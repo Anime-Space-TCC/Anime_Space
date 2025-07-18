@@ -63,7 +63,7 @@ foreach ($lista as $ep) {
                 <?php if (!empty($ep['miniatura'])): ?>
                   <img src="../../img/<?= htmlspecialchars($ep['miniatura']) ?>" alt="Miniatura Episódio <?= htmlspecialchars($ep['numero']) ?>">
                 <?php else: ?>
-                  <img src="../../img/logo-miniatura.jpg" alt="Miniatura padrão">
+                  <img src="../../img/logo.png" alt="Miniatura padrão">
                 <?php endif; ?>
 
                 <div class="card-info">
