@@ -1,7 +1,8 @@
 <?php
 require __DIR__ . '/../shared/conexao.php';
 
-$animes = $pdo->query("SELECT id, nome, genero, imagem, ano FROM animes ORDER BY nome ASC")->fetchAll();
+// Corrigido 'imagem' para 'capa' e 'genero' para 'generos'
+$animes = $pdo->query("SELECT id, nome, generos, capa, ano, nota FROM animes ORDER BY nome ASC")->fetchAll();
 ?>
 
 <!DOCTYPE html>
@@ -22,7 +23,6 @@ $animes = $pdo->query("SELECT id, nome, genero, imagem, ano FROM animes ORDER BY
     </nav>
   </header>
 
-  <!-- Barra de busca + Filtros na mesma linha -->
   <section class="busca-filtros">
     <div class="barra-pesquisa">
       <input type="text" id="searchInput" placeholder="Buscar anime por nome ou gênero...">
@@ -48,12 +48,13 @@ $animes = $pdo->query("SELECT id, nome, genero, imagem, ano FROM animes ORDER BY
   <main class="anime-catalogo">
     <?php if ($animes): ?>
       <?php foreach ($animes as $anime): ?>
-        <article class="anime-item" data-genero="<?= strtolower($anime['genero']) ?>" data-ano="<?= $anime['ano'] ?>">
-          <img src="../../img/<?= htmlspecialchars($anime['imagem']) ?>" alt="<?= htmlspecialchars($anime['nome']) ?>" class="mini-img">
+        <article class="anime-item" data-genero="<?= strtolower($anime['generos']) ?>" data-ano="<?= $anime['ano'] ?>">
+          <img src="../../img/<?= htmlspecialchars($anime['capa']) ?>" alt="<?= htmlspecialchars($anime['nome']) ?>" class="mini-img">
           <div class="info">
             <h3><?= htmlspecialchars($anime['nome']) ?></h3>
-            <p>Gêneros: <?= htmlspecialchars($anime['genero']) ?></p>
+            <p>Gêneros: <?= htmlspecialchars($anime['generos']) ?></p>
             <p>Ano: <?= htmlspecialchars($anime['ano']) ?></p>
+            <p>Nota: ⭐ <?= htmlspecialchars($anime['nota']) ?></p>
             <a href="episodes.php?id=<?= $anime['id'] ?>">▶️ Ver Episódios</a>
           </div>
         </article>

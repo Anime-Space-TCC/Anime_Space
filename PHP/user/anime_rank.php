@@ -1,7 +1,7 @@
 <?php
 require __DIR__ . '/../shared/conexao.php';
 
-$animes = $pdo->query("SELECT id, nome, genero, imagem, nota FROM animes ORDER BY nota DESC")->fetchAll();
+$animes = $pdo->query("SELECT id, nome, capa, nota FROM animes ORDER BY nota DESC")->fetchAll();
 ?>
 
 <!DOCTYPE html>
@@ -26,10 +26,9 @@ $animes = $pdo->query("SELECT id, nome, genero, imagem, nota FROM animes ORDER B
     <?php if ($animes): ?>
         <?php foreach ($animes as $anime): ?>
             <article class="anime-item">
-                <img src="../../img/<?= htmlspecialchars($anime['imagem']) ?>" alt="<?= htmlspecialchars($anime['nome']) ?>" class="mini-img" loading="lazy" />
+                <img src="../../img/<?= htmlspecialchars($anime['capa']) ?>" alt="<?= htmlspecialchars($anime['nome']) ?>" class="mini-img" loading="lazy" />
                 <div class="info">
                     <h3><?= htmlspecialchars($anime['nome']) ?></h3>
-                    <p>Gêneros: <?= htmlspecialchars($anime['genero']) ?></p>
                     <p class="nota-destaque">⭐ <?= number_format($anime['nota'], 1) ?></p>
                 </div>
             </article>
