@@ -10,17 +10,21 @@
 </head>
 
 <body class="home">
-    <!-- Botão do menu hamburguer -->
     <button class="menu-toggle" aria-label="Abrir menu" onclick="toggleMenu()">☰</button>
 
-    <!-- Menu lateral oculto -->
     <nav class="menu-lateral" id="menuLateral" aria-label="Menu principal">
         <a href="../PHP/user/stream.php">Streaming</a>
         <a href="../PHP/user/anime_rank.php">Rank</a>
         <a href="../PHP/user/login.php">Login</a>
         <a href="../PHP/user/register.php">Cadastro</a>
-        <a href="../PHP/user/profile.php">Perfil</a>
     </nav>
+    
+    <a href="../PHP/user/profile.php" class="perfil-btn" aria-label="Perfil do usuário" role="button" tabindex="0">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" width="24" height="24" style="vertical-align: middle;">
+            <circle cx="12" cy="8" r="4" />
+            <path d="M4 20c0-4 8-4 8-4s8 0 8 4v1H4v-1z"/>
+        </svg>
+    </a>
 
     <header class="cabeca" role="banner">
         <img src="../img/slogan2.png" alt="Slogan Anime Space" class="img-slogan" />
