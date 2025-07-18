@@ -1,117 +1,133 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Anime Space!</title>
-    <link rel="icon" href="../img/slogan3.png" type="image/png">
-    <link rel="stylesheet" href="../CSS/style.css">
+    <link rel="icon" href="../img/slogan3.png" type="image/png" />
+    <link rel="stylesheet" href="../CSS/home.css" />
 </head>
 
 <body class="home">
-    <div class="cabeca">
-        <img src="../img/slogan2.png" alt="Slogan2" class="img-slogan">
+    <!-- Botão do menu hamburguer -->
+    <button class="menu-toggle" aria-label="Abrir menu" onclick="toggleMenu()">☰</button>
+
+    <!-- Menu lateral oculto -->
+    <nav class="menu-lateral" id="menuLateral" aria-label="Menu principal">
+        <a href="../PHP/user/stream.php">Streaming</a>
+        <a href="../PHP/user/anime_rank.php">Rank</a>
+        <a href="../PHP/user/login.php">Login</a>
+        <a href="../PHP/user/register.php">Cadastro</a>
+        <a href="../PHP/user/profile.php">Perfil</a>
+    </nav>
+
+    <header class="cabeca" role="banner">
+        <img src="../img/slogan2.png" alt="Slogan Anime Space" class="img-slogan" />
         <p><strong>O universo dos animes ao seu alcance</strong></p>
-    </div><br>
-    <div class="links">
-        <nav>
-            <a href="../PHP/user/stream.php">Streaming</a> |
-            <a href="../PHP/user/anime_rank.php">Rank</a> |
-            <a href="../PHP/user/login.php">Login</a> |
-            <a href="../PHP/user/register.php">Cadastro</a> |
-            <a href="../PHP/user/profile.php">Perfil</a>
-        </nav>
-    </div><br>
-    <div class="top-animes">
-        <h3>Top 5 do mês</h3>
-        <ol class="lista-top">
-            <li>
-                <img src="../img/solo.jpeg" alt="Solo Leveling" class="img">
-                <h4 class="destaque">1 . Solo Leveling</h4>
+    </header>
+
+    <main>
+        <section class="top-animes" aria-labelledby="top-animes-title">
+            <h3 id="top-animes-title">Top 5 do mês</h3>
+            <ol class="lista-top">
+                <li>
+                    <img src="../img/solo.jpeg" alt="Solo Leveling" class="img" />
+                    <h4 class="destaque">1 . Solo Leveling</h4>
                     <div class="sinopse">
-                       <img src="../img/solo.jpeg" alt="Solo Leveling" class="mini-img">
-                       <p>Jin-Woo, o caçador mais fraco da humanidade, recebe a 
-                        chance de evoluir ilimitadamente após sobreviver a uma missão mortal.</p>
+                        <img src="../img/solo.jpeg" alt="Solo Leveling" class="mini-img" />
+                        <p>Jin-Woo, o caçador mais fraco da humanidade, recebe a
+                            chance de evoluir ilimitadamente após sobreviver a uma missão mortal.</p>
                     </div>
-            </li>
-            <li>
-                <img src="../img/frieren.jpeg" alt="Sousou no Frieren" class="img">
-                <h4 class="destaque">2 . Sousou no Frieren</h4>
+                </li>
+                <li>
+                    <img src="../img/frieren.jpeg" alt="Sousou no Frieren" class="img" />
+                    <h4 class="destaque">2 . Sousou no Frieren</h4>
                     <div class="sinopse">
-                       <img src="../img/frieren.jpeg" alt="Frieren" class="mini-img">
-                       <p>Após a derrota do Rei Demônio, a elfa maga Frieren embarca em 
-                        uma jornada para entender os humanos e lidar com o tempo.</p>
+                        <img src="../img/frieren.jpeg" alt="Sousou no Frieren" class="mini-img" />
+                        <p>Após a derrota do Rei Demônio, a elfa maga Frieren embarca em
+                            uma jornada para entender os humanos e lidar com o tempo.</p>
                     </div>
-            </li>
-            <li>
-                <img src="../img/dandadan.jpeg" alt="Dandadan" class="img">
-                <h4 class="destaque">3 . Dandadan</h4>
+                </li>
+                <li>
+                    <img src="../img/dandadan.jpeg" alt="Dandadan" class="img" />
+                    <h4 class="destaque">3 . Dandadan</h4>
                     <div class="sinopse">
-                       <img src="../img/dandadan.jpeg" alt="Dandadan" class="mini-img">
-                       <p>Dois adolescentes com crenças opostas em aliens e espíritos se 
-                        veem envolvidos em batalhas paranormais caóticas e hilárias.</p>
+                        <img src="../img/dandadan.jpeg" alt="Dandadan" class="mini-img" />
+                        <p>Dois adolescentes com crenças opostas em aliens e espíritos se
+                            veem envolvidos em batalhas paranormais caóticas e hilárias.</p>
                     </div>
-            </li>
-            <li>
-                <img src="../img/meshi.jpeg" alt="Dungeon Meshi" class="img">
-                <h4 class="destaque">4 . Dungeon Meshi</h4>
+                </li>
+                <li>
+                    <img src="../img/meshi.jpeg" alt="Dungeon Meshi" class="img" />
+                    <h4 class="destaque">4 . Dungeon Meshi</h4>
                     <div class="sinopse">
-                       <img src="../img/meshi.jpeg" alt="Dungeon Meshi" class="mini-img">
-                       <p>Em uma masmorra mágica, um grupo de aventureiros decide cozinhar 
-                        monstros para sobreviver e salvar uma amiga devorada por um dragão.</p>
+                        <img src="../img/meshi.jpeg" alt="Dungeon Meshi" class="mini-img" />
+                        <p>Em uma masmorra mágica, um grupo de aventureiros decide cozinhar
+                            monstros para sobreviver e salvar uma amiga devorada por um dragão.</p>
                     </div>
-            </li>
-            <li>
-                <img src="../img/kaiju.jpeg" alt="Kaiju No. 8" class="img">
-                <h4 class="destaque">5 . Kaiju No.8</h4>
+                </li>
+                <li>
+                    <img src="../img/kaiju.jpeg" alt="Kaiju No. 8" class="img" />
+                    <h4 class="destaque">5 . Kaiju No.8</h4>
                     <div class="sinopse">
-                       <img src="../img/kaiju.jpeg" alt="Kaiju No. 8" class="mini-img">
-                       <p>Em um Japão atacado por monstros, Kafka ganha o poder de se 
-                        transformar em um Kaiju, dividindo sua vida entre herói e ameaça.</p>
+                        <img src="../img/kaiju.jpeg" alt="Kaiju No. 8" class="mini-img" />
+                        <p>Em um Japão atacado por monstros, Kafka ganha o poder de se
+                            transformar em um Kaiju, dividindo sua vida entre herói e ameaça.</p>
                     </div>
-            </li>
-        </ol>
-    </div><br>
-    <div class="genres">
-        <h3>Gêneros Populares</h3>
-        <ul>
-            <li class="destaque">Ação</li>
-            <li class="destaque">Aventura</li>
-            <li>Cyberpunk</li>
-            <li>Drama</li>
-            <li class="destaque">Esporte</li>
-            <li>Ficção Científica</li>
-            <li>Fantasia</li>
-            <li class="destaque">Isekai</li>
-            <li>Magia</li>
-            <li class="destaque">Mecha</li>
-            <li>Mistério</li>
-            <li>Psicológico</li>
-            <li class="destaque">Romance</li>
-            <li>School Life</li>
-        </ul><br>
-        <ul>
-            <li>Seinen</li>
-            <li class="destaque">Shounen</li>
-            <li>Terror</li>
-            <li>Slice of Life</li>
-            <li>Suspense</li>
-            <li>Superpoderes</li>
-            <li>Thriller</li>
-            <li>Vida Cotidiana</li>
-            <li>Vampiros</li>
-            <li>Yaoi</li>
-            <li>Yuri</li>
-        </ul>
-    </div><br>
-    <div class="rodape">
+                </li>
+            </ol>
+        </section>
+
+        <section class="genres" aria-labelledby="genres-title">
+            <h3 id="genres-title">Gêneros Populares</h3>
+            <ul>
+                <li class="destaque">Ação</li>
+                <li class="destaque">Aventura</li>
+                <li>Cyberpunk</li>
+                <li>Drama</li>
+                <li class="destaque">Esporte</li>
+                <li>Ficção Científica</li>
+                <li>Fantasia</li>
+                <li class="destaque">Isekai</li>
+                <li>Magia</li>
+                <li class="destaque">Mecha</li>
+                <li>Mistério</li>
+                <li>Psicológico</li>
+                <li class="destaque">Romance</li>
+                <li>School Life</li>
+            </ul>
+            <br />
+            <ul>
+                <li>Seinen</li>
+                <li class="destaque">Shounen</li>
+                <li>Terror</li>
+                <li>Slice of Life</li>
+                <li>Suspense</li>
+                <li>Superpoderes</li>
+                <li>Thriller</li>
+                <li>Vida Cotidiana</li>
+                <li>Vampiros</li>
+                <li>Yaoi</li>
+                <li>Yuri</li>
+            </ul>
+        </section>
+    </main>
+
+    <footer class="rodape" role="contentinfo">
         <p>O <strong>Animes Space</strong> é um portal dedicado a recomendar
             os melhores animes, separados por gênero, nota e estilo. Descubra
-            novos títulos,<br> veja o que está em alta e mergulhe no mundo dos animes!
+            novos títulos,<br /> veja o que está em alta e mergulhe no mundo dos animes!
             <a href="sobre.html"><strong>Sobre o site</strong></a>
         </p>
-    </div>
+    </footer>
+
+    <!-- Script para alternar menu lateral -->
+    <script>
+        function toggleMenu() {
+            document.getElementById("menuLateral").classList.toggle("aberto");
+        }
+    </script>
 </body>
 
 </html>
