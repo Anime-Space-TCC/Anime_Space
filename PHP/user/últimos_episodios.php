@@ -23,7 +23,7 @@ $episodios = $stmt->fetchAll();
     <h1 class="titulo-pagina">Últimos Episódios Atualizados</h1>
     <nav>
       <a href="../../HTML/home.html">Home</a> |
-      <a href="ultimo_episodios.php">Últimos Episódios</a> |
+      <a href="ultimo_episodios.php">Lançamentos</a> |
       <a href="estreias_temporada.php">Estreias da Temporada</a>
     </nav>
   </header>

@@ -1,7 +1,7 @@
 <?php
 require __DIR__ . '/../shared/conexao.php';
 
-// Captura o gênero via GET 
+// Captura o gênero via GET
 $filtroGenero = isset($_GET['generos']) ? $_GET['generos'] : '';
 
 // Busca os gêneros únicos da tabela generos
@@ -10,14 +10,34 @@ $generos = $pdo->query("SELECT nome FROM generos ORDER BY nome ASC")->fetchAll(P
 // Busca os anos únicos da tabela anos
 $anos = $pdo->query("SELECT ano FROM anos ORDER BY ano DESC")->fetchAll(PDO::FETCH_COLUMN);
 
-// Consulta dos animes 
+// Consulta dos animes com filtro por gênero, se fornecido
 if ($filtroGenero) {
-  $stmt = $pdo->prepare("SELECT id, nome, generos, capa, ano, nota FROM animes WHERE generos LIKE :genero ORDER BY nome ASC");
-  $stmt->bindValue(':genero', "%$filtroGenero%");
+  // Consulta animes que possuem o gênero filtrado, usando JOIN
+  $stmt = $pdo->prepare("
+    SELECT DISTINCT a.id, a.nome, a.capa, a.ano, a.nota,
+      GROUP_CONCAT(g.nome SEPARATOR ', ') AS generos
+    FROM animes a
+    INNER JOIN anime_generos ag ON a.id = ag.anime_id
+    INNER JOIN generos g ON ag.genero_id = g.id
+    WHERE g.nome = :genero
+    GROUP BY a.id
+    ORDER BY a.nome ASC
+  ");
+  $stmt->bindValue(':genero', $filtroGenero);
   $stmt->execute();
-  $animes = $stmt->fetchAll();
+  $animes = $stmt->fetchAll(PDO::FETCH_ASSOC);
 } else {
-  $animes = $pdo->query("SELECT id, nome, generos, capa, ano, nota FROM animes ORDER BY nome ASC")->fetchAll();
+  // Consulta todos os animes com seus gêneros concatenados
+  $stmt = $pdo->query("
+    SELECT a.id, a.nome, a.capa, a.ano, a.nota,
+      GROUP_CONCAT(g.nome SEPARATOR ', ') AS generos
+    FROM animes a
+    LEFT JOIN anime_generos ag ON a.id = ag.anime_id
+    LEFT JOIN generos g ON ag.genero_id = g.id
+    GROUP BY a.id
+    ORDER BY a.nome ASC
+  ");
+  $animes = $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 ?>
 
@@ -44,7 +64,7 @@ if ($filtroGenero) {
       <input type="text" id="searchInput" placeholder="Buscar anime por nome ou gênero...">
     </div>
     <div class="filtros">
-      <select id="generoSelect">
+      <select id="generoSelect" name="generos">
         <option value="">Gênero</option>
         <?php foreach ($generos as $genero): ?>
           <option value="<?= htmlspecialchars($genero) ?>" <?= $filtroGenero === $genero ? 'selected' : '' ?>>
@@ -52,7 +72,7 @@ if ($filtroGenero) {
           </option>
         <?php endforeach; ?>
       </select>
-      <select id="anoSelect">
+      <select id="anoSelect" name="ano">
         <option value="">Ano</option>
         <?php foreach ($anos as $ano): ?>
           <option value="<?= htmlspecialchars($ano) ?>"><?= htmlspecialchars($ano) ?></option>

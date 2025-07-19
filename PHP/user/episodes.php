@@ -38,17 +38,23 @@ if ($episode_id) {
     $episodioSelecionado = $stmtEp->fetch();
 }
 
-// Função para extrair id do YouTube do link
+// Função para extrair ID do YouTube
 function extrairIdYoutube($url) {
     if (strpos($url, 'youtube.com') !== false || strpos($url, 'youtu.be') !== false) {
-        // Youtube padrão
         if (preg_match('/v=([^&]+)/', $url, $matches)) {
             return $matches[1];
         }
-        // Youtube curto youtu.be
         if (preg_match('/youtu\.be\/([^?&]+)/', $url, $matches)) {
             return $matches[1];
         }
+    }
+    return null;
+}
+
+// Função para extrair ID do Google Drive
+function extrairIdGoogleDrive($url) {
+    if (preg_match('/\/file\/d\/([^\/]+)\//', $url, $matches)) {
+        return $matches[1];
     }
     return null;
 }
@@ -80,19 +86,26 @@ function extrairIdYoutube($url) {
     <main>
 
       <?php if ($episodioSelecionado): ?>
-        <section class="video-player">
+        <section class="video-player" style="text-align: center;">
           <?php
           $videoUrl = $episodioSelecionado['video_url'];
           $youtubeId = extrairIdYoutube($videoUrl);
+          $driveId = extrairIdGoogleDrive($videoUrl);
           ?>
           <h2>Assistindo: <?= htmlspecialchars($episodioSelecionado['titulo']) ?> (Temporada <?= $episodioSelecionado['temporada'] ?>, Episódio <?= $episodioSelecionado['numero'] ?>)</h2>
+
           <?php if ($youtubeId): ?>
             <iframe width="800" height="450"
               src="https://www.youtube.com/embed/<?= htmlspecialchars($youtubeId) ?>"
-              title="Vídeo do episódio <?= htmlspecialchars($episodioSelecionado['titulo']) ?>"
               frameborder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowfullscreen></iframe>
+              allowfullscreen>
+            </iframe>
+
+          <?php elseif ($driveId): ?>
+            <iframe src="https://drive.google.com/file/d/<?= htmlspecialchars($driveId) ?>/preview"
+              width="800" height="450" allow="autoplay" frameborder="0" allowfullscreen>
+            </iframe>
+
           <?php else: ?>
             <video width="800" height="450" controls>
               <source src="/TCC/Anime_Space/<?= htmlspecialchars($videoUrl) ?>" type="video/mp4">
