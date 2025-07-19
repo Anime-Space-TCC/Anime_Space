@@ -80,27 +80,27 @@ function extrairIdYoutube($url) {
     <main>
 
       <?php if ($episodioSelecionado): ?>
-  <section class="video-player">
-    <?php
-    $videoUrl = $episodioSelecionado['link'];
-    $youtubeId = extrairIdYoutube($videoUrl);
-    ?>
-    <h2>Assistindo: <?= htmlspecialchars($episodioSelecionado['titulo']) ?> (Temporada <?= $episodioSelecionado['temporada'] ?>, Episódio <?= $episodioSelecionado['numero'] ?>)</h2>
-    <?php if ($youtubeId): ?>
-      <iframe width="800" height="450"
-        src="https://www.youtube.com/embed/<?= htmlspecialchars($youtubeId) ?>"
-        title="Vídeo do episódio <?= htmlspecialchars($episodioSelecionado['titulo']) ?>"
-        frameborder="0"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        allowfullscreen></iframe>
-    <?php else: ?>
-      <video width="800" height="450" controls>
-        <source src="/TCC/Anime_Space/<?= htmlspecialchars($videoUrl) ?>" type="video/mp4">
-        Seu navegador não suporta vídeo HTML5.
-      </video>
-    <?php endif; ?>
-  </section>
-<?php endif; ?>
+        <section class="video-player">
+          <?php
+          $videoUrl = $episodioSelecionado['video_url'];
+          $youtubeId = extrairIdYoutube($videoUrl);
+          ?>
+          <h2>Assistindo: <?= htmlspecialchars($episodioSelecionado['titulo']) ?> (Temporada <?= $episodioSelecionado['temporada'] ?>, Episódio <?= $episodioSelecionado['numero'] ?>)</h2>
+          <?php if ($youtubeId): ?>
+            <iframe width="800" height="450"
+              src="https://www.youtube.com/embed/<?= htmlspecialchars($youtubeId) ?>"
+              title="Vídeo do episódio <?= htmlspecialchars($episodioSelecionado['titulo']) ?>"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen></iframe>
+          <?php else: ?>
+            <video width="800" height="450" controls>
+              <source src="/TCC/Anime_Space/<?= htmlspecialchars($videoUrl) ?>" type="video/mp4">
+              Seu navegador não suporta vídeo HTML5.
+            </video>
+          <?php endif; ?>
+        </section>
+      <?php endif; ?>
 
       <?php if ($lista): ?>
         <?php foreach ($temporadas as $numTemp => $episodios): ?>
