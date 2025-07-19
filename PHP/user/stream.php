@@ -1,8 +1,24 @@
 <?php
 require __DIR__ . '/../shared/conexao.php';
 
-// Corrigido 'imagem' para 'capa' e 'genero' para 'generos'
-$animes = $pdo->query("SELECT id, nome, generos, capa, ano, nota FROM animes ORDER BY nome ASC")->fetchAll();
+// Captura o gênero via GET 
+$filtroGenero = isset($_GET['generos']) ? $_GET['generos'] : '';
+
+// Busca os gêneros únicos da tabela generos
+$generos = $pdo->query("SELECT nome FROM generos ORDER BY nome ASC")->fetchAll(PDO::FETCH_COLUMN);
+
+// Busca os anos únicos da tabela anos
+$anos = $pdo->query("SELECT ano FROM anos ORDER BY ano DESC")->fetchAll(PDO::FETCH_COLUMN);
+
+// Consulta dos animes 
+if ($filtroGenero) {
+  $stmt = $pdo->prepare("SELECT id, nome, generos, capa, ano, nota FROM animes WHERE generos LIKE :genero ORDER BY nome ASC");
+  $stmt->bindValue(':genero', "%$filtroGenero%");
+  $stmt->execute();
+  $animes = $stmt->fetchAll();
+} else {
+  $animes = $pdo->query("SELECT id, nome, generos, capa, ano, nota FROM animes ORDER BY nome ASC")->fetchAll();
+}
 ?>
 
 <!DOCTYPE html>
@@ -30,16 +46,17 @@ $animes = $pdo->query("SELECT id, nome, generos, capa, ano, nota FROM animes ORD
     <div class="filtros">
       <select id="generoSelect">
         <option value="">Gênero</option>
-        <option value="Ação">Ação</option>
-        <option value="Comédia">Comédia</option>
-        <option value="Romance">Romance</option>
-        <option value="Terror">Terror</option>
+        <?php foreach ($generos as $genero): ?>
+          <option value="<?= htmlspecialchars($genero) ?>" <?= $filtroGenero === $genero ? 'selected' : '' ?>>
+            <?= htmlspecialchars($genero) ?>
+          </option>
+        <?php endforeach; ?>
       </select>
       <select id="anoSelect">
         <option value="">Ano</option>
-        <option value="2025">2025</option>
-        <option value="2024">2024</option>
-        <option value="2023">2023</option>
+        <?php foreach ($anos as $ano): ?>
+          <option value="<?= htmlspecialchars($ano) ?>"><?= htmlspecialchars($ano) ?></option>
+        <?php endforeach; ?>
       </select>
       <button id="limparFiltros">Limpar</button>
     </div>
@@ -101,6 +118,8 @@ $animes = $pdo->query("SELECT id, nome, generos, capa, ano, nota FROM animes ORD
       anoSelect.value = "";
       filtrar();
     });
+
+    if (generoSelect.value) filtrar();
   </script>
 
 </body>

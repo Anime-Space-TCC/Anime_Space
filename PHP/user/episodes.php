@@ -1,7 +1,8 @@
 <?php
 require __DIR__ . '/../shared/conexao.php';
 
-$id = $_GET['id'] ?? null;
+$id = $_GET['id'] ?? null;           // anime id
+$episode_id = $_GET['episode_id'] ?? null;  // episódio selecionado para assistir
 
 if (!$id) {
     echo "Anime não encontrado.";
@@ -28,6 +29,29 @@ $temporadas = [];
 foreach ($lista as $ep) {
     $temporadas[$ep['temporada']][] = $ep;
 }
+
+// Se episode_id foi passado, busca o episódio para exibir vídeo
+$episodioSelecionado = null;
+if ($episode_id) {
+    $stmtEp = $pdo->prepare("SELECT * FROM episodios WHERE id = ? AND anime_id = ?");
+    $stmtEp->execute([$episode_id, $id]);
+    $episodioSelecionado = $stmtEp->fetch();
+}
+
+// Função para extrair id do YouTube do link
+function extrairIdYoutube($url) {
+    if (strpos($url, 'youtube.com') !== false || strpos($url, 'youtu.be') !== false) {
+        // Youtube padrão
+        if (preg_match('/v=([^&]+)/', $url, $matches)) {
+            return $matches[1];
+        }
+        // Youtube curto youtu.be
+        if (preg_match('/youtu\.be\/([^?&]+)/', $url, $matches)) {
+            return $matches[1];
+        }
+    }
+    return null;
+}
 ?>
 
 <!DOCTYPE html>
@@ -35,7 +59,7 @@ foreach ($lista as $ep) {
 <head>
   <meta charset="UTF-8">
   <title>Episódios - <?= htmlspecialchars($animeInfo['nome']) ?></title>
-  <link rel="stylesheet" href="../../CSS/episodeos.css">
+  <link rel="stylesheet" href="../../CSS/style2.css">
   <link rel="icon" href="../../img/slogan3.png" type="image/png">
 </head>
 <body>
@@ -54,27 +78,53 @@ foreach ($lista as $ep) {
     </header>
 
     <main>
+
+      <?php if ($episodioSelecionado): ?>
+  <section class="video-player">
+    <?php
+    $videoUrl = $episodioSelecionado['link'];
+    $youtubeId = extrairIdYoutube($videoUrl);
+    ?>
+    <h2>Assistindo: <?= htmlspecialchars($episodioSelecionado['titulo']) ?> (Temporada <?= $episodioSelecionado['temporada'] ?>, Episódio <?= $episodioSelecionado['numero'] ?>)</h2>
+    <?php if ($youtubeId): ?>
+      <iframe width="800" height="450"
+        src="https://www.youtube.com/embed/<?= htmlspecialchars($youtubeId) ?>"
+        title="Vídeo do episódio <?= htmlspecialchars($episodioSelecionado['titulo']) ?>"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen></iframe>
+    <?php else: ?>
+      <video width="800" height="450" controls>
+        <source src="/TCC/Anime_Space/<?= htmlspecialchars($videoUrl) ?>" type="video/mp4">
+        Seu navegador não suporta vídeo HTML5.
+      </video>
+    <?php endif; ?>
+  </section>
+<?php endif; ?>
+
       <?php if ($lista): ?>
         <?php foreach ($temporadas as $numTemp => $episodios): ?>
           <h2>Temporada <?= $numTemp ?></h2>
           <div class="grid">
             <?php foreach ($episodios as $ep): ?>
               <div class="card">
-                <?php if (!empty($ep['miniatura'])): ?>
-                  <img src="../../img/<?= htmlspecialchars($ep['miniatura']) ?>" alt="Miniatura Episódio <?= htmlspecialchars($ep['numero']) ?>">
-                <?php else: ?>
-                  <img src="../../img/logo.png" alt="Miniatura padrão">
-                <?php endif; ?>
-
-                <div class="card-info">
-                  <div class="numero">Episódio <?= htmlspecialchars($ep['numero']) ?></div>
-                  <div class="titulo"><?= htmlspecialchars($ep['titulo']) ?></div>
-
-                  <?php if (!empty($ep['descricao'])): ?>
-                    <button class="btn-info" onclick="toggleDescricao(this)">+ Info</button>
-                    <div class="descricao"><?= nl2br(htmlspecialchars($ep['descricao'])) ?></div>
+                <div class="card-left">
+                  <?php if (!empty($ep['miniatura'])): ?>
+                    <img src="../../img/<?= htmlspecialchars($ep['miniatura']) ?>" alt="Miniatura Episódio <?= htmlspecialchars($ep['numero']) ?>">
+                  <?php else: ?>
+                    <img src="../../img/logo.png" alt="Miniatura padrão">
                   <?php endif; ?>
 
+                  <div>
+                    <div class="numero">Episódio <?= htmlspecialchars($ep['numero']) ?></div>
+                    <div class="titulo"><?= htmlspecialchars($ep['titulo']) ?></div>
+                  </div>
+                </div>
+
+                <div class="card-center">
+                  <?php if (!empty($ep['descricao'])): ?>
+                    <button class="btn-info" onclick="toggleDescricao(this)">+ Info</button>
+                  <?php endif; ?>
                   <div class="info-adicional">
                     <?php if (!empty($ep['duracao'])): ?>
                       <span>Duração: <?= htmlspecialchars($ep['duracao']) ?> min</span>
@@ -85,17 +135,20 @@ foreach ($lista as $ep) {
                   </div>
                 </div>
 
-                <div class="acoes">
-                  <div class="reacoes">
+                <div class="card-right">
+                  <div class="acoes">
                     <button class="like" title="Gostei">👍</button>
                     <button class="dislike" title="Não Gostei">👎</button>
                   </div>
-                  <a class="btn-assistir" href="<?= htmlspecialchars($ep['link']) ?>" target="_blank" rel="noopener noreferrer">Assistir</a>
+                  <a class="btn-assistir" href="?id=<?= $id ?>&episode_id=<?= $ep['id'] ?>">Assistir</a>
                   <?php if (!empty($ep['link_download'])): ?>
-                    <a class="btn-download" href="<?= htmlspecialchars($ep['link_download']) ?>" target="_blank" rel="noopener noreferrer" style="margin-left:10px;">Download</a>
+                    <a class="btn-download" href="<?= htmlspecialchars($ep['link_download']) ?>" target="_blank" rel="noopener noreferrer">Download</a>
                   <?php endif; ?>
                 </div>
               </div>
+              <?php if (!empty($ep['descricao'])): ?>
+                <div class="descricao"><?= nl2br(htmlspecialchars($ep['descricao'])) ?></div>
+              <?php endif; ?>
             <?php endforeach; ?>
           </div>
         <?php endforeach; ?>
@@ -108,8 +161,8 @@ foreach ($lista as $ep) {
   <script>
     function toggleDescricao(btn) {
       const card = btn.closest('.card');
-      const descricao = card.querySelector('.descricao');
-      if (descricao) {
+      const descricao = card.nextElementSibling;
+      if (descricao && descricao.classList.contains('descricao')) {
         descricao.classList.toggle('active');
         btn.textContent = descricao.classList.contains('active') ? '- Info' : '+ Info';
       }
