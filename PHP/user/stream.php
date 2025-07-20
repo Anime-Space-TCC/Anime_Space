@@ -7,8 +7,8 @@ $filtroGenero = isset($_GET['generos']) ? $_GET['generos'] : '';
 // Busca os gêneros únicos da tabela generos
 $generos = $pdo->query("SELECT nome FROM generos ORDER BY nome ASC")->fetchAll(PDO::FETCH_COLUMN);
 
-// Busca os anos únicos da tabela anos
-$anos = $pdo->query("SELECT ano FROM anos ORDER BY ano DESC")->fetchAll(PDO::FETCH_COLUMN);
+// Busca os anos únicos da tabela ano (corrigido aqui)
+$anos = $pdo->query("SELECT valor FROM ano ORDER BY valor DESC")->fetchAll(PDO::FETCH_COLUMN);
 
 // Consulta dos animes com filtro por gênero, se fornecido
 if ($filtroGenero) {
