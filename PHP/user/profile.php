@@ -13,7 +13,7 @@ $username = $_SESSION['username'];
 <head>
   <meta charset="UTF-8" />
   <title>Perfil - Anime Space</title>
-  <link rel="stylesheet" href="../../CSS/style.css" />
+  <link rel="stylesheet" href="../../CSS/style4.css" />
 </head>
 <body class="perfil">
   <div class="login-container">

@@ -46,7 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
 <meta charset="UTF-8" />
 <title>Cadastro - Anime Space</title>
-<link rel="stylesheet" href="../../CSS/style.css" />
+<link rel="stylesheet" href="../../CSS/style4.css" />
 </head>
 <body class="login">
 <div class="login-container">
