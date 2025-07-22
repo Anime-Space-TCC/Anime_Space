@@ -127,19 +127,11 @@ html, body {
 
 .episodio .card-left {
   display: flex;
-  align-items: center;
+  align-items: center; 
   gap: 15px;
   flex: 3;
   min-width: 0;
-}
-
-.episodio .card-left > div {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  white-space: nowrap;
-  overflow: hidden;
-  min-width: 0;
+  height: 100%; 
 }
 
 .episodio .card-left img {
@@ -153,7 +145,17 @@ html, body {
   flex-shrink: 0;
 }
 
+.episodio .info-container {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
 .episodio .numero {
+  display: flex;
+  align-items: center; 
+  height: 100%;
   font-weight: bold;
   color: #ff9f00;
   font-size: 1.1rem;
@@ -162,7 +164,19 @@ html, body {
   flex-shrink: 0;
 }
 
+.episodio .texto-e-botao {
+  display: flex;
+  flex-direction: row;
+  align-items: center; 
+  gap: 10px;
+  min-width: 0;
+  height: 100%;
+}
+
 .episodio .titulo {
+  display: flex;
+  align-items: center; 
+  line-height: 1.2;
   font-size: 1rem;
   color: #eee;
   font-weight: 500;
@@ -173,20 +187,7 @@ html, body {
   max-width: 350px;
 }
 
-/* CENTRAL */
-
-.episodio .card-center {
-  flex: 2;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 6px;
-  color: #bbb;
-  min-width: 160px;
-}
-
 .episodio .btn-info {
-  align-self: flex-start;
   background: transparent;
   border: 1px solid #ff9f00;
   color: #ff9f00;
@@ -197,7 +198,9 @@ html, body {
   cursor: pointer;
   white-space: nowrap;
   transition: background-color 0.3s ease, color 0.3s ease;
+  margin-top: 0;
 }
+
 
 .episodio .btn-info:hover {
   background-color: #ff9f00;
@@ -215,38 +218,75 @@ html, body {
 
 .episodio .card-right {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 15px;
   flex: 2;
   justify-content: flex-end;
   min-width: 220px;
 }
 
+/* =========================
+      Episódio Reações 
+   ========================= */
+
 .episodio .acoes {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;   /* diminui espaçamento */
   white-space: nowrap;
+  margin-left: 10px; /* afasta do centro */
 }
 
-.episodio .like,
-.episodio .dislike {
-  background: transparent;
-  border: none;
-  font-size: 20px;
-  cursor: pointer;
+.episodio .reacao-btn,
+.episodio .btn-like,
+.episodio .btn-dislike {
+  background-color: transparent;
+  border: 2px solid #ff9f00;
   color: #ff9f00;
-  transition: transform 0.3s ease;
-  line-height: 1;
-  padding: 0;
-  margin: 0;
+  font-weight: 700;
+  padding: 4px 10px;      /* menor padding */
+  border-radius: 20px;
+  font-size: 0.8rem;      /* fonte menor */
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+  user-select: none;
+  white-space: nowrap;
+  min-width: 90px;        /* largura menor */
+  justify-content: center;
+  box-shadow: 0 0 5px #ff9f00;
+  text-shadow: 0 0 3px #ff9f00;
 }
 
-.episodio .like:hover,
-.episodio .dislike:hover {
-  color: #fff;
-  transform: scale(1.2);
+.episodio .btn-like:hover,
+.episodio .btn-dislike:hover,
+.episodio .reacao-btn:hover {
+  background-color: #ff9f00;
+  color: #000;
+  box-shadow: 0 0 12px #ff9f00;
 }
+
+.episodio .btn-like.active,
+.episodio .btn-dislike.active,
+.episodio .reacao-btn.active {
+  background-color: #ff9f00;
+  color: #000;
+  box-shadow: 0 0 15px #ff9f00;
+}
+
+.episodio .btn-like .contador,
+.episodio .btn-dislike .contador,
+.episodio .reacao-btn span.contador {
+  font-weight: 600;
+  font-size: 0.85rem;
+  user-select: text;
+  min-width: 22px;
+  text-align: center;
+}
+
+/* Botões assistir e download */
 
 .episodio .btn-assistir,
 .episodio .btn-download {
@@ -288,6 +328,85 @@ html, body {
 .episodio .card:hover {
   transform: translateX(3px);
   box-shadow: 0 6px 20px #ff9f00;
+}
+
+/* =========================
+      Episódio Comentários 
+   ========================= */
+
+.episodio .comentarios {
+  margin-top: 40px;
+  width: 100%;
+  max-width: 1200px;
+  background-color: rgba(0, 0, 0, 0.75);
+  padding: 30px 40px;
+  border-radius: 15px;
+  box-shadow: 0 5px 15px rgb(175, 134, 0);
+  color: #eee;
+}
+
+.episodio .comentarios h3 {
+  font-size: 1.4rem;
+  color: #ff9f00;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #ff9f00;
+  padding-bottom: 5px;
+}
+
+.episodio .comentarios form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.episodio .comentarios textarea {
+  width: 100%;
+  height: 80px;
+  border-radius: 8px;
+  border: 1px solid #ff9f00;
+  padding: 10px;
+  font-size: 1rem;
+  resize: none;
+  background-color: #111;
+  color: #eee;
+}
+
+.episodio .comentarios button {
+  align-self: flex-end;
+  background-color: #ff9f00;
+  color: #000;
+  font-weight: 700;
+  padding: 6px 16px;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  transition: background-color 0.3s ease;
+}
+
+.episodio .comentarios button:hover {
+  background-color: #fff;
+  color: #ff9f00;
+}
+
+.episodio .comentarios .comentario {
+  padding: 10px 0;
+  border-bottom: 1px solid #555;
+}
+
+.episodio .comentarios .comentario:last-child {
+  border-bottom: none;
+}
+
+.episodio .comentarios .comentario strong {
+  color: #ff9f00;
+}
+
+.episodio .comentarios .comentario p {
+  margin: 5px 0 0;
+  color: #ccc;
+  font-size: 0.95rem;
 }
 
 /* =========================
