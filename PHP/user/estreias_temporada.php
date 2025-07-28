@@ -20,7 +20,7 @@ $estreias = $stmt->fetchAll();
   <meta charset="UTF-8" />
   <title>Estreias da Temporada</title>
   <link rel="stylesheet" href="../../CSS/style1.css" />
-  <link rel="icon" href="../../img/slogan1.png" type="image/png">
+  <link rel="icon" href="../../img/slogan3.png" type="image/png">
 </head>
 <body>
   <header>

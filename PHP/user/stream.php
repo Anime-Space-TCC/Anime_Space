@@ -33,8 +33,9 @@ if (!empty($filtroAno)) {
 }
 
 if (!empty($busca)) {
-  $sql .= " AND (a.nome LIKE :busca OR g.nome LIKE :busca)";
-  $params[':busca'] = '%' . $busca . '%';
+  $sql .= " AND (a.nome LIKE :busca1 OR g.nome LIKE :busca2)";
+  $params[':busca1'] = '%' . $busca . '%';
+  $params[':busca2'] = '%' . $busca . '%';
 }
 
 $sql .= " GROUP BY a.id ORDER BY a.nome ASC";
@@ -49,7 +50,7 @@ $animes = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <head>
   <meta charset="UTF-8">
   <title>Streaming de Animes</title>
-  <link rel="stylesheet" href="../../CSS/style4.css">
+  <link rel="stylesheet" href="../../CSS/style0.css">
   <link rel="icon" href="../../img/slogan3.png" type="image/png">
 </head>
 <body class="streaming" id="topo">

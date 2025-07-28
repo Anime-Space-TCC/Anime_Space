@@ -270,7 +270,7 @@ html, body {
     background: rgba(30, 30, 30, 0.85);
     border-radius: 15px;
     box-shadow: 0 5px 15px rgba(0,0,0,0.7);
-    width: 170px; /* menor largura */
+    width: 170px; 
     height: 320px;
     display: flex;
     flex-direction: column;
@@ -323,7 +323,7 @@ html, body {
     text-decoration: none;
     color: #000;
     background-color: #ff9f00;
-    padding: 4px 10px; /* botão menor */
+    padding: 4px 10px; 
     font-size: 0.8rem;
     border-radius: 25px;
     font-weight: 700;
@@ -344,21 +344,18 @@ html, body {
    ========================= */
 
 .streaming .rodape {
-    flex-shrink: 0;
     background-color: #111;
-    padding: 20px 0; /* sem padding lateral */
+    color: #fff;
     text-align: center;
-    color: #888;
-    font-size: 0.9rem;
-    box-shadow: inset 0 1px 0 #222;
+    padding: 10px 0;
     width: 100%;
+    margin-top: auto;
 }
 
 .streaming .rodape a {
-    color: #ff9f00;
+    color: orange;
     text-decoration: none;
-    font-weight: 600;
-    transition: color 0.3s ease;
+    font-weight: bold;
 }
 
 .streaming .rodape a:hover {
@@ -738,6 +735,108 @@ html, body {
 .perfil form input[type="submit"]:hover {
     background-color: #fff;
     color: #ff9f00;
+}
+
+/* =========================
+      EDITAR PERFIL
+   ========================= */
+
+.editar-perfil {
+    display: flex;
+    flex-direction: column;
+     max-width: 600px;      
+    margin: 110px auto;    
+    padding: 40px 30px;   
+    background-color: rgba(34, 34, 34, 0.95);
+    border-radius: 20px;
+    box-shadow: 0 0 20px rgba(255, 159, 0, 0.5);
+    color: #eee;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.editar-perfil .topo-editar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+}
+
+.editar-perfil .topo-editar h1 {
+    color: #ff9f00;
+    font-size: 2rem;
+    margin: 0;
+}
+
+.editar-perfil .btn-voltar {
+    padding: 2px 140px;
+    background-color: transparent;
+    color: #ff9f00;
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.editar-perfil form {
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+}
+
+.editar-perfil label {
+    font-weight: bold;
+    font-size: 1rem;
+    color: #ff9f00;
+    margin-bottom: 8px;  
+    display: block;    
+}
+
+.editar-perfil input[type="text"],
+.editar-perfil input[type="email"] {
+    width: 100%;
+    padding: 15px 20px;
+    font-size: 1rem;
+    border-radius: 25px;
+    border: 2px solid #ff9f00;
+    background-color: #222;
+    color: #fff;
+    outline: none;
+    transition: 0.3s;
+}
+
+.editar-perfil input:focus {
+    border-color: #fff;
+    box-shadow: 0 0 10px #fff;
+}
+
+.editar-perfil button {
+    align-self: center;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 25px;
+    background-color: #ff9f00;
+    color: #000;
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: 0.3s;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.editar-perfil button:hover {
+    background-color: #fff;
+    color: #ff9f00;
+}
+
+.mensagem-sucesso {
+    background-color: #28a745;
+    color: #fff;
+    padding: 8px 12px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    text-align: center;
 }
 
 /* =========================

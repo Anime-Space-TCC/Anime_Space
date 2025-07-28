@@ -32,15 +32,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
 <meta charset="UTF-8" />
 <title>Login - Anime Space</title>
-<link rel="stylesheet" href="../../CSS/style4.css" />
+<link rel="stylesheet" href="../../CSS/style0.css" />
+<link rel="icon" href="../../img/slogan3.png" type="image/png">
 </head>
 <body class="login">
 <div class="login-container">
   <div class="login-box">
-
-    <!-- Imagem de login adicionada -->
     <img src="../../img/slogan3.png" alt="Imagem de Login" class="login-image" />
-
     <h2>Login</h2>
 
     <?php if ($errors): ?>

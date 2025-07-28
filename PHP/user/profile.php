@@ -13,7 +13,8 @@ $username = $_SESSION['username'];
 <head>
   <meta charset="UTF-8" />
   <title>Perfil - Anime Space</title>
-  <link rel="stylesheet" href="../../CSS/style4.css" />
+  <link rel="stylesheet" href="../../CSS/style0.css" />
+  <link rel="icon" href="../../img/slogan3.png" type="image/png">
 </head>
 <body class="perfil">
   <div class="login-container">
@@ -24,7 +25,7 @@ $username = $_SESSION['username'];
       <div class="links">
         <a href="../../HTML/home.html">🏠 Home</a>
         <a href="stream.php">📺 Streaming</a>
-        <a href="edit_profile.php">✏️ Editar Perfil</a>
+        <a href="editar_perfil.php">✏️ Editar Perfil</a>
       </div>
 
       <form action="logout.php" method="post" style="margin-top: 20px;">

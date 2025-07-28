@@ -10,7 +10,7 @@ $animes = $pdo->query("SELECT id, nome, capa, nota FROM animes ORDER BY nota DES
 <head>
     <meta charset="UTF-8" />
     <title>Ranking de Animes - Anime Space</title>
-    <link rel="stylesheet" href="../../CSS/style4.css">
+    <link rel="stylesheet" href="../../CSS/style0.css">
     <link rel="icon" href="../../img/slogan3.png" type="image/png">
 </head>
 <body class="ranking">
