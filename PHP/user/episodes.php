@@ -1,15 +1,21 @@
 <?php 
+// Inicia a sessão do usuário
 session_start();
+
+// Conecta ao banco de dados
 require __DIR__ . '/../shared/conexao.php';
 
+// Obtém os parâmetros da URL
 $id = $_GET['id'] ?? null;
 $episode_id = $_GET['episode_id'] ?? null;
 
+// Verifica se o anime foi informado
 if (!$id) {
     echo "Anime não encontrado.";
     exit;
 }
 
+// Consulta informações do anime
 $anime = $pdo->prepare("SELECT nome, capa FROM animes WHERE id = ?");
 $anime->execute([$id]);
 $animeInfo = $anime->fetch();
@@ -19,7 +25,7 @@ if (!$animeInfo) {
     exit;
 }
 
-// Buscar episódios com temporadas e as reações agregadas (likes e dislikes)
+// Busca os episódios com contagem de likes e dislikes
 $episodios = $pdo->prepare("
     SELECT e.*, 
         COALESCE(SUM(CASE WHEN r.reacao = 'like' THEN 1 ELSE 0 END), 0) AS likes,
@@ -33,11 +39,13 @@ $episodios = $pdo->prepare("
 $episodios->execute([$id]);
 $lista = $episodios->fetchAll();
 
+// Organiza os episódios por temporada
 $temporadas = [];
 foreach ($lista as $ep) {
     $temporadas[$ep['temporada']][] = $ep;
 }
 
+// Busca o episódio selecionado, se houver
 $episodioSelecionado = null;
 if ($episode_id) {
     $stmtEp = $pdo->prepare("SELECT * FROM episodios WHERE id = ? AND anime_id = ?");
@@ -45,18 +53,20 @@ if ($episode_id) {
     $episodioSelecionado = $stmtEp->fetch();
 }
 
+// Extrai o ID do YouTube a partir da URL
 function extrairIdYoutube($url) {
     if (strpos($url, 'youtube.com') !== false || strpos($url, 'youtu.be') !== false) {
         if (preg_match('/v=([^&]+)/', $url, $matches)) {
             return $matches[1];
         }
-        if (preg_match('/youtu\.be\/([^?&]+)/', $url, $matches)) {
+        if (preg_match('/youtu\\.be\/([^?&]+)/', $url, $matches)) {
             return $matches[1];
         }
     }
     return null;
 }
 
+// Extrai o ID do Google Drive a partir da URL
 function extrairIdGoogleDrive($url) {
     if (preg_match('/\/file\/d\/([^\/]+)\//', $url, $matches)) {
         return $matches[1];
@@ -70,7 +80,7 @@ function extrairIdGoogleDrive($url) {
 <head>
   <meta charset="UTF-8">
   <title>Episódios - <?= htmlspecialchars($animeInfo['nome']) ?></title>
-  <link rel="stylesheet" href="../../CSS/style2.css">
+  <link rel="stylesheet" href="../../CSS/style.css">
   <link rel="icon" href="../../img/slogan3.png" type="image/png">
 </head>
 <body>
@@ -185,13 +195,13 @@ function extrairIdGoogleDrive($url) {
           <h3>Comentários</h3>
           <form action="/TCC/Anime_Space/PHP/user/comentar.php" method="POST">
             <input type="hidden" name="episodio_id" value="<?= htmlspecialchars($episodioSelecionado['id']) ?>">
-            <input type="hidden" name="id" value="<?= htmlspecialchars($id) ?>"> <!-- id do anime -->
+            <input type="hidden" name="id" value="<?= htmlspecialchars($id) ?>"> 
             <textarea name="comentario" rows="4" placeholder="Escreva seu comentário..." required></textarea>
             <button type="submit">Enviar Comentário</button>
           </form>
 
           <?php
-          $stmtComentarios = $pdo->prepare("SELECT c.comentario, c.data_comentario, u.username FROM comentarios c JOIN users u ON c.usuario_id = u.id WHERE c.episodio_id = ? ORDER BY c.data_comentario DESC");
+          $stmtComentarios = $pdo->prepare("SELECT c.comentario, c.data_comentario, u.username FROM comentarios c JOIN users u ON c.user_id = u.id WHERE c.episodio_id = ? ORDER BY c.data_comentario DESC");
           $stmtComentarios->execute([$episodioSelecionado['id']]);
           $comentarios = $stmtComentarios->fetchAll();
 

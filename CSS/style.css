@@ -20,6 +20,960 @@ html, body {
 }
 
 /* =========================
+          MENU 
+   ========================= */
+
+.menu-toggle {
+    font-size: 1.8rem;
+    cursor: pointer;
+    position: fixed;
+    top: 2rem;
+    left: 1rem;
+    z-index: 1300; 
+    background-color: rgba(0, 0, 0, 0.7);
+    color: #ff9f00;
+    padding: 0.3rem 0.7rem;
+    border-radius: 6px;
+    user-select: none;
+    transition: background-color 0.3s ease;
+    box-shadow: 0 0 6px #ff9f00;
+    border: none;
+}
+
+.menu-toggle:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+.menu-toggle:hover {
+    background-color: #ff9f00;
+    color: #000;
+}
+
+.menu-lateral {
+    position: fixed;
+    top: 0;
+    left: -260px;
+    width: 260px;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.85);
+    overflow-y: auto;
+    transition: left 0.35s ease;
+    padding-top: 6rem;
+    z-index: 1200; 
+    box-shadow: 2px 0 8px rgba(255, 159, 0, 0.4);
+    border-top-right-radius: 12px;
+    border-bottom-right-radius: 12px;
+}
+
+.menu-lateral.aberto {
+    left: 0;
+}
+
+.menu-lateral a {
+    display: block;
+    padding: 1rem 2rem;
+    color: #ff9f00;
+    text-decoration: none;
+    font-weight: 600;
+    border-left: 4px solid transparent;
+    transition: background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease;
+}
+
+.menu-lateral a:hover {
+    background-color: #ff9f00;
+    color: #000;
+    border-left-color: #000;
+}
+
+/* =========================
+          MENU PERFIL 
+   ========================= */
+
+.perfil-btn {
+    position: fixed;
+    top: 6rem;
+    left: 1rem;
+    z-index: 1100; 
+    background-color: rgba(0, 0, 0, 0.7);
+    color: #ff9f00;
+    padding: 0.3rem 0.7rem;        
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    font-size: 1.8rem;            
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    box-shadow: 0 0 6px #ff9f00;
+    transition: background-color 0.3s ease;
+    text-decoration: none;
+    height: 2.5rem;              
+    line-height: 2.5rem;          
+}
+
+.perfil-btn:hover {
+    background-color: #ff9f00;
+    color: #000;
+}
+
+.perfil-btn svg {
+    fill: currentColor;
+    width: 24px;
+    height: 24px;
+    vertical-align: middle;
+}
+
+/* =========================
+          HOME
+   ========================= */
+
+.home .cabeca {
+    text-align: center;
+    padding: 30px;
+    background-color: rgba(0, 0, 0, 0.6);
+    box-shadow: 0 5px 15px rgb(175, 134, 0);
+    border-radius: 15px;
+    color: #f0f0f0;
+    max-width: 1200px;
+    margin: 30px auto 10px auto;
+}
+
+.home .cabeca .img-slogan {
+    display: block;
+    margin: 10px auto;
+    max-width: 100%;
+    width: 500px;
+    height: auto;
+}
+
+.home .cabeca p {
+    font-size: 17px;
+    margin-bottom: 5px;
+}
+
+.home .links {
+    text-align: center;
+    margin: 20px auto;
+    background-color: rgba(0, 0, 0, 0.6);
+    box-shadow: 0 5px 15px rgb(175, 134, 0);
+    border-radius: 15px;
+    color: #f0f0f0;
+    max-width: 1200px;
+    padding: 10px;
+}
+
+.home .links a {
+    display: inline-block;
+    text-decoration: none;
+    color: #ff9f00;
+    margin: 0 12px;
+    font-size: 17px;
+    font-weight: 500;
+    padding: 5px 10px;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+}
+
+.home .links a:hover {
+    color: #000000;
+    background-color: #ff9f00;
+    box-shadow: 0 0 5px #ffffff;
+}
+
+.home h3 {
+    text-align: center;
+    margin: 20px 0;
+    font-size: 24px;
+    color: #ff9f00;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+}
+
+.home .top-animes ol {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    list-style: none;
+    padding: 0;
+    flex-wrap: wrap;
+}
+
+.home .top-animes li {
+    text-align: center;
+    color: #ff9f00;
+    text-shadow: 2px 2px 5px rgba(0,0,0,0.8);
+    position: relative;
+    cursor: pointer;
+}
+
+.home .top-animes .destaque {
+    background-color: rgba(0, 0, 0, 0.6);
+    box-shadow: 0 5px 15px rgb(175, 134, 0);
+    color: #ff9f00;
+    padding: 4px 8px;
+    border-radius: 20px;
+    display: inline-block;
+    font-weight: bold;
+    margin-top: 5px;
+}
+
+.home .img {
+    width: 220px;
+    height: 150px;
+    border-radius: 30px;
+    display: block;
+    margin-top: 5px;
+    border: 2px solid black;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease;
+}
+
+.home .top-animes li:hover .img {
+    transform: scale(1.05);
+}
+
+.home .sinopse {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(0, 0, 0, 0.85);
+    color: white;
+    width: 270px;
+    padding: 10px;
+    border-radius: 15px;
+    margin-top: 10px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    display: flex;
+    gap: 10px;
+    z-index: 10;
+}
+
+.home .top-animes li:hover .sinopse {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.home .sinopse .mini-img {
+    width: 60px;
+    height: 110px;
+    object-fit: cover;
+    border-radius: 10px;
+    flex-shrink: 0;
+}
+
+.home .genres {
+    margin: 40px auto;
+    text-align: center;
+    color: #ccc;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 1200px;
+}
+
+.home .genres-title {
+    font-size: 1.5em;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #fff;
+    text-shadow: 1px 1px 2px #000;
+}
+
+.home .genres ul {
+    list-style: none;
+    margin: 10px 0;
+    padding: 12px 20px;
+    display: flex;
+    gap: 12px;
+    border: 1px solid #000000;
+    background-color: rgba(0, 0, 0, 0.5);
+    box-shadow: 0 5px 15px rgb(175, 134, 0);
+    border-radius: 15px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.home .genres li {
+    color: #ccc;
+    font-size: 0.95em;
+    transition: color 0.3s ease;
+}
+
+.home .genres li:hover {
+    color: #fff;
+    cursor: pointer;
+}
+
+.home .genres li.destaque {
+    font-weight: bold;
+    color: #ff9f00;
+}
+
+.home .genres li.destaque a {
+    color: #ff9f00;
+    font-weight: bold;
+    text-decoration: none;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.home .genres li.destaque a:hover {
+    color: #fff;
+    text-decoration: underline;
+}
+
+.home .genres li:not(.destaque) a {
+    color: #ccc;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.home .genres li:not(.destaque) a:hover {
+    color: #fff;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.home .rodape {
+    text-align: center;
+    padding: 10px 20px;
+    background-color: rgba(0, 0, 0, 0.6);
+    box-shadow: 0 5px 15px rgb(175, 134, 0);
+    color: #f0f0f0;
+    max-width: 100%;
+    margin: 0 auto;
+}
+
+.home .rodape p {
+    font-size: 16px;
+    line-height: 1.6;
+    margin-bottom: 10px;
+}
+
+.home .rodape a {
+    color: #ff9f00;
+    text-decoration: none;
+}
+
+.home .rodape strong {
+    color: #ff9f00;
+}
+
+/* =========================
+        Episódios 
+   ========================= */
+
+.episodio {
+  background: url('../img/space.jpg') no-repeat center center fixed;
+  background-size: cover;
+  min-height: 100vh;
+  color: #eee;
+  padding: 40px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+}
+
+.episodio header {
+  width: 100%;
+  max-width: 1200px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.75);
+  padding: 25px 40px;
+  border-radius: 15px;
+  box-shadow: 0 5px 15px rgb(175, 134, 0);
+  color: #ff9f00;
+  flex-wrap: wrap;
+}
+
+.episodio header nav a {
+  background-color: #ff9f00;
+  color: #000;
+  font-weight: 700;
+  padding: 8px 18px;
+  border-radius: 20px;
+  text-decoration: none;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+  margin-left: 10px;
+  white-space: nowrap;
+  display: inline-block;
+}
+
+.episodio header nav a:first-child {
+  margin-left: 0;
+}
+
+.episodio header nav a:hover {
+  background-color: #fff;
+  color: #ff9f00;
+}
+
+.episodio .info-anime {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.episodio .info-anime img {
+  width: 90px;
+  height: 130px;
+  border-radius: 15px;
+  object-fit: cover;
+  border: 3px solid #ff9f00;
+  box-shadow: 0 0 10px #ff9f00;
+}
+
+.episodio main {
+  width: 100%;
+  max-width: 1200px;
+  background-color: rgba(0, 0, 0, 0.75);
+  padding: 30px 40px;
+  border-radius: 15px;
+  box-shadow: 0 5px 15px rgb(175, 134, 0);
+}
+
+.episodio main h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: #ff9f00;
+  border-bottom: 2px solid #ff9f00;
+  padding-bottom: 5px;
+}
+
+.episodio .grid {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/* ======= CARD EPISÓDIO ======= */
+
+.episodio .card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: rgba(255, 255, 255, 0.07);
+  border: 1px solid #cc7f00; 
+  border-radius: 12px;
+  padding: 10px 20px;
+  box-shadow: 0 4px 12px rgba(255, 159, 0, 0.3);
+  transition: transform 0.3s ease;
+  gap: 20px;
+  flex-wrap: nowrap;
+}
+
+.episodio .card-left {
+  display: flex;
+  align-items: center; 
+  gap: 15px;
+  flex: 3;
+  min-width: 0;
+  height: 100%; 
+}
+
+.episodio .card-left img {
+  width: 70px;
+  height: 70px;
+  border-radius: 12px;
+  object-fit: contain;
+  border: 2px solid #ff9f00;
+  background-color: #000;
+  box-shadow: 0 0 8px #ff9f00;
+  flex-shrink: 0;
+}
+
+.episodio .info-container {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.episodio .numero {
+  display: flex;
+  align-items: center; 
+  height: 100%;
+  font-weight: bold;
+  color: #ff9f00;
+  font-size: 1.1rem;
+  white-space: nowrap;
+  min-width: 90px;
+  flex-shrink: 0;
+}
+
+.episodio .texto-e-botao {
+  display: flex;
+  flex-direction: row;
+  align-items: center; 
+  gap: 10px;
+  min-width: 0;
+  height: 100%;
+}
+
+.episodio .titulo {
+  display: flex;
+  align-items: center; 
+  line-height: 1.2;
+  font-size: 1rem;
+  color: #eee;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 150px;
+  max-width: 350px;
+}
+
+.episodio .btn-info {
+  background: transparent;
+  border: 1px solid #ff9f00;
+  color: #ff9f00;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  margin-top: 0;
+}
+
+
+.episodio .btn-info:hover {
+  background-color: #ff9f00;
+  color: #000;
+}
+
+.episodio .info-adicional {
+  font-size: 0.9rem;
+  color: #bbb;
+  margin-top: 2px;
+  white-space: nowrap;
+}
+
+/* DIREITA */
+
+.episodio .card-right {
+  display: flex;
+  align-items: flex-start;
+  gap: 15px;
+  flex: 2;
+  justify-content: flex-end;
+  min-width: 220px;
+}
+
+/* =========================
+      Episódio Reações 
+   ========================= */
+
+.episodio .acoes {
+  display: flex;
+  align-items: center;
+  gap: 10px;   
+  white-space: nowrap;
+  margin-left: 10px; 
+}
+
+.episodio .reacao-btn,
+.episodio .btn-like,
+.episodio .btn-dislike {
+  background-color: transparent;
+  border: 2px solid #ff9f00;
+  color: #ff9f00;
+  font-weight: 700;
+  padding: 4px 10px;      
+  border-radius: 20px;
+  font-size: 0.8rem;      
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+  user-select: none;
+  white-space: nowrap;
+  min-width: 90px;        
+  justify-content: center;
+  box-shadow: 0 0 5px #ff9f00;
+  text-shadow: 0 0 3px #ff9f00;
+}
+
+.episodio .btn-like:hover,
+.episodio .btn-dislike:hover,
+.episodio .reacao-btn:hover {
+  background-color: #ff9f00;
+  color: #000;
+  box-shadow: 0 0 12px #ff9f00;
+}
+
+.episodio .btn-like.active,
+.episodio .btn-dislike.active,
+.episodio .reacao-btn.active {
+  background-color: #ff9f00;
+  color: #000;
+  box-shadow: 0 0 15px #ff9f00;
+}
+
+.episodio .btn-like .contador,
+.episodio .btn-dislike .contador,
+.episodio .reacao-btn span.contador {
+  font-weight: 600;
+  font-size: 0.85rem;
+  user-select: text;
+  min-width: 22px;
+  text-align: center;
+}
+
+/* Botões assistir e download */
+
+.episodio .btn-assistir,
+.episodio .btn-download {
+  background-color: #ff9f00;
+  color: #000;
+  font-weight: 700;
+  padding: 6px 14px;
+  border-radius: 20px;
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: background-color 0.3s ease;
+  white-space: nowrap;
+}
+
+.episodio .btn-assistir:hover,
+.episodio .btn-download:hover {
+  background-color: #fff;
+  color: #ff9f00;
+}
+
+/* Descrição */
+
+.episodio .descricao {
+  display: none;
+  font-size: 0.9rem;
+  color: #ccc;
+  margin-top: 5px;
+  max-width: 100%;
+  white-space: normal;
+  user-select: text;
+  line-height: 1.3;
+  width: 100%;
+}
+
+.episodio .descricao.active {
+  display: block;
+}
+
+.episodio .card:hover {
+  transform: translateX(3px);
+  box-shadow: 0 6px 20px #ff9f00;
+}
+
+/* =========================
+      Episódio Comentários 
+   ========================= */
+
+.episodio .comentarios {
+  margin-top: 40px;
+  width: 100%;
+  max-width: 1200px;
+  background-color: rgba(0, 0, 0, 0.75);
+  padding: 30px 40px;
+  border-radius: 15px;
+  box-shadow: 0 5px 15px rgb(175, 134, 0);
+  color: #eee;
+}
+
+.episodio .comentarios h3 {
+  font-size: 1.4rem;
+  color: #ff9f00;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #ff9f00;
+  padding-bottom: 5px;
+}
+
+.episodio .comentarios form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.episodio .comentarios textarea {
+  width: 100%;
+  height: 80px;
+  border-radius: 8px;
+  border: 1px solid #ff9f00;
+  padding: 10px;
+  font-size: 1rem;
+  resize: none;
+  background-color: #111;
+  color: #eee;
+}
+
+.episodio .comentarios button {
+  align-self: flex-end;
+  background-color: #ff9f00;
+  color: #000;
+  font-weight: 700;
+  padding: 6px 16px;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  transition: background-color 0.3s ease;
+}
+
+.episodio .comentarios button:hover {
+  background-color: #fff;
+  color: #ff9f00;
+}
+
+.episodio .comentarios .comentario {
+  padding: 10px 0;
+  border-bottom: 1px solid #555;
+}
+
+.episodio .comentarios .comentario:last-child {
+  border-bottom: none;
+}
+
+.episodio .comentarios .comentario strong {
+  color: #ff9f00;
+}
+
+.episodio .comentarios .comentario p {
+  margin: 5px 0 0;
+  color: #ccc;
+  font-size: 0.95rem;
+}
+
+/* =========================
+         Video Player 
+   ========================= */
+
+.video-player {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+  gap: 10px;
+}
+
+.video-player h2 {
+  color: #ff9f00;
+  text-align: center;
+  font-size: 1.8rem;
+  margin: 0;
+}
+
+/* =========================
+        Título global
+   ========================= */
+
+.titulo-pagina {
+  font-size: 2.4rem;
+  color: #ff9f00;
+  text-align: center;
+  margin: 30px 0 40px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  text-shadow: 0 0 6px #ff9f00;
+}
+
+/* =========================
+      Estilo Navbar Header
+   ========================= */
+
+header {
+  background-color: rgba(0, 0, 0, 0.7);
+  padding: 15px 20px;
+  text-align: center;
+  box-shadow: 0 0 10px #ff9f00;
+  margin-bottom: 30px;
+  border-radius: 12px;
+}
+
+header nav {
+  margin-top: 10px;
+}
+
+header nav a {
+  color: #ff9f00;
+  text-decoration: none;
+  font-weight: 700;
+  margin: 0 12px;
+  padding: 6px 12px;
+  border-radius: 6px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  box-shadow: 0 0 6px #ff9f00;
+  display: inline-block;
+}
+
+header nav a:hover,
+header nav a:focus {
+  background-color: #ff9f00;
+  color: #000;
+  box-shadow: 0 0 12px #ff9f00;
+}
+
+header h1.titulo-pagina {
+  color: #ff9f00;
+  text-shadow: 0 0 8px #ff9f00;
+  font-weight: 900;
+  font-size: 2.6rem;
+}
+
+/* =========================
+      Ultimas
+   ========================= */
+
+.ultimas .episodios-lista {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 15px;
+}
+
+.ultimas .episodios-lista li {
+  background-color: rgba(0, 0, 0, 0.85);
+  padding: 15px 20px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  box-shadow: 0 0 8px rgba(255, 159, 0, 0.7);
+  transition: box-shadow 0.3s ease;
+}
+
+.ultimas .episodios-lista li:hover {
+  box-shadow: 0 0 14px #ff9f00;
+}
+
+.ultimas .episodios-lista li img {
+  width: 100px;
+  height: auto;
+  border-radius: 8px;
+  object-fit: cover;
+  box-shadow: 0 0 6px #ff9f00;
+  flex-shrink: 0;
+}
+
+.ultimas .episodios-lista li strong {
+  color: #fff;
+  font-size: 1.1rem;
+  min-width: 160px;
+  font-weight: 700;
+  text-shadow: 0 0 3px rgba(255, 159, 0, 0.8);
+}
+
+.ultimas .episodios-lista li a {
+  margin-left: auto;
+  background-color: #ff9f00;
+  color: #000;
+  padding: 8px 14px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 700;
+  box-shadow: 0 0 8px #ff9f00;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.ultimas .episodios-lista li a:hover {
+  background-color: #e68a00;
+  box-shadow: 0 0 12px #e68a00;
+  color: #000;
+}
+
+.ultimas p {
+  color: #bbb;
+  font-size: 1.1rem;
+  text-align: center;
+  margin-top: 40px;
+}
+
+/* =========================
+      Temporada
+   ========================= */
+
+.temporada .episodios-lista {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 15px;
+}
+
+.temporada .episodios-lista li {
+  background-color: rgba(0, 0, 0, 0.85);
+  padding: 15px 20px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  box-shadow: 0 0 8px rgba(255, 159, 0, 0.7);
+  transition: box-shadow 0.3s ease;
+}
+
+.temporada .episodios-lista li:hover {
+  box-shadow: 0 0 14px #ff9f00;
+}
+
+.temporada .episodios-lista li img {
+  width: 100px;
+  height: auto;
+  border-radius: 8px;
+  object-fit: cover;
+  box-shadow: 0 0 6px #ff9f00;
+  flex-shrink: 0;
+}
+
+.temporada .episodios-lista li strong {
+  color: #fff;
+  font-size: 1.1rem;
+  min-width: 160px;
+  font-weight: 700;
+  text-shadow: 0 0 3px rgba(255, 159, 0, 0.8);
+}
+
+.temporada .episodios-lista li a {
+  margin-left: auto;
+  background-color: #ff9f00;
+  color: #000;
+  padding: 8px 14px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 700;
+  box-shadow: 0 0 8px #ff9f00;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.temporada .episodios-lista li a:hover {
+  background-color: #e68a00;
+  box-shadow: 0 0 12px #e68a00;
+  color: #000;
+}
+
+.temporada p {
+  color: #bbb;
+  font-size: 1.1rem;
+  text-align: center;
+  margin-top: 40px;
+}
+
+/* =========================
             LOGIN 
    ========================= */
 
@@ -424,19 +1378,19 @@ html, body {
     box-shadow: 0 5px 15px rgba(175, 134, 0, 0.8);
     box-sizing: border-box;
     min-height: 280px;
-    overflow: visible;  /* garante que nada será cortado */
+    overflow: visible;  
 }
 
 .anime-rank-item {
-  position: relative; /* para posicionar o número */
+  position: relative; 
   margin: 20px;
   text-align: center;
-  width: 120px; /* diminui o tamanho do container do anime */
+  width: 120px; 
 }
 
 .anime-bola {
-  width: 120px;   /* diminuiu */
-  height: 120px;  /* diminuiu */
+  width: 120px;   
+  height: 120px;  
   border-radius: 50%;
   overflow: visible;
   position: relative;
@@ -445,16 +1399,16 @@ html, body {
 }
 
 .anime-bola img {
-  width: 120px;   /* diminuiu */
-  height: 120px;  /* diminuiu */
+  width: 120px;   
+  height: 120px;  
   border-radius: 50%;
   display: block;
 }
 
 .rank-pos {
   position: absolute;
-  top: -20px;   /* sobe o número para fora */
-  left: -20px;  /* desloca para a esquerda */
+  top: -20px;   
+  left: -20px;  
   background-color: #ff9f00;
   color: black;
   font-weight: bold;
@@ -738,7 +1692,7 @@ html, body {
 }
 
 /* =========================
-      EDITAR PERFIL
+         EDITAR PERFIL
    ========================= */
 
 .editar-perfil {
@@ -951,4 +1905,3 @@ html, body {
     font-size: 14px;
     color: #aaa;
 }
-

@@ -2,16 +2,18 @@
 <html lang="pt-BR">
 
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8" /> 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Anime Space!</title>
-  <link rel="icon" href="../img/slogan3.png" type="image/png" />
-  <link rel="stylesheet" href="../CSS/style3.css" />
+  <title>Anime Space!</title> 
+  <link rel="stylesheet" href="../CSS/style.css" /> 
+  <link rel="icon" href="../img/slogan3.png" type="image/png" /> 
 </head>
 
 <body class="home">
+  <!-- Botão para abrir/fechar o menu lateral -->
   <button class="menu-toggle" aria-label="Abrir menu" onclick="toggleMenu()">☰</button>
 
+  <!-- Menu lateral principal -->
   <nav class="menu-lateral" id="menuLateral" aria-label="Menu principal">
     <a href="../PHP/user/stream.php">Catálogo</a>
     <a href="../PHP/user/anime_rank.php">Rank</a>
@@ -20,30 +22,33 @@
     <a href="../PHP/user/register.php">Cadastro</a>
   </nav>
 
+  <!-- Botão para acesso ao perfil do usuário com ícone SVG -->
   <a href="../PHP/user/profile.php" class="perfil-btn" aria-label="Perfil do usuário" role="button" tabindex="0">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" width="24" height="24" style="vertical-align: middle;">
-      <circle cx="12" cy="8" r="4" />
-      <path d="M4 20c0-4 8-4 8-4s8 0 8 4v1H4v-1z" />
+      <circle cx="12" cy="8" r="4" /> <!-- Círculo representando a cabeça do ícone -->
+      <path d="M4 20c0-4 8-4 8-4s8 0 8 4v1H4v-1z" /> <!-- Corpo do ícone -->
     </svg>
   </a>
 
+  <!-- Cabeçalho principal da página -->
   <header class="cabeca" role="banner">
-    <img src="../img/slogan2.png" alt="Slogan Anime Space" class="img-slogan" />
-    <p><strong>O universo dos animes ao seu alcance</strong></p>
+    <img src="../img/slogan2.png" alt="Slogan Anime Space" class="img-slogan" /> 
+    <p><strong>O universo dos animes ao seu alcance</strong></p> 
   </header>
 
   <main>
+    <!-- Seção com os 5 animes principais do mês -->
     <section class="top-animes" aria-labelledby="top-animes-title">
-      <h3 id="top-animes-title">Top 5 do mês</h3>
+      <h3 id="top-animes-title">Top 5 do mês</h3> 
       <ol class="lista-top">
         <li>
-          <a href="../PHP/user/episodes.php?id=1">
-            <img src="../img/solo.png" alt="Solo Leveling" class="img" />
+          <a href="../PHP/user/episodes.php?id=1"> <!-- Link para episódios do anime -->
+            <img src="../img/solo.png" alt="Solo Leveling" class="img" /> <!-- Imagem do anime -->
           </a>
-          <h4 class="destaque">1 . Solo Leveling</h4>
+          <h4 class="destaque">1 . Solo Leveling</h4> 
           <div class="sinopse">
-            <img src="../img/solo.png" alt="Solo Leveling" class="mini-img" />
-            <p>Jin-Woo, o caçador mais fraco da humanidade, recebe a chance de evoluir ilimitadamente após sobreviver a uma missão mortal.</p>
+            <img src="../img/solo.png" alt="Solo Leveling" class="mini-img" /> <!-- Imagem menor dentro da sinopse -->
+            <p>Jin-Woo, o caçador mais fraco da humanidade, recebe a chance de evoluir ilimitadamente após sobreviver a uma missão mortal.</p> <!-- Descrição -->
           </div>
         </li>
 
@@ -93,9 +98,11 @@
       </ol>
     </section>
 
+    <!-- Seção com gêneros populares -->
     <section class="genres" aria-labelledby="genres-title">
-      <h3 id="genres-title">Gêneros Populares</h3>
+      <h3 id="genres-title">Gêneros Populares</h3> <!-- Título da seção -->
       <ul>
+        <!-- Cada li exibe um gênero, alguns com link para filtragem -->
         <li class="destaque"><a href="../PHP/user/stream.php?generos=Ação">Ação</a></li>
         <li class="destaque"><a href="../PHP/user/stream.php?generos=Aventura">Aventura</a></li>
         <li>Cyberpunk</li>
@@ -128,6 +135,7 @@
     </section>
   </main>
 
+  <!-- Rodapé da página -->
   <footer class="rodape" role="contentinfo">
     <p>
       O <strong>Animes Space</strong> é um portal dedicado a recomendar os melhores animes, separados por gênero, nota e estilo. Descubra novos títulos,<br />
@@ -136,7 +144,7 @@
     </p>
   </footer>
 
-  <!-- Script para alternar menu lateral -->
+  <!-- Script para alternar a classe do menu lateral, abrindo ou fechando -->
   <script>
     function toggleMenu() {
       document.getElementById("menuLateral").classList.toggle("aberto");

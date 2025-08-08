@@ -1,16 +1,17 @@
 <?php
-require __DIR__ . '/../shared/conexao.php';
+require __DIR__ . '/../shared/conexao.php'; // Importa conexão com o banco
 
-// Filtros capturados via GET
+// Captura filtros enviados via GET
 $filtroGenero = $_GET['generos'] ?? '';
 $filtroAno = $_GET['ano'] ?? '';
 $busca = $_GET['busca'] ?? '';
 
-// Gêneros e anos disponíveis
+// Busca todos os gêneros disponíveis, ordenados alfabeticamente
 $generos = $pdo->query("SELECT nome FROM generos ORDER BY nome ASC")->fetchAll(PDO::FETCH_COLUMN);
+// Busca todos os anos disponíveis, ordenados do maior para o menor
 $anos = $pdo->query("SELECT valor FROM ano ORDER BY valor DESC")->fetchAll(PDO::FETCH_COLUMN);
 
-// Consulta dinâmica com filtros
+// Monta a consulta SQL dinâmica com os filtros aplicados
 $sql = "
   SELECT DISTINCT a.id, a.nome, a.capa, a.ano, a.nota,
     GROUP_CONCAT(g.nome SEPARATOR ', ') AS generos
@@ -20,29 +21,32 @@ $sql = "
   WHERE 1 = 1
 ";
 
-$params = [];
+$params = []; // Array para armazenar parâmetros da consulta
 
+// Aplica filtro de gênero se selecionado
 if (!empty($filtroGenero)) {
   $sql .= " AND g.nome = :genero";
   $params[':genero'] = $filtroGenero;
 }
 
+// Aplica filtro de ano se selecionado
 if (!empty($filtroAno)) {
   $sql .= " AND a.ano = :ano";
   $params[':ano'] = $filtroAno;
 }
 
+// Aplica filtro de busca por nome ou gênero se informado
 if (!empty($busca)) {
   $sql .= " AND (a.nome LIKE :busca1 OR g.nome LIKE :busca2)";
   $params[':busca1'] = '%' . $busca . '%';
   $params[':busca2'] = '%' . $busca . '%';
 }
 
-$sql .= " GROUP BY a.id ORDER BY a.nome ASC";
+$sql .= " GROUP BY a.id ORDER BY a.nome ASC"; // Agrupa por anime e ordena por nome
 
-$stmt = $pdo->prepare($sql);
-$stmt->execute($params);
-$animes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+$stmt = $pdo->prepare($sql); // Prepara a consulta
+$stmt->execute($params); // Executa com os parâmetros definidos
+$animes = $stmt->fetchAll(PDO::FETCH_ASSOC); // Busca todos os resultados
 ?>
 
 <!DOCTYPE html>
@@ -50,26 +54,28 @@ $animes = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <head>
   <meta charset="UTF-8">
   <title>Streaming de Animes</title>
-  <link rel="stylesheet" href="../../CSS/style0.css">
-  <link rel="icon" href="../../img/slogan3.png" type="image/png">
+  <link rel="stylesheet" href="../../CSS/style.css"> 
+  <link rel="icon" href="../../img/slogan3.png" type="image/png"> 
 </head>
 <body class="streaming" id="topo">
 
   <header class="links">
-    <h1>Animes Disponíveis</h1>
+    <h1>Animes Disponíveis</h1> <!-- Título principal -->
     <nav>
-      <a href="../../HTML/home.html">Home</a>
-      <a href="login.php">Login</a>
+      <a href="../../HTML/home.html">Home</a> <!-- Link para home -->
+      <a href="login.php">Login</a> <!-- Link para login -->
     </nav>
   </header>
 
   <section class="busca-filtros">
     <form method="GET" action="stream.php" style="display: flex; flex-wrap: wrap; gap: 10px; align-items: center;">
       <div class="barra-pesquisa">
+        <!-- Campo de busca por nome ou gênero -->
         <input type="text" name="busca" placeholder="Buscar anime por nome ou gênero..." value="<?= htmlspecialchars($busca) ?>">
       </div>
 
       <div class="filtros">
+        <!-- Dropdown para seleção de gênero -->
         <select name="generos">
           <option value="">Gênero</option>
           <?php foreach ($generos as $genero): ?>
@@ -79,6 +85,7 @@ $animes = $stmt->fetchAll(PDO::FETCH_ASSOC);
           <?php endforeach; ?>
         </select>
 
+        <!-- Dropdown para seleção de ano -->
         <select name="ano">
           <option value="">Ano</option>
           <?php foreach ($anos as $ano): ?>
@@ -88,9 +95,9 @@ $animes = $stmt->fetchAll(PDO::FETCH_ASSOC);
           <?php endforeach; ?>
         </select>
 
-        <button type="submit">Filtrar</button>
+        <button type="submit">Filtrar</button> <!-- Botão para aplicar filtros -->
         <a href="stream.php" style="text-decoration: none;">
-          <button type="button">Limpar</button>
+          <button type="button">Limpar</button> <!-- Botão para limpar filtros -->
         </a>
       </div>
     </form>
@@ -100,23 +107,24 @@ $animes = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <?php if ($animes): ?>
       <?php foreach ($animes as $anime): ?>
         <article class="anime-item" data-genero="<?= strtolower($anime['generos']) ?>" data-ano="<?= $anime['ano'] ?>">
+          <!-- Imagem da capa do anime -->
           <img src="../../img/<?= htmlspecialchars($anime['capa']) ?>" alt="<?= htmlspecialchars($anime['nome']) ?>" class="mini-img">
           <div class="info">
-            <h3><?= htmlspecialchars($anime['nome']) ?></h3>
-            <p>Gêneros: <?= htmlspecialchars($anime['generos']) ?></p>
-            <p>Ano: <?= htmlspecialchars($anime['ano']) ?></p>
-            <p>Nota: ⭐ <?= htmlspecialchars($anime['nota']) ?></p>
-            <a href="episodes.php?id=<?= $anime['id'] ?>">▶️ Ver Episódios</a>
+            <h3><?= htmlspecialchars($anime['nome']) ?></h3> <!-- Nome do anime -->
+            <p>Gêneros: <?= htmlspecialchars($anime['generos']) ?></p> <!-- Gêneros concatenados -->
+            <p>Ano: <?= htmlspecialchars($anime['ano']) ?></p> <!-- Ano de lançamento -->
+            <p>Nota: ⭐ <?= htmlspecialchars($anime['nota']) ?></p> <!-- Nota do anime -->
+            <a href="episodes.php?id=<?= $anime['id'] ?>">▶️ Ver Episódios</a> <!-- Link para episódios -->
           </div>
         </article>
       <?php endforeach; ?>
     <?php else: ?>
-      <p style="color: #ccc;">Nenhum anime cadastrado ainda.</p>
+      <p style="color: #ccc;">Nenhum anime cadastrado ainda.</p> <!-- Mensagem caso não haja animes -->
     <?php endif; ?>
   </main>
 
   <footer class="rodape">
-    <p>&copy; 2025 - Anime Space. <a href="../../HTML/sobre.html">Sobre</a></p>
+    <p>&copy; 2025 - Anime Space. <a href="../../HTML/sobre.html">Sobre</a></p> <!-- Rodapé -->
   </footer>
 
 </body>
