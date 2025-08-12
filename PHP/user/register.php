@@ -84,7 +84,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <div class="links">
       <a href="../../PHP/user/login.php">Já tem conta? Faça login</a>
-      <a href="../../HTML/home.html">Voltar</a>
+      <a href="../../PHP/user/index.php">Voltar</a>
     </div>
   </div>
 </div>

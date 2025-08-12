@@ -1,52 +1,57 @@
-<?php
-require __DIR__ . '/../shared/conexao.php'; // Importa conexão com o banco
+<?php require __DIR__ . '/../shared/conexao.php';
 
-// Captura filtros enviados via GET
 $filtroGenero = $_GET['generos'] ?? '';
 $filtroAno = $_GET['ano'] ?? '';
+$filtroLinguagem = $_GET['linguagem'] ?? '';
 $busca = $_GET['busca'] ?? '';
 
-// Busca todos os gêneros disponíveis, ordenados alfabeticamente
+// Buscar gêneros
 $generos = $pdo->query("SELECT nome FROM generos ORDER BY nome ASC")->fetchAll(PDO::FETCH_COLUMN);
-// Busca todos os anos disponíveis, ordenados do maior para o menor
+
+// Buscar anos
 $anos = $pdo->query("SELECT valor FROM ano ORDER BY valor DESC")->fetchAll(PDO::FETCH_COLUMN);
 
-// Monta a consulta SQL dinâmica com os filtros aplicados
+// Buscar linguagens distintas da tabela episodios
+$linguagens = $pdo->query("SELECT DISTINCT linguagem FROM episodios ORDER BY linguagem ASC")->fetchAll(PDO::FETCH_COLUMN);
+
 $sql = "
   SELECT DISTINCT a.id, a.nome, a.capa, a.ano, a.nota,
-    GROUP_CONCAT(g.nome SEPARATOR ', ') AS generos
+    GROUP_CONCAT(DISTINCT g.nome SEPARATOR ', ') AS generos
   FROM animes a
   LEFT JOIN anime_generos ag ON a.id = ag.anime_id
   LEFT JOIN generos g ON ag.genero_id = g.id
+  LEFT JOIN episodios e ON e.anime_id = a.id
   WHERE 1 = 1
 ";
 
-$params = []; // Array para armazenar parâmetros da consulta
+$params = [];
 
-// Aplica filtro de gênero se selecionado
 if (!empty($filtroGenero)) {
   $sql .= " AND g.nome = :genero";
   $params[':genero'] = $filtroGenero;
 }
 
-// Aplica filtro de ano se selecionado
 if (!empty($filtroAno)) {
   $sql .= " AND a.ano = :ano";
   $params[':ano'] = $filtroAno;
 }
 
-// Aplica filtro de busca por nome ou gênero se informado
+if (!empty($filtroLinguagem)) {
+  $sql .= " AND e.linguagem = :linguagem";
+  $params[':linguagem'] = $filtroLinguagem;
+}
+
 if (!empty($busca)) {
   $sql .= " AND (a.nome LIKE :busca1 OR g.nome LIKE :busca2)";
   $params[':busca1'] = '%' . $busca . '%';
   $params[':busca2'] = '%' . $busca . '%';
 }
 
-$sql .= " GROUP BY a.id ORDER BY a.nome ASC"; // Agrupa por anime e ordena por nome
+$sql .= " GROUP BY a.id ORDER BY a.nome ASC";
 
-$stmt = $pdo->prepare($sql); // Prepara a consulta
-$stmt->execute($params); // Executa com os parâmetros definidos
-$animes = $stmt->fetchAll(PDO::FETCH_ASSOC); // Busca todos os resultados
+$stmt = $pdo->prepare($sql);
+$stmt->execute($params);
+$animes = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <!DOCTYPE html>
@@ -62,7 +67,7 @@ $animes = $stmt->fetchAll(PDO::FETCH_ASSOC); // Busca todos os resultados
   <header class="links">
     <h1>Animes Disponíveis</h1> <!-- Título principal -->
     <nav>
-      <a href="../../HTML/home.html">Home</a> <!-- Link para home -->
+      <a href="../../PHP/user/index.php">Home</a> <!-- Link para home -->
       <a href="login.php">Login</a> <!-- Link para login -->
     </nav>
   </header>
@@ -91,6 +96,16 @@ $animes = $stmt->fetchAll(PDO::FETCH_ASSOC); // Busca todos os resultados
           <?php foreach ($anos as $ano): ?>
             <option value="<?= htmlspecialchars($ano) ?>" <?= $filtroAno === $ano ? 'selected' : '' ?>>
               <?= htmlspecialchars($ano) ?>
+            </option>
+          <?php endforeach; ?>
+        </select>
+
+        <!-- Dropdown para seleção de lingua -->
+        <select name="linguagem">
+          <option value="">Tradução</option>
+          <?php foreach ($linguagens as $linguagem): ?>
+            <option value="<?= htmlspecialchars($linguagem) ?>" <?= $filtroLinguagem === $linguagem ? 'selected' : '' ?>>
+              <?= htmlspecialchars($linguagem) ?>
             </option>
           <?php endforeach; ?>
         </select>

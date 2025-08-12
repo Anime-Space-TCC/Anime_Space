@@ -23,7 +23,7 @@ $animes = $pdo->query("SELECT * FROM animes ORDER BY nota DESC")->fetchAll();
   <div class="links">
     <h1>Gerenciar Animes</h1>
     <nav>
-      <a href="../HTML/home.html">Home</a> 
+      <a href="../../PHP/user/index.php">Home</a> 
       <a href="anime_form.php">Novo Anime</a> 
       <a href="logout.php">Sair</a> 
     </nav>

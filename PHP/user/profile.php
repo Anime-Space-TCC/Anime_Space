@@ -25,7 +25,7 @@ $username = $_SESSION['username']; // Pega o nome de usuário da sessão para ex
       <p>Seja bem-vindo ao seu perfil. Aqui você poderá visualizar e editar seus dados futuramente.</p>
 
       <div class="links"> <!-- Links para navegação -->
-        <a href="../../HTML/home.html">🏠 Home</a>
+        <a href="../../PHP/user/index.php">🏠 Home</a>
         <a href="stream.php">📺 Streaming</a>
         <a href="editar_perfil.php">✏️ Editar Perfil</a>
       </div>

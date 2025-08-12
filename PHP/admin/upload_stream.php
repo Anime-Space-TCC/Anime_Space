@@ -69,7 +69,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <div class="links">
     <h1>Adicionar Episódio - <?= htmlspecialchars($animeInfo['nome']) ?></h1> <!-- Cabeçalho com o nome do anime -->
     <nav>
-      <a href="../../HTML/home.html">Home</a>
+      <a href="../../PHP/user/index.php">Home</a>
       <a href="episodes.php?id=<?= htmlspecialchars($id) ?>">Voltar para Episódios</a>
       <a href="stream.php">Voltar para Streaming</a>
     </nav>

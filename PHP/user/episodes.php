@@ -73,6 +73,27 @@ function extrairIdGoogleDrive($url) {
     }
     return null;
 }
+
+$filtroLinguagemSelecionada = $_GET['linguagem'] ?? '';
+
+// Filtra lista de episódios para a linguagem selecionada, se houver
+if ($filtroLinguagemSelecionada) {
+    // Filtra a lista original $lista para manter só os episódios da linguagem selecionada
+    $lista = array_filter($lista, function($ep) use ($filtroLinguagemSelecionada) {
+        return strtolower($ep['linguagem']) === strtolower($filtroLinguagemSelecionada);
+    });
+    // Reorganiza temporadas com a lista filtrada
+    $temporadas = [];
+    foreach ($lista as $ep) {
+        $temporadas[$ep['temporada']][] = $ep;
+    }
+
+    // Se não foi passado episode_id, já seleciona o primeiro da linguagem escolhida
+    if (!$episode_id && !empty($lista)) {
+        $episodioSelecionado = reset($lista);
+        $episode_id = $episodioSelecionado['id'];
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -93,7 +114,7 @@ function extrairIdGoogleDrive($url) {
         <h1><?= htmlspecialchars($animeInfo['nome']) ?> - Episódios</h1>
       </div>
       <nav>
-        <a href="../../HTML/home.html" class="btn-nav">Home</a>
+        <a href="../../PHP/user/index.php" class="btn-nav">Home</a>
         <a href="../../PHP/user/stream.php" class="btn-nav">Voltar</a>
       </nav>
     </header>
@@ -129,6 +150,11 @@ function extrairIdGoogleDrive($url) {
       <?php if ($lista): ?>
         <?php foreach ($temporadas as $numTemp => $episodios): ?>
           <h2>Temporada <?= $numTemp ?></h2>
+          <div class="filtro-linguagem">
+            <a href="?id=<?= $id ?>&linguagem=dublado" class="btn-ling <?= $filtroLinguagemSelecionada === 'dublado' ? 'ativo' : '' ?>">Dublado</a>
+            <a href="?id=<?= $id ?>&linguagem=legendado" class="btn-ling <?= $filtroLinguagemSelecionada === 'legendado' ? 'ativo' : '' ?>">Legendado</a>
+            <a href="?id=<?= $id ?>" class="btn-ling <?= $filtroLinguagemSelecionada === '' ? 'ativo' : '' ?>">Todos</a>
+          </div>
           <div class="grid">
             <?php foreach ($episodios as $ep): ?>
               <div class="card" data-episodio-id="<?= $ep['id'] ?>">
@@ -173,7 +199,7 @@ function extrairIdGoogleDrive($url) {
                       <span>👍 <?= $ep['likes'] ?> | 👎 <?= $ep['dislikes'] ?></span>
                     <?php endif; ?>
                   </div>
-                  <a class="btn-assistir" href="?id=<?= $id ?>&episode_id=<?= $ep['id'] ?>">Assistir</a>
+                  <a class="btn-assistir" href="?id=<?= $id ?>&episode_id=<?= $ep['id'] ?><?= $filtroLinguagemSelecionada ? '&linguagem=' . urlencode($filtroLinguagemSelecionada) : '' ?>">Assistir</a>
                   <?php if (!empty($ep['link_download'])): ?>
                     <a class="btn-download" href="<?= htmlspecialchars($ep['link_download']) ?>" target="_blank">Download</a>
                   <?php endif; ?>

@@ -70,7 +70,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <div class="links"> <!-- Links adicionais -->
       <p>Não tem conta?<a href="register.php">Cadastre-se</a></p>
-      <a href="../../HTML/home.html">Voltar</a>
+      <a href="../../PHP/user/index.php">Voltar</a>
     </div>
   </div>
 </div>
