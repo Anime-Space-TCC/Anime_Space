@@ -29,8 +29,8 @@ $estreias = $stmt->fetchAll(); // Armazena os resultados em um array
     <h1 class="titulo-pagina">Estreias da Temporada</h1>
     <nav> <!-- Menu de navegação -->
       <a href="../../PHP/user/index.php">Home</a> |
-      <a href="ultimo_episodios.php">Lançamentos</a> |
-      <a href="estreias_temporada.php">Estreias da Temporada</a>
+      <a href="../../PHP/user/stream.php">Catálogo</a> |
+      <a href="../../PHP/user/últimos_episodios.php">Lançamentos</a> 
     </nav>
   </header>
 
