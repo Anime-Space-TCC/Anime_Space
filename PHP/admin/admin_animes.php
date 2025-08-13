@@ -4,7 +4,7 @@ require __DIR__ . '/../shared/conexao.php'; // Inclui conexão com o banco
 
 // Verifica se o usuário é admin, se não for redireciona para login
 if (!isset($_SESSION['usuario']) || $_SESSION['usuario'] !== 'admin') {
-    header('Location: ../HTML/login.html');
+    header('Location: ../../PHP/user/login.php');
     exit();
 }
 
@@ -24,7 +24,7 @@ $animes = $pdo->query("SELECT * FROM animes ORDER BY nota DESC")->fetchAll();
     <h1>Gerenciar Animes</h1>
     <nav>
       <a href="../../PHP/user/index.php">Home</a> 
-      <a href="anime_form.php">Novo Anime</a> 
+      <a href="../../PHP/admin/anime_form.php">Novo Anime</a> 
       <a href="logout.php">Sair</a> 
     </nav>
   </div>
@@ -52,8 +52,8 @@ $animes = $pdo->query("SELECT * FROM animes ORDER BY nota DESC")->fetchAll();
             <td class="destaque"><?= number_format($a['nota'], 1) ?></td>
             <!-- Links para editar e excluir o anime -->
             <td>
-              <a href="anime_form.php?id=<?= $a['id'] ?>">✏️ Editar</a> |
-              <a href="anime_delete.php?id=<?= $a['id'] ?>" onclick="return confirm('Excluir este anime?')">🗑️ Excluir</a>
+              <a href="../../PHP/admin/anime_form.php?id=<?= $a['id'] ?>">✏️ Editar</a> |
+              <a href="../../PHP/admin/anime_delete.php?id=<?= $a['id'] ?>" onclick="return confirm('Excluir este anime?')">🗑️ Excluir</a>
             </td>
           </tr>
         <?php endforeach; ?>

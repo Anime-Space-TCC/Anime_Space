@@ -4,7 +4,7 @@ session_start(); // Inicia a sessão para controle de autenticação
 
 // Verifica se o usuário é admin; caso contrário, redireciona para a página de login
 if (!isset($_SESSION['usuario']) || $_SESSION['usuario'] !== 'admin') {
-    header('Location: ../../HTML/login.html');
+    header('Location: ../../PHP/user/login.php');
     exit();
 }
 
@@ -70,8 +70,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <h1>Adicionar Episódio - <?= htmlspecialchars($animeInfo['nome']) ?></h1> <!-- Cabeçalho com o nome do anime -->
     <nav>
       <a href="../../PHP/user/index.php">Home</a>
-      <a href="episodes.php?id=<?= htmlspecialchars($id) ?>">Voltar para Episódios</a>
-      <a href="stream.php">Voltar para Streaming</a>
+      <a href="../../PHP/user/episodes.php?id=<?= htmlspecialchars($id) ?>">Voltar para Episódios</a>
+      <a href="../../PHP/user/stream.php">Voltar para Streaming</a>
     </nav>
   </div>
 

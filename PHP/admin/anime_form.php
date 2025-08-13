@@ -4,7 +4,7 @@ session_start(); // Inicia a sessão para controle de login
 
 // Verifica se o usuário é admin; caso contrário, redireciona para login
 if (!isset($_SESSION['usuario']) || $_SESSION['usuario'] !== 'admin') {
-    header('Location: ../HTML/login.html');
+    header('Location: ../../PHP/user/login.php');
     exit();
 }
 
