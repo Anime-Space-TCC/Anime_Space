@@ -217,29 +217,43 @@ if ($filtroLinguagemSelecionada) {
       <?php endif; ?>
 
       <?php if ($episodioSelecionado && isset($_SESSION['user_id'])): ?>
-        <section class="comentarios">
-          <h3>Comentários</h3>
-          <form action="/TCC/Anime_Space/PHP/user/comentar.php" method="POST">
+    <section class="comentarios">
+        <h3>Comentários</h3>
+        
+        <?php
+        // Caminho dinâmico para o form de comentários
+        $host = $_SERVER['HTTP_HOST'];
+        $baseDir = rtrim(dirname($_SERVER['SCRIPT_NAME']), '/'); 
+        $formAction = "http://{$host}{$baseDir}/comentar.php";
+        ?>
+        
+        <form action="<?= htmlspecialchars($formAction) ?>" method="POST">
             <input type="hidden" name="episodio_id" value="<?= htmlspecialchars($episodioSelecionado['id']) ?>">
-            <input type="hidden" name="id" value="<?= htmlspecialchars($id) ?>"> 
+            <input type="hidden" name="id" value="<?= htmlspecialchars($id) ?>">
             <textarea name="comentario" rows="4" placeholder="Escreva seu comentário..." required></textarea>
             <button type="submit">Enviar Comentário</button>
-          </form>
+        </form>
 
-          <?php
-          $stmtComentarios = $pdo->prepare("SELECT c.comentario, c.data_comentario, u.username FROM comentarios c JOIN users u ON c.user_id = u.id WHERE c.episodio_id = ? ORDER BY c.data_comentario DESC");
-          $stmtComentarios->execute([$episodioSelecionado['id']]);
-          $comentarios = $stmtComentarios->fetchAll();
+        <?php
+        $stmtComentarios = $pdo->prepare("
+            SELECT c.comentario, c.data_comentario, u.username
+            FROM comentarios c
+            JOIN users u ON c.user_id = u.id
+            WHERE c.episodio_id = ?
+            ORDER BY c.data_comentario DESC
+        ");
+        $stmtComentarios->execute([$episodioSelecionado['id']]);
+        $comentarios = $stmtComentarios->fetchAll();
 
-          foreach ($comentarios as $c): ?>
+        foreach ($comentarios as $c): ?>
             <div class="comentario">
-              <strong><?= htmlspecialchars($c['username']) ?>:</strong>
-              <p><?= nl2br(htmlspecialchars($c['comentario'])) ?></p>
-              <small><?= date('d/m/Y H:i', strtotime($c['data_comentario'])) ?></small>
+                <strong><?= htmlspecialchars($c['username']) ?>:</strong>
+                <p><?= nl2br(htmlspecialchars($c['comentario'])) ?></p>
+                <small><?= date('d/m/Y H:i', strtotime($c['data_comentario'])) ?></small>
             </div>
-          <?php endforeach; ?>
-        </section>
-      <?php endif; ?>
+        <?php endforeach; ?>
+    </section>
+<?php endif; ?>
     </main>
   </div>
 
