@@ -28,14 +28,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8">
     <title>Suporte - Anime Space</title>
-    <link rel="stylesheet" href="../CSS/style.css">
+    <link rel="stylesheet" href="../../CSS/style.css">
+    <link rel="icon" href="../../img/slogan3.png" type="image/png"> 
 </head>
-<body class="suporte">
-
-<div class="container">
+<body>
+<div class="suporte">
     <h1>Suporte - Anime Space</h1>
     <p>Bem-vindo ao suporte do Anime Space! Use o formulário abaixo para entrar em contato com nossa equipe.</p>
-
+    <header class="links">
+    <nav>
+      <a href="../../PHP/user/index.php">Home</a> <!-- Link para home -->
+      <a href="login.php">Login</a> <!-- Link para login -->
+    </nav>
+    </header>
     <?php if ($mensagem_enviada): ?>
         <div class="msg-sucesso">✅ Sua mensagem foi enviada com sucesso! Entraremos em contato em breve.</div>
     <?php endif; ?>
