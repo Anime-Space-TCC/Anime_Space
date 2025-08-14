@@ -1961,3 +1961,74 @@ header h1.titulo-pagina {
     font-size: 14px;
     color: #aaa;
 }
+
+/* =========================
+         Suporte
+   ========================= */
+
+.suporte h1, 
+.suporte h2 {
+    color: #ff9900;
+}
+
+.suporte .container {
+    max-width: 800px;
+    margin: auto;
+}
+
+.suporte .form-suporte {
+    background-color: #1a1a1a;
+    padding: 20px;
+    border-radius: 8px;
+    margin-top: 15px;
+}
+
+.suporte input, 
+.suporte textarea {
+    width: 100%;
+    padding: 10px;
+    margin-top: 8px;
+    background: #222;
+    border: 1px solid #555;
+    color: #fff;
+    border-radius: 5px;
+}
+
+.suporte button {
+    background: #ff9900;
+    border: none;
+    padding: 10px 15px;
+    color: #000;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+.suporte button:hover {
+    background: #e68a00;
+}
+
+.suporte .faq {
+    background-color: #1a1a1a;
+    padding: 15px;
+    border-radius: 8px;
+    margin-top: 20px;
+}
+
+.suporte .faq h3 {
+    margin-bottom: 10px;
+    color: #ff9900;
+}
+
+.suporte .faq p {
+    color: #ccc;
+}
+
+.suporte .msg-sucesso {
+    background: #2a702a;
+    padding: 10px;
+    border-radius: 5px;
+    color: #fff;
+    margin-bottom: 10px;
+}

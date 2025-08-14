@@ -29,6 +29,7 @@ $generos = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <a href="../../PHP/user/stream.php">Catálogo</a>
     <a href="../../PHP/user/estreias_temporada.php">Estreias da Temporada</a>
     <a href="../../PHP/user/últimos_episodios.php">Lançamentos</a>
+    <a href="../../PHP/user/suporte.php">Suporte</a>
     <a href="../../PHP/user/register.php">Cadastro</a>
   </nav>
 
