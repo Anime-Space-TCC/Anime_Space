@@ -370,6 +370,31 @@ html, body {
     color: #ff9f00;
 }
 
+/* Botão Suporte Fixado */
+.home .btn-suporte {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #ff9f00; 
+    padding: 12px;
+    border-radius: 50%;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.4);
+    color: #000000;
+    z-index: 9999;
+    transition: transform 0.2s ease-in-out, background 0.3s;
+}
+
+.home .btn-suporte:hover {
+    transform: scale(1.1);
+    background: rgba(114, 114, 114, 0.9); 
+}
+
+.home .btn-suporte svg {
+    display: block;
+    width: 20px;
+    height: 20px;
+}
+
 /* =========================
         Episódios 
    ========================= */
@@ -1754,7 +1779,7 @@ header h1.titulo-pagina {
 .editar-perfil {
     display: flex;
     flex-direction: column;
-     max-width: 600px;      
+    max-width: 600px;      
     margin: 110px auto;    
     padding: 40px 30px;   
     background-color: rgba(34, 34, 34, 0.95);
@@ -1963,17 +1988,118 @@ header h1.titulo-pagina {
 }
 
 /* =========================
+         Noticias
+   ========================= */
+
+.noticias-page .header {
+    background-color: #1a1a1a;
+    padding: 10px;
+    text-align: center;
+}
+
+.noticias-page nav a {
+    color: #ff9900;
+    text-decoration: none;
+    margin: 0 15px;
+    font-weight: bold;
+}
+
+.noticias-page.noticias nav a.active {
+    border-bottom: 2px solid #ff9900;
+}
+
+.noticias-page .noticias {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+    padding: 20px;
+}
+
+.noticias-page .noticia {
+    background-color: #1a1a1a;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 0 10px rgba(255, 159, 0, 0.3);
+    transition: transform 0.3s;
+}
+
+.noticias-page .noticia:hover {
+    transform: scale(1.05);
+}
+
+.noticias-page .noticia img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.noticias-page .noticia h2 {
+    font-size: 1.2rem;
+    margin: 10px;
+}
+
+.noticias-page .noticia p {
+    font-size: 1rem;
+    margin: 0 10px 10px;
+}
+
+.noticias-page .noticia a {
+    display: inline-block;
+    background-color: #ff9900;
+    color: #000;
+    padding: 10px;
+    text-decoration: none;
+    font-weight: bold;
+    text-align: center;
+    border-radius: 5px;
+    margin: 0 10px 10px;
+    transition: background-color 0.3s;
+}
+
+.noticias-page .noticia a:hover {
+    background-color: #e68a00;
+}
+
+.noticias-page .footer {
+    background-color: #1a1a1a;
+    text-align: center;
+    padding: 10px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+/* =========================
          Suporte
    ========================= */
 
-.suporte h1, 
-.suporte h2 {
-    color: #ff9900;
+.suporte {
+    max-width: 900px;
+    margin: 30px auto;
+    padding: 20px;
+    background: #121212;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.6);
 }
 
-.suporte .container {
-    max-width: 800px;
-    margin: auto;
+.suporte h1 {
+    color: #ff9900;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.suporte h2 {
+    color: #ff9900;
+    margin-top: 25px;
+    margin-bottom: 10px;
+    border-left: 4px solid #ff9900;
+    padding-left: 8px;
+}
+
+.suporte p {
+    color: #ddd;
+    line-height: 1.6;
+    margin-bottom: 15px;
 }
 
 .suporte .form-suporte {
@@ -1981,54 +2107,315 @@ header h1.titulo-pagina {
     padding: 20px;
     border-radius: 8px;
     margin-top: 15px;
+    border: 1px solid #333;
+}
+
+.suporte label {
+    display: block;
+    margin-top: 12px;
+    font-weight: bold;
+    color: #ff9900;
 }
 
 .suporte input, 
 .suporte textarea {
     width: 100%;
-    padding: 10px;
-    margin-top: 8px;
+    padding: 12px;
+    margin-top: 6px;
     background: #222;
-    border: 1px solid #555;
+    border: 1px solid #444;
     color: #fff;
-    border-radius: 5px;
+    border-radius: 6px;
+    font-size: 15px;
+    transition: border 0.3s;
+}
+
+.suporte input:focus, 
+.suporte textarea:focus {
+    outline: none;
+    border: 1px solid #ff9900;
+    background: #1c1c1c;
 }
 
 .suporte button {
     background: #ff9900;
     border: none;
-    padding: 10px 15px;
+    padding: 12px 20px;
     color: #000;
     font-weight: bold;
     cursor: pointer;
-    border-radius: 5px;
-    margin-top: 10px;
+    border-radius: 6px;
+    margin-top: 15px;
+    font-size: 16px;
+    width: 100%;
+    transition: background 0.3s;
 }
 
 .suporte button:hover {
     background: #e68a00;
 }
 
+.suporte .msg-sucesso {
+    background: #2e7d32;
+    padding: 12px;
+    border-radius: 6px;
+    color: #fff;
+    margin: 15px 0;
+    text-align: center;
+    font-weight: bold;
+}
+
 .suporte .faq {
     background-color: #1a1a1a;
-    padding: 15px;
+    padding: 20px;
     border-radius: 8px;
-    margin-top: 20px;
+    margin-top: 25px;
+    border: 1px solid #333;
 }
 
 .suporte .faq h3 {
-    margin-bottom: 10px;
+    margin-bottom: 8px;
     color: #ff9900;
 }
 
 .suporte .faq p {
-    color: #ccc;
+    color: #bbb;
+    margin-bottom: 15px;
 }
 
-.suporte .msg-sucesso {
-    background: #2a702a;
-    padding: 10px;
-    border-radius: 5px;
+.suporte .nav-suporte {
+    position: fixed;
+    top: 15px;
+    right: 15px;
+    z-index: 1000; /* fica por cima */
+}
+
+.suporte .nav-suporte .suporte-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    background: #ff9900;
+    border-radius: 50%;
+    color: #000;
+    text-decoration: none;
+    transition: background 0.3s ease;
+    box-shadow: 0 0 6px rgba(0,0,0,0.5);
+}
+
+.suporte .nav-suporte .suporte-btn:hover {
+    transform: scale(1.1);
+    background: rgba(114, 114, 114, 0.9); 
+}
+
+/* =========================
+   ADMIN - ESTILO CRUD
+========================= */
+
+/* =========================
+    ADMIN LINKS E NAVBAR
+========================= */
+.admin .admin-links {
+    background-color: rgba(26, 26, 26, 0.9);
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    border-bottom: 2px solid #ff9900;
+}
+
+.admin .admin-links h1 {
+    font-size: 1.8rem;
+    color: #ff9900;
+}
+
+.admin .admin-links nav a {
     color: #fff;
-    margin-bottom: 10px;
+    text-decoration: none;
+    margin-left: 15px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.admin .admin-links nav a:hover {
+    color: #ff9900;
+}
+
+/* =========================
+   ADMIN TABELA DE ANIMES
+========================= */
+.admin .admin-anime-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px auto;
+    background-color: rgba(26, 26, 26, 0.95);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+}
+
+.admin .admin-anime-table th, 
+.admin .admin-anime-table td {
+    padding: 12px 15px;
+    text-align: center;
+}
+
+.admin .admin-anime-table thead {
+    background-color: #ff9900;
+    color: #0f0f0f;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.admin .admin-anime-table tbody tr {
+    border-bottom: 1px solid #333;
+    transition: 0.3s;
+}
+
+.admin .admin-anime-table tbody tr:hover {
+    background-color: #222;
+}
+
+.admin .admin-anime-table tfoot {
+    background-color: rgba(26, 26, 26, 0.9);
+    font-weight: bold;
+}
+
+.admin .admin-anime-table img {
+    border-radius: 5px;
+}
+
+/* =========================
+       ADMIN BOTÕES
+========================= */
+.admin .admin-btn, 
+.admin .admin-anime-table a {
+    display: inline-block;
+    padding: 8px 15px;
+    border-radius: 5px;
+    text-decoration: none;
+    color: #fff;
+    font-weight: bold;
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+.admin .admin-btn {
+    background-color: #ff9900;
+    border: none;
+}
+
+.admin .admin-btn:hover {
+    background-color: #e68a00;
+}
+
+.admin .admin-anime-table a {
+    background-color: #333;
+    margin: 2px;
+}
+
+.admin .admin-anime-table a:hover {
+    background-color: #ff9900;
+    color: #0f0f0f;
+}
+
+/* =========================
+     ADMIN FORMULÁRIOS
+========================= */
+.admin .admin-form {
+    background-color: rgba(26, 26, 26, 0.95);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+}
+
+.admin .admin-form label {
+    font-weight: bold;
+}
+
+.admin .admin-form input, 
+.admin .admin-form select, 
+.admin .admin-form textarea {
+    width: 100%;
+    padding: 8px 10px;
+    margin-top: 5px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    border: 1px solid #333;
+    background-color: #0f0f0f;
+    color: #fff;
+}
+
+.admin .admin-form input[type="submit"], 
+.admin .admin-form button {
+    background-color: #ff9900;
+    color: #0f0f0f;
+    border: none;
+    cursor: pointer;
+}
+
+.admin .admin-form input[type="submit"]:hover, 
+.admin .admin-form button:hover {
+    background-color: #e68a00;
+}
+
+/* =========================
+      ADMIN CHECKBOX 
+========================= */
+.admin .generos-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    max-height: 200px; 
+    overflow-y: auto;
+    padding: 10px;
+    border: 1px solid #444;
+    border-radius: 8px;
+    background-color: #222;
+}
+
+.admin .generos-container label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 8px;
+    border-radius: 6px;
+    background-color: rgba(50,50,50,0.7);
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.admin .generos-container label:hover {
+    background-color: #ff9900;
+    color: #0f0f0f;
+}
+
+.admin .generos-container input[type="checkbox"] {
+    accent-color: #ff9900;
+}
+
+/* =========================
+    ADMIN RESPONSIVO
+========================= */
+@media screen and (max-width: 768px) {
+    .admin .admin-links {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .admin .admin-links nav {
+        margin-top: 10px;
+    }
+
+    .admin .admin-anime-table th, 
+    .admin .admin-anime-table td {
+        font-size: 0.85rem;
+        padding: 8px 5px;
+    }
+
+    .admin .admin-form {
+        padding: 15px;
+    }
 }

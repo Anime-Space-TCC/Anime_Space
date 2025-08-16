@@ -29,7 +29,7 @@ $generos = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <a href="../../PHP/user/stream.php">Catálogo</a>
     <a href="../../PHP/user/estreias_temporada.php">Estreias da Temporada</a>
     <a href="../../PHP/user/últimos_episodios.php">Lançamentos</a>
-    <a href="../../PHP/user/suporte.php">Suporte</a>
+    <a href="../../HTML/noticias.html">Noticias</a>
     <a href="../../PHP/user/register.php">Cadastro</a>
   </nav>
 
@@ -39,6 +39,14 @@ $generos = $stmt->fetchAll(PDO::FETCH_ASSOC);
       <circle cx="12" cy="8" r="4" />
       <path d="M4 20c0-4 8-4 8-4s8 0 8 4v1H4v-1z" />
     </svg>
+  </a>
+
+  <!-- Botão Suporte -->
+  <a href="suporte.php" class="btn-suporte" aria-label="Suporte" role="button" tabindex="0">
+  <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" 
+       viewBox="0 0 24 24" width="24" height="24">
+    <path d="M12 2C6.48 2 2 6.03 2 11c0 2.38 1.04 4.52 2.72 6.08L4 22l5.18-2.29C10.02 20.57 11 20.78 12 20.78c5.52 0 10-4.03 10-9s-4.48-9-10-9z"/>
+  </svg>
   </a>
 
   <!-- Cabeçalho principal da página -->

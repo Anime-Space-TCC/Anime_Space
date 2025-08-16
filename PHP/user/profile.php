@@ -8,20 +8,21 @@ if (!isset($_SESSION['user_id'])) {
 }
 
 // Inclui a conexão com o banco de dados
-// O caminho foi ajustado para refletir que 'conexao.php' está em '../shared/'
 require_once '../shared/conexao.php';
 
+// Variáveis de controle
 $userId = $_SESSION['user_id'];
 $username = $_SESSION['username'];
-$mensagem = ''; // Variável para exibir mensagens ao usuário
+$mensagem = ''; // Para exibir mensagens de erro ou sucesso
+$fotoPerfil = ''; // Caminho da foto de perfil
 
-// --- LÓGICA DE UPLOAD DA FOTO ---
-// Este bloco só é executado quando o formulário de upload é enviado
+/* ==========================================================
+   LÓGICA DE UPLOAD DA FOTO DE PERFIL
+========================================================== */
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['foto'])) {
-    // Define o diretório onde as fotos serão salvas
     $diretorio_destino = '../../uploads/';
     
-    // Cria o diretório se ele não existir
+    // Cria o diretório caso não exista
     if (!is_dir($diretorio_destino)) {
         mkdir($diretorio_destino, 0777, true);
     }
@@ -30,26 +31,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['foto'])) {
     $nome_original = basename($_FILES['foto']['name']);
     $extensao = strtolower(pathinfo($nome_original, PATHINFO_EXTENSION));
 
-    // Validações básicas (tipo e tamanho do arquivo)
+    // Tipos de arquivos permitidos
     $tipos_permitidos = ['jpg', 'jpeg', 'png'];
+
+    // Validações do upload
     if (!in_array($extensao, $tipos_permitidos)) {
         $mensagem = "Erro: Apenas arquivos JPG, JPEG e PNG são permitidos.";
-    } elseif ($_FILES['foto']['size'] > 500000) { // Limite de 500KB
+    } elseif ($_FILES['foto']['size'] > 500000) {
         $mensagem = "Erro: O arquivo é muito grande. Tamanho máximo é 500KB.";
     } else {
-        // Gera um nome único para o arquivo, usando o ID do usuário
+        // Define nome único para o arquivo (ID do usuário + extensão)
         $nome_arquivo_unico = $userId . '.' . $extensao;
         $caminho_completo = $diretorio_destino . $nome_arquivo_unico;
 
-        // Move o arquivo temporário para o diretório final
+        // Move o arquivo para a pasta de uploads
         if (move_uploaded_file($arquivo_temporario, $caminho_completo)) {
-            // Caminho que será salvo no banco de dados (relativo ao diretório 'animespace/Anime_Space/')
             $caminho_relativo_db = 'uploads/' . $nome_arquivo_unico;
-            
-            // Atualiza o caminho da foto na tabela 'users'
+
+            // Atualiza o caminho da foto no banco de dados
             $sql_update = "UPDATE users SET foto_perfil = ? WHERE id = ?";
             $stmt_update = $pdo->prepare($sql_update);
-            
+
             if ($stmt_update->execute([$caminho_relativo_db, $userId])) {
                 $mensagem = "Foto de perfil atualizada com sucesso!";
                 $fotoPerfil = '../../' . $caminho_relativo_db;
@@ -61,32 +63,38 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['foto'])) {
         }
     }
 }
+/* ==========================================================
+   FIM DA LÓGICA DE UPLOAD
+========================================================== */
 
-// --- FIM DA LÓGICA DE UPLOAD ---
-
-// Busca a foto de perfil atual do usuário no banco de dados para exibição
-// Este bloco será ignorado se a foto foi atualizada no bloco acima
+/* ==========================================================
+   BUSCA FOTO DE PERFIL NO BANCO
+========================================================== */
 if (empty($fotoPerfil)) {
     $sql_select = "SELECT foto_perfil FROM users WHERE id = ?";
     $stmt_select = $pdo->prepare($sql_select);
     $stmt_select->execute([$userId]);
     $userData = $stmt_select->fetch();
 
-    if ($userData) {
-        $fotoPerfil = !empty($userData['foto_perfil']) ? '../../' . $userData['foto_perfil'] : '../../img/default.jpg';
+    // Caminho físico no servidor
+    $caminho_fisico = __DIR__ . '/../../img/default.jpg';
+
+    if (!file_exists($caminho_fisico)) {
+       $mensagem = "Erro: O arquivo de imagem não foi encontrado em: " . htmlspecialchars($caminho_fisico);
+       $fotoPerfil = 'https://placehold.co/150x150/FFF/000?text=Sem+Foto';
     } else {
-        $fotoPerfil = '../../img/default.jpg';
+       $fotoPerfil = '../../img/default.jpg';
     }
 }
 
-// Verifica se o caminho da imagem existe no servidor para depuração
-$caminho_real_imagem = realpath($fotoPerfil);
-if ($caminho_real_imagem === false) {
+/* ==========================================================
+   FALLBACK CASO A IMAGEM NÃO EXISTA NO SERVIDOR
+========================================================== */
+if (!file_exists($fotoPerfil)) {
     $mensagem = "Erro: O arquivo de imagem não foi encontrado em: " . htmlspecialchars($fotoPerfil);
-    // Adiciona um placeholder para a imagem não encontrada
-    $fotoPerfil = 'https://placehold.co/150x150/FFF/000?text=Foto+n%C3%A3o+encontrada';
+    // Usa imagem de placeholder como último recurso
+    $fotoPerfil = 'https://placehold.co/150x150/FFF/000?text=Sem+Foto';
 }
-
 ?>
 
 <!DOCTYPE html>
@@ -122,8 +130,8 @@ if ($caminho_real_imagem === false) {
 
             <div>
                 <a href="../../PHP/user/index.php">🏠 Home</a>
-                <a href="stream.php">📺 Streaming</a>
-                <a href="editar_perfil.php">✏️ Editar Perfil</a>
+                <a href="../../PHP/user/stream.php">📺 Streaming</a>
+                <a href="../../PHP/user/editar_perfil.php">✏️ Editar Perfil</a>
             </div>
 
             <!-- Formulário para logout -->

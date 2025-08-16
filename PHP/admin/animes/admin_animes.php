@@ -32,7 +32,7 @@ unset($anime); // quebra referência
 <head>
   <meta charset="UTF-8" /> 
   <title>Admin - Animes</title>
-  <link rel="stylesheet" href="../../../CSS/style2.css?v=2" />
+  <link rel="stylesheet" href="../../../CSS/style.css?v=2" />
   <link rel="icon" href="../../../img/slogan3.png" type="image/png"> 
 </head>
 <body class="admin">

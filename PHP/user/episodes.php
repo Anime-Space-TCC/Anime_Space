@@ -114,7 +114,11 @@ if ($filtroLinguagemSelecionada) {
         <h1><?= htmlspecialchars($animeInfo['nome']) ?> - Episódios</h1>
       </div>
       <nav>
-        <a href="../../PHP/user/index.php" class="btn-nav">Home</a>
+        <a href="../../PHP/user/index.php" class="home-btn" aria-label="Página Inicial" role="button" tabindex="0">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" width="20" height="20" style="vertical-align: middle;">
+            <path d="M12 3l9 8h-3v9h-5v-6H11v6H6v-9H3z"/>
+          </svg>
+        </a>
         <a href="../../PHP/user/stream.php" class="btn-nav">Voltar</a>
       </nav>
     </header>
