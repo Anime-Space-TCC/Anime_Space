@@ -14,7 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $errors[] = "Preencha usuário e senha.";
     } else {
         // Prepara e executa a consulta SQL para buscar o usuário
-        $stmt = $pdo->prepare("SELECT id, username, password FROM users WHERE username = ?");
+        $stmt = $pdo->prepare("SELECT id, username, password, tipo FROM users WHERE username = ?");
         $stmt->execute([$username]);
         $user = $stmt->fetch(); // Obtém os dados do usuário
 
@@ -23,6 +23,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Salva dados do usuário na sessão e redireciona para o perfil
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['username'] = $user['username'];
+            $_SESSION['tipo'] = $user['tipo']; // Adiciona o tipo do usuário à sessão (admin ou usuario)
+
             header('Location: ../../PHP/user/profile.php'); // Redireciona
             exit; // Encerra o script
         } else {

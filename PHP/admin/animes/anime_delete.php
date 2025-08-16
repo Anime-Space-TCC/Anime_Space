@@ -1,10 +1,10 @@
 <?php
-require __DIR__ . '/../shared/conexao.php'; // Inclui a conexão com o banco de dados
+require __DIR__ . '/../../shared/conexao.php'; // Inclui a conexão com o banco de dados
 session_start(); // Inicia a sessão para controle de autenticação
 
 // Verifica se o usuário está logado como admin, se não, redireciona para login
-if (!isset($_SESSION['usuario']) || $_SESSION['usuario'] !== 'admin') {
-    header('Location: ../../PHP/user/login.php');
+if (!isset($_SESSION['tipo']) || $_SESSION['tipo'] !== 'admin') {
+    header('Location: ../../../PHP/user/login.php');
     exit();
 }
 

@@ -68,7 +68,6 @@ $animes = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <h1>Animes Disponíveis</h1> <!-- Título principal -->
     <nav>
       <a href="../../PHP/user/index.php">Home</a> <!-- Link para home -->
-      <a href="login.php">Login</a> <!-- Link para login -->
     </nav>
   </header>
 

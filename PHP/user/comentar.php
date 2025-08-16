@@ -9,6 +9,13 @@ if (!isset($_SESSION['user_id'])) {
 
 $user_id = $_SESSION['user_id'];
 
+// Confirma se o user_id realmente existe no banco
+$stmt = $pdo->prepare("SELECT id FROM users WHERE id = ?");
+$stmt->execute([$user_id]);
+if (!$stmt->fetch()) {
+    die("Usuário inválido ou não encontrado.");
+}
+
 // Dados do formulário
 $episodio_id = $_POST['episodio_id'] ?? null;
 $id_anime    = $_POST['id'] ?? null;
@@ -17,6 +24,13 @@ $comentario  = trim($_POST['comentario'] ?? '');
 // Validação
 if (!$episodio_id || empty($comentario)) {
     exit("Comentário inválido.");
+}
+
+// Confirma se o episódio existe
+$stmt = $pdo->prepare("SELECT id FROM episodios WHERE id = ?");
+$stmt->execute([$episodio_id]);
+if (!$stmt->fetch()) {
+    exit("Episódio não encontrado.");
 }
 
 // Insere no banco
