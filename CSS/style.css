@@ -596,10 +596,9 @@ html, body {
 
 .episodio .card-right {
   display: flex;
-  align-items: flex-start;
-  gap: 15px;
-  flex: 2;
+  align-items: center; /* centraliza verticalmente */
   justify-content: flex-end;
+  gap: 10px; /* espaço entre os itens */
   min-width: 220px;
 }
 
@@ -835,6 +834,154 @@ html, body {
   font-size: 0.95rem;
 }
 
+/* =========================
+        Episode Quiz
+   ========================= */
+
+.episodio .video-player {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.episodio .video-player video {
+  max-width: 100%;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(255, 159, 0, 0.5);
+}
+
+.episodio .btn-quiz {
+  display: inline-block;
+  margin-top: 15px;
+  padding: 12px 24px;
+  background: linear-gradient(45deg, #ff6ec7, #6e8efb);
+  border: none;
+  border-radius: 12px;
+  color: white;
+  font-weight: bold;
+  font-size: 1rem;
+  cursor: pointer;
+  text-align: center;
+  transition: transform 0.2s, box-shadow 0.3s;
+  position: relative;
+  box-shadow: 0 0 12px rgba(255, 110, 199, 0.7);
+}
+
+.episodio .btn-quiz:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 20px rgba(255, 110, 199, 0.9);
+}
+
+.episodio .btn-quiz::after {
+  content: "✨";
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  opacity: 0.8;
+  animation: sparkle 1.5s infinite;
+}
+
+@keyframes sparkle {
+  0% { transform: scale(1) rotate(0deg); opacity: 1; }
+  50% { transform: scale(1.5) rotate(90deg); opacity: 0.6; }
+  100% { transform: scale(1) rotate(180deg); opacity: 1; }
+}
+
+.episodio .btn-quiz.hidden {
+  padding: 12px 24px;
+  border-radius: 12px;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 1rem;
+  text-align: center;
+  transition: transform 0.2s, box-shadow 0.3s, opacity 0.3s;
+  visibility: hidden;
+  opacity: 0;
+}
+
+.episodio .btn-quiz.visible {
+  visibility: visible;
+  opacity: 1;
+}
+
+/* =========================
+   Efeito de fundo borrado quando quiz aberto
+========================= */
+
+.episodio.blurred *:not(.quiz-modal) {
+  filter: blur(4px);
+  pointer-events: none;
+  user-select: none;
+}
+
+/* =========================
+         Quiz Modal
+========================= */
+
+.episodio .quiz-modal {
+  display: none; /* Inicialmente oculto */
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(20, 20, 20, 0.95);
+  padding: 30px 40px;
+  border-radius: 15px;
+  box-shadow: 0 5px 20px #ff9f00;
+  z-index: 1000;
+  width: 90%;
+  max-width: 500px;
+  color: #eee;
+  max-height: 90vh; /* Evita ultrapassar a altura da tela */
+  overflow-y: auto; /* Scroll interno se necessário */
+}
+
+.episodio .quiz-modal.active {
+  display: block;
+}
+
+.episodio .quiz-modal h2 {
+  text-align: center;
+  color: #ff9f00;
+  margin-bottom: 20px;
+}
+
+.episodio .quiz-modal .quiz-pergunta {
+  margin-bottom: 15px;
+}
+
+.episodio .quiz-modal .quiz-pergunta label {
+  display: block;
+  margin: 5px 0;
+}
+
+/* Corrige o formulário ocupando espaço extra */
+.episodio .quiz-modal form {
+  margin: 0;
+  padding: 0;
+}
+
+.episodio .quiz-modal button.close-quiz {
+  display: block;
+  margin: 20px auto 0 auto;
+  padding: 6px 16px;
+  background-color: #ff9f00;
+  color: #000;
+  font-weight: 700;
+  font-size: 0.95rem;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.episodio .quiz-modal button.close-quiz:hover {
+  background-color: #fff;
+  color: #ff9f00;
+}
 /* =========================
          Video Player 
    ========================= */

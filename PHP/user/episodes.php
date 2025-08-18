@@ -53,19 +53,6 @@ if ($episode_id) {
     $episodioSelecionado = $stmtEp->fetch();
 }
 
-// Extrai o ID do YouTube a partir da URL
-function extrairIdYoutube($url) {
-    if (strpos($url, 'youtube.com') !== false || strpos($url, 'youtu.be') !== false) {
-        if (preg_match('/v=([^&]+)/', $url, $matches)) {
-            return $matches[1];
-        }
-        if (preg_match('/youtu\\.be\/([^?&]+)/', $url, $matches)) {
-            return $matches[1];
-        }
-    }
-    return null;
-}
-
 // Extrai o ID do Google Drive a partir da URL
 function extrairIdGoogleDrive($url) {
     if (preg_match('/\/file\/d\/([^\/]+)\//', $url, $matches)) {
@@ -78,17 +65,14 @@ $filtroLinguagemSelecionada = $_GET['linguagem'] ?? '';
 
 // Filtra lista de episódios para a linguagem selecionada, se houver
 if ($filtroLinguagemSelecionada) {
-    // Filtra a lista original $lista para manter só os episódios da linguagem selecionada
     $lista = array_filter($lista, function($ep) use ($filtroLinguagemSelecionada) {
         return strtolower($ep['linguagem']) === strtolower($filtroLinguagemSelecionada);
     });
-    // Reorganiza temporadas com a lista filtrada
     $temporadas = [];
     foreach ($lista as $ep) {
         $temporadas[$ep['temporada']][] = $ep;
     }
 
-    // Se não foi passado episode_id, já seleciona o primeiro da linguagem escolhida
     if (!$episode_id && !empty($lista)) {
         $episodioSelecionado = reset($lista);
         $episode_id = $episodioSelecionado['id'];
@@ -128,23 +112,19 @@ if ($filtroLinguagemSelecionada) {
         <section class="video-player" style="text-align: center;">
           <?php
           $videoUrl = $episodioSelecionado['video_url'];
-          $youtubeId = extrairIdYoutube($videoUrl);
           $driveId = extrairIdGoogleDrive($videoUrl);
           ?>
-          <h2>Assistindo: <?= htmlspecialchars($episodioSelecionado['titulo']) ?> (Temporada <?= $episodioSelecionado['temporada'] ?>, Episódio <?= $episodioSelecionado['numero'] ?>)</h2>
+          <h2><?= htmlspecialchars($episodioSelecionado['titulo']) ?> (Temporada <?= $episodioSelecionado['temporada'] ?>, Episódio <?= $episodioSelecionado['numero'] ?>)</h2>
 
-          <?php if ($youtubeId): ?>
-            <iframe width="800" height="450"
-              src="https://www.youtube.com/embed/<?= htmlspecialchars($youtubeId) ?>"
-              frameborder="0" allowfullscreen>
-            </iframe>
-          <?php elseif ($driveId): ?>
+          <?php if ($driveId): ?>
+            <!-- Google Drive - apenas para assistir -->
             <iframe src="https://drive.google.com/file/d/<?= htmlspecialchars($driveId) ?>/preview"
               width="800" height="450" allow="autoplay" frameborder="0" allowfullscreen>
             </iframe>
           <?php else: ?>
+            <!-- Vídeo Local - compatível com quiz -->
             <video width="800" height="450" controls>
-              <source src="/TCC/Anime_Space/<?= htmlspecialchars($videoUrl) ?>" type="video/mp4">
+              <source src="../../videos/<?= htmlspecialchars($videoUrl) ?>" type="video/mp4">
               Seu navegador não suporta vídeo HTML5.
             </video>
           <?php endif; ?>
@@ -169,17 +149,17 @@ if ($filtroLinguagemSelecionada) {
                       <img src="../../img/logo.png" alt="Miniatura padrão">
                     <?php endif; ?>
 
-                <div class="info-container">
-                <div class="numero">Episódio <?= htmlspecialchars($ep['numero']) ?></div>
+                    <div class="info-container">
+                      <div class="numero">Episódio <?= htmlspecialchars($ep['numero']) ?></div>
 
-                <div class="texto-e-botao">
-                <div class="titulo"><?= htmlspecialchars($ep['titulo']) ?></div>
-                    <?php if (!empty($ep['descricao'])): ?>
-                      <button class="btn-info" onclick="toggleDescricao(this)">+ Info</button>
-                    <?php endif; ?>
+                      <div class="texto-e-botao">
+                        <div class="titulo"><?= htmlspecialchars($ep['titulo']) ?></div>
+                        <?php if (!empty($ep['descricao'])): ?>
+                          <button class="btn-info" onclick="toggleDescricao(this)">+ Info</button>
+                        <?php endif; ?>
+                      </div>
+                    </div>
                 </div>
-               </div>
-              </div>
 
                 <div class="card-right">
                   <div class="info-adicional">
@@ -204,9 +184,9 @@ if ($filtroLinguagemSelecionada) {
                     <?php endif; ?>
                   </div>
                   <a class="btn-assistir" href="?id=<?= $id ?>&episode_id=<?= $ep['id'] ?><?= $filtroLinguagemSelecionada ? '&linguagem=' . urlencode($filtroLinguagemSelecionada) : '' ?>">Assistir</a>
-                  <?php if (!empty($ep['link_download'])): ?>
-                    <a class="btn-download" href="<?= htmlspecialchars($ep['link_download']) ?>" target="_blank">Download</a>
-                  <?php endif; ?>
+                  <button class="btn-quiz hidden" data-episode-id="<?= $ep['id'] ?>">
+                    🎉 Quiz do Episódio
+                  </button>
                 </div>
               </div>
 
@@ -221,80 +201,95 @@ if ($filtroLinguagemSelecionada) {
       <?php endif; ?>
 
       <?php if ($episodioSelecionado && isset($_SESSION['user_id'])): ?>
-    <section class="comentarios">
-        <h3>Comentários</h3>
-        
-        <?php
-        // Caminho dinâmico para o form de comentários
-        $host = $_SERVER['HTTP_HOST'];
-        $baseDir = rtrim(dirname($_SERVER['SCRIPT_NAME']), '/'); 
-        $formAction = "http://{$host}{$baseDir}/comentar.php";
-        ?>
-        
-        <form action="<?= htmlspecialchars($formAction) ?>" method="POST">
-            <input type="hidden" name="episodio_id" value="<?= htmlspecialchars($episodioSelecionado['id']) ?>">
-            <input type="hidden" name="id" value="<?= htmlspecialchars($id) ?>">
-            <textarea name="comentario" rows="4" placeholder="Escreva seu comentário..." required></textarea>
-            <button type="submit">Enviar Comentário</button>
-        </form>
+        <section class="comentarios">
+            <h3>Comentários</h3>
+            <?php
+            $host = $_SERVER['HTTP_HOST'];
+            $baseDir = rtrim(dirname($_SERVER['SCRIPT_NAME']), '/'); 
+            $formAction = "http://{$host}{$baseDir}/comentar.php";
+            ?>
+            <form action="<?= htmlspecialchars($formAction) ?>" method="POST">
+                <input type="hidden" name="episodio_id" value="<?= htmlspecialchars($episodioSelecionado['id']) ?>">
+                <input type="hidden" name="id" value="<?= htmlspecialchars($id) ?>">
+                <textarea name="comentario" rows="4" placeholder="Escreva seu comentário..." required></textarea>
+                <button type="submit">Enviar Comentário</button>
+            </form>
 
-        <?php
-        $stmtComentarios = $pdo->prepare("
-            SELECT c.comentario, c.data_comentario, u.username
-            FROM comentarios c
-            JOIN users u ON c.user_id = u.id
-            WHERE c.episodio_id = ?
-            ORDER BY c.data_comentario DESC
-        ");
-        $stmtComentarios->execute([$episodioSelecionado['id']]);
-        $comentarios = $stmtComentarios->fetchAll();
+            <?php
+            $stmtComentarios = $pdo->prepare("
+                SELECT c.comentario, c.data_comentario, u.username
+                FROM comentarios c
+                JOIN users u ON c.user_id = u.id
+                WHERE c.episodio_id = ?
+                ORDER BY c.data_comentario DESC
+            ");
+            $stmtComentarios->execute([$episodioSelecionado['id']]);
+            $comentarios = $stmtComentarios->fetchAll();
 
-        foreach ($comentarios as $c): ?>
-            <div class="comentario">
-                <strong><?= htmlspecialchars($c['username']) ?>:</strong>
-                <p><?= nl2br(htmlspecialchars($c['comentario'])) ?></p>
-                <small><?= date('d/m/Y H:i', strtotime($c['data_comentario'])) ?></small>
-            </div>
-        <?php endforeach; ?>
-    </section>
-<?php endif; ?>
+            foreach ($comentarios as $c): ?>
+                <div class="comentario">
+                    <strong><?= htmlspecialchars($c['username']) ?>:</strong>
+                    <p><?= nl2br(htmlspecialchars($c['comentario'])) ?></p>
+                    <small><?= date('d/m/Y H:i', strtotime($c['data_comentario'])) ?></small>
+                </div>
+            <?php endforeach; ?>
+        </section>
+      <?php endif; ?>
     </main>
   </div>
+<script>
+function toggleDescricao(btn) {
+  const card = btn.closest('.card');
+  const descricao = card.nextElementSibling;
+  if (descricao && descricao.classList.contains('descricao')) {
+    descricao.classList.toggle('active');
+    btn.textContent = descricao.classList.contains('active') ? '- Info' : '+ Info';
+  }
+}
 
-  <script>
-    function toggleDescricao(btn) {
-      const card = btn.closest('.card');
-      const descricao = card.nextElementSibling;
-      if (descricao && descricao.classList.contains('descricao')) {
-        descricao.classList.toggle('active');
-        btn.textContent = descricao.classList.contains('active') ? '- Info' : '+ Info';
+// AJAX para curtir/descurtir
+document.querySelectorAll('.reacao-btn').forEach(button => {
+  button.addEventListener('click', () => {
+    const card = button.closest('.card');
+    const episodioId = card.getAttribute('data-episodio-id');
+    const reacao = button.getAttribute('data-reacao');
+    fetch('reagir.php', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+      body: `episodio_id=${encodeURIComponent(episodioId)}&reacao=${encodeURIComponent(reacao)}`
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.sucesso) {
+        card.querySelector('.contador-like').textContent = `(${data.likes})`;
+        card.querySelector('.contador-dislike').textContent = `(${data.dislikes})`;
+      } else {
+        alert(data.erro || 'Erro ao processar reação.');
       }
-    }
+    })
+    .catch(() => alert('Erro ao enviar reação.'));
+  });
+});
 
-    // AJAX para enviar reação sem recarregar a página
-    document.querySelectorAll('.reacao-btn').forEach(button => {
-      button.addEventListener('click', () => {
-        const card = button.closest('.card');
-        const episodioId = card.getAttribute('data-episodio-id');
-        const reacao = button.getAttribute('data-reacao');
+document.querySelectorAll('.card').forEach(card => {
+  const likeBtn = card.querySelector('.btn-like');
+  const quizBtn = card.querySelector('.btn-quiz');
 
-        fetch('reagir.php', {
-          method: 'POST',
-          headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-          body: `episodio_id=${encodeURIComponent(episodioId)}&reacao=${encodeURIComponent(reacao)}`
-        })
-        .then(response => response.json())
-        .then(data => {
-          if (data.sucesso) {
-            card.querySelector('.contador-like').textContent = `(${data.likes})`;
-            card.querySelector('.contador-dislike').textContent = `(${data.dislikes})`;
-          } else {
-            alert(data.erro || 'Erro ao processar reação.');
-          }
-        })
-        .catch(() => alert('Erro ao enviar reação.'));
+  if(likeBtn && quizBtn){
+    quizBtn.classList.add('hidden'); // esconde inicialmente
+
+    likeBtn.addEventListener('click', () => {
+      // Só mostra o botão após clicar no like
+      quizBtn.classList.remove('hidden');
+
+      // Aqui ainda pode abrir o quiz se quiser
+      quizBtn.addEventListener('click', () => {
+        quizModal.classList.add('active');
+        document.querySelector('.episodio').classList.add('blurred');
       });
     });
-  </script>
+  }
+});
+</script>
 </body>
 </html>
