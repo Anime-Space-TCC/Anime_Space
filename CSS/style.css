@@ -396,8 +396,8 @@ html, body {
 }
 
 /* =========================
-        Episódios 
-   ========================= */
+        Episódios - Container Principal
+========================= */
 
 .episodio {
   background: url('../img/space.jpg') no-repeat center center fixed;
@@ -411,21 +411,26 @@ html, body {
   gap: 30px;
 }
 
+/* =========================
+        Episódios - Header / Navegação
+========================= */
+
 .episodio header {
   width: 100%;
   max-width: 1200px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
   background-color: rgba(0, 0, 0, 0.75);
   padding: 25px 40px;
   border-radius: 15px;
   box-shadow: 0 5px 15px rgb(175, 134, 0);
   color: #ff9f00;
-  flex-wrap: wrap;
 }
 
 .episodio header nav a {
+  display: inline-block;
   background-color: #ff9f00;
   color: #000;
   font-weight: 700;
@@ -436,7 +441,6 @@ html, body {
   transition: background-color 0.3s ease;
   margin-left: 10px;
   white-space: nowrap;
-  display: inline-block;
 }
 
 .episodio header nav a:first-child {
@@ -447,6 +451,10 @@ html, body {
   background-color: #fff;
   color: #ff9f00;
 }
+
+/* =========================
+        Episódios - Info Anime
+========================= */
 
 .episodio .info-anime {
   display: flex;
@@ -462,6 +470,10 @@ html, body {
   border: 3px solid #ff9f00;
   box-shadow: 0 0 10px #ff9f00;
 }
+
+/* =========================
+        Episódios - Main / Conteúdo
+========================= */
 
 .episodio main {
   width: 100%;
@@ -487,29 +499,37 @@ html, body {
   gap: 15px;
 }
 
-/* ======= CARD EPISÓDIO ======= */
+/* =========================
+        Episódios - Card
+========================= */
 
 .episodio .card {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 20px;
+  flex-wrap: nowrap;
   background-color: rgba(255, 255, 255, 0.07);
-  border: 1px solid #cc7f00; 
+  border: 1px solid #cc7f00;
   border-radius: 12px;
   padding: 10px 20px;
   box-shadow: 0 4px 12px rgba(255, 159, 0, 0.3);
   transition: transform 0.3s ease;
-  gap: 20px;
-  flex-wrap: nowrap;
 }
 
+.episodio .card:hover {
+  transform: translateX(3px);
+  box-shadow: 0 6px 20px #ff9f00;
+}
+
+/* Card - Esquerda */
 .episodio .card-left {
   display: flex;
-  align-items: center; 
+  align-items: center;
   gap: 15px;
   flex: 3;
   min-width: 0;
-  height: 100%; 
+  height: 100%;
 }
 
 .episodio .card-left img {
@@ -532,7 +552,7 @@ html, body {
 
 .episodio .numero {
   display: flex;
-  align-items: center; 
+  align-items: center;
   height: 100%;
   font-weight: bold;
   color: #ff9f00;
@@ -545,7 +565,7 @@ html, body {
 .episodio .texto-e-botao {
   display: flex;
   flex-direction: row;
-  align-items: center; 
+  align-items: center;
   gap: 10px;
   min-width: 0;
   height: 100%;
@@ -553,7 +573,7 @@ html, body {
 
 .episodio .titulo {
   display: flex;
-  align-items: center; 
+  align-items: center;
   line-height: 1.2;
   font-size: 1rem;
   color: #eee;
@@ -579,7 +599,6 @@ html, body {
   margin-top: 0;
 }
 
-
 .episodio .btn-info:hover {
   background-color: #ff9f00;
   color: #000;
@@ -592,19 +611,24 @@ html, body {
   white-space: nowrap;
 }
 
-/* DIREITA */
-
+/* Card - Direita */
 .episodio .card-right {
   display: flex;
-  align-items: center; /* centraliza verticalmente */
+  align-items: center;
   justify-content: flex-end;
-  gap: 10px; /* espaço entre os itens */
-  min-width: 220px;
+  gap: 10px;
+  flex: 2;
+  min-width: auto;
+  flex-shrink: 0;
+}
+
+.episodio .card-right > * {
+  flex-shrink: 0;
 }
 
 /* =========================
-      Episódio Linguagem 
-   ========================= */
+        Episódio - Filtro Linguagem
+========================= */
 
 .episodio .filtro-linguagem {
   margin: 20px 0;
@@ -651,36 +675,36 @@ html, body {
 }
 
 /* =========================
-      Episódio Reações 
-   ========================= */
+        Episódio - Reações
+========================= */
 
 .episodio .acoes {
   display: flex;
   align-items: center;
-  gap: 10px;   
+  gap: 10px;
   white-space: nowrap;
-  margin-left: 10px; 
+  margin-left: 10px;
 }
 
 .episodio .reacao-btn,
 .episodio .btn-like,
 .episodio .btn-dislike {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-width: 90px;
   background-color: transparent;
   border: 2px solid #ff9f00;
   color: #ff9f00;
   font-weight: 700;
-  padding: 4px 10px;      
+  padding: 4px 10px;
   border-radius: 20px;
-  font-size: 0.8rem;      
+  font-size: 0.8rem;
   cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
   transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
   user-select: none;
   white-space: nowrap;
-  min-width: 90px;        
-  justify-content: center;
   box-shadow: 0 0 5px #ff9f00;
   text-shadow: 0 0 3px #ff9f00;
 }
@@ -711,10 +735,11 @@ html, body {
   text-align: center;
 }
 
-/* Botões assistir e download */
+/* =========================
+        Episódio - Botões Assistir
+========================= */
 
-.episodio .btn-assistir,
-.episodio .btn-download {
+.episodio .btn-assistir {
   background-color: #ff9f00;
   color: #000;
   font-weight: 700;
@@ -726,16 +751,18 @@ html, body {
   white-space: nowrap;
 }
 
-.episodio .btn-assistir:hover,
-.episodio .btn-download:hover {
+.episodio .btn-assistir:hover {
   background-color: #fff;
   color: #ff9f00;
 }
 
-/* Descrição */
+/* =========================
+        Episódio - Descrição
+========================= */
 
 .episodio .descricao {
-  display: none;
+  max-height: 0;
+  overflow: hidden;
   font-size: 0.9rem;
   color: #ccc;
   margin-top: 5px;
@@ -744,20 +771,18 @@ html, body {
   user-select: text;
   line-height: 1.3;
   width: 100%;
+  opacity: 0;
+  transition: max-height 0.4s ease, opacity 0.3s ease;
 }
 
 .episodio .descricao.active {
-  display: block;
-}
-
-.episodio .card:hover {
-  transform: translateX(3px);
-  box-shadow: 0 6px 20px #ff9f00;
+  max-height: 300px;
+  opacity: 1;
 }
 
 /* =========================
-      Episódio Comentários 
-   ========================= */
+        Episódio - Comentários
+========================= */
 
 .episodio .comentarios {
   margin-top: 40px;
@@ -835,16 +860,16 @@ html, body {
 }
 
 /* =========================
-        Episode Quiz
-   ========================= */
+        Episódio - Video Player & Quiz
+========================= */
 
-.episodio .video-player {
+.episodio .video-player,
+.video-player {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 10px;
   margin-bottom: 20px;
-  position: relative;
 }
 
 .episodio .video-player video {
@@ -853,8 +878,16 @@ html, body {
   box-shadow: 0 4px 15px rgba(255, 159, 0, 0.5);
 }
 
+.video-player h2 {
+  color: #ff9f00;
+  text-align: center;
+  font-size: 1.8rem;
+  margin: 0;
+}
+
+/* Botão Quiz */
 .episodio .btn-quiz {
-  display: inline-block;
+  display: none;
   margin-top: 15px;
   padding: 12px 24px;
   background: linear-gradient(45deg, #ff6ec7, #6e8efb);
@@ -865,9 +898,15 @@ html, body {
   font-size: 1rem;
   cursor: pointer;
   text-align: center;
-  transition: transform 0.2s, box-shadow 0.3s;
+  transition: transform 0.2s, box-shadow 0.3s, opacity 0.3s ease;
   position: relative;
   box-shadow: 0 0 12px rgba(255, 110, 199, 0.7);
+  opacity: 0;
+}
+
+.episodio .btn-quiz.show {
+  display: inline-block;
+  opacity: 1;
 }
 
 .episodio .btn-quiz:hover {
@@ -890,39 +929,9 @@ html, body {
   100% { transform: scale(1) rotate(180deg); opacity: 1; }
 }
 
-.episodio .btn-quiz.hidden {
-  padding: 12px 24px;
-  border-radius: 12px;
-  font-weight: bold;
-  cursor: pointer;
-  font-size: 1rem;
-  text-align: center;
-  transition: transform 0.2s, box-shadow 0.3s, opacity 0.3s;
-  visibility: hidden;
-  opacity: 0;
-}
-
-.episodio .btn-quiz.visible {
-  visibility: visible;
-  opacity: 1;
-}
-
-/* =========================
-   Efeito de fundo borrado quando quiz aberto
-========================= */
-
-.episodio.blurred *:not(.quiz-modal) {
-  filter: blur(4px);
-  pointer-events: none;
-  user-select: none;
-}
-
-/* =========================
-         Quiz Modal
-========================= */
-
+/* Quiz Modal */
 .episodio .quiz-modal {
-  display: none; /* Inicialmente oculto */
+  display: none;
   position: fixed;
   top: 50%;
   left: 50%;
@@ -935,8 +944,8 @@ html, body {
   width: 90%;
   max-width: 500px;
   color: #eee;
-  max-height: 90vh; /* Evita ultrapassar a altura da tela */
-  overflow-y: auto; /* Scroll interno se necessário */
+  max-height: 90vh;
+  overflow-y: auto;
 }
 
 .episodio .quiz-modal.active {
@@ -958,7 +967,6 @@ html, body {
   margin: 5px 0;
 }
 
-/* Corrige o formulário ocupando espaço extra */
 .episodio .quiz-modal form {
   margin: 0;
   padding: 0;
@@ -981,24 +989,6 @@ html, body {
 .episodio .quiz-modal button.close-quiz:hover {
   background-color: #fff;
   color: #ff9f00;
-}
-/* =========================
-         Video Player 
-   ========================= */
-
-.video-player {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-bottom: 20px;
-  gap: 10px;
-}
-
-.video-player h2 {
-  color: #ff9f00;
-  text-align: center;
-  font-size: 1.8rem;
-  margin: 0;
 }
 
 /* =========================

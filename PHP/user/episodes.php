@@ -96,6 +96,11 @@ if ($filtroLinguagemSelecionada) {
           <img src="../../img/<?= htmlspecialchars($animeInfo['capa']) ?>" alt="Capa do Anime">
         <?php endif; ?>
         <h1><?= htmlspecialchars($animeInfo['nome']) ?> - Episódios</h1>
+        <?php if (!empty($ep['descricao'])): ?>
+          <button class="btn-info" onclick="toggleDescricao(this)">
+            ▼
+          </button>
+        <?php endif; ?>
       </div>
       <nav>
         <a href="../../PHP/user/index.php" class="home-btn" aria-label="Página Inicial" role="button" tabindex="0">
@@ -151,12 +156,13 @@ if ($filtroLinguagemSelecionada) {
 
                     <div class="info-container">
                       <div class="numero">Episódio <?= htmlspecialchars($ep['numero']) ?></div>
-
                       <div class="texto-e-botao">
-                        <div class="titulo"><?= htmlspecialchars($ep['titulo']) ?></div>
                         <?php if (!empty($ep['descricao'])): ?>
-                          <button class="btn-info" onclick="toggleDescricao(this)">+ Info</button>
+                          <button class="btn-info" onclick="toggleDescricao(this)">
+                            ▼
+                          </button>
                         <?php endif; ?>
+                        <div class="titulo"><?= htmlspecialchars($ep['titulo']) ?></div>
                       </div>
                     </div>
                 </div>
@@ -191,7 +197,7 @@ if ($filtroLinguagemSelecionada) {
               </div>
 
               <?php if (!empty($ep['descricao'])): ?>
-                <div class="descricao"><?= nl2br(htmlspecialchars($ep['descricao'])) ?></div>
+                <div class="descricao hidden"><?= nl2br(htmlspecialchars($ep['descricao'])) ?></div>
               <?php endif; ?>
             <?php endforeach; ?>
           </div>
@@ -241,18 +247,30 @@ if ($filtroLinguagemSelecionada) {
 function toggleDescricao(btn) {
   const card = btn.closest('.card');
   const descricao = card.nextElementSibling;
-  if (descricao && descricao.classList.contains('descricao')) {
-    descricao.classList.toggle('active');
-    btn.textContent = descricao.classList.contains('active') ? '- Info' : '+ Info';
+  if (!descricao || !descricao.classList.contains('descricao')) return;
+
+  const isAtiva = descricao.classList.contains('active');
+
+  // Fecha todas as descrições
+  document.querySelectorAll('.descricao.active').forEach(desc => {
+    desc.classList.remove('active');
+    const otherBtn = desc.previousElementSibling.querySelector('.btn-info');
+    if (otherBtn) otherBtn.textContent = '▼';
+  });
+
+  // Se não estava ativa, abre a clicada
+  if (!isAtiva) {
+    descricao.classList.add('active');
+    btn.textContent = '▲';
   }
 }
-
 // AJAX para curtir/descurtir
 document.querySelectorAll('.reacao-btn').forEach(button => {
   button.addEventListener('click', () => {
     const card = button.closest('.card');
     const episodioId = card.getAttribute('data-episodio-id');
     const reacao = button.getAttribute('data-reacao');
+    
     fetch('reagir.php', {
       method: 'POST',
       headers: {'Content-Type': 'application/x-www-form-urlencoded'},
@@ -261,34 +279,28 @@ document.querySelectorAll('.reacao-btn').forEach(button => {
     .then(response => response.json())
     .then(data => {
       if (data.sucesso) {
-        card.querySelector('.contador-like').textContent = `(${data.likes})`;
-        card.querySelector('.contador-dislike').textContent = `(${data.dislikes})`;
+        // Atualiza os contadores de like/dislike 
+        card.querySelector('.contador-like').textContent = data.likes;
+        card.querySelector('.contador-dislike').textContent = data.dislikes;
+
+        // --- INÍCIO DA NOVA LÓGICA ---
+        const quizButton = card.querySelector('.btn-quiz');
+
+        if (quizButton) {
+          if (reacao === 'like') {
+            quizButton.classList.add('show');   // Mostra botão com animação
+          } else if (reacao === 'dislike') {
+            quizButton.classList.remove('show'); // Esconde botão com animação
+          }
+        }
+        // --- FIM DA NOVA LÓGICA ---
+
       } else {
         alert(data.erro || 'Erro ao processar reação.');
       }
     })
     .catch(() => alert('Erro ao enviar reação.'));
   });
-});
-
-document.querySelectorAll('.card').forEach(card => {
-  const likeBtn = card.querySelector('.btn-like');
-  const quizBtn = card.querySelector('.btn-quiz');
-
-  if(likeBtn && quizBtn){
-    quizBtn.classList.add('hidden'); // esconde inicialmente
-
-    likeBtn.addEventListener('click', () => {
-      // Só mostra o botão após clicar no like
-      quizBtn.classList.remove('hidden');
-
-      // Aqui ainda pode abrir o quiz se quiser
-      quizBtn.addEventListener('click', () => {
-        quizModal.classList.add('active');
-        document.querySelector('.episodio').classList.add('blurred');
-      });
-    });
-  }
 });
 </script>
 </body>
