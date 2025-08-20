@@ -16,7 +16,7 @@ if (!$id) {
 }
 
 // Consulta informações do anime
-$anime = $pdo->prepare("SELECT nome, capa FROM animes WHERE id = ?");
+$anime = $pdo->prepare("SELECT nome, capa, sinopse FROM animes WHERE id = ?");
 $anime->execute([$id]);
 $animeInfo = $anime->fetch();
 
@@ -85,33 +85,37 @@ if ($filtroLinguagemSelecionada) {
 <head>
   <meta charset="UTF-8">
   <title>Episódios - <?= htmlspecialchars($animeInfo['nome']) ?></title>
-  <link rel="stylesheet" href="../../CSS/style.css">
+  <link rel="stylesheet" href="../../CSS/styleEpi.css">
   <link rel="icon" href="../../img/slogan3.png" type="image/png">
 </head>
 <body>
   <div class="episodio">
     <header>
-      <div class="info-anime">
+    <div class="info-anime">
         <?php if (!empty($animeInfo['capa'])): ?>
-          <img src="../../img/<?= htmlspecialchars($animeInfo['capa']) ?>" alt="Capa do Anime">
+            <img src="../../img/<?= htmlspecialchars($animeInfo['capa']) ?>" alt="Capa do Anime">
         <?php endif; ?>
         <h1><?= htmlspecialchars($animeInfo['nome']) ?> - Episódios</h1>
-        <?php if (!empty($ep['descricao'])): ?>
-          <button class="btn-info" onclick="toggleDescricao(this)">
-            ▼
-          </button>
+        <?php if (!empty($animeInfo['sinopse'])): ?>
+            <button class="btn-info" onclick="toggleSinopse()">
+                Sinopse ▼
+            </button>
         <?php endif; ?>
-      </div>
-      <nav>
-        <a href="../../PHP/user/index.php" class="home-btn" aria-label="Página Inicial" role="button" tabindex="0">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" width="20" height="20" style="vertical-align: middle;">
-            <path d="M12 3l9 8h-3v9h-5v-6H11v6H6v-9H3z"/>
-          </svg>
+    </div>
+    <nav>
+        <a href="../../PHP/user/index.php" class="sinopse-btn" aria-label="Página Inicial" role="button" tabindex="0"
+           style="display: inline-flex; align-items: center; justify-content: center;">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" width="20" height="20" style="vertical-align: middle;">
+                <path d="M12 3l9 8h-3v9h-5v-6H11v6H6v-9H3z"/>
+            </svg>
         </a>
         <a href="../../PHP/user/stream.php" class="btn-nav">Voltar</a>
-      </nav>
+    </nav>
     </header>
-
+    <div class="sinopse-container" id="sinopse-container">
+    <h3>Sinopse</h3>
+    <p><?= nl2br(htmlspecialchars($animeInfo['sinopse'])) ?></p>
+    </div>
     <main>
       <?php if ($episodioSelecionado): ?>
         <section class="video-player" style="text-align: center;">
@@ -264,6 +268,22 @@ function toggleDescricao(btn) {
     btn.textContent = '▲';
   }
 }
+
+function toggleSinopse() {
+    const sinopseContainer = document.getElementById('sinopse-container');
+    const btn = document.querySelector('header .btn-info');
+    
+    if (sinopseContainer && btn) {
+        sinopseContainer.classList.toggle('active');
+        
+        if (sinopseContainer.classList.contains('active')) {
+            btn.textContent = 'Sinopse ▲';
+        } else {
+            btn.textContent = 'Sinopse ▼';
+        }
+    }
+}
+
 // AJAX para curtir/descurtir
 document.querySelectorAll('.reacao-btn').forEach(button => {
   button.addEventListener('click', () => {

@@ -129,7 +129,12 @@ if (!file_exists($fotoPerfil)) {
             <p>Seja bem-vindo ao seu perfil. Aqui você poderá visualizar e editar seus dados futuramente.</p>
 
             <div>
-                <a href="../../PHP/user/index.php">🏠 Home</a>
+                <a href="../../PHP/user/index.php" class="sinopse-btn" aria-label="Página Inicial" role="button" tabindex="0"
+                   style="display: inline-flex; align-items: center; justify-content: center;">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" width="20" height="20" style="vertical-align: middle;">
+                      <path d="M12 3l9 8h-3v9h-5v-6H11v6H6v-9H3z"/>
+                    </svg>
+                </a>
                 <a href="../../PHP/user/stream.php">📺 Streaming</a>
                 <a href="../../PHP/user/editar_perfil.php">✏️ Editar Perfil</a>
             </div>
