@@ -1,3 +1,18 @@
+<?php
+session_start(); // Inicia a sessão para gerenciar autenticação
+require __DIR__ . '/../../shared/conexao.php'; // Inclui conexão com o banco
+
+// Verifica se o usuário é admin, se não for redireciona para login
+if (!isset($_SESSION['tipo']) || $_SESSION['tipo'] !== 'admin') {
+    header('Location: ../../../PHP/user/login.php');
+    exit();
+}
+
+// Consulta todos os episodeos
+$temporadas = $pdo->query("SELECT * FROM temporadas ORDER BY anime_id DESC")->fetchAll(PDO::FETCH_ASSOC);
+?>
+
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -11,7 +26,7 @@
     <h1>Gerenciar Temporadas</h1>
     <nav>
       <a href="../../../PHP/user/index.php">Home</a> 
-      <a href="temporadas_form.php" class="admin-btn">Nova Temporada</a> 
+      <a href="../../../PHP/admin/temporadas/temporadas_form.php" class="admin-btn">Nova Temporada</a> 
       <a href="../../../PHP/shared/logout.php" class="admin-btn">Sair</a> 
     </nav>
   </div>
@@ -22,21 +37,21 @@
         <tr>
           <th>Anime</th>
           <th>Temporada</th>
-          <th>Nome</th>
-          <th>Lançamento</th>
+          <th>Descrição</th>
+          <th>Ano</th>
           <th>Ações</th>
         </tr>
       </thead>
       <tbody>
         <?php foreach ($temporadas as $t): ?>
           <tr>
-            <td><?= htmlspecialchars($t['anime_nome']) ?></td>
+            <td><?= htmlspecialchars($t['anime_id']) ?></td>
             <td><?= htmlspecialchars($t['numero']) ?></td>
-            <td><?= htmlspecialchars($t['nome']) ?></td>
-            <td><?= htmlspecialchars($t['data_lancamento']) ?></td>
+            <td><?= htmlspecialchars($t['descricao']) ?></td>
+            <td><?= htmlspecialchars($t['ano_inicio']) ?></td>
             <td>
-              <a href="temporadas_form.php?id=<?= $t['id'] ?>" class="admin-btn">✏️ Editar</a>
-              <a href="temporadas_delete.php?id=<?= $t['id'] ?>" class="admin-btn" onclick="return confirm('Excluir esta temporada?')">🗑️ Excluir</a>
+              <a href="../../../PHP/admin/temporadas/temporadas_form.php?id=<?= $t['id'] ?>" class="admin-btn">✏️ Editar</a>
+              <a href="../../../PHP/admin/temporadas/temporadas_delete.php?id=<?= $t['id'] ?>" class="admin-btn" onclick="return confirm('Excluir esta temporada?')">🗑️ Excluir</a>
             </td>
           </tr>
         <?php endforeach; ?>
