@@ -98,7 +98,7 @@ if ($filtroLinguagemSelecionada) {
         <h1><?= htmlspecialchars($animeInfo['nome']) ?> - Episódios</h1>
         <?php if (!empty($animeInfo['sinopse'])): ?>
             <button class="btn-info" onclick="toggleSinopse()">
-                Sinopse ▼
+              ▼
             </button>
         <?php endif; ?>
     </div>
@@ -113,7 +113,6 @@ if ($filtroLinguagemSelecionada) {
     </nav>
     </header>
     <div class="sinopse-container" id="sinopse-container">
-    <h3>Sinopse</h3>
     <p><?= nl2br(htmlspecialchars($animeInfo['sinopse'])) ?></p>
     </div>
     <main>
@@ -277,9 +276,9 @@ function toggleSinopse() {
         sinopseContainer.classList.toggle('active');
         
         if (sinopseContainer.classList.contains('active')) {
-            btn.textContent = 'Sinopse ▲';
+            btn.textContent = '▲';
         } else {
-            btn.textContent = 'Sinopse ▼';
+            btn.textContent = '▼';
         }
     }
 }
