@@ -193,9 +193,9 @@ if ($filtroLinguagemSelecionada) {
                     <?php endif; ?>
                   </div>
                   <a class="btn-assistir" href="?id=<?= $id ?>&episode_id=<?= $ep['id'] ?><?= $filtroLinguagemSelecionada ? '&linguagem=' . urlencode($filtroLinguagemSelecionada) : '' ?>">Assistir</a>
-                  <button class="btn-quiz hidden" data-episode-id="<?= $ep['id'] ?>">
+                  <a class="btn-quiz hidden" href="quiz.php?episodio_id=<?= $ep['id'] ?>">
                     🎉 Quiz do Episódio
-                  </button>
+                  </a>
                 </div>
               </div>
 
@@ -297,27 +297,24 @@ document.querySelectorAll('.reacao-btn').forEach(button => {
     })
     .then(response => response.json())
     .then(data => {
-      if (data.sucesso) {
-        // Atualiza os contadores de like/dislike 
-        card.querySelector('.contador-like').textContent = data.likes;
-        card.querySelector('.contador-dislike').textContent = data.dislikes;
+  if (data.sucesso) {
+    card.querySelector('.contador-like').textContent = data.likes;
+    card.querySelector('.contador-dislike').textContent = data.dislikes;
 
-        // --- INÍCIO DA NOVA LÓGICA ---
-        const quizButton = card.querySelector('.btn-quiz');
-
-        if (quizButton) {
-          if (reacao === 'like') {
-            quizButton.classList.add('show');   // Mostra botão com animação
-          } else if (reacao === 'dislike') {
-            quizButton.classList.remove('show'); // Esconde botão com animação
-          }
-        }
-        // --- FIM DA NOVA LÓGICA ---
-
+    // --- NOVA LÓGICA DINÂMICA ---
+    const quizButton = card.querySelector('.btn-quiz');
+    if (quizButton) {
+      if (data.reacao_atual === 'like') {
+        quizButton.classList.add('show');
       } else {
-        alert(data.erro || 'Erro ao processar reação.');
+        quizButton.classList.remove('show');
       }
-    })
+    }
+    // --- FIM DA NOVA LÓGICA ---
+  } else {
+    alert(data.erro || 'Erro ao processar reação.');
+  }
+})
     .catch(() => alert('Erro ao enviar reação.'));
   });
 });

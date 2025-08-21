@@ -42,13 +42,20 @@ if ($existente) {
     $stmt->execute([$user_id, $episodio_id, $reacao]);
 }
 
-// Busca as contagens atualizadas de likes e dislikes para o episódio
-$stmt = $pdo->prepare("SELECT reacao, COUNT(*) as total FROM episodio_reacoes WHERE episodio_id = ? GROUP BY reacao");
+// Busca a reação atual do usuário após a operação
+$stmt = $pdo->prepare("SELECT reacao FROM episodio_reacoes WHERE user_id = ? AND episodio_id = ?");
+$stmt->execute([$user_id, $episodio_id]);
+$reacaoAtual = $stmt->fetchColumn();
+
+// Busca as contagens de likes/dislikes do episódio
+$stmt = $pdo->prepare("
+    SELECT reacao, COUNT(*) as total
+    FROM episodio_reacoes
+    WHERE episodio_id = ?
+    GROUP BY reacao
+");
 $stmt->execute([$episodio_id]);
-
-$contagens = ['like' => 0, 'dislike' => 0]; // Inicializa contadores
-
-// Preenche as contagens conforme resultados da consulta
+$contagens = ['like' => 0, 'dislike' => 0];
 foreach ($stmt->fetchAll(PDO::FETCH_ASSOC) as $linha) {
     if (isset($contagens[$linha['reacao']])) {
         $contagens[$linha['reacao']] = (int)$linha['total'];
@@ -59,6 +66,7 @@ foreach ($stmt->fetchAll(PDO::FETCH_ASSOC) as $linha) {
 echo json_encode([
     'sucesso' => true,
     'likes' => $contagens['like'],
-    'dislikes' => $contagens['dislike']
+    'dislikes' => $contagens['dislike'],
+    'reacao_atual' => $reacaoAtual ?: null
 ]);
-exit; // Finaliza o script
+exit;
