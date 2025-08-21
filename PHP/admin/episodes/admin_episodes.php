@@ -1,15 +1,21 @@
 <?php
-session_start(); // Inicia a sessão para gerenciar autenticação
-require __DIR__ . '/../../shared/conexao.php'; // Inclui conexão com o banco
+session_start();
+require __DIR__ . '/../../shared/conexao.php';
 
-// Verifica se o usuário é admin, se não for redireciona para login
+// Verifica se o usuário é admin
 if (!isset($_SESSION['tipo']) || $_SESSION['tipo'] !== 'admin') {
     header('Location: ../../../PHP/user/login.php');
     exit();
 }
 
-// Consulta todos os episodeos
-$episodes = $pdo->query("SELECT * FROM episodios ORDER BY anime_id DESC")->fetchAll(PDO::FETCH_ASSOC);
+// Consulta todos os episódios com o nome do anime
+$sql = "
+    SELECT e.*, a.nome AS anime_nome
+    FROM episodios e
+    INNER JOIN animes a ON e.anime_id = a.id
+    ORDER BY a.nome, e.temporada, e.numero
+";
+$episodios = $pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <!DOCTYPE html>
@@ -34,32 +40,30 @@ $episodes = $pdo->query("SELECT * FROM episodios ORDER BY anime_id DESC")->fetch
     <table class="admin-anime-table">
       <thead>
         <tr>
+          <th>Miniatura</th>
           <th>Anime</th>
           <th>Temporada</th>
-          <th>Episódio</th>
+          <th>Nº</th>
           <th>Título</th>
-          <th>Descriçao</th>
           <th>Duração</th>
-          <th>Lançamento</th>
-          <th>Miniatura</th>
-          <th>Linguagem</th>
-          <th>Link Video</th>
           <th>Ações</th>
         </tr>
       </thead>
       <tbody>
-        <?php foreach ($episodes as $e): ?>
+        <?php foreach ($episodios as $e): ?>
           <tr>
-            <td><?= htmlspecialchars($e['anime_id']) ?></td>
+            <td>
+              <?php if (!empty($e['miniatura'])): ?>
+                <img src="../../../img/<?= htmlspecialchars($e['miniatura']) ?>" alt="<?= htmlspecialchars($e['titulo']) ?>" width="100">
+              <?php else: ?>
+                —
+              <?php endif; ?>
+            </td>
+            <td><?= htmlspecialchars($e['anime_nome']) ?></td>
             <td><?= htmlspecialchars($e['temporada']) ?></td>
             <td><?= htmlspecialchars($e['numero']) ?></td>
             <td><?= htmlspecialchars($e['titulo']) ?></td>
-            <td><?= htmlspecialchars($e['descricao']) ?></td>
-            <td><?= htmlspecialchars($e['duracao']) ?></td>
-            <td><?= htmlspecialchars($e['data_lancamento']) ?></td>
-            <td><?= htmlspecialchars($e['miniatura']) ?></td>
-            <td><?= htmlspecialchars($e['linguagem']) ?></td>
-            <td><?= htmlspecialchars($e['video_url']) ?></td>
+            <td><?= $e['duracao'] ? $e['duracao'].' min' : '—' ?></td>
             <td>
               <a href="../../../PHP/admin/episodes/episodes_form.php?id=<?= $e['id'] ?>" class="admin-btn">✏️ Editar</a>
               <a href="../../../PHP/admin/episodes/episodes_delete.php?id=<?= $e['id'] ?>" class="admin-btn" onclick="return confirm('Excluir este episódio?')">🗑️ Excluir</a>
@@ -69,7 +73,7 @@ $episodes = $pdo->query("SELECT * FROM episodios ORDER BY anime_id DESC")->fetch
       </tbody>
       <tfoot>
         <tr>
-          <td colspan="7">Total: <?= count($episodes) ?> episódios cadastrados</td>
+          <td colspan="7">Total: <?= count($episodios) ?> episódios cadastrados</td>
         </tr>
       </tfoot>
     </table>

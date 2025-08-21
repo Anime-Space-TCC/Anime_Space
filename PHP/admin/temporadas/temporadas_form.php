@@ -1,42 +1,87 @@
+<?php
+require __DIR__ . '/../../shared/conexao.php';
+session_start();
+
+// Verifica admin
+if (!isset($_SESSION['tipo']) || $_SESSION['tipo'] !== 'admin') {
+    header('Location: ../../../PHP/user/login.php');
+    exit();
+}
+
+$id = $_GET['id'] ?? null;
+
+$temporada = [
+    'anime_id'      => '',
+    'numero'        => '',
+    'nome'          => '',
+    'ano_inicio'    => '',
+    'ano_fim'       => '',
+    'qtd_episodios' => '',
+    'capa'          => ''
+];
+
+// Busca todos os animes
+$animes = $pdo->query("SELECT id, nome FROM animes ORDER BY nome")->fetchAll(PDO::FETCH_ASSOC);
+
+if ($id) {
+    $stmt = $pdo->prepare("SELECT * FROM temporadas WHERE id = ?");
+    $stmt->execute([$id]);
+    $temporada = $stmt->fetch(PDO::FETCH_ASSOC) ?: $temporada;
+}
+?>
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" /> 
-  <title><?= $temporada['id'] ? "Editar" : "Nova" ?> Temporada</title>
-  <link rel="stylesheet" href="../../../CSS/style.css?v=2" />
+  <meta charset="UTF-8">
+  <title><?= $id ? "Editar Temporada" : "Nova Temporada" ?></title>
+  <link rel="stylesheet" href="../../../CSS/style.css?v=2">
+  <link rel="icon" href="../../../img/slogan3.png" type="image/png">
 </head>
 <body class="admin">
   <div class="admin-links">
-    <h1><?= $temporada['id'] ? "Editar Temporada" : "Nova Temporada" ?></h1>
+    <h1><?= $id ? "Editar Temporada" : "Cadastrar Nova Temporada" ?></h1>
     <nav>
-      <a href="admin_temporadas.php">⬅ Voltar</a>
+      <a href="../../../PHP/admin/temporadas/admin_temporadas.php" class="admin-btn">Voltar</a>
+      <a href="../../../PHP/shared/logout.php" class="admin-btn">Sair</a>
     </nav>
   </div>
 
-  <main>
-    <form action="temporadas_save.php" method="post" class="admin-form">
-      <input type="hidden" name="id" value="<?= htmlspecialchars($temporada['id']) ?>">
+  <main class="admin-form">
+    <form method="post" action="../../../PHP/admin/temporadas/temporadas_save.php">
+      <?php if ($id): ?>
+        <input type="hidden" name="id" value="<?= (int)$id ?>">
+      <?php endif; ?>
 
-      <label>Anime:</label>
+      <label>Anime:</label><br>
       <select name="anime_id" required>
         <option value="">-- Selecione --</option>
-        <?php foreach($animes as $a): ?>
-          <option value="<?= $a['id'] ?>" <?= $a['id']==$temporada['anime_id'] ? 'selected':'' ?>>
+        <?php foreach ($animes as $a): ?>
+          <option value="<?= $a['id'] ?>" <?= $temporada['anime_id'] == $a['id'] ? 'selected' : '' ?>>
             <?= htmlspecialchars($a['nome']) ?>
           </option>
         <?php endforeach; ?>
-      </select><br>
+      </select><br><br>
 
-      <label>Número da Temporada:</label>
-      <input type="number" name="numero" value="<?= htmlspecialchars($temporada['numero']) ?>" required><br>
+      <label>Número da Temporada:</label><br>
+      <input type="number" name="numero" value="<?= htmlspecialchars($temporada['numero']) ?>" required><br><br>
 
-      <label>Nome:</label>
-      <input type="text" name="nome" value="<?= htmlspecialchars($temporada['nome']) ?>" required><br>
+      <label>Nome da Temporada:</label><br>
+      <input type="text" name="nome" value="<?= htmlspecialchars($temporada['nome']) ?>"><br><br>
 
-      <label>Data de Lançamento:</label>
-      <input type="date" name="data_lancamento" value="<?= htmlspecialchars($temporada['data_lancamento']) ?>"><br>
+      <label>Ano de Início:</label><br>
+      <input type="number" name="ano_inicio" value="<?= htmlspecialchars($temporada['ano_inicio']) ?>" min="1900" max="2100"><br><br>
 
-      <button type="submit" class="admin-btn">Salvar</button>
+      <label>Ano de Fim:</label><br>
+      <input type="number" name="ano_fim" value="<?= htmlspecialchars($temporada['ano_fim']) ?>" min="1900" max="2100"><br><br>
+
+      <label>Quantidade de Episódios:</label><br>
+      <input type="number" name="qtd_episodios" value="<?= htmlspecialchars($temporada['qtd_episodios']) ?>"><br><br>
+
+      <label>URL da Capa:</label><br>
+      <input type="text" name="capa" value="<?= htmlspecialchars($temporada['capa']) ?>"><br><br>
+
+      <input type="submit" value="Salvar" class="admin-btn">
     </form>
   </main>
 </body>
