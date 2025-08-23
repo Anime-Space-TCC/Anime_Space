@@ -1,8 +1,9 @@
 <?php
 session_start();
 require __DIR__ . '/../shared/conexao.php';
+require __DIR__ . '/../shared/episodios.php';
+require __DIR__ . '/../shared/quizzes.php';
 
-// Obtém o episódio ID
 $episodio_id = $_GET['episodio_id'] ?? null;
 
 if (!$episodio_id) {
@@ -10,31 +11,20 @@ if (!$episodio_id) {
     exit;
 }
 
-// Busca o episódio
-$stmtEp = $pdo->prepare("SELECT e.titulo, a.nome AS anime_nome 
-                         FROM episodios e
-                         JOIN animes a ON e.anime_id = a.id
-                         WHERE e.id = ?");
-$stmtEp->execute([$episodio_id]);
-$episodio = $stmtEp->fetch();
-
+// Episódio
+$episodio = buscarEpisodioComAnime($episodio_id);
 if (!$episodio) {
     echo "Episódio não encontrado.";
     exit;
 }
 
-// Busca as perguntas do quiz
-$stmtQuiz = $pdo->prepare("SELECT * FROM quizzes WHERE episodio_id = ?");
-$stmtQuiz->execute([$episodio_id]);
-$perguntas = $stmtQuiz->fetchAll();
-
+// Perguntas do quiz
+$perguntas = buscarQuizPorEpisodio($episodio_id);
 if (!$perguntas) {
     echo "Nenhum quiz disponível para este episódio.";
     exit;
 }
-
 ?>
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -70,6 +60,7 @@ if (!$perguntas) {
 document.getElementById('submitQuiz').addEventListener('click', function() {
     const perguntas = document.querySelectorAll('.quiz-question');
     let acertos = 0;
+    let respostas = [];
 
     perguntas.forEach(q => {
         const correta = q.getAttribute('data-resposta');
@@ -77,21 +68,8 @@ document.getElementById('submitQuiz').addEventListener('click', function() {
         if (selecionada && selecionada.value === correta) {
             acertos++;
         }
-    });
 
-    const total = perguntas.length;
-    document.getElementById('score').textContent = `Você acertou ${acertos} de ${total} perguntas.`;
-    document.getElementById('quizResultado').style.display = 'block';
-});
-
-document.getElementById('submitQuiz').addEventListener('click', function() {
-    const perguntas = document.querySelectorAll('.quiz-question');
-    let respostas = [];
-
-    perguntas.forEach(q => {
         const idPergunta = q.querySelector('input[type="radio"]').name.replace('q', '');
-        const selecionada = q.querySelector('input[type="radio"]:checked');
-        const correta = q.getAttribute('data-resposta');
         respostas.push({
             pergunta_id: idPergunta,
             resposta_usuario: selecionada ? selecionada.value : null,
@@ -99,7 +77,10 @@ document.getElementById('submitQuiz').addEventListener('click', function() {
         });
     });
 
-    // Envia via fetch/AJAX para PHP
+    const total = perguntas.length;
+    document.getElementById('score').textContent = `Você acertou ${acertos} de ${total} perguntas.`;
+    document.getElementById('quizResultado').style.display = 'block';
+
     fetch('salvar_quiz.php', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},

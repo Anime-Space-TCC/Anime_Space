@@ -1,51 +1,44 @@
 <?php
 session_start();
-require __DIR__ . '/../shared/conexao.php';
 
-// Verifica se o usuário está logado
-if (!isset($_SESSION['user_id'])) {
+require __DIR__ . '/../shared/conexao.php';
+require __DIR__ . '/../shared/auth.php';
+require __DIR__ . '/../shared/validators.php';
+require __DIR__ . '/../shared/comentarios.php';
+
+// 1. Verifica login
+if (!usuarioLogado()) {
     die("Você precisa estar logado para comentar.");
 }
 
-$user_id = $_SESSION['user_id'];
+$user_id = obterUsuarioAtualId();
 
-// Confirma se o user_id realmente existe no banco
-$stmt = $pdo->prepare("SELECT id FROM users WHERE id = ?");
-$stmt->execute([$user_id]);
-if (!$stmt->fetch()) {
+// 2. Confirma se usuário existe
+if (!existeUsuario($pdo, $user_id)) {
     die("Usuário inválido ou não encontrado.");
 }
 
-// Dados do formulário
+// 3. Dados do formulário
 $episodio_id = $_POST['episodio_id'] ?? null;
 $id_anime    = $_POST['id'] ?? null;
 $comentario  = trim($_POST['comentario'] ?? '');
 
-// Validação
+// 4. Valida dados
 if (!$episodio_id || empty($comentario)) {
     exit("Comentário inválido.");
 }
-
-// Confirma se o episódio existe
-$stmt = $pdo->prepare("SELECT id FROM episodios WHERE id = ?");
-$stmt->execute([$episodio_id]);
-if (!$stmt->fetch()) {
+if (!existeEpisodio($pdo, $episodio_id)) {
     exit("Episódio não encontrado.");
 }
 
-// Insere no banco
-$stmt = $pdo->prepare("
-    INSERT INTO comentarios (user_id, episodio_id, comentario, data_comentario)
-    VALUES (?, ?, ?, NOW())
-");
-$stmt->execute([$user_id, $episodio_id, $comentario]);
+// 5. Insere comentário
+inserirComentario($pdo, $user_id, $episodio_id, $comentario);
 
-// --- Caminho dinâmico para redirecionamento ---
-$host = $_SERVER['HTTP_HOST']; // ex.: localhost
-$baseDir = rtrim(dirname($_SERVER['SCRIPT_NAME']), '/'); // pasta atual de comentar.php
+// 6. Redireciona
+$host = $_SERVER['HTTP_HOST'];
+$baseDir = rtrim(dirname($_SERVER['SCRIPT_NAME']), '/');
 $base_url = "http://{$host}{$baseDir}/episodes.php";
 
-// Redireciona para a página do episódio
 if ($id_anime) {
     header("Location: {$base_url}?id=" . urlencode($id_anime) . "&episode_id=" . urlencode($episodio_id));
 } else {

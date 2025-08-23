@@ -1,23 +1,16 @@
 <?php
 session_start();
-require __DIR__ . '/../shared/conexao.php';
+require __DIR__ . '/../shared/suporte.php';
 
-// Se quiser permitir apenas usuários logados, descomente:
-// if (!isset($_SESSION['usuario_id'])) {
-//     header('Location: login.php');
-//     exit();
-// }
+$mensagem_enviada = false;
 
 // Processa envio do formulário
-$mensagem_enviada = false;
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $nome = trim($_POST['nome']);
-    $email = trim($_POST['email']);
-    $mensagem = trim($_POST['mensagem']);
+    $nome = trim($_POST['nome'] ?? '');
+    $email = trim($_POST['email'] ?? '');
+    $mensagem = trim($_POST['mensagem'] ?? '');
 
-    if ($nome && $email && $mensagem) {
-        $stmt = $pdo->prepare("INSERT INTO suporte (nome, email, mensagem, data_envio) VALUES (?, ?, ?, NOW())");
-        $stmt->execute([$nome, $email, $mensagem]);
+    if (enviarMensagemSuporte($nome, $email, $mensagem)) {
         $mensagem_enviada = true;
     }
 }
@@ -35,13 +28,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <div class="suporte">
     <h1>Suporte - Anime Space</h1>
     <p>Bem-vindo ao suporte do Anime Space! Use o formulário abaixo para entrar em contato com nossa equipe.</p>
+    
     <nav class="nav-suporte">
-    <a href="../../PHP/user/index.php" class="suporte-btn" aria-label="Página Inicial" role="button" tabindex="0">
-      <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" width="22" height="22">
-        <path d="M12 3l9 8h-3v9h-5v-6H11v6H6v-9H3z"/>
-      </svg>
-    </a>
+        <a href="../../PHP/user/index.php" class="suporte-btn" aria-label="Página Inicial" role="button" tabindex="0">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" width="22" height="22">
+            <path d="M12 3l9 8h-3v9h-5v-6H11v6H6v-9H3z"/>
+          </svg>
+        </a>
     </nav>
+
     <?php if ($mensagem_enviada): ?>
         <div class="msg-sucesso">✅ Sua mensagem foi enviada com sucesso! Entraremos em contato em breve.</div>
     <?php endif; ?>
@@ -78,6 +73,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <p>Use o formulário de suporte, descrevendo o problema e enviando prints se possível.</p>
     </div>
 </div>
-
 </body>
 </html>

@@ -1,82 +1,54 @@
-<?php 
-// Inicia a sessão do usuário
+<?php
 session_start();
 
-// Conecta ao banco de dados
 require __DIR__ . '/../shared/conexao.php';
+require __DIR__ . '/../shared/auth.php';
+require __DIR__ . '/../shared/animes.php';
+require __DIR__ . '/../shared/episodios.php';
+require __DIR__ . '/../shared/comentarios.php';
+require __DIR__ . '/../shared/utils.php';
 
-// Obtém os parâmetros da URL
 $id = $_GET['id'] ?? null;
 $episode_id = $_GET['episode_id'] ?? null;
 
-// Verifica se o anime foi informado
 if (!$id) {
-    echo "Anime não encontrado.";
-    exit;
+    die("Anime não encontrado.");
 }
 
-// Consulta informações do anime
-$anime = $pdo->prepare("SELECT nome, capa, sinopse FROM animes WHERE id = ?");
-$anime->execute([$id]);
-$animeInfo = $anime->fetch();
+// Busca anime
+$animeInfo = buscarAnimePorId($pdo, $id);
+if (!$animeInfo) die("Anime não encontrado.");
 
-if (!$animeInfo) {
-    echo "Anime não encontrado.";
-    exit;
+// Busca episódios
+$lista = buscarEpisodiosComReacoes($pdo, $id);
+
+// Filtra linguagem se selecionada
+$filtroLinguagemSelecionada = $_GET['linguagem'] ?? '';
+if ($filtroLinguagemSelecionada) {
+    $lista = filtrarPorLinguagem($lista, $filtroLinguagemSelecionada);
 }
 
-// Busca os episódios com contagem de likes e dislikes
-$episodios = $pdo->prepare("
-    SELECT e.*, 
-        COALESCE(SUM(CASE WHEN r.reacao = 'like' THEN 1 ELSE 0 END), 0) AS likes,
-        COALESCE(SUM(CASE WHEN r.reacao = 'dislike' THEN 1 ELSE 0 END), 0) AS dislikes
-    FROM episodios e
-    LEFT JOIN episodio_reacoes r ON e.id = r.episodio_id
-    WHERE e.anime_id = ?
-    GROUP BY e.id
-    ORDER BY e.temporada ASC, e.numero ASC
-");
-$episodios->execute([$id]);
-$lista = $episodios->fetchAll();
+// Organiza por temporada
+$temporadas = organizarPorTemporada($lista);
 
-// Organiza os episódios por temporada
-$temporadas = [];
-foreach ($lista as $ep) {
-    $temporadas[$ep['temporada']][] = $ep;
-}
-
-// Busca o episódio selecionado, se houver
+// Episódio selecionado
 $episodioSelecionado = null;
 if ($episode_id) {
-    $stmtEp = $pdo->prepare("SELECT * FROM episodios WHERE id = ? AND anime_id = ?");
-    $stmtEp->execute([$episode_id, $id]);
-    $episodioSelecionado = $stmtEp->fetch();
+    $episodioSelecionado = buscarEpisodioSelecionado($pdo, $episode_id, $id);
 }
 
-// Extrai o ID do Google Drive a partir da URL
-function extrairIdGoogleDrive($url) {
-    if (preg_match('/\/file\/d\/([^\/]+)\//', $url, $matches)) {
-        return $matches[1];
-    }
-    return null;
-}
-
-$filtroLinguagemSelecionada = $_GET['linguagem'] ?? '';
-
-// Filtra lista de episódios para a linguagem selecionada, se houver
-if ($filtroLinguagemSelecionada) {
-    $lista = array_filter($lista, function($ep) use ($filtroLinguagemSelecionada) {
-        return strtolower($ep['linguagem']) === strtolower($filtroLinguagemSelecionada);
-    });
-    $temporadas = [];
-    foreach ($lista as $ep) {
-        $temporadas[$ep['temporada']][] = $ep;
-    }
-
-    if (!$episode_id && !empty($lista)) {
-        $episodioSelecionado = reset($lista);
-        $episode_id = $episodioSelecionado['id'];
-    }
+// Busca comentários apenas se usuário logado
+$comentarios = [];
+if ($episodioSelecionado && isset($_SESSION['user_id'])) {
+    $stmtComentarios = $pdo->prepare("
+        SELECT c.comentario, c.data_comentario, u.username
+        FROM comentarios c
+        JOIN users u ON c.user_id = u.id
+        WHERE c.episodio_id = ?
+        ORDER BY c.data_comentario DESC
+    ");
+    $stmtComentarios->execute([$episodioSelecionado['id']]);
+    $comentarios = $stmtComentarios->fetchAll();
 }
 ?>
 
@@ -301,7 +273,6 @@ document.querySelectorAll('.reacao-btn').forEach(button => {
     card.querySelector('.contador-like').textContent = data.likes;
     card.querySelector('.contador-dislike').textContent = data.dislikes;
 
-    // --- NOVA LÓGICA DINÂMICA ---
     const quizButton = card.querySelector('.btn-quiz');
     if (quizButton) {
       if (data.reacao_atual === 'like') {
@@ -310,7 +281,7 @@ document.querySelectorAll('.reacao-btn').forEach(button => {
         quizButton.classList.remove('show');
       }
     }
-    // --- FIM DA NOVA LÓGICA ---
+
   } else {
     alert(data.erro || 'Erro ao processar reação.');
   }

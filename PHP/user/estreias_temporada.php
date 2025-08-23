@@ -1,22 +1,9 @@
 <?php
-require __DIR__ . '/../shared/conexao.php'; // Inclui o arquivo de conexão com o banco de dados
+require __DIR__ . '/../shared/conexao.php';
+require __DIR__ . '/../shared/animes.php';
 
-// Consulta SQL para buscar os primeiros episódios da última temporada de cada anime no ano atual
-$sql = "
-SELECT e.*, a.nome AS anime_nome, a.capa AS anime_capa
-FROM episodios e
-JOIN animes a ON e.anime_id = a.id
-WHERE e.numero = 1
-  AND e.temporada = (
-      SELECT MAX(e2.temporada)
-      FROM episodios e2
-      WHERE e2.anime_id = e.anime_id
-  )
-ORDER BY e.data_lancamento DESC
-";
-
-$stmt = $pdo->query($sql);
-$estreias = $stmt->fetchAll(PDO::FETCH_ASSOC);
+// Busca estreias
+$estreias = buscarEstreiasTemporada($pdo);
 ?>
 
 <!DOCTYPE html>
@@ -37,7 +24,7 @@ $estreias = $stmt->fetchAll(PDO::FETCH_ASSOC);
           <path d="M12 3l9 8h-3v9h-5v-6H11v6H6v-9H3z"/>
         </svg>
       </a> |
-      <a href="../../PHP/user/ultimos_episodios.php">Lançamentos</a> 
+      <a href="../../PHP/user/últimos_episodios.php">Lançamentos</a> 
     </nav>
   </header>
 
@@ -46,17 +33,15 @@ $estreias = $stmt->fetchAll(PDO::FETCH_ASSOC);
       <ul class="episodios-lista">
         <?php foreach ($estreias as $ep): ?>
           <li>
-            <!-- Imagem da capa do anime -->
             <?php if (!empty($ep['anime_capa'])): ?>
               <img src="../../img/<?= htmlspecialchars($ep['anime_capa']) ?>" alt="Capa <?= htmlspecialchars($ep['anime_nome']) ?>" width="100" style="border-radius:6px;" />
             <?php else: ?>
               <span style="display:inline-block;width:100px;height:140px;background:#ccc;text-align:center;line-height:140px;border-radius:6px;">Sem Capa</span>
             <?php endif; ?>
 
-            <!-- Informações do episódio -->
             <div style="display:inline-block; margin-left:10px; vertical-align:top;">
               <strong><?= htmlspecialchars($ep['anime_nome']) ?></strong><br>
-              Temporada <?= $ep['numero'] ?>, Episódio <?= $ep['numero'] ?>: <?= htmlspecialchars($ep['titulo']) ?><br>
+              Temporada <?= $ep['temporada'] ?>, Episódio <?= $ep['numero'] ?>: <?= htmlspecialchars($ep['titulo']) ?><br>
               (Estreia em <?= date('d/m/Y', strtotime($ep['data_lancamento'])) ?>)<br>
             </div>
             <a href="../../PHP/user/episodes.php?id=<?= $ep['anime_id'] ?>">Ver Episódios</a>

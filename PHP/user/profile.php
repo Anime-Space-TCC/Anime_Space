@@ -1,149 +1,131 @@
 <?php
-session_start();
+require_once '../shared/auth.php';
+require_once '../shared/usuarios.php';
+require_once '../shared/perfil.php';
 
-// Verifica se o usuário está logado, caso contrário redireciona para login
-if (!isset($_SESSION['user_id'])) {
-    header('Location: login.php');
-    exit;
-}
+// Garante login
+verificarLogin();
 
-// Inclui a conexão com o banco de dados
-require_once '../shared/conexao.php';
-
-// Variáveis de controle
 $userId = $_SESSION['user_id'];
 $username = $_SESSION['username'];
-$mensagem = ''; // Para exibir mensagens de erro ou sucesso
-$fotoPerfil = ''; // Caminho da foto de perfil
+$mensagem = "";
 
-/* ==========================================================
-   LÓGICA DE UPLOAD DA FOTO DE PERFIL
-========================================================== */
+// Upload de foto
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['foto'])) {
-    $diretorio_destino = '../../uploads/';
-    
-    // Cria o diretório caso não exista
-    if (!is_dir($diretorio_destino)) {
-        mkdir($diretorio_destino, 0777, true);
-    }
-
-    $arquivo_temporario = $_FILES['foto']['tmp_name'];
-    $nome_original = basename($_FILES['foto']['name']);
-    $extensao = strtolower(pathinfo($nome_original, PATHINFO_EXTENSION));
-
-    // Tipos de arquivos permitidos
-    $tipos_permitidos = ['jpg', 'jpeg', 'png'];
-
-    // Validações do upload
-    if (!in_array($extensao, $tipos_permitidos)) {
-        $mensagem = "Erro: Apenas arquivos JPG, JPEG e PNG são permitidos.";
-    } elseif ($_FILES['foto']['size'] > 500000) {
-        $mensagem = "Erro: O arquivo é muito grande. Tamanho máximo é 500KB.";
+    $resultado = atualizarFotoPerfil($userId, $_FILES['foto']);
+    if ($resultado === true) {
+        $mensagem = "Foto atualizada com sucesso!";
     } else {
-        // Define nome único para o arquivo (ID do usuário + extensão)
-        $nome_arquivo_unico = $userId . '.' . $extensao;
-        $caminho_completo = $diretorio_destino . $nome_arquivo_unico;
-
-        // Move o arquivo para a pasta de uploads
-        if (move_uploaded_file($arquivo_temporario, $caminho_completo)) {
-            $caminho_relativo_db = 'uploads/' . $nome_arquivo_unico;
-
-            // Atualiza o caminho da foto no banco de dados
-            $sql_update = "UPDATE users SET foto_perfil = ? WHERE id = ?";
-            $stmt_update = $pdo->prepare($sql_update);
-
-            if ($stmt_update->execute([$caminho_relativo_db, $userId])) {
-                $mensagem = "Foto de perfil atualizada com sucesso!";
-                $fotoPerfil = '../../' . $caminho_relativo_db;
-            } else {
-                $mensagem = "Erro ao salvar o caminho da foto no banco de dados.";
-            }
-        } else {
-            $mensagem = "Erro ao mover o arquivo para o servidor.";
-        }
-    }
-}
-/* ==========================================================
-   FIM DA LÓGICA DE UPLOAD
-========================================================== */
-
-/* ==========================================================
-   BUSCA FOTO DE PERFIL NO BANCO
-========================================================== */
-if (empty($fotoPerfil)) {
-    $sql_select = "SELECT foto_perfil FROM users WHERE id = ?";
-    $stmt_select = $pdo->prepare($sql_select);
-    $stmt_select->execute([$userId]);
-    $userData = $stmt_select->fetch();
-
-    // Caminho físico no servidor
-    $caminho_fisico = __DIR__ . '/../../img/default.jpg';
-
-    if (!file_exists($caminho_fisico)) {
-       $mensagem = "Erro: O arquivo de imagem não foi encontrado em: " . htmlspecialchars($caminho_fisico);
-       $fotoPerfil = 'https://placehold.co/150x150/FFF/000?text=Sem+Foto';
-    } else {
-       $fotoPerfil = '../../img/default.jpg';
+        $mensagem = $resultado; // mensagem de erro
     }
 }
 
-/* ==========================================================
-   FALLBACK CASO A IMAGEM NÃO EXISTA NO SERVIDOR
-========================================================== */
-if (!file_exists($fotoPerfil)) {
-    $mensagem = "Erro: O arquivo de imagem não foi encontrado em: " . htmlspecialchars($fotoPerfil);
-    // Usa imagem de placeholder como último recurso
-    $fotoPerfil = 'https://placehold.co/150x150/FFF/000?text=Sem+Foto';
-}
+// Busca foto do perfil
+$fotoPerfil = buscarFotoPerfil($userId);
+
+// Busca dados do perfil
+$favoritos = buscarFavoritos($userId);
+$historico = buscarHistorico($userId);
+$recomendacoes = buscarRecomendacoes($userId);
 ?>
 
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8" />
+    <meta charset="UTF-8">
     <title>Perfil - Anime Space</title>
-    <link rel="stylesheet" href="../../CSS/style.css" />
+    <link rel="stylesheet" href="../../CSS/stylePerf.css">
     <link rel="icon" href="../../img/slogan3.png" type="image/png">
 </head>
 <body class="perfil">
-    <div class="login-container">
-        <div class="login-box">
-            <h2>Olá, <?= htmlspecialchars($username) ?>!</h2>
 
-            <?php if (!empty($mensagem)): ?>
-                <p style="color: red;"><?= htmlspecialchars($mensagem) ?></p>
-            <?php endif; ?>
-            
-            <!-- Foto de perfil -->
-            <div>
-                <img src="<?= htmlspecialchars($fotoPerfil) ?>" alt="Foto de perfil" style="width:150px; height:150px;">
-            </div>
+<div class="login-container">
+    <div class="login-box">
+        <h2>Olá, <?= htmlspecialchars($username) ?>!</h2>
 
-            <!-- Formulário para upload de foto de perfil -->
-            <form action="profile.php" method="post" enctype="multipart/form-data">
-                <label for="foto">Alterar foto de perfil:</label>
-                <input type="file" name="foto" id="foto" required>
-                <input type="submit" value="Salvar Foto">
-            </form>
+        <?php if (!empty($mensagem)): ?>
+            <p class="message error"><?= htmlspecialchars($mensagem) ?></p>
+        <?php endif; ?>
 
-            <p>Seja bem-vindo ao seu perfil. Aqui você poderá visualizar e editar seus dados futuramente.</p>
-
-            <div>
-                <a href="../../PHP/user/index.php" class="sinopse-btn" aria-label="Página Inicial" role="button" tabindex="0"
-                   style="display: inline-flex; align-items: center; justify-content: center;">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" width="20" height="20" style="vertical-align: middle;">
-                      <path d="M12 3l9 8h-3v9h-5v-6H11v6H6v-9H3z"/>
-                    </svg>
-                </a>
-                <a href="../../PHP/user/stream.php">📺 Streaming</a>
-                <a href="../../PHP/user/editar_perfil.php">✏️ Editar Perfil</a>
-            </div>
-
-            <!-- Formulário para logout -->
-            <form action="../shared/logout.php" method="post">
-                <input type="submit" value="Sair da Conta" />
-            </form>
+        <!-- Foto de perfil -->
+        <div id="foto-perfil">
+            <img src="<?= htmlspecialchars($fotoPerfil) ?>" alt="Foto de perfil">
         </div>
+
+        <!-- Formulário para upload de foto de perfil -->
+        <form action="perfil.php" method="post" enctype="multipart/form-data">
+            <label for="foto">Alterar foto de perfil:</label>
+            <input type="file" name="foto" id="foto" required>
+            <input type="submit" value="Salvar Foto">
+        </form>
+
+        <!-- Menu de navegação -->
+        <div class="links">
+            <a href="../../PHP/user/index.php" class="perfil-btn" aria-label="Página Inicial">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 3l9 8h-3v9h-5v-6H11v6H6v-9H3z"/>
+                </svg>
+                Início
+            </a>
+            <a href="../../PHP/user/stream.php">📺 Streaming</a>
+            <a href="../../PHP/user/editar_perfil.php">✏️ Editar Perfil</a>
+        </div>
+
+        <!-- Favoritos -->
+        <h3>Favoritos</h3>
+        <div class="perfil-section">
+            <?php if ($favoritos): ?>
+                <?php foreach ($favoritos as $f): ?>
+                    <div class="item">
+                        <img src="../../<?= htmlspecialchars($f['capa']) ?>" alt="<?= htmlspecialchars($f['nome']) ?>" title="<?= htmlspecialchars($f['nome']) ?>">
+                        <p><?= htmlspecialchars($f['nome']) ?></p>
+                    </div>
+                <?php endforeach; ?>
+            <?php else: ?>
+                <p>Você ainda não adicionou favoritos.</p>
+            <?php endif; ?>
+        </div>
+
+        <!-- Histórico -->
+        <h3>Histórico</h3>
+        <div class="perfil-section">
+            <?php if ($historico): ?>
+                <?php foreach ($historico as $h): ?>
+                    <div class="item">
+                        <img src="../../<?= htmlspecialchars($h['miniatura']) ?>" alt="<?= htmlspecialchars($h['titulo']) ?>" title="<?= htmlspecialchars($h['titulo']) ?>">
+                        <p><?= htmlspecialchars($h['titulo']) ?></p>
+                        <small><?= date('d/m/Y H:i', strtotime($h['data_assistido'])) ?></small>
+                    </div>
+                <?php endforeach; ?>
+            <?php else: ?>
+                <p>Nenhum episódio assistido recentemente.</p>
+            <?php endif; ?>
+        </div>
+
+        <!-- Recomendações -->
+        <h3>Recomendações</h3>
+        <div class="perfil-section">
+            <?php if ($recomendacoes): ?>
+                <?php foreach ($recomendacoes as $r): ?>
+                    <div class="item">
+                        <img src="../../<?= htmlspecialchars($r['capa']) ?>" alt="<?= htmlspecialchars($r['nome']) ?>" title="<?= htmlspecialchars($r['nome']) ?>">
+                        <p><?= htmlspecialchars($r['nome']) ?></p>
+                        <?php if (!empty($r['motivo'])): ?>
+                            <small><?= htmlspecialchars($r['motivo']) ?></small>
+                        <?php endif; ?>
+                    </div>
+                <?php endforeach; ?>
+            <?php else: ?>
+                <p>Sem recomendações no momento.</p>
+            <?php endif; ?>
+        </div>
+
+        <!-- Formulário para logout -->
+        <form action="../shared/logout.php" method="post">
+            <input type="submit" value="Sair da Conta" class="logout-btn">
+        </form>
     </div>
+</div>
+
 </body>
 </html>

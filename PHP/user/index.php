@@ -1,13 +1,11 @@
 <?php
 require __DIR__ . '/../shared/conexao.php';
+require __DIR__ . '/../shared/animes.php';
+require __DIR__ . '/../shared/generos.php';
 
-// Buscar Top 5 animes ordenados pela nota, do maior para o menor
-$stmt = $pdo->query("SELECT id, nome, capa, nota, descricao FROM animes ORDER BY nota DESC LIMIT 5");
-$topAnimes = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-// Buscar todos os gêneros
-$stmt = $pdo->query("SELECT nome, id_destaque FROM generos ORDER BY nome");
-$generos = $stmt->fetchAll(PDO::FETCH_ASSOC);
+// Buscar dados
+$topAnimes = buscarTopAnimes($pdo, 5);
+$generos   = buscarTodosGeneros($pdo);
 ?>
 
 <!DOCTYPE html>
@@ -21,10 +19,8 @@ $generos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 </head>
 <body class="home">
 
-  <!-- Botão para abrir/fechar o menu lateral -->
   <button class="menu-toggle" aria-label="Abrir menu" onclick="toggleMenu()">☰</button>
 
-  <!-- Menu lateral principal -->
   <nav class="menu-lateral" id="menuLateral" aria-label="Menu principal">
     <a href="../../PHP/user/stream.php">Catálogo</a>
     <a href="../../PHP/user/estreias_temporada.php">Estreias da Temporada</a>
@@ -33,7 +29,6 @@ $generos = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <a href="../../PHP/user/register.php">Cadastro</a>
   </nav>
 
-  <!-- Botão para acesso ao perfil do usuário -->
   <a href="../../PHP/user/profile.php" class="perfil-btn" aria-label="Perfil do usuário" role="button" tabindex="0">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" width="24" height="24" style="vertical-align: middle;">
       <circle cx="12" cy="8" r="4" />
@@ -41,22 +36,18 @@ $generos = $stmt->fetchAll(PDO::FETCH_ASSOC);
     </svg>
   </a>
 
-  <!-- Botão Suporte -->
   <a href="suporte.php" class="btn-suporte" aria-label="Suporte" role="button" tabindex="0">
-  <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" 
-       viewBox="0 0 24 24" width="24" height="24">
-    <path d="M12 2C6.48 2 2 6.03 2 11c0 2.38 1.04 4.52 2.72 6.08L4 22l5.18-2.29C10.02 20.57 11 20.78 12 20.78c5.52 0 10-4.03 10-9s-4.48-9-10-9z"/>
-  </svg>
+    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" width="24" height="24">
+      <path d="M12 2C6.48 2 2 6.03 2 11c0 2.38 1.04 4.52 2.72 6.08L4 22l5.18-2.29C10.02 20.57 11 20.78 12 20.78c5.52 0 10-4.03 10-9s-4.48-9-10-9z"/>
+    </svg>
   </a>
 
-  <!-- Cabeçalho principal da página -->
   <header class="cabeca" role="banner">
     <img src="../../img/slogan2.png" alt="Slogan Anime Space" class="img-slogan" /> 
     <p><strong>O universo dos animes ao seu alcance</strong></p> 
   </header>
 
   <main>
-    <!-- Seção com os 5 animes principais do mês -->
     <section class="top-animes" aria-labelledby="top-animes-title">
       <h3 id="top-animes-title">Top 5 do site</h3> 
       <ol class="lista-top">
@@ -75,7 +66,6 @@ $generos = $stmt->fetchAll(PDO::FETCH_ASSOC);
       </ol>
     </section>
 
-    <!-- Seção com gêneros populares -->
     <section class="genres" aria-labelledby="genres-title">
       <h3 id="genres-title">Gêneros Populares</h3>
         <ul>
@@ -90,7 +80,6 @@ $generos = $stmt->fetchAll(PDO::FETCH_ASSOC);
     </section>
   </main>
 
-  <!-- Rodapé da página -->
   <footer class="rodape" role="contentinfo">
     <p>
       O <strong>Animes Space</strong> é um portal dedicado a recomendar os melhores animes, separados por gênero, nota e estilo. Descubra novos títulos,<br />
@@ -99,7 +88,6 @@ $generos = $stmt->fetchAll(PDO::FETCH_ASSOC);
     </p>
   </footer>
 
-  <!-- Script para alternar a classe do menu lateral -->
   <script>
     function toggleMenu() {
       document.getElementById("menuLateral").classList.toggle("aberto");

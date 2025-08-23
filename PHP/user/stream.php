@@ -1,57 +1,19 @@
-<?php require __DIR__ . '/../shared/conexao.php';
+<?php 
+require __DIR__ . '/../shared/catalogo.php';
 
+// Filtros recebidos
 $filtroGenero = $_GET['generos'] ?? '';
 $filtroAno = $_GET['ano'] ?? '';
 $filtroLinguagem = $_GET['linguagem'] ?? '';
 $busca = $_GET['busca'] ?? '';
 
-// Buscar gêneros
-$generos = $pdo->query("SELECT nome FROM generos ORDER BY nome ASC")->fetchAll(PDO::FETCH_COLUMN);
+// Dados para dropdowns
+$generos = getGeneros();
+$anos = getAnos();
+$linguagens = getLinguagens();
 
-// Buscar anos
-$anos = $pdo->query("SELECT valor FROM ano ORDER BY valor DESC")->fetchAll(PDO::FETCH_COLUMN);
-
-// Buscar linguagens distintas da tabela episodios
-$linguagens = $pdo->query("SELECT DISTINCT linguagem FROM episodios ORDER BY linguagem ASC")->fetchAll(PDO::FETCH_COLUMN);
-
-$sql = "
-  SELECT DISTINCT a.id, a.nome, a.capa, a.ano, a.nota,
-    GROUP_CONCAT(DISTINCT g.nome SEPARATOR ', ') AS generos
-  FROM animes a
-  LEFT JOIN anime_generos ag ON a.id = ag.anime_id
-  LEFT JOIN generos g ON ag.genero_id = g.id
-  LEFT JOIN episodios e ON e.anime_id = a.id
-  WHERE 1 = 1
-";
-
-$params = [];
-
-if (!empty($filtroGenero)) {
-  $sql .= " AND g.nome = :genero";
-  $params[':genero'] = $filtroGenero;
-}
-
-if (!empty($filtroAno)) {
-  $sql .= " AND a.ano = :ano";
-  $params[':ano'] = $filtroAno;
-}
-
-if (!empty($filtroLinguagem)) {
-  $sql .= " AND e.linguagem = :linguagem";
-  $params[':linguagem'] = $filtroLinguagem;
-}
-
-if (!empty($busca)) {
-  $sql .= " AND (a.nome LIKE :busca1 OR g.nome LIKE :busca2)";
-  $params[':busca1'] = '%' . $busca . '%';
-  $params[':busca2'] = '%' . $busca . '%';
-}
-
-$sql .= " GROUP BY a.id ORDER BY a.nome ASC";
-
-$stmt = $pdo->prepare($sql);
-$stmt->execute($params);
-$animes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+// Resultado da busca
+$animes = getAnimesFiltrados($filtroGenero, $filtroAno, $filtroLinguagem, $busca);
 ?>
 
 <!DOCTYPE html>

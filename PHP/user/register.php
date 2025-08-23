@@ -1,46 +1,65 @@
 <?php
-session_start(); // Inicia a sessão para uso de variáveis de sessão
-require __DIR__ . '/../shared/conexao.php'; // Importa a conexão com o banco de dados
+session_start();
+require __DIR__ . '/../shared/conexao.php';
+require __DIR__ . '/../shared/usuarios.php';
 
-$errors = []; // Array para armazenar mensagens de erro
+$errors = [];
 
-// Verifica se o formulário foi enviado via POST
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $username = trim($_POST['username'] ?? ''); // Obtém e limpa o nome de usuário
-    $email = trim($_POST['email'] ?? ''); // Obtém e limpa o e-mail
-    $password = $_POST['password'] ?? ''; // Obtém a senha
-    $password_confirm = $_POST['password_confirm'] ?? ''; // Obtém a confirmação da senha
 
-    // Validações básicas dos campos
+    // Recupera os dados do formulário, removendo espaços extras com trim
+    $username = trim($_POST['username'] ?? ''); // Nome de usuário
+    $email = trim($_POST['email'] ?? '');       // E-mail do usuário
+    $password = $_POST['password'] ?? '';       // Senha
+    $password_confirm = $_POST['password_confirm'] ?? ''; // Confirmação de senha
+
+    // =====================
+    // Validações dos campos
+    // =====================
+
+    // Verifica se o username foi preenchido
     if (!$username) $errors[] = "Informe um nome de usuário.";
+
+    // Verifica se o e-mail é válido
     if (!$email || !filter_var($email, FILTER_VALIDATE_EMAIL)) $errors[] = "Informe um e-mail válido.";
+
+    // Verifica se a senha tem pelo menos 6 caracteres
     if (strlen($password) < 6) $errors[] = "A senha deve ter ao menos 6 caracteres.";
+
+    // Verifica se a senha e a confirmação conferem
     if ($password !== $password_confirm) $errors[] = "As senhas não conferem.";
 
-    // Verifica se já existe usuário ou e-mail cadastrado
-    if (empty($errors)) {
-        $stmt = $pdo->prepare("SELECT COUNT(*) FROM users WHERE username = ? OR email = ?");
-        $stmt->execute([$username, $email]);
-        if ($stmt->fetchColumn() > 0) {
-            $errors[] = "Usuário ou e-mail já cadastrado.";
-        }
+    // =====================
+    // Verifica duplicidade
+    // =====================
+    // Se não houver erros até aqui, checa se já existe usuário ou e-mail no banco
+    if (empty($errors) && usuarioExiste($username, $email)) {
+        $errors[] = "Usuário ou e-mail já cadastrado.";
     }
 
-    // Se não houver erros, insere o novo usuário no banco
+    // =====================
+    // Criação do usuário
+    // =====================
     if (empty($errors)) {
-        $hash = password_hash($password, PASSWORD_DEFAULT); // Cria hash da senha
-        $stmt = $pdo->prepare("INSERT INTO users (username, email, password) VALUES (?, ?, ?)");
-        if ($stmt->execute([$username, $email, $hash])) {
-            // Salva dados na sessão e redireciona para o perfil
-            $_SESSION['user_id'] = $pdo->lastInsertId();
+        // Cria novo usuário no banco
+        $novoId = criarUsuario($username, $email, $password);
+
+        // Se cadastro for bem-sucedido
+        if ($novoId) {
+            // Inicia sessão do usuário recém-criado
+            $_SESSION['user_id'] = $novoId;
             $_SESSION['username'] = $username;
+
+            // Redireciona para a página de perfil
             header('Location: profile.php');
             exit;
         } else {
-            $errors[] = "Erro ao cadastrar usuário."; // Mensagem em caso de falha na inserção
+            // Se algo deu errado no cadastro, adiciona erro
+            $errors[] = "Erro ao cadastrar usuário.";
         }
     }
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -51,7 +70,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <link rel="stylesheet" href="../../CSS/style.css" /> 
 <link rel="icon" href="../../img/slogan3.png" type="image/png"> 
 </head>
-<body class="login"> <!-- Classe para estilização de login/cadastro -->
+<body class="login"> 
 <div class="login-container">
   <div class="login-box">
     <h2>Cadastro</h2> 

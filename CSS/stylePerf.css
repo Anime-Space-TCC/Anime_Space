@@ -1,0 +1,257 @@
+/* =========================
+          GLOBAIS
+   ========================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    background-color: rgb(0, 0, 0);
+    font-family: Arial, sans-serif;
+    background-image: url('../img/earth-1756274.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    min-height: 100vh;
+    color: #eee;
+}
+
+/* =========================
+        PERFIL USUÁRIO
+   ========================= */
+
+.perfil .login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.perfil .login-box {
+    background-color: rgba(0, 0, 0, 0.65);
+    padding: 40px 30px;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgb(175, 134, 0);
+    width: 360px;
+    text-align: center;
+    color: #f0f0f0;
+}
+
+.perfil h2 {
+    font-size: 26px;
+    margin-bottom: 15px;
+    color: #ff9f00;
+    text-shadow: 1px 1px 3px #000;
+}
+
+.perfil p {
+    font-size: 16px;
+    margin-bottom: 25px;
+    color: #ccc;
+}
+
+.perfil .links {
+    margin-top: 20px;
+}
+
+.perfil .links a {
+    display: inline-block;
+    margin: 5px 10px;
+    padding: 8px 12px;
+    background-color: transparent;
+    color: #ff9f00;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+.perfil .links a:hover {
+    background-color: #ff9f00;
+    color: #000;
+    box-shadow: 0 0 6px #fff;
+}
+
+.perfil form input[type="submit"] {
+    margin-top: 20px;
+    background-color: #ff9f00;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 20px;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+    color: #000;
+    width: 100%;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    box-shadow: 0 4px 10px rgba(255,159,0,0.7);
+}
+
+.perfil form input[type="submit"]:hover {
+    background-color: #fff;
+    color: #ff9f00;
+}
+
+/* =========================
+          MENU PERFIL 
+   ========================= */
+
+.perfil .perfil-btn {
+    position: fixed;
+    top: 6rem;
+    left: 1rem;
+    z-index: 1100; 
+    background-color: rgba(0, 0, 0, 0.7);
+    color: #ff9f00;
+    padding: 0.3rem 0.7rem;        
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    font-size: 1.8rem;            
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    box-shadow: 0 0 6px #ff9f00;
+    transition: background-color 0.3s ease;
+    text-decoration: none;
+    height: 2.5rem;              
+    line-height: 2.5rem;          
+}
+
+.perfil .perfil-btn:hover {
+    background-color: #ff9f00;
+    color: #000;
+}
+
+.perfil .perfil-btn svg {
+    fill: currentColor;
+    width: 24px;
+    height: 24px;
+    vertical-align: middle;
+}
+
+/* Foto de perfil */
+.perfil #foto-perfil {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    overflow: hidden;
+    display: inline-block;
+}
+
+/* =========================
+         EDITAR PERFIL
+   ========================= */
+
+.editar-perfil {
+    display: flex;
+    flex-direction: column;
+    max-width: 600px;      
+    margin: 110px auto;    
+    padding: 40px 30px;   
+    background-color: rgba(0, 0, 0, 0.65);
+    border-radius: 20px;
+    box-shadow: 0 5px 15px rgb(175, 134, 0);
+    color: #eee;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.editar-perfil .topo-editar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+}
+
+.editar-perfil .topo-editar h1 {
+    color: #ff9f00;
+    font-size: 2rem;
+    margin: 0;
+    text-shadow: 1px 1px 3px #000;
+}
+
+.editar-perfil .btn-voltar {
+    padding: 8px 20px;
+    background-color: transparent;
+    color: #ff9f00;
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: background-color 0.3s, color 0.3s, box-shadow 0.3s;
+}
+
+.editar-perfil .btn-voltar:hover {
+    background-color: #ff9f00;
+    color: #000;
+    box-shadow: 0 0 6px #fff;
+}
+
+.editar-perfil form {
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+}
+
+.editar-perfil label {
+    font-weight: bold;
+    font-size: 1rem;
+    color: #ff9f00;
+    margin-bottom: 8px;  
+    display: block;    
+}
+
+.editar-perfil input[type="text"],
+.editar-perfil input[type="email"],
+.editar-perfil input[type="password"],
+.editar-perfil input[type="file"] {
+    width: 100%;
+    padding: 12px 15px;
+    font-size: 1rem;
+    border-radius: 8px;
+    border: 2px solid #ff9f00;
+    background-color: #222;
+    color: #fff;
+    outline: none;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    margin-bottom: 15px;
+}
+
+.editar-perfil input:focus {
+    border-color: #fff;
+    box-shadow: 0 0 8px #ff9f00;
+}
+
+.editar-perfil button {
+    align-self: center;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 25px;
+    background-color: #ff9f00;
+    color: #000;
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s, box-shadow 0.3s;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 10px rgba(255,159,0,0.7);
+}
+
+.editar-perfil button:hover {
+    background-color: #fff;
+    color: #ff9f00;
+}
+
+.editar-perfil .mensagem-sucesso {
+    background-color: #28a745;
+    color: #fff;
+    padding: 8px 12px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    text-align: center;
+}
