@@ -50,6 +50,22 @@ if ($episodioSelecionado && isset($_SESSION['user_id'])) {
     $stmtComentarios->execute([$episodioSelecionado['id']]);
     $comentarios = $stmtComentarios->fetchAll();
 }
+
+$usuarioId = $_SESSION['user_id'] ?? null;
+$favoritado = false;
+
+if ($usuarioId) {
+    $stmt = $pdo->prepare("SELECT 1 FROM favoritos WHERE user_id = ? AND anime_id = ?");
+    $stmt->execute([$usuarioId, $id]);
+    $favoritado = $stmt->fetch() ? true : false;
+}
+
+$avaliacaoUsuario = 0;
+if ($usuarioId) {
+    $stmt = $pdo->prepare("SELECT nota FROM avaliacoes WHERE user_id = ? AND anime_id = ?");
+    $stmt->execute([$usuarioId, $id]);
+    $avaliacaoUsuario = $stmt->fetchColumn() ?: 0;
+}
 ?>
 
 <!DOCTYPE html>
@@ -64,15 +80,28 @@ if ($episodioSelecionado && isset($_SESSION['user_id'])) {
   <div class="episodio">
     <header>
     <div class="info-anime">
-        <?php if (!empty($animeInfo['capa'])): ?>
-            <img src="../../img/<?= htmlspecialchars($animeInfo['capa']) ?>" alt="Capa do Anime">
-        <?php endif; ?>
-        <h1><?= htmlspecialchars($animeInfo['nome']) ?> - Episódios</h1>
-        <?php if (!empty($animeInfo['sinopse'])): ?>
-            <button class="btn-info" onclick="toggleSinopse()">
-              ▼
-            </button>
-        <?php endif; ?>
+    <?php if (!empty($animeInfo['capa'])): ?>
+        <img src="../../img/<?= htmlspecialchars($animeInfo['capa']) ?>" alt="Capa do Anime">
+    <?php endif; ?>
+    <h1><?= htmlspecialchars($animeInfo['nome']) ?> - Episódios</h1>
+    <?php if (isset($_SESSION['user_id'])): ?>
+    <!-- Botão Favorito -->
+    <button type="button" id="btn-favorito" class="btn-favorito <?= $favoritado ? 'ativo' : '' ?>" data-anime-id="<?= $id ?>">
+    <?= $favoritado ? '❤️' : '🤍' ?>
+    </button>
+    <!-- Avaliação de Estrelas -->
+    <div class="avaliacao-estrelas" data-anime-id="<?= $id ?>">
+    <div class="estrela-container">
+        <?php for ($i = 1; $i <= 5; $i++): ?>
+            <button type="button" class="estrela <?= $i <= $avaliacaoUsuario ? 'ativa' : '' ?>" data-valor="<?= $i ?>">☆</button>
+        <?php endfor; ?>
+    </div>
+    <div class="nota-display"><?= $avaliacaoUsuario ? $avaliacaoUsuario.'/10' : '' ?></div>
+    </div>
+    <?php endif; ?>
+    <?php if (!empty($animeInfo['sinopse'])): ?>
+        <button type="button" class="btn-info" onclick="toggleSinopse()">▼</button>
+    <?php endif; ?>
     </div>
     <nav>
         <a href="../../PHP/user/index.php" class="sinopse-btn" aria-label="Página Inicial" role="button" tabindex="0"
@@ -289,6 +318,69 @@ document.querySelectorAll('.reacao-btn').forEach(button => {
     .catch(() => alert('Erro ao enviar reação.'));
   });
 });
+
+// FAVORITO
+const btnFav = document.getElementById("btn-favorito");
+if (btnFav) {
+  btnFav.addEventListener("click", (e) => {
+    e.preventDefault();
+    const animeId = btnFav.dataset.animeId;
+
+    fetch("../shared/favoritar.php", {
+      method: "POST",
+      headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+      body: `anime_id=${encodeURIComponent(animeId)}`,
+      credentials: 'same-origin'
+    })
+    .then(res => res.json())
+    .then(data => {
+      if (data.sucesso) {
+        btnFav.textContent = data.favoritado ? "❤️" : "🤍";
+        btnFav.classList.toggle("ativo", data.favoritado);
+      } else {
+        alert(data.erro || 'Erro desconhecido.');
+      }
+    })
+    .catch(() => alert('Erro ao enviar favorito.'));
+  });
+}
+
+// AVALIAÇÃO DE ESTRELAS
+document.querySelectorAll(".avaliacao-estrelas").forEach(container => {
+  const animeId = container.dataset.animeId;
+  const estrelas = container.querySelectorAll(".estrela");
+  const notaBox = container.querySelector(".nota-display");
+
+  const atualizarEstrelas = (valor) => {
+    estrelas.forEach(e => e.classList.toggle("ativa", e.dataset.valor <= valor));
+  };
+
+  estrelas.forEach(estrela => {
+    estrela.addEventListener("click", (e) => {
+      e.preventDefault();
+      const valorEstrela = Number(estrela.dataset.valor); // 1–5
+      const nota = valorEstrela * 2; // 0–10
+
+      fetch("../shared/avaliar.php", {
+        method: "POST",
+        headers: {"Content-Type": "application/x-www-form-urlencoded"},
+        body: `anime_id=${encodeURIComponent(animeId)}&avaliacao=${nota}`,
+        credentials: 'same-origin'
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.sucesso) {
+          atualizarEstrelas(valorEstrela); // mantém 1–5 para exibir estrelas
+          notaBox.textContent = `Nota: ${data.nota}/10`; // exibe 0–10
+        } else {
+          alert(data.erro || 'Erro ao registrar avaliação.');
+        }
+      })
+      .catch(() => alert('Erro ao enviar avaliação.'));
+    });
+  });
+});
+
 </script>
 </body>
 </html>

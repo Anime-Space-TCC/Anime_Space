@@ -451,6 +451,72 @@ html, body {
 }
 
 /* =========================
+   BOTÃO FAVORITO + ESTRELAS
+========================= */
+.info-anime .acoes-header {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-top: 10px;
+}
+
+/* Botão Favorito com coração */
+.info-anime .btn-favorito {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 25px;      
+  padding: 0;
+  transition: transform 0.2s, color 0.2s;
+  color: #333;           
+}
+.info-anime .btn-favorito:hover {
+  transform: scale(1.2);
+}
+.info-anime .btn-favorito.ativo {
+  color: #ffaa00;       
+  transform: scale(1.2);
+}
+
+.info-anime .avaliacao-estrelas {
+  display: flex;
+  flex-direction: column; 
+  align-items: flex-start;
+  gap: 2px;
+  position: relative;
+}
+
+/* Container das estrelas (linha) */
+.info-anime .avaliacao-estrelas .estrela-container {
+  display: flex;
+  flex-direction: row;  
+  gap: 5px;
+}
+
+/* Estrelas individuais */
+.info-anime .avaliacao-estrelas .estrela {
+  font-size: 36px;       
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #ccc;
+  transition: transform 0.2s, color 0.2s;
+}
+.info-anime .avaliacao-estrelas .estrela:hover,
+.info-anime .avaliacao-estrelas .estrela.ativa {
+  color: #ffaa00;
+  transform: scale(1.2);
+}
+
+/* Nota discreta abaixo das estrelas */
+.info-anime .avaliacao-estrelas .nota-display {
+  font-size: 0.75rem;
+  color: #666;
+  margin-top: 2px; 
+}
+
+
+/* =========================
         DESCRIÇÃO
    ========================= */
 .descricao {

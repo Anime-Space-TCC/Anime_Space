@@ -22,7 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $errors[] = $resultado['error'];
     }
 }
-
+?>
 
 <!DOCTYPE html>
 <html lang="pt-BR">

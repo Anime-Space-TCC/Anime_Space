@@ -1,7 +1,6 @@
 /* =========================
           GLOBAIS
-   ========================= */
-
+========================= */
 * {
     margin: 0;
     padding: 0;
@@ -9,143 +8,357 @@
 }
 
 html, body {
-    background-color: rgb(0, 0, 0);
-    font-family: Arial, sans-serif;
+    font-family: 'Segoe UI', sans-serif;
+    min-height: 100vh;
+    background-color: #0a0a0a;
     background-image: url('../img/earth-1756274.jpg');
     background-size: cover;
-    background-repeat: no-repeat;
     background-position: center;
-    min-height: 100vh;
     color: #eee;
 }
 
 /* =========================
-        PERFIL USUÁRIO
-   ========================= */
-
-.perfil .login-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-}
-
-.perfil .login-box {
-    background-color: rgba(0, 0, 0, 0.65);
-    padding: 40px 30px;
-    border-radius: 15px;
-    box-shadow: 0 5px 15px rgb(175, 134, 0);
-    width: 360px;
-    text-align: center;
-    color: #f0f0f0;
-}
-
-.perfil h2 {
-    font-size: 26px;
-    margin-bottom: 15px;
-    color: #ff9f00;
-    text-shadow: 1px 1px 3px #000;
-}
-
-.perfil p {
-    font-size: 16px;
-    margin-bottom: 25px;
-    color: #ccc;
-}
-
-.perfil .links {
-    margin-top: 20px;
-}
-
-.perfil .links a {
-    display: inline-block;
-    margin: 5px 10px;
-    padding: 8px 12px;
-    background-color: transparent;
-    color: #ff9f00;
-    border-radius: 6px;
-    text-decoration: none;
-    font-size: 14px;
-    transition: all 0.3s ease;
-}
-
-.perfil .links a:hover {
-    background-color: #ff9f00;
-    color: #000;
-    box-shadow: 0 0 6px #fff;
-}
-
-.perfil form input[type="submit"] {
-    margin-top: 20px;
-    background-color: #ff9f00;
-    border: none;
+        MENU LATERAL
+========================= */
+.menu-lateral {
+    position: fixed;
+    top: 3rem;
+    left: 0.5rem; /* mais colado na borda */
+    background-color: rgba(0,0,0,0.6);
+    padding: 8px; /* reduzido */
     border-radius: 8px;
-    padding: 12px 20px;
-    font-weight: bold;
-    font-size: 16px;
-    cursor: pointer;
-    color: #000;
-    width: 100%;
-    transition: background-color 0.3s ease, color 0.3s ease;
-    box-shadow: 0 4px 10px rgba(255,159,0,0.7);
+    display: flex;
+    flex-direction: column;
+    gap: 6px; /* menos espaço entre itens */
+    box-shadow: 0 0 6px #ffbf00;
+    z-index: 1000;
+    width: 130px; /* largura fixa menor */
 }
 
-.perfil form input[type="submit"]:hover {
+/* Links */
+.menu-lateral a {
+    color: #ffbf00;
+    text-decoration: none;
+    padding: 6px 8px; /* mais compacto */
+    border-radius: 5px;
+    transition: all 0.3s ease;
+    font-weight: bold;
+    font-size: 0.9rem; /* fonte menor */
+    display: block;
+    text-align: center; /* centraliza texto/ícones */
+}
+
+/* Hover */
+.menu-lateral a:hover {
+    background-color: #ffbf00;
+    color: #000;
+    box-shadow: 0 0 4px #fff;
+}
+
+/* Botão de submit */
+.menu-lateral input[type="submit"] {
+    background-color: #ffbf00;
+    color: #000;
+    border: none;
+    border-radius: 5px;
+    padding: 6px;
+    font-weight: bold;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: center;
+}
+
+/* Hover no botão */
+.menu-lateral input[type="submit"]:hover {
     background-color: #fff;
-    color: #ff9f00;
+    color: #ffbf00;
+    box-shadow: 0 0 4px #fff;
+}
+
+.form-logout {
+    text-align: center; /* centraliza o botão dentro do form */
+    margin-top: 8px;
+}
+
+.form-logout input[type="submit"] {
+    background-color: #ffbf00;
+    color: #000;
+    border: none;
+    border-radius: 5px;
+    padding: 6px 12px;
+    font-weight: bold;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-block; /* garante centralização */
+}
+
+.form-logout input[type="submit"]:hover {
+    background-color: #fff;
+    color: #ffbf00;
+    box-shadow: 0 0 4px #fff;
 }
 
 /* =========================
-          MENU PERFIL 
-   ========================= */
-
-.perfil .perfil-btn {
-    position: fixed;
-    top: 6rem;
-    left: 1rem;
-    z-index: 1100; 
-    background-color: rgba(0, 0, 0, 0.7);
-    color: #ff9f00;
-    padding: 0.3rem 0.7rem;        
-    border-radius: 6px;
-    border: none;
-    cursor: pointer;
-    font-size: 1.8rem;            
+       PERFIL RPG CENTRALIZADO
+========================= */
+.perfil-rpg {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 80px 20px 50px 20px;
+    position: relative;
+    z-index: 1;
     display: flex;
+    flex-direction: column;
     align-items: center;
-    gap: 0.5rem;
-    box-shadow: 0 0 6px #ff9f00;
-    transition: background-color 0.3s ease;
-    text-decoration: none;
-    height: 2.5rem;              
-    line-height: 2.5rem;          
 }
 
-.perfil .perfil-btn:hover {
-    background-color: #ff9f00;
-    color: #000;
+/* Bainha semi-transparente atrás do conteúdo */
+.perfil-rpg::before {
+    content: '';
+    position: absolute;
+    top: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 1000px;
+    bottom: 40px;
+    background: rgba(0,0,0,0.5);
+    backdrop-filter: blur(6px);
+    z-index: -1;
+    border-radius: 20px;
 }
 
-.perfil .perfil-btn svg {
-    fill: currentColor;
-    width: 24px;
-    height: 24px;
-    vertical-align: middle;
+/* =========================
+       GRID DE BLOCOS
+========================= */
+.blocos {
+    display: grid;
+    grid-template-columns: 1fr 1fr; 
+    gap: 100px;
+    width: 100%;
+    max-width: 950px;
+    margin-bottom: 30px;
 }
 
-/* Foto de perfil */
-.perfil #foto-perfil {
+.bloco {
+    background-color: rgba(0,0,0,0.55);
+    border: 2px solid #ffbf00;
+    border-radius: 12px;
+    padding: 50px;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Avatar */
+.avatar-section {
+    background-color: rgba(0,0,0,0.65);
+    border: 2px solid #ffbf00;
+    border-radius: 15px;
+    padding: 20px;
+    text-align: center;
+    width: 100%;
+    align-items: center;
+}
+
+.avatar {
     width: 150px;
     height: 150px;
     border-radius: 50%;
     overflow: hidden;
+    border: 4px solid #ffbf00;
+    box-shadow: 0 0 20px #ffbf00, 0 0 40px rgba(255, 191, 0, 0.3);
+    margin-bottom: 15px;
+    margin-left: 95px; 
+    display: flex;            
+    align-items: center;       
+    justify-content: center;   
+}
+
+.avatar img {
+    width: 100%;
+    height: 20%;
+    object-fit: cover;
+    display: block;       
+}
+
+.info-player h2 {
+    font-size: 26px;
+    color: #ffbf00;
+    text-shadow: 1px 1px 5px #000;
+    margin-bottom: 5px;
+}
+
+.info-player .level {
+    font-weight: bold;
+    color: #fff;
+    margin-bottom: 10px;
+}
+
+.exp-bar {
+    width: 90%;
+    height: 20px;
+    background-color: #222;
+    border: 2px solid #ffbf00;
+    border-radius: 10px;
+    overflow: hidden;
+    margin: 0 auto;
+}
+
+.exp-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #ffbf00, #ffd633);
+    transition: width 0.5s ease;
+}
+
+/* Status */
+.stats-section {
+    width: 100%;
+    text-align: left;
+}
+
+/* Favoritos & Recomendações */
+.favoritos-section,
+.recomendacoes-section {
+    width: 100%;
+}
+
+/* Títulos */
+.stats-section h3,
+.favoritos-section h3,
+.recomendacoes-section h3 {
+    color: #ffbf00;
+    margin-bottom: 10px;
+    text-shadow: 1px 1px 3px #000;
+}
+
+/* =========================
+       CARDS (Favoritos, Histórico, Recomendações)
+========================= */
+.cards-container {
+    display: flex;
+    flex-wrap: wrap;           
+    gap: 10px;                
+    justify-content: flex-start;
+    max-height: 350px;         
+    overflow-y: auto;          
+    padding: 5px;
+}
+
+
+.cards-container .card {
+    flex: 1 1 calc(25% - 10px); 
+    max-width: 100px;
+    max-height: 150px;
+    margin: 0 auto;
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    background-color: rgba(0,0,0,0.6);
+    border: 2px solid #ffbf00;
+    border-radius: 10px;
+    overflow: hidden;
+    text-align: center;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.cards-container .card img {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+    border-bottom: 2px solid #ffbf00;
+}
+
+.cards-container .card p {
+    margin: 5px 0;
+    color: #ffbf00;
+    font-weight: bold;
+    font-size: 0.9rem;
+    text-align: center;
+}
+
+.cards-container .card small {
+    display: block;
+    color: #ccc;
+    font-size: 0.8rem;
+}
+
+.cards-container .card:hover {
+    transform: translateY(-5px) scale(1.05);
+    box-shadow: 0 0 15px #ffbf00;
+}
+
+/* =========================
+     FORMULÁRIO AVATAR/EDITAR
+========================= */
+.upload-avatar-form {
+    margin: 10px auto;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+    justify-content: center; 
+    max-width: 400px; 
+    width: 90%; 
+}
+
+.upload-avatar-form input[type="file"] {
+    display: block;
+    margin: 0 0 10px 0;
+    width: 100%; 
+    border-radius: 6px;
+}
+
+.btn-upload {
     display: inline-block;
+    background-color: #ffbf00;
+    color: #000;
+    padding: 6px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    text-shadow: 1px 1px 2px #000;
+    transition: all 0.3s ease;
+}
+
+.upload-avatar-form .btn-upload:hover {
+    background-color: #fff;
+    color: #ffbf00;
+    box-shadow: 0 0 8px #ffbf00;
+}
+
+
+.editar-perfil label {
+    display: block;
+    margin: 0;
+    padding-left: 5px;
+    font-weight: bold;
+    font-size: 1rem;
+    color: #ffbf00;
+    text-align: left;
+    width: 100%;
+}
+
+
+.editar-perfil input[type="text"],
+.editar-perfil input[type="email"],
+.editar-perfil input[type="password"],
+.editar-perfil input[type="file"] {
+    width: calc(100% - 20px);
+    margin: 5px 10px 15px 10px;
+    padding: 12px 15px;
+    border-radius: 8px;
+    border: 2px solid #ffbf00;
+    background-color: #222;
+    color: #fff;
+    outline: none;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 /* =========================
          EDITAR PERFIL
-   ========================= */
-
+========================= */
 .editar-perfil {
     display: flex;
     flex-direction: column;
@@ -197,30 +410,6 @@ html, body {
     margin-top: 20px;
 }
 
-.editar-perfil label {
-    font-weight: bold;
-    font-size: 1rem;
-    color: #ff9f00;
-    margin-bottom: 8px;  
-    display: block;    
-}
-
-.editar-perfil input[type="text"],
-.editar-perfil input[type="email"],
-.editar-perfil input[type="password"],
-.editar-perfil input[type="file"] {
-    width: 100%;
-    padding: 12px 15px;
-    font-size: 1rem;
-    border-radius: 8px;
-    border: 2px solid #ff9f00;
-    background-color: #222;
-    color: #fff;
-    outline: none;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
-    margin-bottom: 15px;
-}
-
 .editar-perfil input:focus {
     border-color: #fff;
     box-shadow: 0 0 8px #ff9f00;
@@ -254,4 +443,41 @@ html, body {
     border-radius: 8px;
     margin-bottom: 20px;
     text-align: center;
+}
+
+/* =========================
+         RESPONSIVO
+========================= */
+@media (max-width: 768px) {
+    .perfil-rpg {
+        padding: 120px 20px 50px 20px;
+    }
+
+    .avatar-section {
+        width: 80%;
+    }
+
+    .exp-bar {
+        width: 200px;
+    }
+
+    .cards-container {
+        grid-template-columns: repeat(auto-fill,minmax(100px,1fr));
+    }
+
+    .menu-lateral {
+        position: relative;
+        top: 0;
+        left: 0;
+        flex-direction: row;
+        padding: 10px;
+        border-radius: 0;
+        justify-content: space-around;
+        width: 100%;
+    }
+
+    .menu-lateral a, .menu-lateral input[type="submit"] {
+        font-size: 14px;
+        padding: 6px 8px;
+    }
 }
