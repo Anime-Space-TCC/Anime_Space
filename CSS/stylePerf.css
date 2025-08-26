@@ -1,13 +1,15 @@
 /* =========================
           GLOBAIS
 ========================= */
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-html, body {
+html,
+body {
     font-family: 'Segoe UI', sans-serif;
     min-height: 100vh;
     background-color: #0a0a0a;
@@ -17,45 +19,53 @@ html, body {
     color: #eee;
 }
 
+
 /* =========================
         MENU LATERAL
 ========================= */
+
 .menu-lateral {
     position: fixed;
     top: 3rem;
-    left: 0.5rem; /* mais colado na borda */
-    background-color: rgba(0,0,0,0.6);
-    padding: 8px; /* reduzido */
+    left: 0.5rem;
+    background-color: rgba(0, 0, 0, 0.6);
+    padding: 8px;
     border-radius: 8px;
     display: flex;
     flex-direction: column;
-    gap: 6px; /* menos espaço entre itens */
+    gap: 6px;
     box-shadow: 0 0 6px #ffbf00;
     z-index: 1000;
-    width: 130px; /* largura fixa menor */
+    width: 130px;
 }
 
+
 /* Links */
+
 .menu-lateral a {
     color: #ffbf00;
     text-decoration: none;
-    padding: 6px 8px; /* mais compacto */
+    padding: 6px 8px;
     border-radius: 5px;
     transition: all 0.3s ease;
     font-weight: bold;
-    font-size: 0.9rem; /* fonte menor */
+    font-size: 0.9rem;
     display: block;
-    text-align: center; /* centraliza texto/ícones */
+    text-align: center;
 }
 
+
 /* Hover */
+
 .menu-lateral a:hover {
     background-color: #ffbf00;
     color: #000;
     box-shadow: 0 0 4px #fff;
 }
 
+
 /* Botão de submit */
+
 .menu-lateral input[type="submit"] {
     background-color: #ffbf00;
     color: #000;
@@ -69,7 +79,9 @@ html, body {
     text-align: center;
 }
 
+
 /* Hover no botão */
+
 .menu-lateral input[type="submit"]:hover {
     background-color: #fff;
     color: #ffbf00;
@@ -77,7 +89,7 @@ html, body {
 }
 
 .form-logout {
-    text-align: center; /* centraliza o botão dentro do form */
+    text-align: center;
     margin-top: 8px;
 }
 
@@ -91,7 +103,7 @@ html, body {
     font-size: 0.9rem;
     cursor: pointer;
     transition: all 0.3s ease;
-    display: inline-block; /* garante centralização */
+    display: inline-block;
 }
 
 .form-logout input[type="submit"]:hover {
@@ -100,9 +112,11 @@ html, body {
     box-shadow: 0 0 4px #fff;
 }
 
+
 /* =========================
        PERFIL RPG CENTRALIZADO
 ========================= */
+
 .perfil-rpg {
     max-width: 1000px;
     margin: 0 auto;
@@ -114,7 +128,9 @@ html, body {
     align-items: center;
 }
 
+
 /* Bainha semi-transparente atrás do conteúdo */
+
 .perfil-rpg::before {
     content: '';
     position: absolute;
@@ -124,18 +140,20 @@ html, body {
     width: 100%;
     max-width: 1000px;
     bottom: 40px;
-    background: rgba(0,0,0,0.5);
+    background: rgba(0, 0, 0, 0.5);
     backdrop-filter: blur(6px);
     z-index: -1;
     border-radius: 20px;
 }
 
+
 /* =========================
        GRID DE BLOCOS
 ========================= */
+
 .blocos {
     display: grid;
-    grid-template-columns: 1fr 1fr; 
+    grid-template-columns: 1fr 1fr;
     gap: 100px;
     width: 100%;
     max-width: 950px;
@@ -143,7 +161,7 @@ html, body {
 }
 
 .bloco {
-    background-color: rgba(0,0,0,0.55);
+    background-color: rgba(0, 0, 0, 0.55);
     border: 2px solid #ffbf00;
     border-radius: 12px;
     padding: 50px;
@@ -151,9 +169,11 @@ html, body {
     flex-direction: column;
 }
 
+
 /* Avatar */
+
 .avatar-section {
-    background-color: rgba(0,0,0,0.65);
+    background-color: rgba(0, 0, 0, 0.65);
     border: 2px solid #ffbf00;
     border-radius: 15px;
     padding: 20px;
@@ -169,18 +189,18 @@ html, body {
     overflow: hidden;
     border: 4px solid #ffbf00;
     box-shadow: 0 0 20px #ffbf00, 0 0 40px rgba(255, 191, 0, 0.3);
-    margin-bottom: 15px;
-    margin-left: 95px; 
-    display: flex;            
-    align-items: center;       
-    justify-content: center;   
+    margin: 0 auto 15px auto;
+    /* sempre no centro */
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .avatar img {
     width: 100%;
     height: 20%;
     object-fit: cover;
-    display: block;       
+    display: block;
 }
 
 .info-player h2 {
@@ -212,19 +232,25 @@ html, body {
     transition: width 0.5s ease;
 }
 
+
 /* Status */
+
 .stats-section {
     width: 100%;
     text-align: left;
 }
 
+
 /* Favoritos & Recomendações */
+
 .favoritos-section,
 .recomendacoes-section {
     width: 100%;
 }
 
+
 /* Títulos */
+
 .stats-section h3,
 .favoritos-section h3,
 .recomendacoes-section h3 {
@@ -233,29 +259,30 @@ html, body {
     text-shadow: 1px 1px 3px #000;
 }
 
+
 /* =========================
        CARDS (Favoritos, Histórico, Recomendações)
 ========================= */
+
 .cards-container {
     display: flex;
-    flex-wrap: wrap;           
-    gap: 10px;                
+    flex-wrap: wrap;
+    gap: 10px;
     justify-content: flex-start;
-    max-height: 350px;         
-    overflow-y: auto;          
+    max-height: 350px;
+    overflow-y: auto;
     padding: 5px;
 }
 
-
 .cards-container .card {
-    flex: 1 1 calc(25% - 10px); 
+    flex: 1 1 calc(25% - 10px);
     max-width: 100px;
     max-height: 150px;
     margin: 0 auto;
     text-decoration: none;
     display: flex;
     flex-direction: column;
-    background-color: rgba(0,0,0,0.6);
+    background-color: rgba(0, 0, 0, 0.6);
     border: 2px solid #ffbf00;
     border-radius: 10px;
     overflow: hidden;
@@ -289,24 +316,26 @@ html, body {
     box-shadow: 0 0 15px #ffbf00;
 }
 
+
 /* =========================
      FORMULÁRIO AVATAR/EDITAR
 ========================= */
+
 .upload-avatar-form {
     margin: 10px auto;
     text-align: center;
     display: flex;
     flex-direction: column;
-    align-items: center; 
-    justify-content: center; 
-    max-width: 400px; 
-    width: 90%; 
+    align-items: center;
+    justify-content: center;
+    max-width: 400px;
+    width: 90%;
 }
 
 .upload-avatar-form input[type="file"] {
     display: block;
     margin: 0 0 10px 0;
-    width: 100%; 
+    width: 100%;
     border-radius: 6px;
 }
 
@@ -328,7 +357,6 @@ html, body {
     box-shadow: 0 0 8px #ffbf00;
 }
 
-
 .editar-perfil label {
     display: block;
     margin: 0;
@@ -339,7 +367,6 @@ html, body {
     text-align: left;
     width: 100%;
 }
-
 
 .editar-perfil input[type="text"],
 .editar-perfil input[type="email"],
@@ -356,15 +383,17 @@ html, body {
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
+
 /* =========================
          EDITAR PERFIL
 ========================= */
+
 .editar-perfil {
     display: flex;
     flex-direction: column;
-    max-width: 600px;      
-    margin: 110px auto;    
-    padding: 40px 30px;   
+    max-width: 600px;
+    margin: 110px auto;
+    padding: 40px 30px;
     background-color: rgba(0, 0, 0, 0.65);
     border-radius: 20px;
     box-shadow: 0 5px 15px rgb(175, 134, 0);
@@ -428,7 +457,7 @@ html, body {
     transition: background-color 0.3s, color 0.3s, box-shadow 0.3s;
     margin-top: 20px;
     margin-bottom: 20px;
-    box-shadow: 0 4px 10px rgba(255,159,0,0.7);
+    box-shadow: 0 4px 10px rgba(255, 159, 0, 0.7);
 }
 
 .editar-perfil button:hover {
@@ -445,26 +474,24 @@ html, body {
     text-align: center;
 }
 
+
 /* =========================
          RESPONSIVO
 ========================= */
+
 @media (max-width: 768px) {
     .perfil-rpg {
         padding: 120px 20px 50px 20px;
     }
-
     .avatar-section {
         width: 80%;
     }
-
     .exp-bar {
         width: 200px;
     }
-
     .cards-container {
-        grid-template-columns: repeat(auto-fill,minmax(100px,1fr));
+        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
     }
-
     .menu-lateral {
         position: relative;
         top: 0;
@@ -475,8 +502,8 @@ html, body {
         justify-content: space-around;
         width: 100%;
     }
-
-    .menu-lateral a, .menu-lateral input[type="submit"] {
+    .menu-lateral a,
+    .menu-lateral input[type="submit"] {
         font-size: 14px;
         padding: 6px 8px;
     }

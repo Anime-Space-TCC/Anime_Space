@@ -8,7 +8,8 @@
     box-sizing: border-box;
 }
 
-html, body {
+html,
+body {
     background-color: rgb(0, 0, 0);
     font-family: Arial, sans-serif;
     background-image: url('../img/earth-1756274.jpg');
@@ -18,6 +19,7 @@ html, body {
     min-height: 100vh;
     color: #eee;
 }
+
 
 /* =========================
           MENU 
@@ -29,7 +31,7 @@ html, body {
     position: fixed;
     top: 2rem;
     left: 1rem;
-    z-index: 1300; 
+    z-index: 1300;
     background-color: rgba(0, 0, 0, 0.7);
     color: #ff9f00;
     padding: 0.3rem 0.7rem;
@@ -60,7 +62,7 @@ html, body {
     overflow-y: auto;
     transition: left 0.35s ease;
     padding-top: 6rem;
-    z-index: 1200; 
+    z-index: 1200;
     box-shadow: 2px 0 8px rgba(255, 159, 0, 0.4);
     border-top-right-radius: 12px;
     border-bottom-right-radius: 12px;
@@ -85,6 +87,7 @@ html, body {
     color: #000;
     border-left-color: #000;
 }
+
 
 /* =========================
           HOME
@@ -148,7 +151,7 @@ html, body {
     margin: 20px 0;
     font-size: 24px;
     color: #ff9f00;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
 }
 
 .home .top-animes ol {
@@ -163,7 +166,7 @@ html, body {
 .home .top-animes li {
     text-align: center;
     color: #ff9f00;
-    text-shadow: 2px 2px 5px rgba(0,0,0,0.8);
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.8);
     position: relative;
     cursor: pointer;
 }
@@ -324,15 +327,17 @@ html, body {
     color: #ff9f00;
 }
 
+
 /* Botão Suporte Fixado */
+
 .home .btn-suporte {
     position: fixed;
     bottom: 20px;
     right: 20px;
-    background: #ff9f00; 
+    background: #ff9f00;
     padding: 12px;
     border-radius: 50%;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.4);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
     color: #000000;
     z-index: 9999;
     transition: transform 0.2s ease-in-out, background 0.3s;
@@ -340,7 +345,7 @@ html, body {
 
 .home .btn-suporte:hover {
     transform: scale(1.1);
-    background: rgba(114, 114, 114, 0.9); 
+    background: rgba(114, 114, 114, 0.9);
 }
 
 .home .btn-suporte svg {
@@ -349,10 +354,12 @@ html, body {
     height: 20px;
 }
 
+
 /* =========================
    MENU PERFIL
 ========================= */
-.perfil .perfil-btn {
+
+.home .perfil-btn {
     position: fixed;
     top: 6rem;
     left: 1rem;
@@ -374,20 +381,22 @@ html, body {
     line-height: 2.5rem;
 }
 
-.perfil .perfil-btn:hover {
+.home .perfil-btn:hover {
     background-color: #ff9f00;
     color: #000;
 }
 
-.perfil .perfil-btn svg {
+.home .perfil-btn svg {
     fill: currentColor;
     width: 24px;
     height: 24px;
     vertical-align: middle;
 }
 
+
 /* Foto de perfil */
-.perfil #foto-perfil {
+
+.home #foto-perfil {
     width: 150px;
     height: 150px;
     border-radius: 50%;
@@ -395,205 +404,210 @@ html, body {
     display: inline-block;
 }
 
+
 /* =========================
         Título global
    ========================= */
 
 .titulo-pagina {
-  font-size: 2.4rem;
-  color: #ff9f00;
-  text-align: center;
-  margin: 30px 0 40px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  text-shadow: 0 0 6px #ff9f00;
+    font-size: 2.4rem;
+    color: #ff9f00;
+    text-align: center;
+    margin: 30px 0 40px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-shadow: 0 0 6px #ff9f00;
 }
+
 
 /* =========================
       Estilo Navbar Header
    ========================= */
 
 header {
-  background-color: rgba(0, 0, 0, 0.7);
-  padding: 15px 20px;
-  text-align: center;
-  box-shadow: 0 0 10px #ff9f00;
-  margin-bottom: 30px;
-  border-radius: 12px;
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 15px 20px;
+    text-align: center;
+    box-shadow: 0 0 10px #ff9f00;
+    margin-bottom: 30px;
+    border-radius: 12px;
 }
 
 header nav {
-  margin-top: 10px;
+    margin-top: 10px;
 }
 
 header nav a {
-  color: #ff9f00;
-  text-decoration: none;
-  font-weight: 700;
-  margin: 0 12px;
-  padding: 6px 12px;
-  border-radius: 6px;
-  transition: background-color 0.3s ease, color 0.3s ease;
-  box-shadow: 0 0 6px #ff9f00;
-  display: inline-block;
+    color: #ff9f00;
+    text-decoration: none;
+    font-weight: 700;
+    margin: 0 12px;
+    padding: 6px 12px;
+    border-radius: 6px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    box-shadow: 0 0 6px #ff9f00;
+    display: inline-block;
 }
 
 header nav a:hover,
 header nav a:focus {
-  background-color: #ff9f00;
-  color: #000;
-  box-shadow: 0 0 12px #ff9f00;
+    background-color: #ff9f00;
+    color: #000;
+    box-shadow: 0 0 12px #ff9f00;
 }
 
 header h1.titulo-pagina {
-  color: #ff9f00;
-  text-shadow: 0 0 8px #ff9f00;
-  font-weight: 900;
-  font-size: 2.6rem;
+    color: #ff9f00;
+    text-shadow: 0 0 8px #ff9f00;
+    font-weight: 900;
+    font-size: 2.6rem;
 }
+
 
 /* =========================
       Ultimas
    ========================= */
 
 .ultimas .episodios-lista {
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  max-width: 900px;
-  margin: 0 auto;
-  padding: 0 15px;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 15px;
 }
 
 .ultimas .episodios-lista li {
-  background-color: rgba(0, 0, 0, 0.85);
-  padding: 15px 20px;
-  border-radius: 12px;
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  box-shadow: 0 0 8px rgba(255, 159, 0, 0.7);
-  transition: box-shadow 0.3s ease;
+    background-color: rgba(0, 0, 0, 0.85);
+    padding: 15px 20px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    box-shadow: 0 0 8px rgba(255, 159, 0, 0.7);
+    transition: box-shadow 0.3s ease;
 }
 
 .ultimas .episodios-lista li:hover {
-  box-shadow: 0 0 14px #ff9f00;
+    box-shadow: 0 0 14px #ff9f00;
 }
 
 .ultimas .episodios-lista li img {
-  width: 100px;
-  height: auto;
-  border-radius: 8px;
-  object-fit: cover;
-  box-shadow: 0 0 6px #ff9f00;
-  flex-shrink: 0;
+    width: 100px;
+    height: auto;
+    border-radius: 8px;
+    object-fit: cover;
+    box-shadow: 0 0 6px #ff9f00;
+    flex-shrink: 0;
 }
 
 .ultimas .episodios-lista li strong {
-  color: #fff;
-  font-size: 1.1rem;
-  min-width: 160px;
-  font-weight: 700;
-  text-shadow: 0 0 3px rgba(255, 159, 0, 0.8);
+    color: #fff;
+    font-size: 1.1rem;
+    min-width: 160px;
+    font-weight: 700;
+    text-shadow: 0 0 3px rgba(255, 159, 0, 0.8);
 }
 
 .ultimas .episodios-lista li a {
-  margin-left: auto;
-  background-color: #ff9f00;
-  color: #000;
-  padding: 8px 14px;
-  border-radius: 8px;
-  text-decoration: none;
-  font-weight: 700;
-  box-shadow: 0 0 8px #ff9f00;
-  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    margin-left: auto;
+    background-color: #ff9f00;
+    color: #000;
+    padding: 8px 14px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 700;
+    box-shadow: 0 0 8px #ff9f00;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .ultimas .episodios-lista li a:hover {
-  background-color: #e68a00;
-  box-shadow: 0 0 12px #e68a00;
-  color: #000;
+    background-color: #e68a00;
+    box-shadow: 0 0 12px #e68a00;
+    color: #000;
 }
 
 .ultimas p {
-  color: #bbb;
-  font-size: 1.1rem;
-  text-align: center;
-  margin-top: 40px;
+    color: #bbb;
+    font-size: 1.1rem;
+    text-align: center;
+    margin-top: 40px;
 }
+
 
 /* =========================
       Temporada
    ========================= */
 
 .temporada .episodios-lista {
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  max-width: 900px;
-  margin: 0 auto;
-  padding: 0 15px;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 15px;
 }
 
 .temporada .episodios-lista li {
-  background-color: rgba(0, 0, 0, 0.85);
-  padding: 15px 20px;
-  border-radius: 12px;
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  box-shadow: 0 0 8px rgba(255, 159, 0, 0.7);
-  transition: box-shadow 0.3s ease;
+    background-color: rgba(0, 0, 0, 0.85);
+    padding: 15px 20px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    box-shadow: 0 0 8px rgba(255, 159, 0, 0.7);
+    transition: box-shadow 0.3s ease;
 }
 
 .temporada .episodios-lista li:hover {
-  box-shadow: 0 0 14px #ff9f00;
+    box-shadow: 0 0 14px #ff9f00;
 }
 
 .temporada .episodios-lista li img {
-  width: 100px;
-  height: auto;
-  border-radius: 8px;
-  object-fit: cover;
-  box-shadow: 0 0 6px #ff9f00;
-  flex-shrink: 0;
+    width: 100px;
+    height: auto;
+    border-radius: 8px;
+    object-fit: cover;
+    box-shadow: 0 0 6px #ff9f00;
+    flex-shrink: 0;
 }
 
 .temporada .episodios-lista li strong {
-  color: #fff;
-  font-size: 1.1rem;
-  min-width: 160px;
-  font-weight: 700;
-  text-shadow: 0 0 3px rgba(255, 159, 0, 0.8);
+    color: #fff;
+    font-size: 1.1rem;
+    min-width: 160px;
+    font-weight: 700;
+    text-shadow: 0 0 3px rgba(255, 159, 0, 0.8);
 }
 
 .temporada .episodios-lista li a {
-  margin-left: auto;
-  background-color: #ff9f00;
-  color: #000;
-  padding: 8px 14px;
-  border-radius: 8px;
-  text-decoration: none;
-  font-weight: 700;
-  box-shadow: 0 0 8px #ff9f00;
-  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    margin-left: auto;
+    background-color: #ff9f00;
+    color: #000;
+    padding: 8px 14px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 700;
+    box-shadow: 0 0 8px #ff9f00;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .temporada .episodios-lista li a:hover {
-  background-color: #e68a00;
-  box-shadow: 0 0 12px #e68a00;
-  color: #000;
+    background-color: #e68a00;
+    box-shadow: 0 0 12px #e68a00;
+    color: #000;
 }
 
 .temporada p {
-  color: #bbb;
-  font-size: 1.1rem;
-  text-align: center;
-  margin-top: 40px;
+    color: #bbb;
+    font-size: 1.1rem;
+    text-align: center;
+    margin-top: 40px;
 }
+
 
 /* =========================
             LOGIN 
@@ -603,8 +617,9 @@ header h1.titulo-pagina {
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh; 
+    min-height: 100vh;
 }
+
 .login .login-box {
     background-color: rgba(0, 0, 0, 0.6);
     padding: 30px;
@@ -612,15 +627,18 @@ header h1.titulo-pagina {
     box-shadow: 0 5px 15px rgb(175, 134, 0);
     width: 300px;
 }
+
 .login h2 {
     text-align: center;
     color: #ffffff;
     margin-bottom: 20px;
     font-size: 24px;
 }
+
 .login .textbox {
     margin-bottom: 20px;
 }
+
 .login .textbox input {
     width: 100%;
     padding: 10px;
@@ -629,10 +647,12 @@ header h1.titulo-pagina {
     border-radius: 4px;
     font-size: 16px;
 }
-.login  .textbox input:focus {
+
+.login .textbox input:focus {
     border-color: #ff9f00;
     outline: none;
 }
+
 .login .btn {
     width: 100%;
     padding: 10px;
@@ -643,9 +663,11 @@ header h1.titulo-pagina {
     font-size: 16px;
     cursor: pointer;
 }
+
 .login .btn:hover {
     background-color: #ff9f00;
 }
+
 .login .links {
     text-align: center;
     margin-top: 20px;
@@ -682,12 +704,14 @@ header h1.titulo-pagina {
 .login .links a:hover {
     color: #fff;
 }
+
 .login .login-image {
     max-width: 150px;
     border-radius: 8px;
     margin: 0 auto 20px auto;
     display: block;
 }
+
 
 /* =========================
       STREAMING ANIMES
@@ -707,7 +731,9 @@ header h1.titulo-pagina {
     box-sizing: border-box;
 }
 
+
 /* Adiciona padding lateral apenas nas seções internas */
+
 .streaming .links,
 .streaming .busca-filtros,
 .streaming .anime-catalogo {
@@ -749,6 +775,7 @@ header h1.titulo-pagina {
 .streaming .links nav a:hover {
     color: #fff;
 }
+
 
 /* =========================
        BUSCA + FILTROS
@@ -829,6 +856,7 @@ header h1.titulo-pagina {
     color: #ff9f00;
 }
 
+
 /* =========================
        CATÁLOGO DE ANIMES
    ========================= */
@@ -845,8 +873,8 @@ header h1.titulo-pagina {
 .streaming .anime-item {
     background: rgba(30, 30, 30, 0.85);
     border-radius: 15px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.7);
-    width: 170px; 
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.7);
+    width: 170px;
     height: 320px;
     display: flex;
     flex-direction: column;
@@ -899,11 +927,11 @@ header h1.titulo-pagina {
     text-decoration: none;
     color: #000;
     background-color: #ff9f00;
-    padding: 4px 10px; 
+    padding: 4px 10px;
     font-size: 0.8rem;
     border-radius: 25px;
     font-weight: 700;
-    box-shadow: 0 4px 10px rgba(255,159,0,0.7);
+    box-shadow: 0 4px 10px rgba(255, 159, 0, 0.7);
     display: inline-block;
     transition: background-color 0.3s ease, color 0.3s ease;
     margin-top: 6px;
@@ -914,6 +942,7 @@ header h1.titulo-pagina {
     background-color: #fff;
     color: #ff9f00;
 }
+
 
 /* =========================
          RODAPÉ
@@ -947,7 +976,7 @@ header h1.titulo-pagina {
     padding: 30px;
     background-color: #1a1a1a;
     text-align: center;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.8);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.8);
 }
 
 .sobre .links h1 {
@@ -1036,7 +1065,7 @@ header h1.titulo-pagina {
     height: 140px;
     object-fit: cover;
     border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
     transition: transform 0.3s;
 }
 
@@ -1051,6 +1080,7 @@ header h1.titulo-pagina {
     font-size: 14px;
     color: #aaa;
 }
+
 
 /* =========================
          Noticias
@@ -1134,6 +1164,7 @@ header h1.titulo-pagina {
     width: 100%;
 }
 
+
 /* =========================
          Suporte
    ========================= */
@@ -1144,7 +1175,7 @@ header h1.titulo-pagina {
     padding: 20px;
     background: #121212;
     border-radius: 10px;
-    box-shadow: 0 0 15px rgba(0,0,0,0.6);
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.6);
 }
 
 .suporte h1 {
@@ -1182,7 +1213,7 @@ header h1.titulo-pagina {
     color: #ff9900;
 }
 
-.suporte input, 
+.suporte input,
 .suporte textarea {
     width: 100%;
     padding: 12px;
@@ -1195,7 +1226,7 @@ header h1.titulo-pagina {
     transition: border 0.3s;
 }
 
-.suporte input:focus, 
+.suporte input:focus,
 .suporte textarea:focus {
     outline: none;
     border: 1px solid #ff9900;
@@ -1252,7 +1283,8 @@ header h1.titulo-pagina {
     position: fixed;
     top: 15px;
     right: 15px;
-    z-index: 1000; /* fica por cima */
+    z-index: 1000;
+    /* fica por cima */
 }
 
 .suporte .nav-suporte .suporte-btn {
@@ -1266,21 +1298,24 @@ header h1.titulo-pagina {
     color: #000;
     text-decoration: none;
     transition: background 0.3s ease;
-    box-shadow: 0 0 6px rgba(0,0,0,0.5);
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.5);
 }
 
 .suporte .nav-suporte .suporte-btn:hover {
     transform: scale(1.1);
-    background: rgba(114, 114, 114, 0.9); 
+    background: rgba(114, 114, 114, 0.9);
 }
+
 
 /* =========================
    ADMIN - ESTILO CRUD
 ========================= */
 
+
 /* =========================
     ADMIN LINKS E NAVBAR
 ========================= */
+
 .admin .admin-links {
     background-color: rgba(26, 26, 26, 0.9);
     padding: 15px 20px;
@@ -1308,9 +1343,11 @@ header h1.titulo-pagina {
     color: #ff9900;
 }
 
+
 /* =========================
    ADMIN TABELA DE ANIMES
 ========================= */
+
 .admin .admin-anime-table {
     width: 100%;
     border-collapse: collapse;
@@ -1318,10 +1355,10 @@ header h1.titulo-pagina {
     background-color: rgba(26, 26, 26, 0.95);
     border-radius: 10px;
     overflow: hidden;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
 }
 
-.admin .admin-anime-table th, 
+.admin .admin-anime-table th,
 .admin .admin-anime-table td {
     padding: 12px 15px;
     text-align: center;
@@ -1352,10 +1389,12 @@ header h1.titulo-pagina {
     border-radius: 5px;
 }
 
+
 /* =========================
        ADMIN BOTÕES
 ========================= */
-.admin .admin-btn, 
+
+.admin .admin-btn,
 .admin .admin-anime-table a {
     display: inline-block;
     padding: 8px 15px;
@@ -1386,22 +1425,24 @@ header h1.titulo-pagina {
     color: #0f0f0f;
 }
 
+
 /* =========================
      ADMIN FORMULÁRIOS
 ========================= */
+
 .admin .admin-form {
     background-color: rgba(26, 26, 26, 0.95);
     padding: 20px;
     border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
 }
 
 .admin .admin-form label {
     font-weight: bold;
 }
 
-.admin .admin-form input, 
-.admin .admin-form select, 
+.admin .admin-form input,
+.admin .admin-form select,
 .admin .admin-form textarea {
     width: 100%;
     padding: 8px 10px;
@@ -1413,7 +1454,7 @@ header h1.titulo-pagina {
     color: #fff;
 }
 
-.admin .admin-form input[type="submit"], 
+.admin .admin-form input[type="submit"],
 .admin .admin-form button {
     background-color: #ff9900;
     color: #0f0f0f;
@@ -1421,19 +1462,21 @@ header h1.titulo-pagina {
     cursor: pointer;
 }
 
-.admin .admin-form input[type="submit"]:hover, 
+.admin .admin-form input[type="submit"]:hover,
 .admin .admin-form button:hover {
     background-color: #e68a00;
 }
 
+
 /* =========================
       ADMIN CHECKBOX 
 ========================= */
+
 .admin .generos-container {
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
-    max-height: 200px; 
+    max-height: 200px;
     overflow-y: auto;
     padding: 10px;
     border: 1px solid #444;
@@ -1447,7 +1490,7 @@ header h1.titulo-pagina {
     gap: 6px;
     padding: 5px 8px;
     border-radius: 6px;
-    background-color: rgba(50,50,50,0.7);
+    background-color: rgba(50, 50, 50, 0.7);
     cursor: pointer;
     transition: 0.2s;
 }
@@ -1461,25 +1504,24 @@ header h1.titulo-pagina {
     accent-color: #ff9900;
 }
 
+
 /* =========================
     ADMIN RESPONSIVO
 ========================= */
+
 @media screen and (max-width: 768px) {
     .admin .admin-links {
         flex-direction: column;
         align-items: flex-start;
     }
-
     .admin .admin-links nav {
         margin-top: 10px;
     }
-
-    .admin .admin-anime-table th, 
+    .admin .admin-anime-table th,
     .admin .admin-anime-table td {
         font-size: 0.85rem;
         padding: 8px 5px;
     }
-
     .admin .admin-form {
         padding: 15px;
     }
