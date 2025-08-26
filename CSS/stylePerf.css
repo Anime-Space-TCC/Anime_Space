@@ -128,9 +128,6 @@ body {
     align-items: center;
 }
 
-
-/* Bainha semi-transparente atrás do conteúdo */
-
 .perfil-rpg::before {
     content: '';
     position: absolute;
@@ -190,7 +187,6 @@ body {
     border: 4px solid #ffbf00;
     box-shadow: 0 0 20px #ffbf00, 0 0 40px rgba(255, 191, 0, 0.3);
     margin: 0 auto 15px auto;
-    /* sempre no centro */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -198,9 +194,10 @@ body {
 
 .avatar img {
     width: 100%;
-    height: 20%;
-    object-fit: cover;
-    display: block;
+    height: 100%;
+    object-fit: contain; 
+    object-position: center;
+    background: #222;    
 }
 
 .info-player h2 {

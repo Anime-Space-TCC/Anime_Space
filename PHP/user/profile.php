@@ -10,17 +10,13 @@ $userId = $_SESSION['user_id'];
 $username = $_SESSION['username'];
 $mensagem = "";
 
-// Upload de foto
+// Upload da foto
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['foto'])) {
     $resultado = atualizarFotoPerfil($userId, $_FILES['foto']);
-    if ($resultado === true) {
-        $mensagem = "Foto atualizada com sucesso!";
-    } else {
-        $mensagem = $resultado;
-    }
+    $mensagem = $resultado === true ? "Foto de perfil atualizada com sucesso!" : $resultado;
 }
 
-// Busca foto do perfil
+// Busca a foto do perfil
 $fotoPerfil = buscarFotoPerfil($userId);
 
 // Busca dados do perfil
@@ -60,13 +56,13 @@ $recomendacoes = buscarRecomendacoes($userId);
             <div class="bloco avatar-section">
                 <div class="avatar-section">
                     <div class="avatar">
-                      <img src="<?= htmlspecialchars($fotoPerfil) ?>" alt="Avatar de <?= htmlspecialchars($username) ?>">
+                    <img src="<?= htmlspecialchars($fotoPerfil) ?>" alt="Avatar de <?= htmlspecialchars($username) ?>">
                     </div>
 
                     <!-- Botão abaixo da foto -->
-                    <form action="perfil.php" method="post" enctype="multipart/form-data" class="upload-avatar-form">
-                        <label for="foto" class="btn-upload">Alterar Foto</label>
-                        <input type="file" name="foto" id="foto" accept="image/*" style="display:none" onchange="this.form.submit()">
+                    <form action="../../PHP/user/profile.php" method="post" enctype="multipart/form-data">
+                      <label for="foto" class="btn-upload">Alterar Foto</label>
+                      <input type="file" name="foto" id="foto" accept="image/*" style="display:none" onchange="this.form.submit()">
                     </form>
 
                     <div class="info-player">
