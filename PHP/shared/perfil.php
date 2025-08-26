@@ -44,3 +44,4 @@ function buscarRecomendacoes($userId) {
     $stmt->execute([$userId]);
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
+

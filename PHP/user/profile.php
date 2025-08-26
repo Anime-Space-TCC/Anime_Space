@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['foto'])) {
     if ($resultado === true) {
         $mensagem = "Foto atualizada com sucesso!";
     } else {
-        $mensagem = $resultado; // mensagem de erro
+        $mensagem = $resultado;
     }
 }
 
@@ -60,7 +60,7 @@ $recomendacoes = buscarRecomendacoes($userId);
             <div class="bloco avatar-section">
                 <div class="avatar-section">
                     <div class="avatar">
-                        <img src="../../<?= htmlspecialchars($fotoPerfil) ?>" alt="Avatar de <?= htmlspecialchars($username) ?>">
+                      <img src="<?= htmlspecialchars($fotoPerfil) ?>" alt="Avatar de <?= htmlspecialchars($username) ?>">
                     </div>
 
                     <!-- Botão abaixo da foto -->

@@ -1,6 +1,4 @@
 <?php
-// /PHP/shared/usuarios.php
-
 require_once __DIR__ . '/conexao.php';
 
 /**
@@ -11,10 +9,6 @@ require_once __DIR__ . '/conexao.php';
 
 /**
  * Busca um usuário pelo ID
- *
- * @param PDO $pdo
- * @param int $id
- * @return array|null
  */
 function buscarUsuarioPorId(PDO $pdo, int $id): ?array {
     $stmt = $pdo->prepare("SELECT username, email FROM users WHERE id = ?");
@@ -24,12 +18,6 @@ function buscarUsuarioPorId(PDO $pdo, int $id): ?array {
 
 /**
  * Atualiza username e email de um usuário
- *
- * @param PDO $pdo
- * @param int $id
- * @param string $username
- * @param string $email
- * @return bool
  */
 function atualizarUsuario(PDO $pdo, int $id, string $username, string $email): bool {
     $stmt = $pdo->prepare("UPDATE users SET username = ?, email = ? WHERE id = ?");
@@ -38,81 +26,55 @@ function atualizarUsuario(PDO $pdo, int $id, string $username, string $email): b
 
 /**
  * Atualiza a foto de perfil do usuário
- *
- * @param int $userId
- * @param array $file
- * @return bool|string true em caso de sucesso ou mensagem de erro
  */
 function atualizarFotoPerfil(int $userId, array $file) {
     global $pdo;
 
-    $diretorio_destino = __DIR__ . '/../../uploads/';
-    if (!is_dir($diretorio_destino)) {
-        mkdir($diretorio_destino, 0777, true);
-    }
+    // Pasta física onde os arquivos serão salvos
+    $pastaFisica = __DIR__ . '/../uploads/perfil/';
+    if (!is_dir($pastaFisica)) mkdir($pastaFisica, 0777, true);
 
-    $nome_original = basename($file['name']);
-    $extensao = strtolower(pathinfo($nome_original, PATHINFO_EXTENSION));
-    $tipos_permitidos = ['jpg', 'jpeg', 'png'];
+    // Caminho público dinâmico relativo ao projeto
+    $projetoBase = str_replace($_SERVER['DOCUMENT_ROOT'], '', realpath(__DIR__ . '/..'));
+    $pastaPublica = $projetoBase . '/uploads/perfil/';
 
-    if (!in_array($extensao, $tipos_permitidos)) {
-        return "Erro: Apenas arquivos JPG, JPEG e PNG são permitidos.";
-    }
+    $extensao = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
+    if (!in_array($extensao, ['jpg','jpeg','png'])) return "Erro: Apenas JPG/PNG.";
+    if ($file['size'] > 500000) return "Erro: Máx. 500KB.";
 
-    if ($file['size'] > 500000) {
-        return "Erro: O arquivo é muito grande. Máx. 500KB.";
-    }
+    $nomeArquivo = $userId.'_'.time().'.'.$extensao;
+    $destinoFisico = $pastaFisica . $nomeArquivo;
+    $destinoPublico = $pastaPublica . $nomeArquivo;
 
-    $nome_arquivo_unico = $userId . '.' . $extensao;
-    $caminho_completo = $diretorio_destino . $nome_arquivo_unico;
+    if (!move_uploaded_file($file['tmp_name'], $destinoFisico)) return "Erro ao mover arquivo.";
 
-    if (move_uploaded_file($file['tmp_name'], $caminho_completo)) {
-        $caminho_relativo_db = 'uploads/' . $nome_arquivo_unico;
-        $stmt = $pdo->prepare("UPDATE users SET foto_perfil = ? WHERE id = ?");
-        if ($stmt->execute([$caminho_relativo_db, $userId])) {
-            return true;
-        } else {
-            return "Erro ao salvar caminho no banco.";
-        }
-    } else {
-        return "Erro ao mover o arquivo.";
-    }
+    $stmt = $pdo->prepare("UPDATE users SET foto_perfil = ? WHERE id = ?");
+    if (!$stmt->execute([$destinoPublico, $userId])) return "Erro ao salvar caminho no banco.";
+
+    return true;
 }
 
 /**
- * Retorna o caminho da foto de perfil do usuário
- *
- * @param int $userId
- * @return string
+ * Busca a foto de perfil do usuário
  */
 function buscarFotoPerfil(int $userId): string {
     global $pdo;
 
     $stmt = $pdo->prepare("SELECT foto_perfil FROM users WHERE id = ?");
     $stmt->execute([$userId]);
-    $user = $stmt->fetch(PDO::FETCH_ASSOC);
+    $foto = $stmt->fetchColumn();
 
-    if ($user && !empty($user['foto_perfil'])) {
-        $foto = __DIR__ . '/../../' . $user['foto_perfil'];
-        if (file_exists($foto)) {
-            return '../../' . $user['foto_perfil'];
-        }
+    if ($foto && file_exists($_SERVER['DOCUMENT_ROOT'] . str_replace('/', DIRECTORY_SEPARATOR, $foto))) {
+        return $foto;
     }
 
-    // fallback para foto padrão
-    $default = '../../img/default.jpg';
-    if (file_exists($default)) {
-        return $default;
-    }
-    return 'https://placehold.co/150x150/FFF/000?text=Sem+Foto';
+    // fallback automático
+    $projetoBase = str_replace($_SERVER['DOCUMENT_ROOT'], '', realpath(__DIR__ . '/..'));
+    return $projetoBase . '/img/default.jpg';
 }
 
 /**
  * Verifica se já existe username ou email
- *
- * @param string $username
- * @param string $email
- * @return bool
  */
 function usuarioExiste(string $username, string $email): bool {
     global $pdo;
@@ -123,11 +85,6 @@ function usuarioExiste(string $username, string $email): bool {
 
 /**
  * Cria um novo usuário
- *
- * @param string $username
- * @param string $email
- * @param string $password
- * @return int|false ID do novo usuário ou false em caso de erro
  */
 function criarUsuario(string $username, string $email, string $password) {
     global $pdo;
