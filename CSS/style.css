@@ -967,6 +967,64 @@ header h1.titulo-pagina {
     color: #fff;
 }
 
+/* =========================
+        Noticias
+========================= */
+
+.noticias {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+  padding: 30px;
+  max-width: 1200px;
+  margin: auto;
+}
+
+.noticia {
+  background: #111;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 0 10px #000;
+  transition: transform 0.2s;
+}
+
+.noticia:hover {
+  transform: scale(1.03);
+}
+
+.noticia img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+}
+
+.noticia h2 {
+  font-size: 1.2rem;
+  margin: 15px;
+  color: #ffbf00;
+}
+
+.noticia p {
+  font-size: 0.95rem;
+  margin: 0 15px 15px;
+  color: #ddd;
+}
+
+.noticia a {
+  display: inline-block;
+  margin: 0 15px 15px;
+  padding: 8px 15px;
+  background: #ffbf00;
+  color: #111;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background 0.2s;
+}
+
+.noticia a:hover {
+  background: #ffaa00;
+}
 
 /* =========================
         SOBRE 
@@ -1080,90 +1138,6 @@ header h1.titulo-pagina {
     font-size: 14px;
     color: #aaa;
 }
-
-
-/* =========================
-         Noticias
-   ========================= */
-
-.noticias-page .header {
-    background-color: #1a1a1a;
-    padding: 10px;
-    text-align: center;
-}
-
-.noticias-page nav a {
-    color: #ff9900;
-    text-decoration: none;
-    margin: 0 15px;
-    font-weight: bold;
-}
-
-.noticias-page.noticias nav a.active {
-    border-bottom: 2px solid #ff9900;
-}
-
-.noticias-page .noticias {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 20px;
-    padding: 20px;
-}
-
-.noticias-page .noticia {
-    background-color: #1a1a1a;
-    border-radius: 10px;
-    overflow: hidden;
-    box-shadow: 0 0 10px rgba(255, 159, 0, 0.3);
-    transition: transform 0.3s;
-}
-
-.noticias-page .noticia:hover {
-    transform: scale(1.05);
-}
-
-.noticias-page .noticia img {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-}
-
-.noticias-page .noticia h2 {
-    font-size: 1.2rem;
-    margin: 10px;
-}
-
-.noticias-page .noticia p {
-    font-size: 1rem;
-    margin: 0 10px 10px;
-}
-
-.noticias-page .noticia a {
-    display: inline-block;
-    background-color: #ff9900;
-    color: #000;
-    padding: 10px;
-    text-decoration: none;
-    font-weight: bold;
-    text-align: center;
-    border-radius: 5px;
-    margin: 0 10px 10px;
-    transition: background-color 0.3s;
-}
-
-.noticias-page .noticia a:hover {
-    background-color: #e68a00;
-}
-
-.noticias-page .footer {
-    background-color: #1a1a1a;
-    text-align: center;
-    padding: 10px;
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-}
-
 
 /* =========================
          Suporte
@@ -1311,6 +1285,50 @@ header h1.titulo-pagina {
    ADMIN - ESTILO CRUD
 ========================= */
 
+.admin-dashboard {
+  display: flex;
+  justify-content: center; 
+  align-items: stretch;
+  gap: 20px;
+  padding: 20px;
+  flex-wrap: nowrap; 
+  overflow-x: auto; 
+}
+
+.admin-cards {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); 
+  gap: 30px; 
+  max-width: 900px;
+  margin: 30px auto; 
+}
+
+.admin-card {
+  background: #111;
+  border: 1px solid #444;
+  border-radius: 15px;
+  padding: 30px;
+  text-align: center;
+  box-shadow: 0 0 15px #000;
+  transition: transform 0.2s;
+  min-height: 250px;
+  font-size: 1.1rem; 
+}
+
+.admin-card:hover {
+  transform: scale(1.05);
+}
+
+.admin-card img {
+  margin-bottom: 15px;
+  max-width: 80px; 
+}
+
+.admin-card h3 {
+  margin: 15px 0;
+  color: #ffbf00;
+  font-size: 1.4rem;
+}
 
 /* =========================
     ADMIN LINKS E NAVBAR
