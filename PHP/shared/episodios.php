@@ -18,7 +18,7 @@ require_once __DIR__ . '/conexao.php';
  */
 function buscarEpisodiosComReacoes(PDO $pdo, int $animeId): array {
     $stmt = $pdo->prepare("
-        SELECT e.*, 
+        SELECT e.*, date_format(e.data_lancamento, '%d/%m/%Y') as data_lancamento,
             COALESCE(SUM(CASE WHEN r.reacao = 'like' THEN 1 ELSE 0 END), 0) AS likes,
             COALESCE(SUM(CASE WHEN r.reacao = 'dislike' THEN 1 ELSE 0 END), 0) AS dislikes
         FROM episodios e

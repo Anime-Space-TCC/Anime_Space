@@ -58,7 +58,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <h2>Informações de Contato</h2>
     <p>📧 E-mail: suporte@animespace.com</p>
-    <p>📱 WhatsApp: (61) 99999-9999</p>
+    <p>📱 WhatsApp: <a target="_blank" alt="Chat on WhatsApp" href="https://wa.me/5561991585929?text=Ola%20tenho%20interesse%20em%20falar%20sobre%20animes">
+        Clique para enviar mensagem!</a>
+    </p>
     <p>📍 Endereço: Brasília - DF</p>
 
     <div class="faq">
