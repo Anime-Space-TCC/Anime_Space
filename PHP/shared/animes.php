@@ -62,3 +62,18 @@ function buscarTopAnimes(PDO $pdo, int $limite = 5): array {
     $stmt->execute([$limite]);
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
+
+/**
+ * Busca os lançamentos mais recentes (últimos cadastrados)
+ *
+ * @param PDO $pdo
+ * @param int $limite
+ * @return array
+ */
+function buscarLancamentos(PDO $pdo, int $limite = 20): array {
+    // Ordena por ID desc para evitar depender de coluna específica de data.
+    $stmt = $pdo->prepare("SELECT id, nome, capa FROM animes ORDER BY id DESC LIMIT ?");
+    $stmt->bindValue(1, $limite, PDO::PARAM_INT);
+    $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}

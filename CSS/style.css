@@ -107,14 +107,14 @@ body {
 .home .cabeca .img-slogan {
     display: block;
     margin: 10px auto;
-    max-width: 100%;
-    width: 500px;
+    max-width: 200px; /* Reduzi tamanho da logo */
     height: auto;
 }
 
 .home .cabeca p {
-    font-size: 17px;
+    font-size: 1.2rem; /* Texto menor */
     margin-bottom: 5px;
+    text-align: center;
 }
 
 .home .links {
@@ -237,6 +237,8 @@ body {
     flex-direction: column;
     align-items: center;
     max-width: 1200px;
+    margin-bottom: 5px;
+    margin-top: 20px;
 }
 
 .home .genres-title {
@@ -302,6 +304,76 @@ body {
     text-decoration: underline;
 }
 
+
+/* =========================
+      LANÇAMENTOS (NOVO)
+   ========================= */
+
+.home .lancamentos {
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.home .lancamentos h3 {
+    margin-top: 5px;
+    margin-bottom: 15px;
+    text-align: center;
+    color: #ff9f00;
+    font-size: 22px;
+    text-shadow: 1px 1px 3px #000;
+}
+
+.home .grid-lancamentos {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 15px;
+}
+
+.home .card-anime {
+    background: rgba(0, 0, 0, 0.7);
+    border-radius: 10px;
+    overflow: hidden;
+    text-align: center;
+    transition: transform 0.2s;
+    border: 1px solid #222;
+    box-shadow: 0 3px 6px #ff9f00;
+}
+
+.home .card-anime:hover {
+    transform: scale(1.05);
+    color: #ffbf00;
+}
+
+/* garante que o link não tenha sublinhado */
+.home .card-anime a,
+.home .card-anime a:link,
+.home .card-anime a:visited,
+.home .card-anime a:hover,
+.home .card-anime a:active,
+.home .card-anime a:focus {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+.home .capa-anime {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+    border-bottom: none; /* tira a linha amarela */
+}
+
+.home .nome-anime {
+    padding: 8px;
+    font-size: 0.9rem;
+    color: #fff;
+}
+
+/* =========================
+        RODAPÉ
+   ========================= */
+
 .home .rodape {
     text-align: center;
     padding: 10px 20px;
@@ -353,7 +425,6 @@ body {
     width: 20px;
     height: 20px;
 }
-
 
 /* =========================
    MENU PERFIL

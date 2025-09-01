@@ -6,6 +6,9 @@ require __DIR__ . '/../shared/generos.php';
 // Buscar dados
 $topAnimes = buscarTopAnimes($pdo, 5);
 $generos   = buscarTodosGeneros($pdo);
+$lancamentos = buscarLancamentos($pdo, 20);
+$estreias = buscarEstreiasTemporada($pdo);
+
 ?>
 
 <!DOCTYPE html>
@@ -77,6 +80,21 @@ $generos   = buscarTodosGeneros($pdo);
             </li>
           <?php endforeach; ?>
         </ul>
+    </section>
+
+    <section class="lancamentos" aria-labelledby="lancamentos-title">
+      <h3 id="lancamentos-title">Lançamentos Recentes</h3>
+      <div class="grid-lancamentos">
+        <?php foreach ($lancamentos as $anime): ?>
+          <div class="card-anime">
+            <a href="../../PHP/user/episodes.php?id=<?= $anime['id'] ?>">
+              <img src="../../img/<?= htmlspecialchars($anime['capa']) ?>" 
+                   alt="<?= htmlspecialchars($anime['nome']) ?>" class="capa-anime" />
+              <p class="nome-anime"><?= htmlspecialchars($anime['nome']) ?></p>
+            </a>
+          </div>
+        <?php endforeach; ?>
+      </div>
     </section>
   </main>
 
