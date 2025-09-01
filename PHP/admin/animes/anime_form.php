@@ -17,6 +17,7 @@ $anime = [
     'nota' => '',
     'capa' => '',
     'descricao' => '',
+    'sinopse' => '',
     'ano' => ''
 ];
 
@@ -49,16 +50,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nota = $_POST['nota'] ?? 0;
     $capa = $_POST['capa'] ?? '';
     $descricao = $_POST['descricao'] ?? '';
+    $sinopse = $_POST['sinopse'] ?? '';
     $ano = $_POST['ano'] ?? '';
 
     if ($id) {
         // Atualiza o anime
-        $sql = "UPDATE animes SET nome=?, nota=?, capa=?, descricao=?, ano=? WHERE id=?";
-        $pdo->prepare($sql)->execute([$nome, $nota, $capa, $descricao, $ano, $id]);
+        $sql = "UPDATE animes SET nome=?, nota=?, capa=?, descricao=?, sinopse=? , ano=? WHERE id=?";
+        $pdo->prepare($sql)->execute([$nome, $nota, $capa, $descricao, $sinopse, $ano, $id]);
     } else {
         // Insere novo anime
-        $sql = "INSERT INTO animes (nome, nota, capa, descricao, ano) VALUES (?, ?, ?, ?, ?)";
-        $pdo->prepare($sql)->execute([$nome, $nota, $capa, $descricao, $ano]);
+        $sql = "INSERT INTO animes (nome, nota, capa, descricao,sinopse, ano) VALUES (?, ?, ?, ?, ?, ?)";
+        $pdo->prepare($sql)->execute([$nome, $nota, $capa, $descricao, $sinopse, $ano]);
         $id = $pdo->lastInsertId(); // pega o ID do anime recém-criado
     }
 
@@ -110,6 +112,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             <label>Descrição:</label><br>
             <textarea name="descricao" rows="5" required><?= htmlspecialchars($anime['descricao']) ?></textarea><br><br>
+
+            <label>Sinopse:</label><br>
+            <textarea name="sinopse" rows="5" required><?= htmlspecialchars($anime['sinopse']) ?>
+            </textarea><br><br>
 
             <label>Nota:</label><br>
             <input type="number" name="nota" step="0.1" min="0" max="10" value="<?= htmlspecialchars($anime['nota']) ?>" required><br><br>

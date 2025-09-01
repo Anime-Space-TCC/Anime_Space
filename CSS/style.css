@@ -95,12 +95,12 @@ body {
 
 .home .cabeca {
     text-align: center;
-    padding: 30px;
+    padding: 20px;
     background-color: rgba(0, 0, 0, 0.6);
     box-shadow: 0 5px 15px rgb(175, 134, 0);
     border-radius: 15px;
     color: #f0f0f0;
-    max-width: 1200px;
+    max-width: 1300px;
     margin: 30px auto 10px auto;
 }
 
