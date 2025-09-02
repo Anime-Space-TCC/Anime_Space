@@ -31,8 +31,9 @@ $quizzes = $pdo->query("
     <div class="admin-links">
         <h1>Gerenciar Quizzes</h1>
         <nav>
-            <a href="../../../PHP/user/index.php">Home</a>
+            <a href="../../../PHP/user/index.php" class="admin-btn">Home</a>
             <a href="../../../PHP/admin/quiz/quiz_form.php" class="admin-btn">Novo Quiz</a>
+            <a href="../../../PHP/admin/index.php" class="admin-btn">Voltar</a> 
             <a href="../../../PHP/shared/logout.php" class="admin-btn">Sair</a>
         </nav>
     </div>
@@ -44,10 +45,6 @@ $quizzes = $pdo->query("
                     <th>Anime</th>
                     <th>Episódio</th>
                     <th>Pergunta</th>
-                    <th>A</th>
-                    <th>B</th>
-                    <th>C</th>
-                    <th>D</th>
                     <th>Resposta</th>
                     <th>Ações</th>
                 </tr>
@@ -58,10 +55,6 @@ $quizzes = $pdo->query("
                     <td><?= htmlspecialchars($q['anime_nome']) ?></td>
                     <td><?= htmlspecialchars($q['episodio']) ?></td>
                     <td><?= htmlspecialchars($q['pergunta']) ?></td>
-                    <td><?= htmlspecialchars($q['alternativa_a']) ?></td>
-                    <td><?= htmlspecialchars($q['alternativa_b']) ?></td>
-                    <td><?= htmlspecialchars($q['alternativa_c']) ?></td>
-                    <td><?= htmlspecialchars($q['alternativa_d']) ?></td>
                     <td class="destaque"><?= htmlspecialchars($q['resposta_correta']) ?></td>
                     <td>
                         <a href="../../../PHP/admin/quiz/quiz_form.php?id=<?= $q['id'] ?>" class="admin-btn">✏️ Editar</a>

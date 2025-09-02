@@ -154,21 +154,20 @@ html, body {
     box-shadow: 0 0 15px var(--color-primary);
 }
 
-/* MAIN CONTENT */
 .episodio main {
     width: 100%;
     max-width: 1200px;
     background-color: var(--color-dark-bg);
-    padding: 20px 40px 30px 40px; /* REDUZIDO: padding-top de 30px para 20px */
+    padding: 20px 40px 30px 40px; 
     border-radius: 15px;
     box-shadow: var(--shadow-strong);
 }
 
-/* Reduz espaço entre seções */
+
 .episodio main h2 {
     font-size: 1.5rem;
     font-weight: 700;
-    margin-bottom: 15px; /* REDUZIDO: de 20px para 15px */
+    margin-bottom: 15px; 
     color: var(--color-primary);
     border-bottom: 2px solid var(--color-primary);
     padding-bottom: 5px;
@@ -193,31 +192,29 @@ html, body {
 .sinopse-container h3 {
     color: var(--color-primary);
     font-size: 1.3rem;
-    margin-bottom: 12px; /* REDUZIDO: de 15px para 12px */
+    margin-bottom: 12px;
     border-bottom: 2px solid var(--color-primary);
-    padding-bottom: 6px; /* REDUZIDO: de 8px para 6px */
+    padding-bottom: 6px; 
     text-shadow: 0 0 8px rgba(255, 159, 0, 0.6);
 }
 
 .sinopse-container p {
-    line-height: 1.5; /* REDUZIDO: de 1.6 para 1.5 */
+    line-height: 1.5; 
     text-align: justify;
     font-size: 0.95rem;
     margin-bottom: 0;
 }
 
-/* Estado FECHADO - espaço mínimo */
 .sinopse-container:not(.active) {
     max-height: 0;
     opacity: 0;
     overflow: hidden;
     padding: 0 20px;
     border-width: 0;
-    margin: 5px 0; /* ESPAÇO MINIMO quando fechado */
+    margin: 5px 0; 
     transition: all 0.4s ease-in-out;
 }
 
-/* Estado ABERTO */
 .sinopse-container.active {
     max-height: 500px;
     opacity: 1;
@@ -451,7 +448,7 @@ html, body {
 }
 
 /* =========================
-   BOTÃO FAVORITO + ESTRELAS
+   BOTÃO FAVORITO + ESTRELAS + QUIZ
 ========================= */
 .info-anime .acoes-header {
   display: flex;
@@ -460,7 +457,6 @@ html, body {
   margin-top: 10px;
 }
 
-/* Botão Favorito com coração */
 .info-anime .btn-favorito {
   background: none;
   border: none;
@@ -486,14 +482,12 @@ html, body {
   position: relative;
 }
 
-/* Container das estrelas (linha) */
 .info-anime .avaliacao-estrelas .estrela-container {
   display: flex;
   flex-direction: row;  
   gap: 5px;
 }
 
-/* Estrelas individuais */
 .info-anime .avaliacao-estrelas .estrela {
   font-size: 36px;       
   background: none;
@@ -508,13 +502,182 @@ html, body {
   transform: scale(1.2);
 }
 
-/* Nota discreta abaixo das estrelas */
 .info-anime .avaliacao-estrelas .nota-display {
   font-size: 0.75rem;
   color: #666;
   margin-top: 2px; 
 }
 
+/* =========================
+   BOTÃO DE QUIZ
+========================= */
+
+.info-anime .btn-quiz {
+    display: none;             
+    margin-top: 15px;
+    padding: 12px 24px;
+    background: linear-gradient(45deg, #ff6ec7, #6e8efb);
+    border: none;
+    border-radius: 12px;
+    color: white;
+    font-weight: bold;
+    font-size: 1rem;
+    cursor: pointer;
+    text-align: center;
+    transition: transform 0.2s, box-shadow 0.3s, opacity 0.3s ease;
+    box-shadow: 0 0 12px rgba(255, 110, 199, 0.7);
+    opacity: 0;
+    text-decoration: none;
+}
+
+.info-anime .btn-quiz.show {
+    display: inline-flex;      
+    justify-content: center;
+    align-items: center;
+    opacity: 1;
+}
+
+.info-anime .btn-quiz:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 20px rgba(255, 110, 199, 0.9);
+}
+
+/* =========================
+   MODAL DO QUIZ
+========================= */
+.info-anime .quiz-modal {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(20, 20, 20, 0.95);
+    padding: 30px 40px;
+    border-radius: 15px;
+    box-shadow: 0 5px 20px var(--color-primary);
+    z-index: 1000;
+    width: 90%;
+    max-width: 500px;
+    color: var(--color-gray-light);
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.info-anime .quiz-modal.active {
+    display: block;
+}
+
+.info-anime .quiz-modal h2 {
+    text-align: center;
+    color: var(--color-primary);
+    margin-bottom: 20px;
+}
+
+.info-anime .quiz-modal .quiz-pergunta {
+    margin-bottom: 15px;
+}
+
+.info-anime .quiz-modal button.close-quiz {
+    display: block;
+    margin: 20px auto 0;
+    padding: 6px 16px;
+    background-color: var(--color-primary);
+    color: var(--color-black);
+    font-weight: 700;
+    font-size: 0.95rem;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.info-anime .quiz-modal button.close-quiz:hover {
+    background-color: var(--color-white);
+    color: var(--color-primary);
+}
+
+/* =========================
+        QUIZ PAGE
+========================= */
+
+.quiz-container {
+    max-width: 700px;
+    margin: 40px auto;
+    padding: 25px 30px;
+    background-color: rgba(30, 30, 30, 0.95);
+    border-radius: 15px;
+    color: #fff;
+    font-family: Arial, sans-serif;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.5);
+}
+
+.quiz-container h2 {
+    text-align: center;
+    margin-bottom: 25px;
+    color: var(--color-primary);
+}
+
+.quiz-question {
+    margin-bottom: 20px;
+    padding: 15px;
+    background-color: rgba(50, 50, 50, 0.8);
+    border-radius: 12px;
+}
+
+.quiz-question p {
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+.quiz-question label {
+    display: block;
+    margin: 6px 0;
+    cursor: pointer;
+    font-size: 0.95rem;
+}
+
+.quiz-question input[type="radio"] {
+    margin-right: 8px;
+    cursor: pointer;
+}
+
+#submitQuiz {
+    display: block;
+    width: 100%;
+    margin-top: 20px;
+    padding: 12px 0;
+    font-size: 1rem;
+    font-weight: bold;
+    color: #fff;
+    background: linear-gradient(45deg, #ff6ec7, #6e8efb);
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.3s;
+}
+
+#submitQuiz:hover {
+    transform: scale(1.03);
+    box-shadow: 0 0 15px rgba(255, 110, 199, 0.7);
+}
+
+#quizResultado {
+    margin-top: 25px;
+    padding: 15px;
+    background-color: rgba(0, 255, 13, 0.9);
+    border-radius: 12px;
+    text-align: center;
+}
+
+#quizResultado h3 {
+    margin-bottom: 10px;
+    color: #000000;
+}
+
+#quizResultado p {
+    font-weight: bold;
+    font-size: 1.1rem;
+}
 
 /* =========================
         DESCRIÇÃO
@@ -618,171 +781,6 @@ html, body {
     margin: 5px 0 0;
     color: var(--color-gray);
     font-size: 0.95rem;
-}
-
-/* =========================
-        QUIZ
-   ========================= */
-.btn-quiz {
-    display: none;
-    margin-top: 15px;
-    padding: 12px 24px;
-    background: linear-gradient(45deg, #ff6ec7, #6e8efb);
-    border: none;
-    border-radius: 12px;
-    color: white;
-    font-weight: bold;
-    font-size: 1rem;
-    cursor: pointer;
-    text-align: center;
-    transition: transform 0.2s, box-shadow 0.3s, opacity 0.3s ease;
-    box-shadow: 0 0 12px rgba(255, 110, 199, 0.7);
-    opacity: 0;
-    text-decoration: none;
-}
-
-.btn-quiz.show {
-    display: inline-block;
-    opacity: 1;
-}
-
-.btn-quiz:hover {
-    transform: scale(1.05);
-    box-shadow: 0 0 20px rgba(255, 110, 199, 0.9);
-}
-
-.quiz-modal {
-    display: none;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: rgba(20, 20, 20, 0.95);
-    padding: 30px 40px;
-    border-radius: 15px;
-    box-shadow: 0 5px 20px var(--color-primary);
-    z-index: 1000;
-    width: 90%;
-    max-width: 500px;
-    color: var(--color-gray-light);
-    max-height: 90vh;
-    overflow-y: auto;
-}
-
-.quiz-modal.active {
-    display: block;
-}
-
-.quiz-modal h2 {
-    text-align: center;
-    color: var(--color-primary);
-    margin-bottom: 20px;
-}
-
-.quiz-modal .quiz-pergunta {
-    margin-bottom: 15px;
-}
-
-.quiz-modal button.close-quiz {
-    display: block;
-    margin: 20px auto 0;
-    padding: 6px 16px;
-    background-color: var(--color-primary);
-    color: var(--color-black);
-    font-weight: 700;
-    font-size: 0.95rem;
-    border: none;
-    border-radius: 20px;
-    cursor: pointer;
-    transition: var(--transition);
-}
-
-.quiz-modal button.close-quiz:hover {
-    background-color: var(--color-white);
-    color: var(--color-primary);
-}
-
-/* =========================
-        QUIZ PAGE
-========================= */
-
-.quiz-container {
-    max-width: 700px;
-    margin: 40px auto;
-    padding: 25px 30px;
-    background-color: rgba(30, 30, 30, 0.95);
-    border-radius: 15px;
-    color: #fff;
-    font-family: Arial, sans-serif;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.5);
-}
-
-.quiz-container h2 {
-    text-align: center;
-    margin-bottom: 25px;
-    color: var(--color-primary);
-}
-
-.quiz-question {
-    margin-bottom: 20px;
-    padding: 15px;
-    background-color: rgba(50, 50, 50, 0.8);
-    border-radius: 12px;
-}
-
-.quiz-question p {
-    margin-bottom: 10px;
-    font-weight: 600;
-}
-
-.quiz-question label {
-    display: block;
-    margin: 6px 0;
-    cursor: pointer;
-    font-size: 0.95rem;
-}
-
-.quiz-question input[type="radio"] {
-    margin-right: 8px;
-    cursor: pointer;
-}
-
-#submitQuiz {
-    display: block;
-    width: 100%;
-    margin-top: 20px;
-    padding: 12px 0;
-    font-size: 1rem;
-    font-weight: bold;
-    color: #fff;
-    background: linear-gradient(45deg, #ff6ec7, #6e8efb);
-    border: none;
-    border-radius: 12px;
-    cursor: pointer;
-    transition: transform 0.2s, box-shadow 0.3s;
-}
-
-#submitQuiz:hover {
-    transform: scale(1.03);
-    box-shadow: 0 0 15px rgba(255, 110, 199, 0.7);
-}
-
-#quizResultado {
-    margin-top: 25px;
-    padding: 15px;
-    background-color: rgba(0, 255, 13, 0.9);
-    border-radius: 12px;
-    text-align: center;
-}
-
-#quizResultado h3 {
-    margin-bottom: 10px;
-    color: #000000;
-}
-
-#quizResultado p {
-    font-weight: bold;
-    font-size: 1.1rem;
 }
 
 /* =========================

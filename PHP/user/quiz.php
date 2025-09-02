@@ -1,41 +1,43 @@
-<?php
+<?php 
 session_start();
 require __DIR__ . '/../shared/conexao.php';
-require __DIR__ . '/../shared/episodios.php';
 require __DIR__ . '/../shared/quizzes.php';
+require __DIR__ . '/../shared/animes.php'; // helper para buscar anime
 
-$episodio_id = $_GET['episodio_id'] ?? null;
+// Pega o anime_id do GET e garante que seja inteiro
+$anime_id = isset($_GET['anime_id']) ? (int)$_GET['anime_id'] : 0;
 
-if (!$episodio_id) {
-    echo "Episódio não informado.";
+if ($anime_id <= 0) {
+    echo "Anime não informado.";
     exit;
 }
 
-// Episódio
-$episodio = buscarEpisodioComAnime($episodio_id);
-if (!$episodio) {
-    echo "Episódio não encontrado.";
+// Buscar anime pelo ID
+$anime = buscarAnimePorId($anime_id);
+if (!$anime) {
+    echo "Anime não encontrado.";
     exit;
 }
 
-// Perguntas do quiz
-$perguntas = buscarQuizPorEpisodio($episodio_id);
+// Perguntas do quiz (por anime, não episódio)
+$perguntas = buscarQuizPorAnime($anime_id);
 if (!$perguntas) {
-    echo "Nenhum quiz disponível para este episódio.";
+    echo "Nenhum quiz disponível para este anime.";
     exit;
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <title>Quiz - <?= htmlspecialchars($episodio['titulo']) ?></title>
+    <title>Quiz - <?= htmlspecialchars($anime['nome']) ?></title>
     <link rel="stylesheet" href="../../CSS/styleEpi.css">
     <link rel="icon" href="../../img/slogan3.png" type="image/png">
 </head>
 <body>
 <div class="quiz-container">
-    <h2>Quiz - <?= htmlspecialchars($episodio['anime_nome']) ?>: <?= htmlspecialchars($episodio['titulo']) ?></h2>
+    <h2>Quiz - <?= htmlspecialchars($anime['nome']) ?></h2>
 
     <form id="quizForm">
         <?php foreach ($perguntas as $index => $q): ?>
@@ -81,12 +83,23 @@ document.getElementById('submitQuiz').addEventListener('click', function() {
     document.getElementById('score').textContent = `Você acertou ${acertos} de ${total} perguntas.`;
     document.getElementById('quizResultado').style.display = 'block';
 
+    // Desabilita o botão para evitar múltiplos envios
+    this.disabled = true;
+
     fetch('salvar_quiz.php', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({episodio_id: <?= $episodio_id ?>, respostas})
+        body: JSON.stringify({anime_id: <?= $anime_id ?>, respostas})
     }).then(res => res.json()).then(data => {
-        alert(`Você acertou ${data.acertos} de ${data.total} perguntas!`);
+        if(data.status === 'duplicado') {
+            alert("Você já respondeu este quiz anteriormente!");
+        } else if(data.status === 'salvo') {
+            alert(`Respostas salvas! Você acertou ${data.acertos} de ${data.total} perguntas.`);
+        } else {
+            alert("Ocorreu um erro ao salvar suas respostas.");
+        }
+    }).catch(() => {
+        alert("Erro na comunicação com o servidor.");
     });
 });
 </script>

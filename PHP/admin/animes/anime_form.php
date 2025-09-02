@@ -101,11 +101,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <input type="text" name="nome" value="<?= htmlspecialchars($anime['nome']) ?>" required><br><br>
 
             <label>Gêneros:</label><br>
-            <?php foreach($todosGeneros as $g): ?>
+            <div class="generos-container">
+              <?php foreach($todosGeneros as $g): ?>
+                <label class="genero-chip">
                 <input type="checkbox" name="generos[]" value="<?= $g['id'] ?>"
                 <?= in_array($g['id'], $generosSelecionados) ? 'checked' : '' ?>>
-                <?= htmlspecialchars($g['nome']) ?><br>
-            <?php endforeach; ?>
+                <span><?= htmlspecialchars($g['nome']) ?></span>
+                </label>
+              <?php endforeach; ?>
+            </div><br>
 
             <label>Ano de lançamento:</label><br>
             <input type="number" name="ano" value="<?= htmlspecialchars($anime['ano']) ?>" required><br><br>

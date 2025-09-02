@@ -30,8 +30,9 @@ $episodios = $pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
   <div class="admin-links">
     <h1>Gerenciar Episódios</h1>
     <nav>
-      <a href="../../../PHP/user/index.php">Home</a> 
+      <a href="../../../PHP/user/index.php" class="admin-btn">Home</a> 
       <a href="../../../PHP/admin/episodes/episodes_form.php" class="admin-btn">Novo Episódio</a> 
+      <a href="../../../PHP/admin/index.php" class="admin-btn">Voltar</a> 
       <a href="../../../PHP/shared/logout.php" class="admin-btn">Sair</a> 
     </nav>
   </div>
@@ -45,7 +46,6 @@ $episodios = $pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
           <th>Temporada</th>
           <th>Nº</th>
           <th>Título</th>
-          <th>Duração</th>
           <th>Ações</th>
         </tr>
       </thead>
@@ -63,7 +63,6 @@ $episodios = $pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
             <td><?= htmlspecialchars($e['temporada']) ?></td>
             <td><?= htmlspecialchars($e['numero']) ?></td>
             <td><?= htmlspecialchars($e['titulo']) ?></td>
-            <td><?= $e['duracao'] ? $e['duracao'].' min' : '—' ?></td>
             <td>
               <a href="../../../PHP/admin/episodes/episodes_form.php?id=<?= $e['id'] ?>" class="admin-btn">✏️ Editar</a>
               <a href="../../../PHP/admin/episodes/episodes_delete.php?id=<?= $e['id'] ?>" class="admin-btn" onclick="return confirm('Excluir este episódio?')">🗑️ Excluir</a>

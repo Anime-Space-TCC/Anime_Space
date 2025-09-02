@@ -28,8 +28,9 @@ $temporadas = $pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
   <div class="admin-links">
     <h1>Gerenciar Temporadas</h1>
     <nav>
-      <a href="../../../PHP/user/index.php">Home</a>
+      <a href="../../../PHP/user/index.php" class="admin-btn">Home</a>
       <a href="../../../PHP/admin/temporadas/temporadas_form.php" class="admin-btn">Nova Temporada</a>
+      <a href="../../../PHP/admin/index.php" class="admin-btn">Voltar</a> 
       <a href="../../../PHP/shared/logout.php" class="admin-btn">Sair</a>
     </nav>
   </div>

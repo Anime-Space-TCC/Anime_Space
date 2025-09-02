@@ -39,8 +39,9 @@ unset($anime); // quebra referência
   <div class="admin-links">
     <h1>Gerenciar Animes</h1>
     <nav>
-      <a href="../../../PHP/user/index.php">Home</a> 
+      <a href="../../../PHP/user/index.php" class="admin-btn">Home</a> 
       <a href="../../../PHP/admin/animes/anime_form.php" class="admin-btn">Novo Anime</a> 
+      <a href="../../../PHP/admin/index.php" class="admin-btn">Voltar</a> 
       <a href="../../../PHP/shared/logout.php" class="admin-btn">Sair</a> 
     </nav>
   </div>

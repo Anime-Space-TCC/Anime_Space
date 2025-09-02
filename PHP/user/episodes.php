@@ -73,7 +73,7 @@ if ($usuarioId) {
 <head>
   <meta charset="UTF-8">
   <title>Episódios - <?= htmlspecialchars($animeInfo['nome']) ?></title>
-  <link rel="stylesheet" href="../../CSS/styleEpi.css">
+  <link rel="stylesheet" href="../../CSS/styleEpi2.css">
   <link rel="icon" href="../../img/slogan3.png" type="image/png">
 </head>
 <body>
@@ -111,6 +111,10 @@ if ($usuarioId) {
             </svg>
         </a>
         <a href="../../PHP/user/stream.php" class="btn-nav">Voltar</a>
+        <a id="btn-quiz" class="btn-quiz <?= $favoritado ? 'show' : 'hidden' ?>" 
+            href="quiz.php?anime_id=<?= $episodioSelecionado['id'] ?>">
+            🎉 Quiz do Anime
+        </a>
     </nav>
     </header>
     <div class="sinopse-container" id="sinopse-container">
@@ -197,9 +201,6 @@ if ($usuarioId) {
                     <?php endif; ?>
                   </div>
                   <a class="btn-assistir" href="?id=<?= $id ?>&episode_id=<?= $ep['id'] ?><?= $filtroLinguagemSelecionada ? '&linguagem=' . urlencode($filtroLinguagemSelecionada) : '' ?>">Assistir</a>
-                  <a class="btn-quiz hidden" href="quiz.php?episodio_id=<?= $ep['id'] ?>">
-                    🎉 Quiz do Episódio
-                  </a>
                 </div>
               </div>
 
@@ -288,6 +289,7 @@ function toggleSinopse() {
 }
 
 // AJAX para curtir/descurtir
+// AJAX para curtir/descurtir
 document.querySelectorAll('.reacao-btn').forEach(button => {
   button.addEventListener('click', () => {
     const card = button.closest('.card');
@@ -301,26 +303,18 @@ document.querySelectorAll('.reacao-btn').forEach(button => {
     })
     .then(response => response.json())
     .then(data => {
-  if (data.sucesso) {
-    card.querySelector('.contador-like').textContent = data.likes;
-    card.querySelector('.contador-dislike').textContent = data.dislikes;
+      if (data.sucesso) {
+        card.querySelector('.contador-like').textContent = data.likes;
+        card.querySelector('.contador-dislike').textContent = data.dislikes;
 
-    const quizButton = card.querySelector('.btn-quiz');
-    if (quizButton) {
-      if (data.reacao_atual === 'like') {
-        quizButton.classList.add('show');
       } else {
-        quizButton.classList.remove('show');
+        alert(data.erro || 'Erro ao processar reação.');
       }
-    }
-
-  } else {
-    alert(data.erro || 'Erro ao processar reação.');
-  }
-})
+    })
     .catch(() => alert('Erro ao enviar reação.'));
   });
 });
+
 
 // FAVORITO
 const btnFav = document.getElementById("btn-favorito");
@@ -338,8 +332,21 @@ if (btnFav) {
     .then(res => res.json())
     .then(data => {
       if (data.sucesso) {
+        // Atualiza o estado do botão de favorito
         btnFav.textContent = data.favoritado ? "❤️" : "🤍";
         btnFav.classList.toggle("ativo", data.favoritado);
+
+        // === Função do botão de quiz aqui ===
+        const quizButton = document.querySelector('.btn-quiz');
+        if (quizButton) {
+          if (data.favoritado) {
+            quizButton.classList.add('show');
+          } else {
+            quizButton.classList.remove('show');
+          }
+        }
+        // ================================
+
       } else {
         alert(data.erro || 'Erro desconhecido.');
       }
@@ -373,8 +380,8 @@ document.querySelectorAll(".avaliacao-estrelas").forEach(container => {
       .then(res => res.json())
       .then(data => {
         if (data.sucesso) {
-          atualizarEstrelas(valorEstrela); // mantém 1–5 para exibir estrelas
-          notaBox.textContent = `Nota: ${data.nota}/10`; // exibe 0–10
+          atualizarEstrelas(valorEstrela); 
+          notaBox.textContent = `Nota: ${data.nota}/10`; 
         } else {
           alert(data.erro || 'Erro ao registrar avaliação.');
         }

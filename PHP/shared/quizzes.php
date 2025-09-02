@@ -2,45 +2,34 @@
 require_once __DIR__ . '/conexao.php';
 
 /**
- * Busca todas as perguntas de um quiz de um determinado episódio.
- *
- * @param int $episodio_id ID do episódio
- * @return array Lista de perguntas do quiz
- */
-function buscarQuizPorEpisodio($episodio_id) {
-    global $pdo; // usa a conexão PDO global
-
-    // Prepara e executa a query para buscar todas as perguntas do episódio
-    $stmt = $pdo->prepare("SELECT * FROM quizzes WHERE episodio_id = ?");
-    $stmt->execute([$episodio_id]);
-
-    // Retorna todas as perguntas como array
-    return $stmt->fetchAll();
-}
-
-/**
  * Salva o resultado do quiz de um usuário e retorna o número de acertos.
+ * Evita respostas duplicadas para o mesmo usuário e anime.
  *
  * @param int $userId ID do usuário
- * @param int $episodio_id ID do episódio
+ * @param int $anime_id ID do anime
  * @param array $respostas Array com as respostas do usuário
- * @return array ['acertos' => int, 'total' => int] Contagem de acertos e total de perguntas
+ * @return array ['acertos' => int, 'total' => int, 'status' => string]
  */
-function salvarResultadoQuiz($userId, $episodio_id, $respostas) {
+function salvarResultadoQuiz($userId, $anime_id, $respostas) {
     global $pdo;
 
-    $acertos = 0;           // contador de respostas corretas
-    $total = count($respostas); // total de perguntas respondidas
+    // Verifica se o usuário já respondeu esse quiz
+    $stmtCheck = $pdo->prepare("SELECT COUNT(*) FROM quiz_respostas WHERE user_id = ? AND anime_id = ?");
+    $stmtCheck->execute([$userId, $anime_id]);
+    if ($stmtCheck->fetchColumn() > 0) {
+        return ['acertos' => 0, 'total' => count($respostas), 'status' => 'duplicado'];
+    }
+
+    $acertos = 0;
+    $total = count($respostas);
 
     foreach ($respostas as $resp) {
-        // Incrementa acertos se a resposta estiver correta
         if ($resp['correta']) {
             $acertos++;
         }
 
-        // Insere cada resposta do usuário no banco de dados
         $stmt = $pdo->prepare("
-            INSERT INTO quiz_respostas (user_id, pergunta_id, resposta_usuario, correta, episodio_id)
+            INSERT INTO quiz_respostas (user_id, pergunta_id, resposta_usuario, correta, anime_id)
             VALUES (?, ?, ?, ?, ?)
         ");
         $stmt->execute([
@@ -48,10 +37,9 @@ function salvarResultadoQuiz($userId, $episodio_id, $respostas) {
             $resp['pergunta_id'],
             $resp['resposta_usuario'],
             $resp['correta'],
-            $episodio_id
+            $anime_id
         ]);
     }
 
-    // Retorna o total de acertos e o total de perguntas
-    return ['acertos' => $acertos, 'total' => $total];
+    return ['acertos' => $acertos, 'total' => $total, 'status' => 'salvo'];
 }
