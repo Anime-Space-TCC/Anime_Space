@@ -83,7 +83,7 @@ $estreias = buscarEstreiasTemporada($pdo);
     </section>
 
     <section class="lancamentos" aria-labelledby="lancamentos-title">
-      <h3 id="lancamentos-title">Lançamentos Recentes</h3>
+      <h3 id="lancamentos-title">Lançamentos</h3>
       <div class="grid-lancamentos">
         <?php foreach ($lancamentos as $anime): ?>
           <div class="card-anime">

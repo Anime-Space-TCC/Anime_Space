@@ -122,14 +122,17 @@ if ($usuarioId) {
           <?php
           $videoUrl = $episodioSelecionado['video_url'];
           $driveId = extrairIdGoogleDrive($videoUrl);
+          $dailymotionId = extrairIdDailymotion($videoUrl);
           ?>
-          <h2><?= htmlspecialchars($episodioSelecionado['titulo']) ?> (Temporada <?= $episodioSelecionado['temporada'] ?>, Episódio <?= $episodioSelecionado['numero'] ?>)</h2>
 
-          <?php if ($driveId): ?>
-            <!-- Google Drive - apenas para assistir -->
-            <iframe src="https://drive.google.com/file/d/<?= htmlspecialchars($driveId) ?>/preview"
-              width="800" height="450" allow="autoplay" frameborder="0" allowfullscreen>
+          <h2><?= htmlspecialchars($episodioSelecionado['titulo']) ?> (Temporada <?= $episodioSelecionado['temporada'] ?>, Episódio <?= $episodioSelecionado['numero'] ?>)</h2>
+          <?php if ($dailymotionId): ?>    
+            <!-- Dailymotion Embed -->
+            <iframe frameborder="0" width="800" height="450"
+             src="https://www.dailymotion.com/embed/video/<?= htmlspecialchars($dailymotionId) ?>"
+             allowfullscreen allow="autoplay">
             </iframe>
+            
           <?php else: ?>
             <!-- Vídeo Local - compatível com quiz -->
             <video width="800" height="450" controls>
