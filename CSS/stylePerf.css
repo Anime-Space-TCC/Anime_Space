@@ -34,7 +34,7 @@ body {
     display: flex;
     flex-direction: column;
     gap: 6px;
-    box-shadow: 0 0 6px #ffbf00;
+    box-shadow: 0 0 6px #ff9f00;
     z-index: 1000;
     width: 130px;
 }
@@ -43,7 +43,7 @@ body {
 /* Links */
 
 .menu-lateral a {
-    color: #ffbf00;
+    color: #ff9f00;
     text-decoration: none;
     padding: 6px 8px;
     border-radius: 5px;
@@ -58,7 +58,7 @@ body {
 /* Hover */
 
 .menu-lateral a:hover {
-    background-color: #ffbf00;
+    background-color: #ff9f00;
     color: #000;
     box-shadow: 0 0 4px #fff;
 }
@@ -67,7 +67,7 @@ body {
 /* Botão de submit */
 
 .menu-lateral input[type="submit"] {
-    background-color: #ffbf00;
+    background-color: #ff9f00;
     color: #000;
     border: none;
     border-radius: 5px;
@@ -84,7 +84,7 @@ body {
 
 .menu-lateral input[type="submit"]:hover {
     background-color: #fff;
-    color: #ffbf00;
+    color: #ff9f00;
     box-shadow: 0 0 4px #fff;
 }
 
@@ -94,7 +94,7 @@ body {
 }
 
 .form-logout input[type="submit"] {
-    background-color: #ffbf00;
+    background-color: #ff9f00;
     color: #000;
     border: none;
     border-radius: 5px;
@@ -108,7 +108,7 @@ body {
 
 .form-logout input[type="submit"]:hover {
     background-color: #fff;
-    color: #ffbf00;
+    color: #ff9f00;
     box-shadow: 0 0 4px #fff;
 }
 
@@ -159,7 +159,7 @@ body {
 
 .bloco {
     background-color: rgba(0, 0, 0, 0.55);
-    border: 2px solid #ffbf00;
+    border: 2px solid #ff9f00;
     border-radius: 12px;
     padding: 50px;
     display: flex;
@@ -171,7 +171,7 @@ body {
 
 .avatar-section {
     background-color: rgba(0, 0, 0, 0.65);
-    border: 2px solid #ffbf00;
+    border: 2px solid #ff9f00;
     border-radius: 15px;
     padding: 20px;
     text-align: center;
@@ -184,8 +184,8 @@ body {
     height: 150px;
     border-radius: 50%;
     overflow: hidden;
-    border: 4px solid #ffbf00;
-    box-shadow: 0 0 20px #ffbf00, 0 0 40px rgba(255, 191, 0, 0.3);
+    border: 4px solid #ff9f00;
+    box-shadow: 0 0 20px #ff9f00, 0 0 40px rgba(255, 191, 0, 0.3);
     margin: 0 auto 15px auto;
     display: flex;
     align-items: center;
@@ -202,7 +202,7 @@ body {
 
 .info-player h2 {
     font-size: 26px;
-    color: #ffbf00;
+    color: #ff9f00;
     text-shadow: 1px 1px 5px #000;
     margin-bottom: 5px;
 }
@@ -217,7 +217,7 @@ body {
     width: 90%;
     height: 20px;
     background-color: #222;
-    border: 2px solid #ffbf00;
+    border: 2px solid #ff9f00;
     border-radius: 10px;
     overflow: hidden;
     margin: 0 auto;
@@ -225,7 +225,7 @@ body {
 
 .exp-fill {
     height: 100%;
-    background: linear-gradient(90deg, #ffbf00, #ffd633);
+    background: linear-gradient(90deg, #ff9f00, #ffd633);
     transition: width 0.5s ease;
 }
 
@@ -251,7 +251,7 @@ body {
 .stats-section h3,
 .favoritos-section h3,
 .recomendacoes-section h3 {
-    color: #ffbf00;
+    color: #ff9f00;
     margin-bottom: 10px;
     text-shadow: 1px 1px 3px #000;
 }
@@ -280,7 +280,7 @@ body {
     display: flex;
     flex-direction: column;
     background-color: rgba(0, 0, 0, 0.6);
-    border: 2px solid #ffbf00;
+    border: 2px solid #ff9f00;
     border-radius: 10px;
     overflow: hidden;
     text-align: center;
@@ -291,12 +291,12 @@ body {
     width: 100%;
     height: 160px;
     object-fit: cover;
-    border-bottom: 2px solid #ffbf00;
+    border-bottom: 2px solid #ff9f00;
 }
 
 .cards-container .card p {
     margin: 5px 0;
-    color: #ffbf00;
+    color: #ff9f00;
     font-weight: bold;
     font-size: 0.9rem;
     text-align: center;
@@ -310,7 +310,7 @@ body {
 
 .cards-container .card:hover {
     transform: translateY(-5px) scale(1.05);
-    box-shadow: 0 0 15px #ffbf00;
+    box-shadow: 0 0 15px #ff9f00;
 }
 
 
@@ -338,7 +338,7 @@ body {
 
 .btn-upload {
     display: inline-block;
-    background-color: #ffbf00;
+    background-color: #ff9f00;
     color: #000;
     padding: 6px 12px;
     border-radius: 6px;
@@ -350,8 +350,8 @@ body {
 
 .upload-avatar-form .btn-upload:hover {
     background-color: #fff;
-    color: #ffbf00;
-    box-shadow: 0 0 8px #ffbf00;
+    color: #ff9f00;
+    box-shadow: 0 0 8px #ff9f00;
 }
 
 .editar-perfil label {
@@ -360,7 +360,7 @@ body {
     padding-left: 5px;
     font-weight: bold;
     font-size: 1rem;
-    color: #ffbf00;
+    color: #ff9f00;
     text-align: left;
     width: 100%;
 }
@@ -373,7 +373,7 @@ body {
     margin: 5px 10px 15px 10px;
     padding: 12px 15px;
     border-radius: 8px;
-    border: 2px solid #ffbf00;
+    border: 2px solid #ff9f00;
     background-color: #222;
     color: #fff;
     outline: none;

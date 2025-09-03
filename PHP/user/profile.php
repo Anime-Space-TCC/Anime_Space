@@ -41,8 +41,8 @@ $recomendacoes = buscarRecomendacoes($userId);
             <path d="M12 3l9 8h-3v9h-5v-6H11v6H6v-9H3z"/>
         </svg>
     </a>
-    <a href="../../PHP/user/stream.php">Streaming</a>
-    <a href="../../PHP/user/editar_perfil.php">Editar Perfil</a>
+    <a href="../../PHP/user/stream.php">Catálogo</a>
+    <a href="../../PHP/user/editar_perfil.php">Editar</a>
     <form action="../shared/logout.php" method="post" class="form-logout">
         <input type="submit" value="Sair">
     </form>
