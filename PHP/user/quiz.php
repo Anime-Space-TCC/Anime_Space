@@ -3,6 +3,10 @@ session_start();
 require __DIR__ . '/../shared/conexao.php';
 require __DIR__ . '/../shared/quizzes.php';
 require __DIR__ . '/../shared/animes.php'; // helper para buscar anime
+require_once __DIR__ . '/../shared/auth.php';
+
+// Bloqueia acesso se não estiver logado
+verificarLogin();
 
 // Pega o anime_id do GET e garante que seja inteiro
 $anime_id = isset($_GET['anime_id']) ? (int)$_GET['anime_id'] : 0;

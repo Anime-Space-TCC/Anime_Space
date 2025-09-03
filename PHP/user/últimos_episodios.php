@@ -1,5 +1,9 @@
 <?php
 require __DIR__ . '/../shared/episodios.php';
+require_once __DIR__ . '/../shared/auth.php';
+
+// Bloqueia acesso se não estiver logado
+verificarLogin();
 
 // Busca os 20 episódios mais recentes
 $episodios = getUltimosEpisodios(20);

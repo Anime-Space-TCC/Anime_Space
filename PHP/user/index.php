@@ -8,7 +8,6 @@ $topAnimes = buscarTopAnimes($pdo, 5);
 $generos   = buscarTodosGeneros($pdo);
 $lancamentos = buscarLancamentos($pdo, 20);
 $estreias = buscarEstreiasTemporada($pdo);
-
 ?>
 
 <!DOCTYPE html>
@@ -29,6 +28,7 @@ $estreias = buscarEstreiasTemporada($pdo);
     <a href="../../PHP/user/estreias_temporada.php">Estreias da Temporada</a>
     <a href="../../PHP/user/últimos_episodios.php">Lançamentos</a>
     <a href="../../PHP/user/noticias.php">Noticias</a>
+    <a href="../../PHP/user/vendas.php">Lojinha</a>
     <a href="../../PHP/user/register.php">Cadastro</a>
   </nav>
 

@@ -30,8 +30,12 @@ if (!function_exists('usuarioLogado')) {
  */
 if (!function_exists('verificarLogin')) {
     function verificarLogin(): void {
-        if (!usuarioLogado()) {
-            header('Location: login.php');
+        $paginaAtual = basename($_SERVER['PHP_SELF']); // pega só o arquivo atual
+        $paginasPublicas = ['login.php', 'register.php']; // páginas abertas
+
+        if (!usuarioLogado() && !in_array($paginaAtual, $paginasPublicas)) {
+            // Caminho relativo correto para o login
+            header("Location: login.php");
             exit;
         }
     }

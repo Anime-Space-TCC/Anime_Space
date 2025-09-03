@@ -1,6 +1,10 @@
 <?php
 session_start();
 require __DIR__ . '/../shared/suporte.php';
+require_once __DIR__ . '/../shared/auth.php';
+
+// Bloqueia acesso se não estiver logado
+verificarLogin();
 
 $mensagem_enviada = false;
 

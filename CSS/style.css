@@ -681,108 +681,83 @@ header h1.titulo-pagina {
 
 
 /* =========================
-            LOGIN 
-   ========================= */
+   LOJA - PÁGINA DE VENDAS
+========================= */
 
-.login .login-container {
+.loja .loja-container {
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
-    align-items: center;
+    gap: 20px;
+    padding: 40px;
     min-height: 100vh;
+    background-color: #000; /* fundo escuro */
 }
 
-.login .login-box {
+.loja .card-produto {
     background-color: rgba(0, 0, 0, 0.6);
-    padding: 30px;
+    padding: 20px;
     border-radius: 8px;
     box-shadow: 0 5px 15px rgb(175, 134, 0);
-    width: 300px;
-}
-
-.login h2 {
+    width: 250px;
     text-align: center;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease;
+}
+
+.loja .card-produto:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 18px rgb(255, 159, 0);
+}
+
+.loja .card-produto img {
+    max-width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 6px;
+    margin-bottom: 15px;
+    border: 1px solid #fff;
+}
+
+.loja .card-produto h2 {
+    font-size: 20px;
     color: #ffffff;
-    margin-bottom: 20px;
-    font-size: 24px;
+    margin: 10px 0;
 }
 
-.login .textbox {
-    margin-bottom: 20px;
+.loja .card-produto p {
+    font-size: 14px;
+    color: #ddd;
+    margin-bottom: 10px;
 }
 
-.login .textbox input {
-    width: 100%;
-    padding: 10px;
-    margin: 5px 0;
-    border: 1px solid #ffffff;
-    border-radius: 4px;
-    font-size: 16px;
+.loja .card-produto .preco {
+    font-size: 18px;
+    font-weight: bold;
+    color: #ff9f00;
+    margin: 12px 0;
 }
 
-.login .textbox input:focus {
-    border-color: #ff9f00;
-    outline: none;
-}
-
-.login .btn {
+.loja .card-produto button {
     width: 100%;
     padding: 10px;
     background-color: #ff9f00;
-    color: rgb(0, 0, 0);
+    color: #000;
     border: none;
     border-radius: 4px;
     font-size: 16px;
     cursor: pointer;
+    transition: background 0.3s ease;
 }
 
-.login .btn:hover {
-    background-color: #ff9f00;
+.loja .card-produto button:hover {
+    background-color: #e68a00;
 }
 
-.login .links {
-    text-align: center;
-    margin-top: 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    font-size: 14px;
+.loja .card-produto .estoque {
+    font-size: 13px;
+    color: #aaa;
+    margin-top: 8px;
 }
-
-.login .links p {
-    margin: 0;
-    color: #ff9f00;
-}
-
-.login .links p a {
-    color: #ff9f00;
-    text-decoration: none;
-    font-weight: 600;
-    margin-left: 5px;
-    transition: color 0.3s ease;
-}
-
-.login .links p a:hover {
-    color: #fff;
-}
-
-.login .links a {
-    color: #ff9f00;
-    text-decoration: none;
-    font-weight: 600;
-    transition: color 0.3s ease;
-}
-
-.login .links a:hover {
-    color: #fff;
-}
-
-.login .login-image {
-    max-width: 150px;
-    border-radius: 8px;
-    margin: 0 auto 20px auto;
-    display: block;
-}
-
 
 /* =========================
       STREAMING ANIMES
@@ -1351,6 +1326,72 @@ header h1.titulo-pagina {
     background: rgba(114, 114, 114, 0.9);
 }
 
+/* =========================
+   LOJA - PÁGINA DE VENDAS
+========================= */
+
+.loja-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+  padding: 20px;
+}
+
+.loja .card-produto {
+  background: #1c1c1c;
+  border-radius: 12px;
+  padding: 15px;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.4);
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s;
+}
+
+.loja .card-produto:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.6);
+}
+
+.loja .card-produto img {
+  max-width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+
+.loja .card-produto h2 {
+  font-size: 1.2rem;
+  color: #fff;
+  margin: 8px 0;
+}
+
+.loja .card-produto p {
+  font-size: 0.9rem;
+  color: #ccc;
+  margin-bottom: 8px;
+}
+
+.loja .card-produto .preco {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #4caf50;
+  margin: 10px 0;
+}
+
+.loja .card-produto button {
+  background: #ff4757;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  color: white;
+  cursor: pointer;
+  transition: background 0.2s ease-in-out;
+}
+
+.loja .card-produto button:hover {
+  background: #e84118;
+}
 
 /* =========================
    ADMIN - ESTILO CRUD

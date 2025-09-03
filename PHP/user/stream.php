@@ -1,5 +1,9 @@
 <?php 
 require __DIR__ . '/../shared/catalogo.php';
+require_once __DIR__ . '/../shared/auth.php';
+
+// Bloqueia acesso se não estiver logado
+verificarLogin();
 
 // Filtros recebidos
 $filtroGenero = $_GET['generos'] ?? '';

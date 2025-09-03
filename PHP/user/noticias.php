@@ -1,6 +1,10 @@
 <?php
 session_start();
 require __DIR__ . '/../shared/conexao.php';
+require_once __DIR__ . '/../shared/auth.php';
+
+// Bloqueia acesso se não estiver logado
+verificarLogin();
 
 // Busca todas as notícias
 $stmt = $pdo->query("SELECT * FROM noticias ORDER BY data_publicacao DESC");

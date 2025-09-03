@@ -8,6 +8,9 @@ require __DIR__ . '/../shared/episodios.php';
 require __DIR__ . '/../shared/comentarios.php';
 require __DIR__ . '/../shared/utils.php';
 
+// Bloqueia acesso se não estiver logado
+verificarLogin();
+
 $id = $_GET['id'] ?? null;
 $episode_id = $_GET['episode_id'] ?? null;
 
