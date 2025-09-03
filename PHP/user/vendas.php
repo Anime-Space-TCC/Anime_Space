@@ -14,21 +14,24 @@ $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <head>
   <meta charset="UTF-8">
   <title>Loja - Anime Space</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="../../CSS/style.css">
   <link rel="icon" href="../../img/slogan3.png" type="image/png" /> 
 </head>
 <body class="loja">
-  <h1>Loja Anime Space</h1>
-  <div class="loja-container">
+  <header class="loja-header">
+    <h1>Loja Anime Space</h1>
+  </header>
+
+  <main class="produtos-grid">
     <?php foreach ($produtos as $produto): ?>
-      <div class="card-produto">
-        <img src="<?= htmlspecialchars($produto['imagem']) ?>" alt="<?= htmlspecialchars($produto['nome']) ?>">
-        <h2><?= htmlspecialchars($produto['nome']) ?></h2>
-        <p><?= htmlspecialchars($produto['descricao']) ?></p>
-        <p class="preco">R$ <?= number_format($produto['preco'], 2, ',', '.') ?></p>
-        <button>Adicionar ao Carrinho</button>
+      <div class="produto-card">
+        <img src="../../img/<?= htmlspecialchars($produto['imagem']) ?>" alt="<?= htmlspecialchars($produto['nome']) ?>" class="produto-imagem">
+        <h2 class="produto-nome"><?= htmlspecialchars($produto['nome']) ?></h2>
+        <p class="produto-descricao"><?= htmlspecialchars($produto['descricao']) ?></p>
+        <p class="produto-preco">R$ <?= number_format($produto['preco'], 2, ',', '.') ?></p>
+        <button class="btn-adicionar">Adicionar ao Carrinho</button>
       </div>
     <?php endforeach; ?>
-  </div>
+  </main>
 </body>
 </html>

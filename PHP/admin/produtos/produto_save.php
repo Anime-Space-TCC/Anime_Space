@@ -40,6 +40,6 @@ if ($id) {
 }
 
 // Redireciona após salvar
-header('Location: admin_produtos.php');
+header('Location: admin_produto.php');
 exit();
 ?>

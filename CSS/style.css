@@ -684,80 +684,107 @@ header h1.titulo-pagina {
    LOJA - PÁGINA DE VENDAS
 ========================= */
 
-.loja .loja-container {
+.loja {
+    font-family: 'Arial', sans-serif;
+    background-color: #f5f5f5; /* fundo claro e mais leve */
+    padding: 20px 0;
+}
+
+.loja .loja-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.loja .loja-header h1 {
+    font-size: 32px;
+    color: #333;
+}
+
+/* =========================
+   Grid de produtos
+========================= */
+
+.produtos-grid {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     gap: 20px;
-    padding: 40px;
-    min-height: 100vh;
-    background-color: #000; /* fundo escuro */
+    padding: 0 20px;
 }
 
-.loja .card-produto {
-    background-color: rgba(0, 0, 0, 0.6);
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 5px 15px rgb(175, 134, 0);
-    width: 250px;
+/* Card de produto */
+.produto-card {
+    background-color: #fff; /* fundo branco */
+    padding: 15px;
+    border-radius: 16px; /* cantos mais curvos */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    width: 220px; /* mais compacto */
     text-align: center;
     transition: transform 0.2s ease-in-out, box-shadow 0.2s ease;
 }
 
-.loja .card-produto:hover {
+.produto-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 6px 18px rgb(255, 159, 0);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
 }
 
-.loja .card-produto img {
+/* Imagem do produto */
+.produto-imagem {
     max-width: 100%;
-    height: 180px;
+    height: 160px;
     object-fit: cover;
-    border-radius: 6px;
-    margin-bottom: 15px;
-    border: 1px solid #fff;
+    border-radius: 12px;
+    margin-bottom: 12px;
+    border: 1px solid #ddd;
 }
 
-.loja .card-produto h2 {
-    font-size: 20px;
-    color: #ffffff;
+/* Nome do produto */
+.produto-nome {
+    font-size: 18px;
+    color: #333;
     margin: 10px 0;
 }
 
-.loja .card-produto p {
+/* Descrição */
+.produto-descricao {
     font-size: 14px;
-    color: #ddd;
+    color: #666;
     margin-bottom: 10px;
 }
 
-.loja .card-produto .preco {
-    font-size: 18px;
+/* Preço */
+.produto-preco {
+    font-size: 16px;
     font-weight: bold;
     color: #ff9f00;
-    margin: 12px 0;
+    margin: 10px 0;
 }
 
-.loja .card-produto button {
+/* Botão adicionar ao carrinho */
+.btn-adicionar {
     width: 100%;
     padding: 10px;
     background-color: #ff9f00;
-    color: #000;
+    color: #fff;
     border: none;
-    border-radius: 4px;
-    font-size: 16px;
+    border-radius: 12px; /* mais curvo */
+    font-size: 15px;
     cursor: pointer;
-    transition: background 0.3s ease;
+    transition: background 0.3s ease, transform 0.2s ease;
 }
 
-.loja .card-produto button:hover {
+.btn-adicionar:hover {
     background-color: #e68a00;
+    transform: scale(1.03);
 }
 
-.loja .card-produto .estoque {
+/* Estoque (opcional) */
+.produto-estoque {
     font-size: 13px;
     color: #aaa;
-    margin-top: 8px;
+    margin-top: 6px;
 }
+
 
 /* =========================
             LOGIN 

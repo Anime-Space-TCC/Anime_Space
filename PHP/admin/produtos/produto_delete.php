@@ -20,6 +20,6 @@ $stmt = $pdo->prepare("DELETE FROM produtos WHERE id = ?");
 $stmt->execute([$id]);
 
 // Redireciona para a página de gerenciamento de produtos após exclusão
-header("Location: admin_produtos.php");
+header("Location: admin_produto.php");
 exit();
 ?>

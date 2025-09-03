@@ -49,7 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $pdo->prepare($sql)->execute([$nome, $preco, $estoque, $imagem, $descricao]);
     }
 
-    header('Location: admin_produtos.php');
+    header('Location: admin_produto.php');
     exit();
 }
 ?>
