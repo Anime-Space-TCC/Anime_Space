@@ -43,3 +43,18 @@ function salvarResultadoQuiz($userId, $anime_id, $respostas) {
 
     return ['acertos' => $acertos, 'total' => $total, 'status' => 'salvo'];
 }
+
+function buscarQuizPorAnimeETemporada(PDO $pdo, int $anime_id, ?int $temporada = null) {
+    $sql = "SELECT * FROM quizzes WHERE anime_id = :anime_id";
+    if ($temporada !== null) {
+        $sql .= " AND temporada = :temporada";
+    }
+    $stmt = $pdo->prepare($sql);
+    $stmt->bindValue(':anime_id', $anime_id, PDO::PARAM_INT);
+    if ($temporada !== null) {
+        $stmt->bindValue(':temporada', $temporada, PDO::PARAM_INT);
+    }
+    $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+

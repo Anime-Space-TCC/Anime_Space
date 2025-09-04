@@ -508,75 +508,121 @@ html, body {
   margin-top: 2px; 
 }
 
-/* =========================
+/* ========================= 
    BOTÕES DE TEMPORADA E QUIZ
 ========================= */
 
-.btn-quiz,
-.select-temporada {
-    display: none;             
-    margin-top: 15px;
-    padding: 12px 24px;
-    background: linear-gradient(45deg, #ff6ec7, #6e8efb);
-    border: none;
-    border-radius: 12px;
-    color: white;
-    font-weight: bold;
-    font-size: 1rem;
-    cursor: pointer;
-    text-align: center;
-    transition: transform 0.2s, box-shadow 0.3s, opacity 0.3s ease;
-    box-shadow: 0 0 12px rgba(255, 110, 199, 0.7);
-    opacity: 0;
-    text-decoration: none;
+.header-temporada {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;  
+  gap: 12px;
+  margin: 18px 0;
+  flex-wrap: wrap;
 }
 
-/* Container para alinhar lado a lado */
-.temporada-quiz-container {
-    display: inline-flex;
-    align-items: center;
-    gap: 12px; /* Espaçamento entre select e botão */
+/* Botões individuais de temporada (quando houver vários) */
+.btn-temporada {
+  padding: 10px 18px;          
+  border: none;
+  border-radius: 10px;
+  background: #ffaa00;         
+  color: #222;                 
+  font-weight: 600;
+  cursor: pointer;
+  transition: background .2s ease, transform .2s ease;
+}
+.btn-temporada:hover { 
+  background: #ffb733;         
+  transform: scale(1.05);      
+}
+.btn-temporada.ativo { 
+  background: #ff8800;         
+  color: #fff;
 }
 
-/* Mostra quando ativo */
-.btn-quiz.show,
-.select-temporada.show {
-    display: inline-flex;      
-    justify-content: center;
-    align-items: center;
-    opacity: 1;
+/* Dropdown de seleção de temporadas */
+.seletor-temporadas-dropdown {
+  position: relative;
+  display: inline-block;
+}
+#btn-temporada {
+  padding: 10px 18px;
+  border: none;
+  border-radius: 10px;
+  background: #ffaa00;
+  color: #222;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background .2s ease, transform .2s ease;
+}
+#btn-temporada:hover { 
+  background: #ffb733;
+  transform: scale(1.05);
+}
+.temporada-lista {
+  position: absolute;
+  top: 110%;
+  left: 0;
+  background: #fff5e0;
+  border: 1px solid #ffaa00;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  min-width: 150px;
+  display: none;
+  z-index: 100;
+}
+.temporada-lista a {
+  display: block;
+  padding: 8px 12px;
+  text-decoration: none;
+  color: #222;
+  font-weight: 500;
+  transition: background .2s ease;
+}
+.temporada-lista a:hover {
+  background: #ffb733;
+  color: #fff;
+}
+.temporada-lista.hidden { display: none; }
+
+/* Título quando houver apenas uma temporada */
+.titulo-temporada-unica {
+  font-size: 1.2rem;
+  margin: 0;
+  font-weight: 600;
+  color: #ffaa00;
 }
 
-/* Efeito hover */
-.btn-quiz:hover,
-.select-temporada:hover {
-    transform: scale(1.05);
-    box-shadow: 0 0 20px rgba(255, 110, 199, 0.9);
+/* Botão de Quiz */
+.btn-quiz {
+  display: none;
+  padding: 10px 16px;
+  border-radius: 10px;
+  background: #ffaa00;        
+  color: #222;
+  font-weight: 600;
+  text-decoration: none;
+  transition: filter .2s ease, transform .2s ease;
+}
+.btn-quiz:hover { 
+  filter: brightness(0.9); 
+  transform: scale(1.05);
+}
+.btn-quiz.show { display: inline-block; }
+
+.btn-quiz::after {
+  content: "✨";
+  position: relative;
+  left: 6px;
+  opacity: 0.8;
+  animation: sparkle 1.5s infinite;
 }
 
-/* Dropdown de temporada */
-.select-temporada {
-    appearance: none; /* remove estilo padrão do select */
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    background-color: rgba(255, 110, 199, 0.2);
-    color: white;
-    font-weight: bold;
-    padding: 10px 20px;
-    border-radius: 12px;
-    border: none;
-    cursor: pointer;
-    margin-right: 0; /* controle de gap pelo container */
-}
-
-/* Ícone seta do select (opcional) */
-.select-temporada::-ms-expand {
-    display: none;
-}
-
-.select-temporada option {
-    background-color: rgba(20, 20, 20, 0.95);
-    color: white;
+/* Animação de brilho do Quiz */
+@keyframes sparkle {
+  0%, 100% { opacity: 0.8; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.2); }
 }
 
 /* =========================
@@ -840,13 +886,4 @@ html, body {
     0% { transform: scale(1) rotate(0deg); opacity: 1; }
     50% { transform: scale(1.5) rotate(90deg); opacity: 0.6; }
     100% { transform: scale(1) rotate(180deg); opacity: 1; }
-}
-
-.btn-quiz::after {
-    content: "✨";
-    position: absolute;
-    top: -10px;
-    right: -10px;
-    opacity: 0.8;
-    animation: sparkle 1.5s infinite;
 }

@@ -35,13 +35,28 @@ function buscarAnimePorId(PDO $pdo, int $id): ?array {
  */
 function buscarEstreiasTemporada(PDO $pdo) {
     $sql = "
-        SELECT t.id AS temporada_id, t.anime_id, t.numero AS temporada, t.nome AS temporada_nome,
-               a.nome AS anime_nome, a.capa AS anime_capa,
-               e.numero AS numero, e.titulo AS titulo, e.data_lancamento
+        SELECT 
+            t.id AS temporada_id,
+            t.anime_id,
+            t.numero AS temporada,
+            t.nome AS temporada_nome,
+            a.nome AS anime_nome,
+            a.capa AS anime_capa,
+            e.numero AS numero,
+            e.titulo AS titulo,
+            e.data_lancamento
         FROM temporadas t
         JOIN animes a ON t.anime_id = a.id
-        LEFT JOIN episodios e ON e.anime_id = t.anime_id AND e.temporada = t.numero
-        ORDER BY a.nome, t.numero, e.numero
+        LEFT JOIN episodios e 
+            ON e.anime_id = t.anime_id 
+           AND e.temporada = t.numero
+           AND e.numero = (
+               SELECT MIN(e2.numero)
+               FROM episodios e2
+               WHERE e2.anime_id = t.anime_id
+                 AND e2.temporada = t.numero
+           )
+        ORDER BY a.nome, t.numero
     ";
     
     $stmt = $pdo->query($sql);

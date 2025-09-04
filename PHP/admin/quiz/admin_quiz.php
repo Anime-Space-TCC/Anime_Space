@@ -10,7 +10,7 @@ if (!isset($_SESSION['tipo']) || $_SESSION['tipo'] !== 'admin') {
 
 // Consulta todos os quizzes, incluindo o nome do anime
 $quizzes = $pdo->query("
-    SELECT q.id, q.pergunta, q.alternativa_a, q.alternativa_b, q.alternativa_c, q.alternativa_d, q.resposta_correta,
+    SELECT q.id, q.temporada, q.pergunta, q.alternativa_a, q.alternativa_b, q.alternativa_c, q.alternativa_d, q.resposta_correta,
            a.nome AS anime_nome
     FROM quizzes q
     JOIN animes a ON q.anime_id = a.id
@@ -43,6 +43,7 @@ $quizzes = $pdo->query("
     <thead>
         <tr>
             <th>Anime</th>
+            <th>Tempodada</th>
             <th>Pergunta</th>
             <th>Resposta</th>
             <th>Ações</th>
@@ -52,6 +53,7 @@ $quizzes = $pdo->query("
         <?php foreach ($quizzes as $q): ?>
         <tr>
             <td><?= htmlspecialchars($q['anime_nome']) ?></td>
+            <td><?= htmlspecialchars($q['temporada']) ?></td>
             <td><?= htmlspecialchars($q['pergunta']) ?></td>
             <td class="destaque"><?= htmlspecialchars($q['resposta_correta']) ?></td>
             <td>

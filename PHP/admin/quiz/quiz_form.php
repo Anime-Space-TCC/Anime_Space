@@ -19,7 +19,8 @@ $quiz = [
     'alternativa_c' => '',
     'alternativa_d' => '',
     'resposta_correta' => 'A',
-    'anime_id' => ''
+    'anime_id' => '',
+    'temporada' => ''
 ];
 
 // Busca todos os animes para relacionar o quiz
@@ -36,7 +37,15 @@ if ($id) {
     }
 }
 
-// Processa envio do formulário
+// Busca temporadas do anime selecionado
+$temporadas = [];
+if ($quiz['anime_id']) {
+    $stmt = $pdo->prepare("SELECT numero, nome FROM temporadas WHERE anime_id = ? ORDER BY numero");
+    $stmt->execute([$quiz['anime_id']]);
+    $temporadas = $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+// Processa envio do formulário (mantido igual)
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $pergunta = $_POST['pergunta'] ?? '';
     $a = $_POST['alternativa_a'] ?? '';
@@ -45,18 +54,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $d = $_POST['alternativa_d'] ?? '';
     $resposta = $_POST['resposta_correta'] ?? 'A';
     $anime_id = $_POST['anime_id'] ?? null;
+    $temporada = $_POST['temporada'] ?? null;
 
     if ($id) {
         // Atualiza quiz
         $sql = "UPDATE quizzes 
-                SET pergunta=?, alternativa_a=?, alternativa_b=?, alternativa_c=?, alternativa_d=?, resposta_correta=?, anime_id=? 
+                SET pergunta=?, alternativa_a=?, alternativa_b=?, alternativa_c=?, alternativa_d=?, resposta_correta=?, anime_id=?, temporada=? 
                 WHERE id=?";
-        $pdo->prepare($sql)->execute([$pergunta, $a, $b, $c, $d, $resposta, $anime_id, $id]);
+        $pdo->prepare($sql)->execute([$pergunta, $a, $b, $c, $d, $resposta, $anime_id, $temporada, $id]);
     } else {
         // Insere quiz
-        $sql = "INSERT INTO quizzes (pergunta, alternativa_a, alternativa_b, alternativa_c, alternativa_d, resposta_correta, anime_id) 
-                VALUES (?, ?, ?, ?, ?, ?, ?)";
-        $pdo->prepare($sql)->execute([$pergunta, $a, $b, $c, $d, $resposta, $anime_id]);
+        $sql = "INSERT INTO quizzes (pergunta, alternativa_a, alternativa_b, alternativa_c, alternativa_d, resposta_correta, anime_id, temporada) 
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        $pdo->prepare($sql)->execute([$pergunta, $a, $b, $c, $d, $resposta, $anime_id, $temporada]);
     }
 
     header('Location: ../../../PHP/admin/quiz/admin_quiz.php');
@@ -112,6 +122,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <?php foreach($animes as $a): ?>
                     <option value="<?= $a['id'] ?>" <?= $quiz['anime_id'] == $a['id'] ? 'selected' : '' ?>>
                         <?= htmlspecialchars($a['nome']) ?>
+                    </option>
+                <?php endforeach; ?>
+            </select><br><br>
+
+            <label>Temporada:</label><br>
+            <select name="temporada" id="temporadaSelect" required>
+                <option value="">Selecione a temporada</option>
+                <?php foreach($temporadas as $temp): ?>
+                    <option value="<?= $temp['numero'] ?>" <?= (isset($quiz['temporada']) && $quiz['temporada'] == $temp['numero']) ? 'selected' : '' ?>>
+                        <?= htmlspecialchars($temp['nome'] ?: "Temporada {$temp['numero']}") ?>
                     </option>
                 <?php endforeach; ?>
             </select><br><br>

@@ -29,6 +29,9 @@ if (!$perguntas) {
     echo "Nenhum quiz disponível para este anime.";
     exit;
 }
+// Verifica se uma temporada foi especificada
+$temporada = isset($_GET['temporada']) ? (int)$_GET['temporada'] : null;
+$perguntas = buscarQuizPorAnimeETemporada($anime_id, $temporada);
 ?>
 
 <!DOCTYPE html>
