@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 31-Ago-2025 às 02:46
+-- Tempo de geração: 05-Set-2025 às 01:07
 -- Versão do servidor: 10.4.24-MariaDB
 -- versão do PHP: 8.1.6
 
@@ -45,11 +45,11 @@ CREATE TABLE `animes` (
 --
 
 INSERT INTO `animes` (`id`, `nome`, `nota`, `descricao`, `sinopse`, `capa`, `ano`, `linguagem`, `created_at`, `updated_at`) VALUES
-(1, 'Solo Leveling', '8.5', 'Sung Jinwoo, o caçador mais fraco do mundo, ganha a habilidade de ficar mais forte sem limites após sobreviver a uma dungeon mortal, iniciando uma ascensão imparável.', 'Em um mundo onde portais místicos — as dungeons — surgem, caçadores enfrentam monstros para proteger a humanidade. Sung Jinwoo, classificado como um Hunter de Rank E, é considerado o mais fraco entre eles. Tudo muda quando ele sobrevive por pouco a uma dungeon dupla que quase aniquila seu grupo. Após esse evento traumático, Jinwoo é escolhido por um misterioso programa chamado Sistema, que lhe concede uma habilidade única: subir de nível infinitamente, algo impossível para os demais caçadores. Ele parte então em uma jornada incrível, enfrentando monstros e humanos em busca da origem de seu poder, até descobrir que foi destinado a se tornar o Shadow Monarch, um necromante imortal que luta para salvar a humanidade contra os demais Monarcas, que buscam sua destruição.', 'solo.png', 2021, NULL, '2025-08-31 00:31:54', '2025-08-31 00:31:54'),
-(2, 'Sousou no Frieren', '9.2', 'Após derrotar o Rei Demônio, a maga élfica Frieren parte em uma jornada para entender os humanos e lidar com a passagem do tempo e a perda de seus companheiros.', 'A história começa após um grande triunfo: a mage élfica Frieren fazia parte de um grupo heroico que derrotou o Rei Demônio em uma jornada de dez anos. Após a vitória, seus companheiros — humanos e anões — envelhecem e morrem, enquanto Frieren, com seu tempo de vida milenar, os vê como eventos breves em sua própria existência. Ela retorna cinquenta anos depois — e percebe que perdeu a chance de se aprofundar nas relações com seus companheiros humanos, especialmente com o herói Himmel. Movida pelo arrependimento, ela embarca em uma nova jornada para reencontrar o passado, cumprir os desejos finais dos amigos e ensinar sua aprendiz humana, Fern, enquanto reflete sobre a transitoriedade da vida, a profundidade das emoções humanas e o valor das conexões verdadeiras.', 'frieren.png', 2022, 'legendado', '2025-08-31 00:31:54', '2025-08-31 00:31:54'),
-(3, 'Dandadan', '8.8', 'Uma mistura de ação, comédia e sobrenatural, onde uma garota que acredita em fantasmas e um garoto que acredita em alienígenas acabam envolvidos com ambos.', 'Momo Ayase”, que acredita em fantasmas mas não em alienígenas, e “Ken Takakura” (apelidado Okarun), que acredita em alienígenas mas nega a existência de fantasmas, acabam em uma aposta para provar quem está certo — ela visita um hotspot alienígena, ele um lugar assombrado. Isso desencadeia eventos sobrenaturais extremos: Momo é abduzida por aliens, liberando seus poderes psíquicos latentes; Okarun, por sua vez, é possuído por um espírito. Juntos, enfrentam ameaças sobrenaturais com uma mistura caótica de ação, comédia e romance adolescente — desde espíritos malignos até confrontos com alienígenas. A história combina horror escancarado, risos constrangedores e rostos rosa de vergonha típica da puberdade', 'dandadan.png', 2023, 'legendado', '2025-08-31 00:31:54', '2025-08-31 00:31:54'),
-(4, 'Dungeon Meshi', '8.7', 'Um grupo de aventureiros explora uma masmorra e sobrevive cozinhando monstros que encontram pelo caminho, combinando fantasia e culinária criativa.', 'Nesse mundo de fantasia, um grupo de aventureiros falha em derrotar um dragão vermelho e precisa salvar sua companheira feiticeira Falin, teletransportada para fora antes de ser devorada. Sem dinheiro ou suprimentos, eles decidem sobreviver cozinhando e comendo os monstros que encontram na dungeon. Liderados por Laios, um espadachim obcecado por monstros, e contando com um anão cozinheiro chamado Senshi, eles devolvem vida — literalmente — à aventura com criatividade e bom humor', 'dungeon.png', 2024, 'legendado', '2025-08-31 00:31:54', '2025-08-31 00:31:54'),
-(5, 'Kaiju No. 8', '8.6', 'Em um Japão atacado por monstros gigantes, um homem ganha o poder de se transformar em um kaiju, e decide usar essa força para proteger o país.', 'Kafka Hibino trabalha limpando monstros kaiju, enquanto seu sonho de infância era se tornar membro da força que combate essas criaturas. Tudo muda quando ele acaba ingerindo um kaiju — e passa a ter a habilidade de se transformar em um deles. Agora, Kafka usa esse poder inusitado para ingressar na força de defesa e cumprir uma promessa feita a uma amiga de infância', 'kaiju8.png', 2024, 'legendado', '2025-08-31 00:31:54', '2025-08-31 00:31:54');
+(1, 'Solo Leveling', '8.5', 'Sung Jinwoo, o caçador mais fraco do mundo, ganha a habilidade de ficar mais forte sem limites após sobreviver a uma dungeon mortal, iniciando uma ascensão imparável.', 'Em um mundo onde portais místicos — as dungeons — surgem, caçadores enfrentam monstros para proteger a humanidade. Sung Jinwoo, classificado como um Hunter de Rank E, é considerado o mais fraco entre eles. Tudo muda quando ele sobrevive por pouco a uma dungeon dupla que quase aniquila seu grupo. Após esse evento traumático, Jinwoo é escolhido por um misterioso programa chamado Sistema, que lhe concede uma habilidade única: subir de nível infinitamente, algo impossível para os demais caçadores. Ele parte então em uma jornada incrível, enfrentando monstros e humanos em busca da origem de seu poder, até descobrir que foi destinado a se tornar o Shadow Monarch, um necromante imortal que luta para salvar a humanidade contra os demais Monarcas, que buscam sua destruição.', 'solo.png', 2021, NULL, '2025-09-04 23:05:55', '2025-09-04 23:05:55'),
+(2, 'Sousou no Frieren', '9.2', 'Após derrotar o Rei Demônio, a maga élfica Frieren parte em uma jornada para entender os humanos e lidar com a passagem do tempo e a perda de seus companheiros.', 'A história começa após um grande triunfo: a mage élfica Frieren fazia parte de um grupo heroico que derrotou o Rei Demônio em uma jornada de dez anos. Após a vitória, seus companheiros — humanos e anões — envelhecem e morrem, enquanto Frieren, com seu tempo de vida milenar, os vê como eventos breves em sua própria existência. Ela retorna cinquenta anos depois — e percebe que perdeu a chance de se aprofundar nas relações com seus companheiros humanos, especialmente com o herói Himmel. Movida pelo arrependimento, ela embarca em uma nova jornada para reencontrar o passado, cumprir os desejos finais dos amigos e ensinar sua aprendiz humana, Fern, enquanto reflete sobre a transitoriedade da vida, a profundidade das emoções humanas e o valor das conexões verdadeiras.', 'frieren.png', 2022, 'legendado', '2025-09-04 23:05:55', '2025-09-04 23:05:55'),
+(3, 'Dandadan', '8.8', 'Uma mistura de ação, comédia e sobrenatural, onde uma garota que acredita em fantasmas e um garoto que acredita em alienígenas acabam envolvidos com ambos.', 'Momo Ayase”, que acredita em fantasmas mas não em alienígenas, e “Ken Takakura” (apelidado Okarun), que acredita em alienígenas mas nega a existência de fantasmas, acabam em uma aposta para provar quem está certo — ela visita um hotspot alienígena, ele um lugar assombrado. Isso desencadeia eventos sobrenaturais extremos: Momo é abduzida por aliens, liberando seus poderes psíquicos latentes; Okarun, por sua vez, é possuído por um espírito. Juntos, enfrentam ameaças sobrenaturais com uma mistura caótica de ação, comédia e romance adolescente — desde espíritos malignos até confrontos com alienígenas. A história combina horror escancarado, risos constrangedores e rostos rosa de vergonha típica da puberdade', 'dandadan.png', 2023, 'legendado', '2025-09-04 23:05:55', '2025-09-04 23:05:55'),
+(4, 'Dungeon Meshi', '8.7', 'Um grupo de aventureiros explora uma masmorra e sobrevive cozinhando monstros que encontram pelo caminho, combinando fantasia e culinária criativa.', 'Nesse mundo de fantasia, um grupo de aventureiros falha em derrotar um dragão vermelho e precisa salvar sua companheira feiticeira Falin, teletransportada para fora antes de ser devorada. Sem dinheiro ou suprimentos, eles decidem sobreviver cozinhando e comendo os monstros que encontram na dungeon. Liderados por Laios, um espadachim obcecado por monstros, e contando com um anão cozinheiro chamado Senshi, eles devolvem vida — literalmente — à aventura com criatividade e bom humor', 'dungeon.png', 2024, 'legendado', '2025-09-04 23:05:55', '2025-09-04 23:05:55'),
+(5, 'Kaiju No. 8', '8.6', 'Em um Japão atacado por monstros gigantes, um homem ganha o poder de se transformar em um kaiju, e decide usar essa força para proteger o país.', 'Kafka Hibino trabalha limpando monstros kaiju, enquanto seu sonho de infância era se tornar membro da força que combate essas criaturas. Tudo muda quando ele acaba ingerindo um kaiju — e passa a ter a habilidade de se transformar em um deles. Agora, Kafka usa esse poder inusitado para ingressar na força de defesa e cumprir uma promessa feita a uma amiga de infância', 'kaiju8.png', 2024, 'legendado', '2025-09-04 23:05:55', '2025-09-04 23:05:55');
 
 -- --------------------------------------------------------
 
@@ -111,22 +111,10 @@ INSERT INTO `ano` (`id`, `valor`) VALUES
 --
 
 CREATE TABLE `avaliacoes` (
-  `id` int(11) NOT NULL,
-  `nota` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
-  `anime_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Extraindo dados da tabela `avaliacoes`
---
-
-INSERT INTO `avaliacoes` (`id`, `nota`, `user_id`, `anime_id`) VALUES
-(1, 10, 1, 4),
-(2, 4, 1, 4),
-(3, 2, 1, 4),
-(4, 10, 1, 4),
-(5, 10, 1, 4);
+  `anime_id` int(11) NOT NULL,
+  `nota` decimal(3,1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -155,6 +143,7 @@ CREATE TABLE `episodios` (
   `numero` int(11) NOT NULL,
   `titulo` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `descricao` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `sinopse` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `duracao` int(11) DEFAULT NULL,
   `data_lancamento` date DEFAULT NULL,
   `miniatura` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -166,13 +155,13 @@ CREATE TABLE `episodios` (
 -- Extraindo dados da tabela `episodios`
 --
 
-INSERT INTO `episodios` (`id`, `anime_id`, `temporada`, `numero`, `titulo`, `descricao`, `duracao`, `data_lancamento`, `miniatura`, `video_url`, `linguagem`) VALUES
-(1, 1, 1, 1, 'O Mais Fraco', 'Jinwoo começa sua jornada como o caçador mais fraco.', 24, '2021-07-01', 'logo.png', 'https://drive.google.com/file/d/1RnLQJH6KwSR-rtXlhRimfnZJatIg2Y2V/view?usp=drivesdk', 'dublado'),
-(2, 1, 1, 2, 'Despertar', 'Despertar dos poderes ocultos de Jinwoo.', 24, '2021-07-08', 'logo.png', 'https://drive.google.com/file/d/17EPHfXN-GqFyjZby2kIePP3WyQgCsj-h/view?usp=drive_link', 'legendado'),
-(3, 1, 1, 3, 'Portão Mortal', 'Jinwoo enfrenta seu maior desafio em uma dungeon mortal.', 25, '2021-07-15', 'logo.png', 'https://drive.google.com/file/d/1lEj07Vr851FLUkZX95_s5sao52gleoHh/view?usp=drive_link', 'legendado'),
-(4, 2, 1, 1, 'Adeus Heróis', 'Frieren enfrenta o fim de uma era e o início de sua jornada.', 24, '2022-10-01', 'logo.png', 'videos/frieren_ep1.mp4', 'legendado'),
-(5, 2, 1, 2, 'Lembranças Eternas', 'Frieren relembra momentos com seus antigos companheiros.', 24, '2022-10-08', 'logo.png', 'videos/frieren_ep2.mp4', 'legendado'),
-(6, 2, 1, 3, 'Viagem ao Norte', 'A jornada solitária de Frieren a leva ao desconhecido.', 25, '2022-10-15', 'logo.png', 'videos/frieren_ep3.mp4', 'legendado');
+INSERT INTO `episodios` (`id`, `anime_id`, `temporada`, `numero`, `titulo`, `descricao`, `sinopse`, `duracao`, `data_lancamento`, `miniatura`, `video_url`, `linguagem`) VALUES
+(1, 1, 1, 1, 'O Mais Fraco', 'Jinwoo começa sua jornada como o caçador mais fraco.', NULL, 24, '2021-07-01', 'logo.png', 'https://dai.ly/k3obgOHYF3cY0TDLp18', 'dublado'),
+(2, 1, 1, 2, 'Despertar', 'Despertar dos poderes ocultos de Jinwoo.', NULL, 24, '2021-07-08', 'logo.png', 'https://drive.google.com/file/d/17EPHfXN-GqFyjZby2kIePP3WyQgCsj-h/view?usp=drive_link', 'legendado'),
+(3, 1, 1, 3, 'Portão Mortal', 'Jinwoo enfrenta seu maior desafio em uma dungeon mortal.', NULL, 25, '2021-07-15', 'logo.png', 'https://drive.google.com/file/d/1lEj07Vr851FLUkZX95_s5sao52gleoHh/view?usp=drive_link', 'legendado'),
+(4, 2, 1, 1, 'Adeus Heróis', 'Frieren enfrenta o fim de uma era e o início de sua jornada.', NULL, 24, '2022-10-01', 'logo.png', 'videos/frieren_ep1.mp4', 'legendado'),
+(5, 2, 1, 2, 'Lembranças Eternas', 'Frieren relembra momentos com seus antigos companheiros.', NULL, 24, '2022-10-08', 'logo.png', 'videos/frieren_ep2.mp4', 'legendado'),
+(6, 2, 1, 3, 'Viagem ao Norte', 'A jornada solitária de Frieren a leva ao desconhecido.', NULL, 25, '2022-10-15', 'logo.png', 'videos/frieren_ep3.mp4', 'legendado');
 
 -- --------------------------------------------------------
 
@@ -188,13 +177,6 @@ CREATE TABLE `episodio_reacoes` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Extraindo dados da tabela `episodio_reacoes`
---
-
-INSERT INTO `episodio_reacoes` (`id`, `episodio_id`, `user_id`, `reacao`, `created_at`) VALUES
-(1, 4, 1, 'like', '2025-08-31 00:44:47');
-
 -- --------------------------------------------------------
 
 --
@@ -202,10 +184,11 @@ INSERT INTO `episodio_reacoes` (`id`, `episodio_id`, `user_id`, `reacao`, `creat
 --
 
 CREATE TABLE `favoritos` (
-  `id_favorito` int(11) NOT NULL,
+  `id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
-  `anime_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `anime_id` int(11) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -240,11 +223,12 @@ INSERT INTO `generos` (`id`, `nome`, `id_destaque`) VALUES
 --
 
 CREATE TABLE `historico` (
-  `id_historico` int(11) NOT NULL,
-  `data_assistido` date NOT NULL,
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
   `episodio_id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `data_assistido` timestamp NOT NULL DEFAULT current_timestamp(),
+  `progresso_segundos` int(11) DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -254,12 +238,38 @@ CREATE TABLE `historico` (
 
 CREATE TABLE `noticias` (
   `id` int(11) NOT NULL,
-  `data_publicacao` date NOT NULL,
-  `imagem` varchar(150) NOT NULL,
-  `titulo` varchar(60) NOT NULL,
-  `resumo` text NOT NULL,
-  `url_externa` varchar(150) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `titulo` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `resumo` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `conteudo` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `imagem` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `data_publicacao` datetime DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Extraindo dados da tabela `noticias`
+--
+
+INSERT INTO `noticias` (`id`, `titulo`, `resumo`, `conteudo`, `imagem`, `data_publicacao`) VALUES
+(1, 'Novo Anime de Ação Anunciado para 2025', 'A produtora confirmou o lançamento de um anime que promete revolucionar o gênero de ação.', 'Durante a Anime Expo 2025, o estúdio revelou detalhes sobre sua nova produção. A série contará com batalhas épicas, personagens carismáticos e animação de ponta. O lançamento está previsto para outubro de 2025.', 'anime_acao2025.jpg', '2025-09-04 20:05:55'),
+(2, 'Mangá Popular Chega ao Fim', 'Após mais de 10 anos de publicação, um dos mangás mais queridos pelos fãs está chegando ao seu último capítulo.', 'O autor anunciou em entrevista que o arco final será emocionante e cheio de reviravoltas. Fãs aguardam ansiosos pela conclusão que promete ser inesquecível.', 'manga_final.jpg', '2025-09-04 20:05:55'),
+(3, 'Evento Geek Reúne Milhares de Fãs', 'A convenção anual de cultura pop bateu recorde de público neste final de semana.', 'Além de palestras e lançamentos, o evento contou com concursos de cosplay, estandes de produtos exclusivos e pré-estreias de novos animes. A organização já confirmou a edição de 2026.', 'evento_geek2025.png', '2025-09-04 20:05:55');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `produtos`
+--
+
+CREATE TABLE `produtos` (
+  `id` int(11) NOT NULL,
+  `nome` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `descricao` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `preco` decimal(10,2) NOT NULL,
+  `estoque` int(11) DEFAULT 0,
+  `imagem` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `categoria` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `data_criacao` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -269,14 +279,15 @@ CREATE TABLE `noticias` (
 
 CREATE TABLE `quizzes` (
   `id` int(11) NOT NULL,
-  `episodio_id` int(11) NOT NULL,
-  `pergunta` varchar(255) NOT NULL,
-  `alternativa_a` varchar(255) NOT NULL,
-  `alternativa_b` varchar(255) NOT NULL,
-  `alternativa_c` varchar(255) NOT NULL,
-  `alternativa_d` varchar(255) NOT NULL,
-  `resposta_correta` char(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `anime_id` int(11) NOT NULL,
+  `temporada` int(11) DEFAULT NULL,
+  `pergunta` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `alternativa_a` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `alternativa_b` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `alternativa_c` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `alternativa_d` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `resposta_correta` char(1) COLLATE utf8mb4_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -287,7 +298,7 @@ CREATE TABLE `quizzes` (
 CREATE TABLE `quiz_respostas` (
   `id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
-  `episodio_id` int(11) NOT NULL,
+  `anime_id` int(11) NOT NULL,
   `pergunta_id` int(11) NOT NULL,
   `resposta_usuario` enum('A','B','C','D') COLLATE utf8mb4_unicode_ci NOT NULL,
   `correta` tinyint(1) NOT NULL,
@@ -301,11 +312,12 @@ CREATE TABLE `quiz_respostas` (
 --
 
 CREATE TABLE `recomendacoes` (
-  `id_recomendacoes` int(11) NOT NULL,
-  `motivo` int(11) NOT NULL,
+  `id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
-  `anime_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `anime_id` int(11) NOT NULL,
+  `motivo` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `data_recomendacao` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -315,11 +327,11 @@ CREATE TABLE `recomendacoes` (
 
 CREATE TABLE `suporte` (
   `id` int(11) NOT NULL,
-  `nome` varchar(100) NOT NULL,
-  `email` varchar(150) NOT NULL,
-  `mensagem` text NOT NULL,
+  `nome` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(150) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `mensagem` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `data_envio` datetime NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -337,6 +349,17 @@ CREATE TABLE `temporadas` (
   `qtd_episodios` int(11) DEFAULT NULL,
   `capa` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Extraindo dados da tabela `temporadas`
+--
+
+INSERT INTO `temporadas` (`id`, `anime_id`, `numero`, `nome`, `ano_inicio`, `ano_fim`, `qtd_episodios`, `capa`) VALUES
+(1, 1, 1, 'Temporada 1', 2021, 2021, 3, 'solo.png'),
+(2, 2, 1, 'Temporada 1', 2022, 2022, 3, 'frieren.png'),
+(3, 3, 1, 'Temporada 1', 2023, 2023, 0, 'dandadan.png'),
+(4, 4, 1, 'Temporada 1', 2024, 2024, 0, 'dungeon.png'),
+(5, 5, 1, 'Temporada 1', 2024, 2024, 0, 'kaiju8.png');
 
 -- --------------------------------------------------------
 
@@ -360,8 +383,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `username`, `email`, `password`, `tipo`, `foto_perfil`, `created_at`, `updated_at`) VALUES
-(1, 'admin', 'admin@admin.com', '$2y$10$OYipWM3B9dSloJrEZeRezOfVPxioEf89jRfwOt5wJ37UqBMfXz5g2', 'admin', 'default.jpg', '2025-08-31 00:31:54', '2025-08-31 00:31:54'),
-(2, 'julio', 'jc1368222@gmail.com', '$2y$10$WK.KasDH2UFqupPgRP46s.WfFTfhjIKybho7uFHyyhkocG7/c3G6y', 'user', 'default.jpg', '2025-08-31 00:32:34', '2025-08-31 00:35:50');
+(1, 'admin', 'admin@admin.com', '$2y$10$OYipWM3B9dSloJrEZeRezOfVPxioEf89jRfwOt5wJ37UqBMfXz5g2', 'admin', 'default.jpg', '2025-09-04 23:05:55', '2025-09-04 23:05:55');
 
 --
 -- Índices para tabelas despejadas
@@ -392,7 +414,8 @@ ALTER TABLE `ano`
 -- Índices para tabela `avaliacoes`
 --
 ALTER TABLE `avaliacoes`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`user_id`,`anime_id`),
+  ADD KEY `anime_id` (`anime_id`);
 
 --
 -- Índices para tabela `comentarios`
@@ -422,7 +445,9 @@ ALTER TABLE `episodio_reacoes`
 -- Índices para tabela `favoritos`
 --
 ALTER TABLE `favoritos`
-  ADD PRIMARY KEY (`id_favorito`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `uq_user_anime_fav` (`user_id`,`anime_id`),
+  ADD KEY `anime_id` (`anime_id`);
 
 --
 -- Índices para tabela `generos`
@@ -435,7 +460,9 @@ ALTER TABLE `generos`
 -- Índices para tabela `historico`
 --
 ALTER TABLE `historico`
-  ADD PRIMARY KEY (`id_historico`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `uq_user_episodio_hist` (`user_id`,`episodio_id`),
+  ADD KEY `episodio_id` (`episodio_id`);
 
 --
 -- Índices para tabela `noticias`
@@ -444,11 +471,17 @@ ALTER TABLE `noticias`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Índices para tabela `produtos`
+--
+ALTER TABLE `produtos`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Índices para tabela `quizzes`
 --
 ALTER TABLE `quizzes`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `episodio_id` (`episodio_id`);
+  ADD KEY `anime_id` (`anime_id`);
 
 --
 -- Índices para tabela `quiz_respostas`
@@ -456,14 +489,16 @@ ALTER TABLE `quizzes`
 ALTER TABLE `quiz_respostas`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `uq_user_pergunta` (`user_id`,`pergunta_id`),
-  ADD KEY `episodio_id` (`episodio_id`),
+  ADD KEY `anime_id` (`anime_id`),
   ADD KEY `pergunta_id` (`pergunta_id`);
 
 --
 -- Índices para tabela `recomendacoes`
 --
 ALTER TABLE `recomendacoes`
-  ADD PRIMARY KEY (`id_recomendacoes`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `uq_user_anime_rec` (`user_id`,`anime_id`),
+  ADD KEY `anime_id` (`anime_id`);
 
 --
 -- Índices para tabela `suporte`
@@ -503,12 +538,6 @@ ALTER TABLE `ano`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT de tabela `avaliacoes`
---
-ALTER TABLE `avaliacoes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
-
---
 -- AUTO_INCREMENT de tabela `comentarios`
 --
 ALTER TABLE `comentarios`
@@ -524,13 +553,13 @@ ALTER TABLE `episodios`
 -- AUTO_INCREMENT de tabela `episodio_reacoes`
 --
 ALTER TABLE `episodio_reacoes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de tabela `favoritos`
 --
 ALTER TABLE `favoritos`
-  MODIFY `id_favorito` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de tabela `generos`
@@ -542,12 +571,18 @@ ALTER TABLE `generos`
 -- AUTO_INCREMENT de tabela `historico`
 --
 ALTER TABLE `historico`
-  MODIFY `id_historico` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de tabela `noticias`
 --
 ALTER TABLE `noticias`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT de tabela `produtos`
+--
+ALTER TABLE `produtos`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
@@ -566,7 +601,7 @@ ALTER TABLE `quiz_respostas`
 -- AUTO_INCREMENT de tabela `recomendacoes`
 --
 ALTER TABLE `recomendacoes`
-  MODIFY `id_recomendacoes` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de tabela `suporte`
@@ -578,13 +613,13 @@ ALTER TABLE `suporte`
 -- AUTO_INCREMENT de tabela `temporadas`
 --
 ALTER TABLE `temporadas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de tabela `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Restrições para despejos de tabelas
@@ -596,6 +631,13 @@ ALTER TABLE `users`
 ALTER TABLE `anime_generos`
   ADD CONSTRAINT `anime_generos_ibfk_1` FOREIGN KEY (`anime_id`) REFERENCES `animes` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `anime_generos_ibfk_2` FOREIGN KEY (`genero_id`) REFERENCES `generos` (`id`) ON DELETE CASCADE;
+
+--
+-- Limitadores para a tabela `avaliacoes`
+--
+ALTER TABLE `avaliacoes`
+  ADD CONSTRAINT `avaliacoes_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `avaliacoes_ibfk_2` FOREIGN KEY (`anime_id`) REFERENCES `animes` (`id`) ON DELETE CASCADE;
 
 --
 -- Limitadores para a tabela `comentarios`
@@ -618,18 +660,39 @@ ALTER TABLE `episodio_reacoes`
   ADD CONSTRAINT `episodio_reacoes_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
 
 --
+-- Limitadores para a tabela `favoritos`
+--
+ALTER TABLE `favoritos`
+  ADD CONSTRAINT `favoritos_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `favoritos_ibfk_2` FOREIGN KEY (`anime_id`) REFERENCES `animes` (`id`) ON DELETE CASCADE;
+
+--
+-- Limitadores para a tabela `historico`
+--
+ALTER TABLE `historico`
+  ADD CONSTRAINT `historico_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `historico_ibfk_2` FOREIGN KEY (`episodio_id`) REFERENCES `episodios` (`id`) ON DELETE CASCADE;
+
+--
 -- Limitadores para a tabela `quizzes`
 --
 ALTER TABLE `quizzes`
-  ADD CONSTRAINT `quizzes_ibfk_1` FOREIGN KEY (`episodio_id`) REFERENCES `episodios` (`id`) ON DELETE CASCADE;
+  ADD CONSTRAINT `quizzes_ibfk_1` FOREIGN KEY (`anime_id`) REFERENCES `animes` (`id`) ON DELETE CASCADE;
 
 --
 -- Limitadores para a tabela `quiz_respostas`
 --
 ALTER TABLE `quiz_respostas`
   ADD CONSTRAINT `quiz_respostas_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `quiz_respostas_ibfk_2` FOREIGN KEY (`episodio_id`) REFERENCES `episodios` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `quiz_respostas_ibfk_2` FOREIGN KEY (`anime_id`) REFERENCES `animes` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `quiz_respostas_ibfk_3` FOREIGN KEY (`pergunta_id`) REFERENCES `quizzes` (`id`) ON DELETE CASCADE;
+
+--
+-- Limitadores para a tabela `recomendacoes`
+--
+ALTER TABLE `recomendacoes`
+  ADD CONSTRAINT `recomendacoes_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `recomendacoes_ibfk_2` FOREIGN KEY (`anime_id`) REFERENCES `animes` (`id`) ON DELETE CASCADE;
 
 --
 -- Limitadores para a tabela `temporadas`
