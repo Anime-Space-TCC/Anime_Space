@@ -82,7 +82,7 @@ if (!empty($temporadas)) {
 <head>
   <meta charset="UTF-8">
   <title>Episódios - <?= htmlspecialchars($animeInfo['nome']) ?></title>
-  <link rel="stylesheet" href="../../CSS/styleEpi2.css">
+  <link rel="stylesheet" href="../../CSS/episodeos.css">
   <link rel="icon" href="../../img/slogan3.png" type="image/png">
 </head>
 <body>
@@ -163,7 +163,7 @@ if (!empty($temporadas)) {
             <?php if (count($temporadas) > 1): ?>
                 <div class="dropdown-temporadas">
                     <button class="btn-dropdown" id="btnDropdown">
-                        Temporada <?= $temporadaInicial ?> ▼
+                        Temporada <?= $temporadaInicial ?>
                     </button>
                     <ul class="dropdown-list" id="dropdownList">
                         <?php foreach (array_keys($temporadas) as $numTemp): ?>
@@ -344,7 +344,7 @@ if (btnDropdown && dropdownList) {
   dropdownItems.forEach(item => {
     item.addEventListener('click', () => {
       const temporada = item.dataset.temporada;
-      btnDropdown.textContent = `Temporada ${temporada} ▼`;
+      btnDropdown.textContent = `Temporada ${temporada}`;
 
       document.querySelectorAll('.temporada-bloco').forEach(bloco => {
         bloco.style.display = (bloco.dataset.temporada === temporada) ? "" : "none";

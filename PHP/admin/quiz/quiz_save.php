@@ -22,7 +22,7 @@ if ($id) {
     $stmt->execute([$anime_id, $temporada, $pergunta, $a, $b, $c, $d, $resposta, $id]);
 } else {
     $stmt = $pdo->prepare("INSERT INTO quizzes (anime_id, temporada, pergunta, alternativa_a, alternativa_b, alternativa_c, alternativa_d, resposta_correta) VALUES (?,?,?,?,?,?,?)");
-    $stmt->execute([$anime_id, $temporada $pergunta, $a, $b, $c, $d, $resposta]);
+    $stmt->execute([$anime_id, $temporada, $pergunta, $a, $b, $c, $d, $resposta]);
 }
 
 header('Location: ../../../PHP/user/quiz.php');
