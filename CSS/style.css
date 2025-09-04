@@ -684,12 +684,6 @@ header h1.titulo-pagina {
    LOJA - PÁGINA DE VENDAS
 ========================= */
 
-.loja {
-    font-family: 'Arial', sans-serif;
-    background-color: #f5f5f5; /* fundo claro e mais leve */
-    padding: 20px 0;
-}
-
 .loja .loja-header {
     text-align: center;
     margin-bottom: 30px;
@@ -1038,7 +1032,7 @@ header h1.titulo-pagina {
    ========================= */
 
 .streaming .anime-catalogo {
-    width: 100%;
+    max-width: 100%;
     margin: 0 auto 60px;
     display: flex;
     flex-wrap: wrap;

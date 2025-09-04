@@ -11,12 +11,12 @@ $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
 $redirect = $_GET['redirect'] ?? 'admin'; // 'admin' (padrão) ou 'user'
 
 if (!$id) {
-    header('Location: ../../../PHP/admin/quiz/admin_quizzes.php?msg=ID%20inválido');
+    header('Location: ../../../PHP/admin/quiz/admin_quiz.php?msg=ID%20inválido');
     exit();
 }
 
-// Busca o episodio_id para redirecionar corretamente (se necessário)
-$stmt = $pdo->prepare("SELECT episodio_id FROM quizzes WHERE id = ?");
+// Busca o anime_id para possível uso (ajuste se precisar)
+$stmt = $pdo->prepare("SELECT anime_id FROM quizzes WHERE id = ?");
 $stmt->execute([$id]);
 $quiz = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -25,15 +25,16 @@ if (!$quiz) {
     exit();
 }
 
-$episodioId = (int)$quiz['episodio_id'];
+$animeId = (int)$quiz['anime_id'];
 
 // Apaga
 $del = $pdo->prepare("DELETE FROM quizzes WHERE id = ?");
 $del->execute([$id]);
 
 // Redireciona
-if ($redirect === 'user' && $episodioId) {
-    header("Location: ../../../PHP/user/quiz.php?episodio_id={$episodioId}&msg=Quiz%20excluído");
+if ($redirect === 'user' && $animeId) {
+    // Ajuste o redirecionamento aqui se precisar passar anime_id para alguma página do usuário
+    header("Location: ../../../PHP/user/quiz.php?anime_id={$animeId}&msg=Quiz%20excluído");
 } else {
     header("Location: ../../../PHP/admin/quiz/admin_quiz.php?msg=Quiz%20excluído");
 }

@@ -19,14 +19,11 @@ $quiz = [
     'alternativa_c' => '',
     'alternativa_d' => '',
     'resposta_correta' => 'A',
-    'episodio_id' => ''
+    'anime_id' => ''
 ];
 
-// Busca todos os episódios para relacionar o quiz
-$episodios = $pdo->query("SELECT e.id, e.numero, e.titulo, a.nome AS anime_nome 
-                          FROM episodios e 
-                          JOIN animes a ON e.anime_id = a.id 
-                          ORDER BY a.nome, e.numero")->fetchAll(PDO::FETCH_ASSOC);
+// Busca todos os animes para relacionar o quiz
+$animes = $pdo->query("SELECT id, nome FROM animes ORDER BY nome")->fetchAll(PDO::FETCH_ASSOC);
 
 // Se for edição, busca os dados do quiz
 if ($id) {
@@ -47,19 +44,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $c = $_POST['alternativa_c'] ?? '';
     $d = $_POST['alternativa_d'] ?? '';
     $resposta = $_POST['resposta_correta'] ?? 'A';
-    $episodio_id = $_POST['episodio_id'] ?? null;
+    $anime_id = $_POST['anime_id'] ?? null;
 
     if ($id) {
         // Atualiza quiz
         $sql = "UPDATE quizzes 
-                SET pergunta=?, alternativa_a=?, alternativa_b=?, alternativa_c=?, alternativa_d=?, resposta_correta=?, episodio_id=? 
+                SET pergunta=?, alternativa_a=?, alternativa_b=?, alternativa_c=?, alternativa_d=?, resposta_correta=?, anime_id=? 
                 WHERE id=?";
-        $pdo->prepare($sql)->execute([$pergunta, $a, $b, $c, $d, $resposta, $episodio_id, $id]);
+        $pdo->prepare($sql)->execute([$pergunta, $a, $b, $c, $d, $resposta, $anime_id, $id]);
     } else {
         // Insere quiz
-        $sql = "INSERT INTO quizzes (pergunta, alternativa_a, alternativa_b, alternativa_c, alternativa_d, resposta_correta, episodio_id) 
+        $sql = "INSERT INTO quizzes (pergunta, alternativa_a, alternativa_b, alternativa_c, alternativa_d, resposta_correta, anime_id) 
                 VALUES (?, ?, ?, ?, ?, ?, ?)";
-        $pdo->prepare($sql)->execute([$pergunta, $a, $b, $c, $d, $resposta, $episodio_id]);
+        $pdo->prepare($sql)->execute([$pergunta, $a, $b, $c, $d, $resposta, $anime_id]);
     }
 
     header('Location: ../../../PHP/admin/quiz/admin_quiz.php');
@@ -109,12 +106,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <option value="D" <?= $quiz['resposta_correta'] === 'D' ? 'selected' : '' ?>>D</option>
             </select><br><br>
 
-            <label>Relacionar Episódio:</label><br>
-            <select name="episodio_id" required>
+            <label>Relacionar Anime:</label><br>
+            <select name="anime_id" required>
                 <option value="">Selecione</option>
-                <?php foreach($episodios as $e): ?>
-                    <option value="<?= $e['id'] ?>" <?= $quiz['episodio_id'] == $e['id'] ? 'selected' : '' ?>>
-                        <?= htmlspecialchars($e['anime_nome']) ?> - Episódio <?= $e['numero'] ?> (<?= htmlspecialchars($e['titulo']) ?>)
+                <?php foreach($animes as $a): ?>
+                    <option value="<?= $a['id'] ?>" <?= $quiz['anime_id'] == $a['id'] ? 'selected' : '' ?>>
+                        <?= htmlspecialchars($a['nome']) ?>
                     </option>
                 <?php endforeach; ?>
             </select><br><br>

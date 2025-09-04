@@ -118,8 +118,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <textarea name="descricao" rows="5" required><?= htmlspecialchars($anime['descricao']) ?></textarea><br><br>
 
             <label>Sinopse:</label><br>
-            <textarea name="sinopse" rows="5" required><?= htmlspecialchars($anime['sinopse']) ?>
-            </textarea><br><br>
+            <textarea name="sinopse" rows="5" required><?= htmlspecialchars($anime['sinopse']) ?></textarea><br><br>
 
             <label>Nota:</label><br>
             <input type="number" name="nota" step="0.1" min="0" max="10" value="<?= htmlspecialchars($anime['nota']) ?>" required><br><br>
