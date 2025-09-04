@@ -528,6 +528,7 @@ html, body {
   background: #ffaa00;         
   color: #222;                 
   font-weight: 1000;
+  font-size: 15px;
   cursor: pointer;
   transition: background 0.2s ease, transform 0.2s ease;
 }
@@ -553,7 +554,7 @@ html, body {
   border: 1px solid #ffaa00;
   border-radius: 8px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-  min-width: 163px;
+  min-width: 174px;
   display: none;
   z-index: 100;
   list-style: none;
