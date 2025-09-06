@@ -17,6 +17,7 @@ $anos = getAnos();
 $linguagens = getLinguagens();
 
 // Resultado da busca
+$busca = $_GET['busca'] ?? '';
 $animes = getAnimesFiltrados($filtroGenero, $filtroAno, $filtroLinguagem, $busca);
 ?>
 
