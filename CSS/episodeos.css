@@ -52,14 +52,13 @@ html, body {
 
 /* HEADER */
 .episodio header {
-    width: 100%;
-    max-width: 1200px;
+    width: 92%;
     display: flex;
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
     background-color: var(--color-dark-bg);
-    padding: 25px 40px;
+    padding: 15px 50px;
     border-radius: 15px;
     box-shadow: var(--shadow-strong);
     color: var(--color-primary);
@@ -178,12 +177,11 @@ html, body {
    ========================= */
 
 .sinopse-container {
-    width: 100%;
-    max-width: 1200px;
+    width: 92%;
     background-color: rgba(0, 0, 0, 0.9);
     border: 2px solid var(--color-primary);
     border-radius: 12px;
-    padding: 20px;
+    padding: 2px;
     margin: 10px 0 15px 0; /* REDUZIDO: margin superior de 15px para 10px */
     box-shadow: 0 5px 20px rgba(255, 159, 0, 0.4);
     color: #eee;
@@ -211,7 +209,7 @@ html, body {
     overflow: hidden;
     padding: 0 20px;
     border-width: 0;
-    margin: 5px 0; 
+    margin: -15px; 
     transition: all 0.4s ease-in-out;
 }
 
@@ -252,7 +250,7 @@ html, body {
 .grid {
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap:5px;
 }
 
 .card {
@@ -264,13 +262,11 @@ html, body {
     border: 1px solid var(--color-primary-dark);
     border-radius: 12px;
     padding: 10px 20px;
-    box-shadow: 0 4px 12px rgba(255, 159, 0, 0.3);
     transition: transform 0.3s ease;
 }
 
 .card:hover {
     transform: translateX(3px);
-    box-shadow: 0 6px 20px var(--color-primary);
 }
 
 .card-left {
