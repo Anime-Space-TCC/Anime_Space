@@ -136,17 +136,17 @@ if (!empty($temporadas)) {
         <section class="video-player" style="text-align: center;">
           <?php
             $videoUrl = $episodioSelecionado['video_url'];
-            $driveId = extrairIdGoogleDrive($videoUrl);
-            $dailymotionId = extrairIdDailymotion($videoUrl);
+            $youtubeId = extrairIdYoutube($videoUrl);
           ?>
+          
           <h2><?= htmlspecialchars($episodioSelecionado['titulo']) ?> (Temporada <?= $episodioSelecionado['temporada'] ?>, Episódio <?= $episodioSelecionado['numero'] ?>)</h2>
-          <?php if ($dailymotionId): ?>
-            <!-- Dailymotion Embed -->
-            <iframe frameborder="0" width="800" height="450"
-                    src="https://www.dailymotion.com/embed/video/<?= htmlspecialchars($dailymotionId) ?>"
-                    allowfullscreen allow="autoplay">
-            </iframe>
+          <?php if ($youtubeId): ?>
+            <!-- YouTube Embed -->
+            <iframe width="800" height="450" 
+                    src="https://www.youtube.com/embed/<?= htmlspecialchars($youtubeId) ?>" 
+                    frameborder="0" allowfullscreen allow="autoplay"></iframe>
           <?php else: ?>
+
             <!-- Vídeo Local -->
             <video width="800" height="450" controls>
               <source src="../../videos/<?= htmlspecialchars($videoUrl) ?>" type="video/mp4">

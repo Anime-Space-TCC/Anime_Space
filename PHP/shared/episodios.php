@@ -114,14 +114,7 @@ function buscarEpisodioComAnime(int $episodioId): ?array {
     return $stmt->fetch(PDO::FETCH_ASSOC) ?: null;
 }
 
-function extrairIdDailymotion($url) {
-    // Formato longo: dailymotion.com/video/ID
-    if (preg_match('/dailymotion\.com\/video\/([a-zA-Z0-9]+)/', $url, $matches)) {
-        return $matches[1];
-    }
-    // Formato curto: dai.ly/ID
-    if (preg_match('/dai\.ly\/([a-zA-Z0-9]+)/', $url, $matches)) {
-        return $matches[1];
-    }
-    return null;
+function extrairIdYoutube($url) {
+    preg_match('/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|embed)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/ ]{11})/', $url, $matches);
+    return $matches[1] ?? null;
 }
