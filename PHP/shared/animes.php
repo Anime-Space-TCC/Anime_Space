@@ -22,7 +22,7 @@ if (session_status() === PHP_SESSION_NONE) {
  * @return array|null
  */
 function buscarAnimePorId(PDO $pdo, int $id): ?array {
-    $stmt = $pdo->prepare("SELECT nome, capa, sinopse FROM animes WHERE id = ?");
+    $stmt = $pdo->prepare("SELECT id, nome, capa, sinopse FROM animes WHERE id = ?");
     $stmt->execute([$id]);
     return $stmt->fetch(PDO::FETCH_ASSOC) ?: null;
 }
@@ -33,7 +33,7 @@ function buscarAnimePorId(PDO $pdo, int $id): ?array {
  * @param PDO $pdo
  * @return array
  */
-function buscarEstreiasTemporada(PDO $pdo) {
+function buscarEstreiasTemporada(PDO $pdo): array {
     $sql = "
         SELECT 
             t.id AS temporada_id,
@@ -71,8 +71,9 @@ function buscarEstreiasTemporada(PDO $pdo) {
  * @return array
  */
 function buscarTopAnimes(PDO $pdo, int $limite = 5): array {
-    $stmt = $pdo->prepare("SELECT id, nome, capa, nota, descricao FROM animes ORDER BY nota DESC LIMIT ?");
-    $stmt->execute([$limite]);
+    $stmt = $pdo->prepare("SELECT id, nome, capa, nota, descricao FROM animes ORDER BY nota DESC LIMIT :limite");
+    $stmt->bindValue(':limite', $limite, PDO::PARAM_INT);
+    $stmt->execute();
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
@@ -84,9 +85,8 @@ function buscarTopAnimes(PDO $pdo, int $limite = 5): array {
  * @return array
  */
 function buscarLancamentos(PDO $pdo, int $limite = 20): array {
-    // Ordena por ID desc para evitar depender de coluna específica de data.
-    $stmt = $pdo->prepare("SELECT id, nome, capa FROM animes ORDER BY id DESC LIMIT ?");
-    $stmt->bindValue(1, $limite, PDO::PARAM_INT);
+    $stmt = $pdo->prepare("SELECT id, nome, capa FROM animes ORDER BY id DESC LIMIT :limite");
+    $stmt->bindValue(':limite', $limite, PDO::PARAM_INT);
     $stmt->execute();
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }

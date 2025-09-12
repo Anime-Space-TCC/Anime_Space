@@ -32,7 +32,7 @@ function buscarEpisodiosComReacoes(PDO $pdo, int $animeId): array {
 }
 
 /**
- * Busca um episódio específico de um anime
+ * Busca um episódio específico de um anime (com temporada garantida)
  *
  * @param PDO $pdo
  * @param int $episodioId
@@ -40,7 +40,12 @@ function buscarEpisodiosComReacoes(PDO $pdo, int $animeId): array {
  * @return array|null
  */
 function buscarEpisodioSelecionado(PDO $pdo, int $episodioId, int $animeId): ?array {
-    $stmt = $pdo->prepare("SELECT * FROM episodios WHERE id = ? AND anime_id = ?");
+    $stmt = $pdo->prepare("
+        SELECT id, anime_id, temporada, numero, titulo, descricao, sinopse, duracao, data_lancamento, miniatura, video_url, linguagem
+        FROM episodios 
+        WHERE id = ? AND anime_id = ? 
+        LIMIT 1
+    ");
     $stmt->execute([$episodioId, $animeId]);
     return $stmt->fetch(PDO::FETCH_ASSOC) ?: null;
 }
@@ -108,12 +113,19 @@ function buscarEpisodioComAnime(int $episodioId): ?array {
         FROM episodios e
         JOIN animes a ON e.anime_id = a.id
         WHERE e.id = ?
+        LIMIT 1
     ";
     $stmt = $pdo->prepare($sql);
     $stmt->execute([$episodioId]);
     return $stmt->fetch(PDO::FETCH_ASSOC) ?: null;
 }
 
+/**
+ * Extrai o ID do YouTube de uma URL
+ *
+ * @param string $url
+ * @return string|null
+ */
 function extrairIdYoutube($url) {
     preg_match('/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|embed)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/ ]{11})/', $url, $matches);
     return $matches[1] ?? null;

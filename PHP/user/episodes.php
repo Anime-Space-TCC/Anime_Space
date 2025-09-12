@@ -55,14 +55,23 @@ if ($episodioSelecionado && isset($_SESSION['user_id'])) {
 }
 
 $usuarioId = $_SESSION['user_id'] ?? null;
-$favoritado = false;
 
+// Verifica se anime está favoritado
+$favoritado = false;
 if ($usuarioId) {
     $stmt = $pdo->prepare("SELECT 1 FROM favoritos WHERE user_id = ? AND anime_id = ?");
     $stmt->execute([$usuarioId, $id]);
-    $favoritado = $stmt->fetch() ? true : false;
+    $favoritado = (bool) $stmt->fetchColumn();
 }
+// Define a temporada atual do quiz
+$quizTemporada = $episodioSelecionado['temporada'] ?? array_key_first($temporadas);
 
+// Monta a URL do quiz somente se o anime estiver favoritado e houver temporada
+$quizUrl = '';
+if ($favoritado && $quizTemporada) {
+    $quizUrl = "../../PHP/user/quiz.php?anime_id={$id}&temporada={$quizTemporada}";
+}
+// Avaliação do usuário
 $avaliacaoUsuario = 0;
 if ($usuarioId) {
     $stmt = $pdo->prepare("SELECT nota FROM avaliacoes WHERE user_id = ? AND anime_id = ?");
@@ -73,7 +82,13 @@ if ($usuarioId) {
 // Define qual temporada começa aberta (a do episódio selecionado, senão a primeira)
 $temporadaInicial = null;
 if (!empty($temporadas)) {
-    $temporadaInicial = $episodioSelecionado['temporada'] ?? array_key_first($temporadas);
+    // Se existe episódio selecionado, abre a temporada dele
+    if ($episodioSelecionado && isset($temporadas[$episodioSelecionado['temporada']])) {
+        $temporadaInicial = $episodioSelecionado['temporada'];
+    } else {
+        // Senão, abre a primeira temporada da lista
+        $temporadaInicial = array_key_first($temporadas);
+    }
 }
 ?>
 
@@ -176,9 +191,9 @@ if (!empty($temporadas)) {
                 <h2 class="titulo-temporada-unica">Temporada <?= $unicaTemp ?></h2>
             <?php endif; ?>
 
-            <?php if (isset($_SESSION['user_id'])): ?>
+            <?php if (isset($_SESSION['user_id']) && $favoritado): ?>
                 <!-- Botão Quiz: só aparece se favoritado -->
-                <a href="../../PHP/user/quiz.php?anime_id=<?= $id ?>" class="btn-quiz" data-anime-id="<?= $id ?>">Quiz do Anime</a>
+                <a href="<?= htmlspecialchars($quizUrl) ?>" class="btn-quiz" data-anime-id="<?= $id ?>">Quiz da Temporada <?= $quizTemporada ?></a>
             <?php endif; ?>
         </div>
 
@@ -226,7 +241,7 @@ if (!empty($temporadas)) {
                           👍 Curtir <span class="contador-like">(<?= $ep['likes'] ?>)</span>
                         </button>
                         <button class="reacao-btn btn-dislike" data-reacao="dislike">
-                          👎 Não Curtir <span class="contador-dislike">(<?= $ep['dislikes'] ?>)</span>
+                          👎 Não Curtir <span class="contador-dislike">(<?= $ep['dislikes'] ?></span>
                         </button>
                       <?php else: ?>
                         <span>👍 <?= $ep['likes'] ?> | 👎 <?= $ep['dislikes'] ?></span>
@@ -268,16 +283,6 @@ if (!empty($temporadas)) {
           </form>
 
           <?php
-            $stmtComentarios = $pdo->prepare("
-              SELECT c.comentario, c.data_comentario, u.username
-              FROM comentarios c
-              JOIN users u ON c.user_id = u.id
-              WHERE c.episodio_id = ?
-              ORDER BY c.data_comentario DESC
-            ");
-            $stmtComentarios->execute([$episodioSelecionado['id']]);
-            $comentarios = $stmtComentarios->fetchAll();
-
             foreach ($comentarios as $c): ?>
               <div class="comentario">
                 <strong><?= htmlspecialchars($c['username']) ?>:</strong>
@@ -291,31 +296,6 @@ if (!empty($temporadas)) {
   </div>
 
 <script>
-
-// ========================
-// Alterna descrição do episódio
-// ========================
-function toggleDescricao(btn) {
-  const card = btn.closest('.card');
-  const descricao = card.nextElementSibling;
-  if (!descricao || !descricao.classList.contains('descricao')) return;
-
-  const isAtiva = descricao.classList.contains('active');
-
-  // Fecha todas as descrições
-  document.querySelectorAll('.descricao.active').forEach(desc => {
-    desc.classList.remove('active');
-    const otherBtn = desc.previousElementSibling.querySelector('.btn-info');
-    if (otherBtn) otherBtn.textContent = '▼';
-  });
-
-  // Abre a clicada se não estava ativa
-  if (!isAtiva) {
-    descricao.classList.add('active');
-    btn.textContent = '▲';
-  }
-}
-
 // ========================
 // Alterna sinopse do anime
 // ========================
@@ -336,7 +316,7 @@ const dropdownList = document.getElementById('dropdownList');
 
 if (btnDropdown && dropdownList) {
   const dropdownItems = dropdownList.querySelectorAll('li');
-  
+
   btnDropdown.addEventListener('click', () => {
     dropdownList.classList.toggle('show');
   });
@@ -349,6 +329,12 @@ if (btnDropdown && dropdownList) {
       document.querySelectorAll('.temporada-bloco').forEach(bloco => {
         bloco.style.display = (bloco.dataset.temporada === temporada) ? "" : "none";
       });
+
+      // Atualiza link do Quiz para a temporada selecionada
+      const quizBtn = document.querySelector(`.btn-quiz[data-anime-id="<?= $id ?>"]`);
+      if (quizBtn) {
+        quizBtn.href = `../../PHP/user/quiz.php?anime_id=<?= $id ?>&temporada=${temporada}`;
+      }
 
       dropdownList.classList.remove('show');
     });
@@ -406,16 +392,16 @@ document.querySelectorAll(".btn-favorito").forEach(btnFav => {
     .then(res => res.json())
     .then(data => {
       if (data.sucesso) {
-        // Atualiza o estado do botão de favorito
         btnFav.textContent = data.favoritado ? "❤️" : "🤍";
         btnFav.classList.toggle("ativo", data.favoritado);
 
-        // Atualiza o botão de Quiz correspondente pelo anime_id
         const quizBtn = document.querySelector(`.btn-quiz[data-anime-id="${animeId}"]`);
         if (quizBtn) {
           quizBtn.classList.toggle('show', data.favoritado);
+          if(data.favoritado) {
+            quizBtn.href = `../../PHP/user/quiz.php?anime_id=${animeId}&temporada=${btnDropdown ? btnDropdown.textContent.replace('Temporada ', '') : '1'}`;
+          }
         }
-
       } else {
         alert(data.erro || 'Erro desconhecido.');
       }
@@ -439,8 +425,8 @@ document.querySelectorAll('.avaliacao-estrelas').forEach(container => {
   estrelas.forEach(estrela => {
     estrela.addEventListener('click', e => {
       e.preventDefault();
-      const valorEstrela = Number(estrela.dataset.valor); // 1–5
-      const nota = valorEstrela * 2; // 0–10
+      const valorEstrela = Number(estrela.dataset.valor);
+      const nota = valorEstrela * 2;
 
       fetch('../shared/avaliar.php', {
         method: 'POST',

@@ -2,7 +2,7 @@
 session_start();
 require __DIR__ . '/../shared/conexao.php';
 require __DIR__ . '/../shared/quizzes.php';
-require __DIR__ . '/../shared/animes.php'; // helper para buscar anime
+require __DIR__ . '/../shared/animes.php'; 
 require_once __DIR__ . '/../shared/auth.php';
 
 // Bloqueia acesso se não estiver logado
@@ -17,34 +17,34 @@ if ($anime_id <= 0) {
 }
 
 // Buscar anime pelo ID
-$anime = buscarAnimePorId($anime_id);
+$anime = buscarAnimePorId($pdo, $anime_id);
 if (!$anime) {
     echo "Anime não encontrado.";
     exit;
 }
 
-// Perguntas do quiz (por anime, não episódio)
-$perguntas = buscarQuizPorAnime($anime_id);
-if (!$perguntas) {
-    echo "Nenhum quiz disponível para este anime.";
-    exit;
-}
 // Verifica se uma temporada foi especificada
 $temporada = isset($_GET['temporada']) ? (int)$_GET['temporada'] : null;
-$perguntas = buscarQuizPorAnimeETemporada($anime_id, $temporada);
+
+// Buscar perguntas do quiz (por anime e temporada)
+$perguntas = buscarQuizPorAnimeETemporada($pdo, $anime_id, $temporada);
+if (!$perguntas) {
+    echo "Nenhum quiz disponível para este anime" . ($temporada ? " na temporada $temporada" : "") . ".";
+    exit;
+}
 ?>
 
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <title>Quiz - <?= htmlspecialchars($anime['nome']) ?></title>
+    <title>Quiz - <?= htmlspecialchars($anime['nome']) ?> <?= $temporada ? " (Temporada $temporada)" : "" ?></title>
     <link rel="stylesheet" href="../../CSS/styleEpi.css">
     <link rel="icon" href="../../img/slogan3.png" type="image/png">
 </head>
 <body>
 <div class="quiz-container">
-    <h2>Quiz - <?= htmlspecialchars($anime['nome']) ?></h2>
+    <h2>Quiz - <?= htmlspecialchars($anime['nome']) ?> <?= $temporada ? " - Temporada $temporada" : "" ?></h2>
 
     <form id="quizForm">
         <?php foreach ($perguntas as $index => $q): ?>
@@ -90,13 +90,16 @@ document.getElementById('submitQuiz').addEventListener('click', function() {
     document.getElementById('score').textContent = `Você acertou ${acertos} de ${total} perguntas.`;
     document.getElementById('quizResultado').style.display = 'block';
 
-    // Desabilita o botão para evitar múltiplos envios
-    this.disabled = true;
+    this.disabled = true; // Desabilita o botão para evitar múltiplos envios
 
     fetch('salvar_quiz.php', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({anime_id: <?= $anime_id ?>, respostas})
+        body: JSON.stringify({
+            anime_id: <?= $anime_id ?>,
+            temporada: <?= $temporada ?? 'null' ?>,
+            respostas
+        })
     }).then(res => res.json()).then(data => {
         if(data.status === 'duplicado') {
             alert("Você já respondeu este quiz anteriormente!");
