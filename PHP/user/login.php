@@ -28,9 +28,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $resultado = login($pdo, $username, $password);
 
         if ($resultado['success']) {
-            // Redireciona para o perfil
-            header('Location: ../../PHP/user/profile.php');
-            exit;
+            if ($resultado['2fa']) {
+                // Usuário usa 2FA → redireciona para a tela de verificação
+                header('Location: ../../PHP/shared/verificar-2fa.php');
+                exit;
+            } else {
+                // Usuário não usa 2FA → entra direto
+                header('Location: ../../PHP/user/profile.php');
+                exit;
+            }
         } else {
             $errors[] = $resultado['error'];
         }
