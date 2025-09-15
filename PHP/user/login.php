@@ -5,21 +5,35 @@ require_once __DIR__ . '/../shared/auth.php';
 
 $errors = [];
 
-// Verifica se o formulário foi submetido via método POST
+// =====================
+// Processa submissão do formulário
+// =====================
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    // Chama a função de login passando username e password do formulário
-    // O operador null coalescing ?? garante que, se o campo não existir, será usado string vazia
-    $resultado = login($pdo, $_POST['username'] ?? '', $_POST['password'] ?? '');
+    $username = trim($_POST['username'] ?? '');
+    $password = $_POST['password'] ?? '';
 
-    // Se login for bem-sucedido
-    if ($resultado['success']) {
-        // Redireciona o usuário para a página de perfil
-        header('Location: ../../PHP/user/profile.php');
-        exit; // interrompe a execução após o redirecionamento
-    } else {
-        // Caso haja erro no login, adiciona a mensagem ao array de erros
-        $errors[] = $resultado['error'];
+    if (!$username) {
+        $errors[] = "Informe o nome de usuário.";
+    }
+
+    if (!$password) {
+        $errors[] = "Informe a senha.";
+    }
+
+    // =====================
+    // Tenta realizar login
+    // =====================
+    if (empty($errors)) {
+        $resultado = login($pdo, $username, $password);
+
+        if ($resultado['success']) {
+            // Redireciona para o perfil
+            header('Location: ../../PHP/user/profile.php');
+            exit;
+        } else {
+            $errors[] = $resultado['error'];
+        }
     }
 }
 ?>
@@ -48,7 +62,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <form action="login.php" method="post">
       <div class="textbox">
-        <input type="text" name="username" placeholder="Usuário" required value="<?= htmlspecialchars($_POST['username'] ?? '') ?>" />
+        <input type="text" name="username" placeholder="Usuário" required 
+               value="<?= htmlspecialchars($_POST['username'] ?? '') ?>" />
       </div>
       <div class="textbox">
         <input type="password" name="password" placeholder="Senha" required />
@@ -57,7 +72,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </form>
 
     <div class="links">
-      <p>Não tem conta?<a href="register.php">Cadastre-se</a></p>
+      <p>Não tem conta? <a href="register.php">Cadastre-se</a></p>
       <a href="../../PHP/user/index.php">Voltar</a>
     </div>
   </div>

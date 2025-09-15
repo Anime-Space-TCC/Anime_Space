@@ -17,20 +17,22 @@ function buscarUsuarioPorId(PDO $pdo, int $id): ?array {
 }
 
 /**
- * Atualiza username e email de um usuário
+ * Atualiza username, email e senha de um usuário
  */
-function atualizarUsuario(PDO $pdo, int $id, string $username, string $email): bool {
-    $stmt = $pdo->prepare("UPDATE users SET username = ?, email = ? WHERE id = ?");
-    return $stmt->execute([$username, $email, $id]);
+function atualizarUsuario(PDO $pdo, int $id, string $username, string $email, ?string $password = null): bool {
+    if ($password !== null) {
+        $stmt = $pdo->prepare("UPDATE users SET username = ?, email = ?, password = ? WHERE id = ?");
+        return $stmt->execute([$username, $email, $password, $id]);
+    } else {
+        $stmt = $pdo->prepare("UPDATE users SET username = ?, email = ? WHERE id = ?");
+        return $stmt->execute([$username, $email, $id]);
+    }
 }
 
 /**
  * Atualiza a foto de perfil do usuário
  */
-function atualizarFotoPerfil(int $userId, array $file) {
-    global $pdo;
-
-    // Pasta de destino (uploads na raiz do projeto)
+function atualizarFotoPerfil(PDO $pdo, int $userId, array $file): string|bool {
     $diretorio_destino = __DIR__ . '/../../uploads/';
     if (!is_dir($diretorio_destino)) {
         mkdir($diretorio_destino, 0777, true);
@@ -48,7 +50,6 @@ function atualizarFotoPerfil(int $userId, array $file) {
         return "Erro: O arquivo é muito grande (máx. 500KB).";
     }
 
-    // Nome único baseado no ID do usuário
     $nome_arquivo_unico = $userId . '.' . $extensao;
     $caminho_completo = $diretorio_destino . $nome_arquivo_unico;
 
@@ -56,7 +57,6 @@ function atualizarFotoPerfil(int $userId, array $file) {
         return "Erro ao mover o arquivo.";
     }
 
-    // Caminho salvo no banco (relativo à raiz do projeto)
     $caminho_relativo_db = 'uploads/' . $nome_arquivo_unico;
 
     $stmt = $pdo->prepare("UPDATE users SET foto_perfil = ? WHERE id = ?");
@@ -70,9 +70,7 @@ function atualizarFotoPerfil(int $userId, array $file) {
 /**
  * Busca a foto de perfil do usuário
  */
-function buscarFotoPerfil(int $userId): string {
-    global $pdo;
-
+function buscarFotoPerfil(PDO $pdo, int $userId): string {
     $stmt = $pdo->prepare("SELECT foto_perfil FROM users WHERE id = ?");
     $stmt->execute([$userId]);
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -80,7 +78,7 @@ function buscarFotoPerfil(int $userId): string {
     if ($user && !empty($user['foto_perfil'])) {
         $foto = __DIR__ . '/../../' . $user['foto_perfil'];
         if (file_exists($foto)) {
-            return '../../' . $user['foto_perfil']; 
+            return '../../' . $user['foto_perfil'];
         }
     }
 
@@ -90,15 +88,13 @@ function buscarFotoPerfil(int $userId): string {
         return $default;
     }
 
-    // último recurso: placeholder online
     return 'https://placehold.co/150x150/FFF/000?text=Sem+Foto';
 }
 
 /**
  * Verifica se já existe username ou email
  */
-function usuarioExiste(string $username, string $email): bool {
-    global $pdo;
+function usuarioExiste(PDO $pdo, string $username, string $email): bool {
     $stmt = $pdo->prepare("SELECT COUNT(*) FROM users WHERE username = ? OR email = ?");
     $stmt->execute([$username, $email]);
     return $stmt->fetchColumn() > 0;
@@ -107,13 +103,12 @@ function usuarioExiste(string $username, string $email): bool {
 /**
  * Cria um novo usuário
  */
-function criarUsuario(string $username, string $email, string $password) {
-    global $pdo;
+function criarUsuario(PDO $pdo, string $username, string $email, string $password): int|false {
     $hash = password_hash($password, PASSWORD_DEFAULT);
 
     $stmt = $pdo->prepare("INSERT INTO users (username, email, password) VALUES (?, ?, ?)");
     if ($stmt->execute([$username, $email, $hash])) {
-        return $pdo->lastInsertId();
+        return (int) $pdo->lastInsertId();
     }
 
     return false;

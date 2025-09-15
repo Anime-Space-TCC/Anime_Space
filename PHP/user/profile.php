@@ -8,16 +8,17 @@ verificarLogin();
 
 $userId = $_SESSION['user_id'];
 $username = $_SESSION['username'];
+$userTipo = $_SESSION['tipo'] ?? 'user';
 $mensagem = "";
 
 // Upload da foto
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['foto'])) {
-    $resultado = atualizarFotoPerfil($userId, $_FILES['foto']);
+    $resultado = atualizarFotoPerfil($pdo, $userId, $_FILES['foto']);
     $mensagem = $resultado === true ? "Foto de perfil atualizada com sucesso!" : $resultado;
 }
 
 // Busca a foto do perfil
-$fotoPerfil = buscarFotoPerfil($userId);
+$fotoPerfil = buscarFotoPerfil($pdo, $userId);
 
 // Busca dados do perfil
 $favoritos = buscarFavoritos($userId);
@@ -43,6 +44,11 @@ $recomendacoes = buscarRecomendacoes($userId);
     </a>
     <a href="../../PHP/user/stream.php">Catálogo</a>
     <a href="../../PHP/user/editar_perfil.php">Editar</a>
+
+    <?php if ($userTipo === 'admin'): ?>
+        <a href="../../PHP/admin/index.php">Administrador</a>
+    <?php endif; ?>
+
     <form action="../shared/logout.php" method="post" class="form-logout">
         <input type="submit" value="Sair">
     </form>
