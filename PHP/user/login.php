@@ -17,8 +17,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $errors[] = "Informe o nome de usuário.";
     }
 
-    if (!$password) {
-        $errors[] = "Informe a senha.";
+    if (strlen($password) < 8 
+    || !preg_match('/[A-Z]/', $password) 
+    || !preg_match('/[a-z]/', $password) 
+    || !preg_match('/[0-9]/', $password) 
+    || !preg_match('/[\W]/', $password)) {
+    
+    $errors[] = "A senha deve ter pelo menos 8 caracteres, 
+                 incluindo maiúsculas, minúsculas, números e símbolos.";
     }
 
     // =====================

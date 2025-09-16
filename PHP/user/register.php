@@ -2,21 +2,21 @@
 session_start();
 require __DIR__ . '/../shared/conexao.php';
 require __DIR__ . '/../shared/usuarios.php';
+require __DIR__ . '/../shared/auth.php'; 
 
 $errors = [];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Recupera os dados do formulário, removendo espaços extras com trim
-    $username = trim($_POST['username'] ?? ''); // Nome de usuário
-    $email = trim($_POST['email'] ?? '');       // E-mail do usuário
-    $password = $_POST['password'] ?? '';       // Senha
-    $password_confirm = $_POST['password_confirm'] ?? ''; // Confirmação de senha
+    $username = trim($_POST['username'] ?? '');
+    $email = trim($_POST['email'] ?? '');
+    $password = $_POST['password'] ?? '';
+    $password_confirm = $_POST['password_confirm'] ?? '';
 
     // =====================
     // Validações dos campos
     // =====================
-
     if (!$username) {
         $errors[] = "Informe um nome de usuário.";
     }
@@ -25,9 +25,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $errors[] = "Informe um e-mail válido.";
     }
 
-    // Senha forte: 8+ caracteres, pelo menos 1 maiúscula, 1 minúscula e 1 número
-    if (!preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/', $password)) {
-        $errors[] = "A senha deve ter pelo menos 8 caracteres, incluindo letra maiúscula, minúscula e número.";
+    // Senha forte (usa a função do auth.php)
+    if ($err = validarSenhaForte($password)) {
+        $errors[] = $err;
     }
 
     if ($password !== $password_confirm) {
@@ -45,9 +45,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Criação do usuário
     // =====================
     if (empty($errors)) {
-        $novoId = criarUsuario($pdo, $username, $email, $password);
+        // Criptografa a senha com algoritmo seguro
+        $hash = password_hash($password, PASSWORD_DEFAULT);
+
+        $novoId = criarUsuario($pdo, $username, $email, $hash);
 
         if ($novoId) {
+            // Cria sessão automaticamente após cadastro
             $_SESSION['user_id'] = $novoId;
             $_SESSION['username'] = $username;
 
@@ -58,7 +62,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 }
-
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">

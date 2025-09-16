@@ -14,6 +14,7 @@ verificarLogin();
 $id = $_GET['id'] ?? null;
 $episode_id = $_GET['episode_id'] ?? null;
 
+
 if (!$id) {
     die("Anime não encontrado.");
 }
@@ -217,10 +218,11 @@ if (!empty($temporadas)) {
                     <div class="info-container">
                       <div class="numero">Episódio <?= htmlspecialchars($ep['numero']) ?></div>
                       <div class="texto-e-botao">
+                        <div class="titulo"><?= htmlspecialchars($ep['titulo']) ?></div>
                         <?php if (!empty($ep['descricao'])): ?>
                           <button class="btn-info" onclick="toggleDescricao(this)">▼</button>
+                          <div class="descricao hidden"><?= nl2br(htmlspecialchars($ep['descricao'])) ?></div>
                         <?php endif; ?>
-                        <div class="titulo"><?= htmlspecialchars($ep['titulo']) ?></div>
                       </div>
                     </div>
                   </div>
@@ -238,10 +240,10 @@ if (!empty($temporadas)) {
                     <div class="acoes">
                       <?php if (isset($_SESSION['user_id'])): ?>
                         <button class="reacao-btn btn-like" data-reacao="like">
-                          👍 Curtir <span class="contador-like">(<?= $ep['likes'] ?>)</span>
+                          👍 Curtir <span class="contador-like"><?= $ep['likes'] ?></span>
                         </button>
                         <button class="reacao-btn btn-dislike" data-reacao="dislike">
-                          👎 Não Curtir <span class="contador-dislike">(<?= $ep['dislikes'] ?></span>
+                          👎 Não Curtir <span class="contador-dislike"><?= $ep['dislikes'] ?></span>
                         </button>
                       <?php else: ?>
                         <span>👍 <?= $ep['likes'] ?> | 👎 <?= $ep['dislikes'] ?></span>
@@ -254,10 +256,6 @@ if (!empty($temporadas)) {
                     </a>
                   </div>
                 </div>
-
-                <?php if (!empty($ep['descricao'])): ?>
-                  <div class="descricao hidden"><?= nl2br(htmlspecialchars($ep['descricao'])) ?></div>
-                <?php endif; ?>
               <?php endforeach; ?>
             </div>
           </div>
@@ -306,6 +304,20 @@ function toggleSinopse() {
     sinopseContainer.classList.toggle('active');
     btn.textContent = sinopseContainer.classList.contains('active') ? '▲' : '▼';
   }
+}
+
+// ========================
+// Alterna descrição de episódio
+// ========================
+function toggleDescricao(btn) {
+    const card = btn.closest('.card'); // pega o card pai
+    if (!card) return;
+
+    const descricao = card.nextElementSibling; // a div .descricao está logo depois do card
+    if (!descricao) return;
+
+    descricao.classList.toggle('hidden');
+    btn.textContent = descricao.classList.contains('hidden') ? '▼' : '▲';
 }
 
 // ========================

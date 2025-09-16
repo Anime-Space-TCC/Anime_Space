@@ -81,14 +81,14 @@ if (!function_exists('login')) {
             }
 
             // Se usa 2FA → enviar código
-            $codigo = rand(100000, 999999);
+            $codigo = random_int(100000, 999999); // mais seguro que rand()
             $_SESSION['aguardando_2fa'] = true;
             $_SESSION['2fa_user'] = $user;
             $_SESSION['2fa_code'] = $codigo;
             $_SESSION['2fa_expires'] = time() + 300; // expira em 5 min
 
-            // Enviar o código (aqui simplificado, mas você pode usar PHPMailer)
-           mail($user['email'], "Seu código de verificação", "Seu código 2FA é: $codigo");
+            // Enviar o código por e-mail (aqui simplificado)
+            mail($user['email'], "Seu código de verificação", "Seu código 2FA é: $codigo");
 
             return ['success' => true, 'error' => null, '2fa' => true];
         }
@@ -139,5 +139,19 @@ if (!function_exists('logout')) {
     function logout(): void {
         session_unset();
         session_destroy();
+    }
+}
+
+/**
+ * Validar senha Forte
+ */
+if (!function_exists('validarSenhaForte')) {
+    function validarSenhaForte(string $pwd): ?string {
+        if (strlen($pwd) < 8) return "Senha deve ter ao menos 8 caracteres.";
+        if (!preg_match('/[A-Z]/', $pwd)) return "Inclua pelo menos 1 letra maiúscula.";
+        if (!preg_match('/[a-z]/', $pwd)) return "Inclua pelo menos 1 letra minúscula.";
+        if (!preg_match('/\d/', $pwd)) return "Inclua ao menos 1 número.";
+        if (!preg_match('/[\W]/', $pwd)) return "Inclua ao menos 1 símbolo (ex: !@#).";
+        return null;
     }
 }
