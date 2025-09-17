@@ -41,7 +41,7 @@ function buscarEpisodiosComReacoes(PDO $pdo, int $animeId): array {
  */
 function buscarEpisodioSelecionado(PDO $pdo, int $episodioId, int $animeId): ?array {
     $stmt = $pdo->prepare("
-        SELECT id, anime_id, temporada, numero, titulo, descricao, sinopse, duracao, data_lancamento, miniatura, video_url, linguagem
+        SELECT id, anime_id, temporada, numero, titulo, descricao, duracao, data_lancamento, miniatura, video_url, linguagem
         FROM episodios 
         WHERE id = ? AND anime_id = ? 
         LIMIT 1

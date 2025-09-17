@@ -71,7 +71,7 @@ function buscarEstreiasTemporada(PDO $pdo): array {
  * @return array
  */
 function buscarTopAnimes(PDO $pdo, int $limite = 5): array {
-    $stmt = $pdo->prepare("SELECT id, nome, capa, nota, descricao FROM animes ORDER BY nota DESC LIMIT :limite");
+    $stmt = $pdo->prepare("SELECT id, nome, capa, nota, sinopse FROM animes ORDER BY nota DESC LIMIT :limite");
     $stmt->bindValue(':limite', $limite, PDO::PARAM_INT);
     $stmt->execute();
     return $stmt->fetchAll(PDO::FETCH_ASSOC);

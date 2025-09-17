@@ -250,7 +250,7 @@ html, body {
 .grid {
     display: flex;
     flex-direction: column;
-    gap:5px;
+    gap: 5px;
 }
 
 .card {
@@ -295,21 +295,21 @@ html, body {
     min-width: 0;
 }
 
-.numero {
+.episodio-numero {
     font-weight: bold;
     color: var(--color-primary);
     font-size: 1.1rem;
     white-space: nowrap;
 }
 
-.texto-e-botao {
+.titulo-e-descricao {
     display: flex;
     align-items: center;
     gap: 10px;
     min-width: 0;
 }
 
-.titulo {
+.episodio-titulo {
     font-size: 1rem;
     color: var(--color-gray-light);
     font-weight: 500;
@@ -338,6 +338,41 @@ html, body {
 
 .card-right > * {
     flex-shrink: 0;
+}
+
+.episodio-descricao {
+    display: block;
+    margin: 5px 0 15px 0; 
+    padding: 8px 10px;
+    background-color: var(--color-dark-bg, #111);
+    color: var(--color-gray-light, #f0f0f0);
+    font-size: 0.9rem;
+    line-height: 1.4;
+    border-radius: 8px;
+    border: 1px solid var(--color-primary-dark, #444);
+    max-width: 100%; 
+    white-space: normal;
+    word-break: break-word;
+}
+
+.hidden {
+    display: none;
+}
+
+.btn-toggle-descricao {
+    background-color: var(--color-primary); /* cor do botão */
+    color: var(--color-dark-bg);
+    border: none;
+    border-radius: 16px;
+    padding: 8px 15px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.btn-toggle-descricao:hover {
+    background-color: var(--color-primary-dark);
+    transform: translateY(-1px);
 }
 
 /* =========================

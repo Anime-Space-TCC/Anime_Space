@@ -28,25 +28,34 @@ $noticias = $stmt->fetchAll(PDO::FETCH_ASSOC);
 </header>
 
 <main>
-  <h1 style="text-align:center; margin:20px 0;">Últimas Notícias</h1>
-
   <div class="noticias">
-    <?php foreach ($noticias as $n): ?>
-      <article class="noticia">
+    <?php 
+      $primeira = true; // para destacar a primeira notícia
+      foreach ($noticias as $n): 
+    ?>
+      <article class="noticia" style="<?= $primeira ? 'order:-1;' : '' ?>">
         <img src="../../img/<?= htmlspecialchars($n['imagem']) ?>" alt="<?= htmlspecialchars($n['titulo']) ?>">
         <h2><?= htmlspecialchars($n['titulo']) ?></h2>
         <p><?= htmlspecialchars($n['resumo']) ?></p>
-
         <?php if (!empty($n['url_externa'])): ?>
-          <!-- Notícia externa -->
           <a href="<?= htmlspecialchars($n['url_externa']) ?>" target="_blank">Leia mais</a>
         <?php else: ?>
-          <!-- Notícia interna -->
           <a href="noticia.php?id=<?= $n['id'] ?>">Leia mais</a>
         <?php endif; ?>
       </article>
+      <?php $primeira = false; ?>
     <?php endforeach; ?>
   </div>
+
+  <aside class="sidebar">
+    <h3>Mais Populares</h3>
+    <?php foreach(array_slice($noticias,0,5) as $n): ?>
+      <div class="mini-noticia">
+        <img src="../../img/<?= htmlspecialchars($n['imagem']) ?>" alt="<?= htmlspecialchars($n['titulo']) ?>">
+        <p><?= htmlspecialchars($n['titulo']) ?></p>
+      </div>
+    <?php endforeach; ?>
+  </aside>
 </main>
 
 <footer>

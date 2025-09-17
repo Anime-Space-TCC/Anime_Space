@@ -192,9 +192,13 @@ if (!empty($temporadas)) {
                 <h2 class="titulo-temporada-unica">Temporada <?= $unicaTemp ?></h2>
             <?php endif; ?>
 
-            <?php if (isset($_SESSION['user_id']) && $favoritado): ?>
-                <!-- Botão Quiz: só aparece se favoritado -->
-                <a href="<?= htmlspecialchars($quizUrl) ?>" class="btn-quiz" data-anime-id="<?= $id ?>">Quiz da Temporada <?= $quizTemporada ?></a>
+            <?php if (isset($_SESSION['user_id'])): ?>
+                <!-- Botão Quiz sempre presente, mas oculto se não favoritado -->
+                <a href="<?= htmlspecialchars($quizUrl ?: '#') ?>" 
+                  class="btn-quiz <?= $favoritado ? '' : 'hidden' ?>" 
+                  data-anime-id="<?= $id ?>">
+                  Quiz da Temporada <?= $quizTemporada ?>
+                </a>
             <?php endif; ?>
         </div>
 
@@ -216,15 +220,14 @@ if (!empty($temporadas)) {
                       alt="Miniatura Episódio <?= htmlspecialchars($ep['numero']) ?>">
 
                     <div class="info-container">
-                      <div class="numero">Episódio <?= htmlspecialchars($ep['numero']) ?></div>
-                      <div class="texto-e-botao">
-                        <div class="titulo"><?= htmlspecialchars($ep['titulo']) ?></div>
-                        <?php if (!empty($ep['descricao'])): ?>
-                          <button class="btn-info" onclick="toggleDescricao(this)">▼</button>
-                          <div class="descricao hidden"><?= nl2br(htmlspecialchars($ep['descricao'])) ?></div>
-                        <?php endif; ?>
+                      <div class="episodio-numero">Episódio <?= htmlspecialchars($ep['numero']) ?></div>
+                      <div class="titulo-e-descricao">
+                          <div class="episodio-titulo"><?= htmlspecialchars($ep['titulo']) ?></div>
+                          <?php if (!empty($ep['descricao'])): ?>
+                              <button class="btn-toggle-descricao" onclick="toggleDescricao(this)">▼</button>
+                          <?php endif; ?>
                       </div>
-                    </div>
+                  </div>
                   </div>
 
                   <div class="card-right">
@@ -256,6 +259,9 @@ if (!empty($temporadas)) {
                     </a>
                   </div>
                 </div>
+                <?php if (!empty($ep['descricao'])): ?>
+                    <div class="episodio-descricao hidden"><?= nl2br(htmlspecialchars($ep['descricao'])) ?></div>
+                <?php endif; ?>
               <?php endforeach; ?>
             </div>
           </div>
@@ -310,10 +316,10 @@ function toggleSinopse() {
 // Alterna descrição de episódio
 // ========================
 function toggleDescricao(btn) {
-    const card = btn.closest('.card'); // pega o card pai
+    const card = btn.closest('.card');
     if (!card) return;
 
-    const descricao = card.nextElementSibling; // a div .descricao está logo depois do card
+    const descricao = card.nextElementSibling;
     if (!descricao) return;
 
     descricao.classList.toggle('hidden');
@@ -388,7 +394,7 @@ document.querySelectorAll('.reacao-btn').forEach(button => {
 });
 
 // ========================
-// Favoritos
+// Favoritos 
 // ========================
 document.querySelectorAll(".btn-favorito").forEach(btnFav => {
   btnFav.addEventListener("click", (e) => {
@@ -404,16 +410,16 @@ document.querySelectorAll(".btn-favorito").forEach(btnFav => {
     .then(res => res.json())
     .then(data => {
       if (data.sucesso) {
+        // Atualiza o coração
         btnFav.textContent = data.favoritado ? "❤️" : "🤍";
         btnFav.classList.toggle("ativo", data.favoritado);
 
         const quizBtn = document.querySelector(`.btn-quiz[data-anime-id="${animeId}"]`);
-        if (quizBtn) {
-          quizBtn.classList.toggle('show', data.favoritado);
-          if(data.favoritado) {
-            quizBtn.href = `../../PHP/user/quiz.php?anime_id=${animeId}&temporada=${btnDropdown ? btnDropdown.textContent.replace('Temporada ', '') : '1'}`;
-          }
+        if (quizBtn && data.favoritado) {
+          const temporadaAtual = btnDropdown ? btnDropdown.textContent.replace('Temporada ', '') : '1';
+          quizBtn.href = `../../PHP/user/quiz.php?anime_id=${animeId}&temporada=${temporadaAtual}`;
         }
+
       } else {
         alert(data.erro || 'Erro desconhecido.');
       }
