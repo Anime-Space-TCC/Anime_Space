@@ -52,7 +52,7 @@ html, body {
 
 /* HEADER */
 .episodio header {
-    width: 92%;
+    width: 77%;
     display: flex;
     justify-content: space-between;
     align-items: center;
