@@ -375,7 +375,7 @@ document.querySelectorAll('.reacao-btn').forEach(button => {
     const episodioId = card.dataset.episodioId;
     const reacao = button.dataset.reacao;
 
-    fetch('reagir.php', {
+    fetch('../shared/reagir.php', {
       method: 'POST',
       headers: {'Content-Type': 'application/x-www-form-urlencoded'},
       body: `episodio_id=${encodeURIComponent(episodioId)}&reacao=${encodeURIComponent(reacao)}`
