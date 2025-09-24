@@ -5,9 +5,7 @@ require_once __DIR__ . '/../shared/auth.php';
 
 $errors = [];
 
-// =====================
 // Processa submissão do formulário
-// =====================
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $username = trim($_POST['username'] ?? '');
@@ -27,16 +25,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                  incluindo maiúsculas, minúsculas, números e símbolos.";
     }
 
-    // =====================
     // Tenta realizar login
-    // =====================
     if (empty($errors)) {
         $resultado = login($pdo, $username, $password);
 
         if ($resultado['success']) {
             if ($resultado['2fa']) {
                 // Usuário usa 2FA → redireciona para a tela de verificação
-                header('Location: ../../PHP/shared/verificar-2fa.php');
+                header('Location: ../../PHP/shared/verificar_2fa.php');
                 exit;
             } else {
                 // Usuário não usa 2FA → entra direto

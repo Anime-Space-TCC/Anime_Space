@@ -11,6 +11,7 @@ if (!usuarioLogado()) {
     exit();
 }
 
+//Obtém o ID do usuário atualmente autenticado no sistema.
 $id = obterUsuarioAtualId();
 
 // 2. Busca usuário
@@ -29,7 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Validação básica
     if ($novoNome === '' || $novoEmail === '') {
     $msg = "Preencha os campos de nome e email.";
-} else {
+    } else {
     if ($novaSenha !== '') {
         // Atualizar com a nova senha
         $hashSenha = password_hash($novaSenha, PASSWORD_DEFAULT);

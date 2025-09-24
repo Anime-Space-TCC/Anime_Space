@@ -6,6 +6,7 @@ require_once '../shared/perfil.php';
 // Garante login
 verificarLogin();
 
+//Recupera informações do usuário da sessão atual.
 $userId = $_SESSION['user_id'];
 $username = $_SESSION['username'];
 $userTipo = $_SESSION['tipo'] ?? 'user';
@@ -153,7 +154,5 @@ $recomendacoes = buscarRecomendacoes($userId);
 
     </div>
 </div>
-
-
 </body>
 </html>

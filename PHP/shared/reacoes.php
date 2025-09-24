@@ -1,21 +1,11 @@
 <?php
-// /PHP/shared/reacoes.php
-
 require_once __DIR__ . '/conexao.php';
 
-/**
- * =========================
- * FUNÇÕES DE REAÇÕES
- * =========================
- */
+// =========================
+// FUNÇÕES DE REAÇÕES
+// =========================
 
-/**
- * Busca a reação atual de um usuário em um episódio
- *
- * @param int $userId
- * @param int $episodioId
- * @return array|null
- */
+// Busca a reação atual de um usuário em um episódio
 function buscarReacaoUsuario(int $userId, int $episodioId): ?array {
     global $pdo;
     $stmt = $pdo->prepare("
@@ -27,14 +17,7 @@ function buscarReacaoUsuario(int $userId, int $episodioId): ?array {
     return $stmt->fetch(PDO::FETCH_ASSOC) ?: null;
 }
 
-/**
- * Salva ou atualiza uma reação de usuário
- *
- * @param int $userId
- * @param int $episodioId
- * @param string $reacao ('like' ou 'dislike')
- * @return array|null Reação atualizada ou nova
- */
+// Salva ou atualiza uma reação de usuário
 function salvarOuAtualizarReacao(int $userId, int $episodioId, string $reacao): ?array {
     global $pdo;
 
@@ -62,12 +45,7 @@ function salvarOuAtualizarReacao(int $userId, int $episodioId, string $reacao): 
     return buscarReacaoUsuario($userId, $episodioId);
 }
 
-/**
- * Conta todas as reações de um episódio
- *
- * @param int $episodioId
- * @return array Contagem de likes e dislikes
- */
+// Conta todas as reações de um episódio
 function contarReacoesEpisodio(int $episodioId): array {
     global $pdo;
 

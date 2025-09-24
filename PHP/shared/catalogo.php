@@ -1,17 +1,12 @@
 <?php
 require_once __DIR__ . '/conexao.php';
 
-/**
- * =========================
- * FUNÇÕES DE RETORNO DE DADOS
- * =========================
- */
+// =========================
+// FUNÇÕES DE RETORNO DE DADOS
+// =========================
 
-/**
- * Retorna todos os gêneros cadastrados
- *
- * @return array
- */
+
+// Retorna todos os gêneros cadastrados
 function getGeneros() {
     global $pdo;
     return $pdo->query("
@@ -21,11 +16,7 @@ function getGeneros() {
     ")->fetchAll(PDO::FETCH_COLUMN);
 }
 
-/**
- * Retorna todos os anos disponíveis
- *
- * @return array
- */
+// Retorna todos os anos disponíveis
 function getAnos() {
     global $pdo;
     return $pdo->query("
@@ -35,11 +26,7 @@ function getAnos() {
     ")->fetchAll(PDO::FETCH_COLUMN);
 }
 
-/**
- * Retorna todas as linguagens disponíveis nos episódios
- *
- * @return array
- */
+// Retorna todas as linguagens disponíveis nos episódios
 function getLinguagens() {
     global $pdo;
     return $pdo->query("
@@ -49,21 +36,11 @@ function getLinguagens() {
     ")->fetchAll(PDO::FETCH_COLUMN);
 }
 
-/**
- * =========================
- * FUNÇÃO DE FILTRAGEM DE ANIMES
- * =========================
- */
+// =========================
+// FUNÇÃO DE FILTRAGEM DE ANIMES
+// =========================
 
-/**
- * Busca os animes aplicando filtros de gênero, ano, linguagem e busca
- *
- * @param string $filtroGenero
- * @param string $filtroAno
- * @param string $filtroLinguagem
- * @param string $busca
- * @return array
- */
+// Busca os animes aplicando filtros de gênero, ano, linguagem e busca
 function getAnimesFiltrados($filtroGenero = '', $filtroAno = '', $filtroLinguagem = '', $busca = '') {
     global $pdo;
 

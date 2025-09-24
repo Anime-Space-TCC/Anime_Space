@@ -1,14 +1,7 @@
 <?php
 require_once __DIR__ . '/conexao.php';
 
-/**
- * Salva uma mensagem de suporte no banco de dados
- *
- * @param string $nome
- * @param string $email
- * @param string $mensagem
- * @return bool true se sucesso, false se falha
- */
+// Envia uma mensagem de suporte para o banco de dados.
 function enviarMensagemSuporte($nome, $email, $mensagem) {
     global $pdo;
 

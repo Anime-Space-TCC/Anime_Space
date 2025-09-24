@@ -6,6 +6,7 @@ require_once __DIR__ . '/../shared/auth.php';
 // Bloqueia acesso se não estiver logado
 verificarLogin();
 
+// Indica se a mensagem de suporte foi enviada com sucesso.
 $mensagem_enviada = false;
 
 // Processa envio do formulário

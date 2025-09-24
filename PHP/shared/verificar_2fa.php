@@ -1,5 +1,4 @@
 <?php
-// verificar-2fa.php
 require_once __DIR__ . '/../shared/auth.php';
 
 $erro = '';
@@ -8,6 +7,7 @@ $sucesso = false;
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $codigo = trim($_POST['codigo'] ?? '');
 
+    // verificarCodigo2FA
     if (verificarCodigo2FA($codigo)) {
         // Sucesso → redireciona para página inicial (ou dashboard)
         header("Location: ../../PHP/user/profile.php");

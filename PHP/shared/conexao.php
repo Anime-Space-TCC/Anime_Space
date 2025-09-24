@@ -1,12 +1,11 @@
 <?php
-// conexao.php
 
 // Configurações do banco de dados
-$host = 'localhost';        // Endereço do servidor (localhost para ambiente local)
-$db   = 'anime_space';      // Nome do banco de dados
-$user = 'root';             // Nome de usuário do banco (padrão do XAMPP/Laragon)
-$pass = '';                 // Senha do banco (normalmente vazia em localhost)
-$charset = 'utf8mb4';       // Charset que suporta caracteres especiais, como emojis
+$host = 'localhost';        
+$db   = 'anime_space';     
+$user = 'root';             
+$pass = '';                 
+$charset = 'utf8mb4';       
 
 // Data Source Name (DSN) - string de conexão usada pelo PDO
 $dsn = "mysql:host=$host;dbname=$db;charset=$charset";

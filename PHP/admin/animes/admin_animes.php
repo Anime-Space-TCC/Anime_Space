@@ -24,7 +24,7 @@ foreach ($animes as &$anime) {
     $generos = $stmt->fetchAll(PDO::FETCH_COLUMN);
     $anime['generos'] = implode(', ', $generos);
 }
-unset($anime); // quebra referência
+unset($anime); 
 ?>
 
 <!DOCTYPE html>

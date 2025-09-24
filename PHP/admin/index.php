@@ -63,7 +63,7 @@ if (!isset($_SESSION['tipo']) || $_SESSION['tipo'] !== 'admin') {
 
     <div class="admin-card">
       <img src="../../img/slogan3.png" alt="Produtos">
-      <h3>Jojinha</h3>
+      <h3>Lojinha</h3>
       <p>Gerencie os produtos lançados.</p><br>
       <a href="../../PHP/admin/produtos/admin_produto.php" class="admin-btn">📂 Acessar</a>
     </div>

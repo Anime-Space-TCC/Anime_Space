@@ -1,6 +1,6 @@
 <?php
-require __DIR__ . '/../../shared/conexao.php'; // Inclui a conexão com o banco de dados
-session_start(); // Inicia a sessão para controle de autenticação
+require __DIR__ . '/../../shared/conexao.php'; 
+session_start();  
 
 // Verifica se o usuário está logado como admin, se não, redireciona para login
 if (!isset($_SESSION['tipo']) || $_SESSION['tipo'] !== 'admin') {

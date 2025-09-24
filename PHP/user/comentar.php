@@ -10,7 +10,7 @@ require __DIR__ . '/../shared/comentarios.php';
 if (!usuarioLogado()) {
     die("Você precisa estar logado para comentar.");
 }
-
+// Obtém o ID do usuário atualmente autenticado no sistema.
 $user_id = obterUsuarioAtualId();
 
 // 2. Confirma se usuário existe

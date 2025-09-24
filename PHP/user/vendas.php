@@ -5,6 +5,7 @@ require_once __DIR__ . '/../shared/auth.php';
 // Bloqueia acesso se não estiver logado
 verificarLogin();
 
+// Busca todos os produtos ordenados pela data de criação
 $stmt = $pdo->query("SELECT * FROM produtos ORDER BY data_criacao DESC");
 $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>

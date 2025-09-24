@@ -6,15 +6,15 @@ require __DIR__ . '/../shared/auth.php';
 require __DIR__ . '/../shared/animes.php';
 require __DIR__ . '/../shared/episodios.php';
 require __DIR__ . '/../shared/comentarios.php';
-require __DIR__ . '/../shared/utils.php';
 
 // Bloqueia acesso se não estiver logado
 verificarLogin();
 
+// Obtém o ID do anime e o ID do episódio a partir dos parâmetros da URL ($_GET).
 $id = $_GET['id'] ?? null;
 $episode_id = $_GET['episode_id'] ?? null;
 
-
+// Se o ID do anime não for fornecido, encerra a execução exibindo uma mensagem de erro.
 if (!$id) {
     die("Anime não encontrado.");
 }

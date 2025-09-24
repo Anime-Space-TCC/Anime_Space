@@ -5,6 +5,7 @@ require_once __DIR__ . '/../shared/reacoes.php';
 
 header('Content-Type: application/json');
 
+// Verifica se o usuário está logado
 if (!isset($_SESSION['user_id'])) {
     echo json_encode(['erro' => 'Usuário não logado']);
     exit;
@@ -19,10 +20,10 @@ if (!$episodio_id || !in_array($reacao, ['like', 'dislike'], true)) {
     exit;
 }
 
-// Salva ou atualiza
+// Salva ou atualiza a reação
 $reacaoAtual = salvarOuAtualizarReacao($user_id, $episodio_id, $reacao);
 
-// Contagem atualizada
+// Conta as reações do episódio
 $contagens = contarReacoesEpisodio($episodio_id);
 
 echo json_encode([

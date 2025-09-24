@@ -1,10 +1,10 @@
 <?php
+require __DIR__ . '/../shared/conexao.php';
+
 // Inicia a sessão apenas se não houver sessão ativa
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
-
-require __DIR__ . '/../shared/conexao.php';
 
 // Verifica se o usuário está logado
 if (!isset($_SESSION['user_id'])) {

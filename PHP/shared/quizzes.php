@@ -1,15 +1,8 @@
 <?php
 require_once __DIR__ . '/conexao.php';
 
-/**
- * Salva o resultado do quiz de um usuário e retorna o número de acertos.
- * Evita respostas duplicadas para o mesmo usuário e anime.
- *
- * @param int $userId ID do usuário
- * @param int $anime_id ID do anime
- * @param array $respostas Array com as respostas do usuário
- * @return array ['acertos' => int, 'total' => int, 'status' => string, 'msg' => string|null]
- */
+// Salva o resultado do quiz de um usuário e retorna o número de acertos.
+// Evita respostas duplicadas para o mesmo usuário e anime.
 function salvarResultadoQuiz($userId, $anime_id, $respostas) {
     global $pdo;
 
@@ -62,14 +55,7 @@ function salvarResultadoQuiz($userId, $anime_id, $respostas) {
     }
 }
 
-/**
- * Busca quizzes por anime e temporada.
- *
- * @param PDO $pdo Conexão com o banco
- * @param int $anime_id ID do anime
- * @param int|null $temporada Número da temporada (opcional)
- * @return array Lista de quizzes
- */
+// Busca quizzes por anime e temporada.
 function buscarQuizPorAnimeETemporada(PDO $pdo, int $anime_id, ?int $temporada = null) {
     $sql = "SELECT * FROM quizzes WHERE anime_id = :anime_id";
     if ($temporada !== null) {

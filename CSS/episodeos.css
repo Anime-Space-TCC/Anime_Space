@@ -51,8 +51,8 @@ html, body {
 }
 
 /* HEADER */
-.episodio header {
-    width: 77%;
+.episodio header { 
+    width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;

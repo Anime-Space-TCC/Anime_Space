@@ -1,6 +1,4 @@
 <?php
-// /PHP/shared/auth.php
-
 require_once __DIR__ . '/conexao.php';
 
 // ==============================
@@ -14,20 +12,14 @@ if (session_status() === PHP_SESSION_NONE) {
 // Funções de Autenticação
 // ==============================
 
-/**
- * Verifica se o usuário está logado
- *
- * @return bool
- */
+// Verifica se o usuário está logado
 if (!function_exists('usuarioLogado')) {
     function usuarioLogado(): bool {
         return isset($_SESSION['user_id']) && empty($_SESSION['aguardando_2fa']);
     }
 }
 
-/**
- * Verifica login e redireciona para login.php se não estiver logado
- */
+// Verifica login e redireciona para login.php se não estiver logado
 if (!function_exists('verificarLogin')) {
     function verificarLogin(): void {
         $paginaAtual = basename($_SERVER['PHP_SELF']); // pega só o arquivo atual
@@ -40,25 +32,14 @@ if (!function_exists('verificarLogin')) {
     }
 }
 
-/**
- * Retorna o ID do usuário logado
- *
- * @return int|null
- */
+// Retorna o ID do usuário logado
 if (!function_exists('obterUsuarioAtualId')) {
     function obterUsuarioAtualId(): ?int {
         return $_SESSION['user_id'] ?? null;
     }
 }
 
-/**
- * Realiza login do usuário (primeira etapa)
- *
- * @param PDO $pdo
- * @param string $username
- * @param string $password
- * @return array ['success'=>bool, 'error'=>string|null, '2fa'=>bool]
- */
+// Realiza login do usuário (primeira etapa)
 if (!function_exists('login')) {
     function login(PDO $pdo, string $username, string $password): array {
         $username = trim($username);
@@ -97,12 +78,7 @@ if (!function_exists('login')) {
     }
 }
 
-/**
- * Verifica o código 2FA
- *
- * @param string $codigo
- * @return bool
- */
+// Verifica o código 2FA
 if (!function_exists('verificarCodigo2FA')) {
     function verificarCodigo2FA(string $codigo): bool {
         if (!isset($_SESSION['2fa_user'], $_SESSION['2fa_code'], $_SESSION['2fa_expires'])) {
@@ -132,9 +108,7 @@ if (!function_exists('verificarCodigo2FA')) {
     }
 }
 
-/**
- * Realiza logout
- */
+// Realiza logout
 if (!function_exists('logout')) {
     function logout(): void {
         session_unset();
@@ -142,9 +116,7 @@ if (!function_exists('logout')) {
     }
 }
 
-/**
- * Validar senha Forte
- */
+// Validar senha Forte
 if (!function_exists('validarSenhaForte')) {
     function validarSenhaForte(string $pwd): ?string {
         if (strlen($pwd) < 8) return "Senha deve ter ao menos 8 caracteres.";

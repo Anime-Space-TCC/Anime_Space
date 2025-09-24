@@ -3,65 +3,8 @@ session_start();
 require __DIR__ . '/../shared/conexao.php';
 require __DIR__ . '/../shared/usuarios.php';
 require __DIR__ . '/../shared/auth.php'; 
+require_once __DIR__ . '/../shared/register.php';
 
-$errors = [];
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
-    // Recupera os dados do formulário, removendo espaços extras com trim
-    $username = trim($_POST['username'] ?? '');
-    $email = trim($_POST['email'] ?? '');
-    $password = $_POST['password'] ?? '';
-    $password_confirm = $_POST['password_confirm'] ?? '';
-
-    // =====================
-    // Validações dos campos
-    // =====================
-    if (!$username) {
-        $errors[] = "Informe um nome de usuário.";
-    }
-
-    if (!$email || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        $errors[] = "Informe um e-mail válido.";
-    }
-
-    // Senha forte (usa a função do auth.php)
-    if ($err = validarSenhaForte($password)) {
-        $errors[] = $err;
-    }
-
-    if ($password !== $password_confirm) {
-        $errors[] = "As senhas não conferem.";
-    }
-
-    // =====================
-    // Verifica duplicidade
-    // =====================
-    if (empty($errors) && usuarioExiste($pdo, $username, $email)) {
-        $errors[] = "Usuário ou e-mail já cadastrado.";
-    }
-
-    // =====================
-    // Criação do usuário
-    // =====================
-    if (empty($errors)) {
-        // Criptografa a senha com algoritmo seguro
-        $hash = password_hash($password, PASSWORD_DEFAULT);
-
-        $novoId = criarUsuario($pdo, $username, $email, $hash);
-
-        if ($novoId) {
-            // Cria sessão automaticamente após cadastro
-            $_SESSION['user_id'] = $novoId;
-            $_SESSION['username'] = $username;
-
-            header('Location: profile.php');
-            exit;
-        } else {
-            $errors[] = "Erro ao cadastrar usuário.";
-        }
-    }
-}
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -77,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <h2>Cadastro</h2> 
     
     <?php if ($errors): ?>
-      <ul style="color: #f00; margin-bottom: 15px;">
+      <ul>
         <?php foreach ($errors as $error): ?>
           <li><?= htmlspecialchars($error) ?></li>
         <?php endforeach; ?>

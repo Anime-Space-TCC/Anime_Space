@@ -1,21 +1,13 @@
 <?php
-// /PHP/shared/episodios.php
-
 require_once __DIR__ . '/conexao.php';
 
-/**
- * =========================
- * FUNÇÕES DE EPISÓDIOS
- * =========================
- */
 
-/**
- * Retorna todos os episódios de um anime com contagem de likes e dislikes
- *
- * @param PDO $pdo
- * @param int $animeId
- * @return array
- */
+//=========================
+//  FUNÇÕES DE EPISÓDIOS
+//=========================
+
+
+// Retorna todos os episódios de um anime com contagem de likes e dislikes
 function buscarEpisodiosComReacoes(PDO $pdo, int $animeId): array {
     $stmt = $pdo->prepare("
         SELECT e.*, date_format(e.data_lancamento, '%d/%m/%Y') as data_lancamento,
@@ -31,14 +23,7 @@ function buscarEpisodiosComReacoes(PDO $pdo, int $animeId): array {
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
-/**
- * Busca um episódio específico de um anime (com temporada garantida)
- *
- * @param PDO $pdo
- * @param int $episodioId
- * @param int $animeId
- * @return array|null
- */
+// Busca um episódio específico de um anime (com temporada garantida)
 function buscarEpisodioSelecionado(PDO $pdo, int $episodioId, int $animeId): ?array {
     $stmt = $pdo->prepare("
         SELECT id, anime_id, temporada, numero, titulo, descricao, duracao, data_lancamento, miniatura, video_url, linguagem
@@ -50,12 +35,7 @@ function buscarEpisodioSelecionado(PDO $pdo, int $episodioId, int $animeId): ?ar
     return $stmt->fetch(PDO::FETCH_ASSOC) ?: null;
 }
 
-/**
- * Organiza uma lista de episódios por temporada
- *
- * @param array $episodios
- * @return array
- */
+// Organiza uma lista de episódios por temporada
 function organizarPorTemporada(array $episodios): array {
     $temporadas = [];
     foreach ($episodios as $ep) {
@@ -64,23 +44,12 @@ function organizarPorTemporada(array $episodios): array {
     return $temporadas;
 }
 
-/**
- * Filtra episódios por linguagem
- *
- * @param array $episodios
- * @param string $linguagem
- * @return array
- */
+// Filtra episódios por linguagem
 function filtrarPorLinguagem(array $episodios, string $linguagem): array {
     return array_filter($episodios, fn($ep) => strtolower($ep['linguagem']) === strtolower($linguagem));
 }
 
-/**
- * Retorna os últimos episódios lançados
- *
- * @param int $limite Quantidade de episódios (padrão: 20)
- * @return array
- */
+// Retorna os últimos episódios lançados
 function getUltimosEpisodios(int $limite = 20): array {
     global $pdo;
 
@@ -99,12 +68,7 @@ function getUltimosEpisodios(int $limite = 20): array {
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
-/**
- * Busca um episódio com informações do anime
- *
- * @param int $episodioId
- * @return array|null
- */
+// Busca um episódio com informações do anime
 function buscarEpisodioComAnime(int $episodioId): ?array {
     global $pdo;
 
@@ -120,12 +84,7 @@ function buscarEpisodioComAnime(int $episodioId): ?array {
     return $stmt->fetch(PDO::FETCH_ASSOC) ?: null;
 }
 
-/**
- * Extrai o ID do YouTube de uma URL
- *
- * @param string $url
- * @return string|null
- */
+// Extrai o ID do YouTube de uma URL
 function extrairIdYoutube($url) {
     preg_match('/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|embed)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/ ]{11})/', $url, $matches);
     return $matches[1] ?? null;

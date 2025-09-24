@@ -1,9 +1,7 @@
 <?php
 require_once 'conexao.php';
 
-/**
- * Busca favoritos do usuário
- */
+// Busca favoritos do usuário
 function buscarFavoritos($userId) {
     global $pdo;
     $stmt = $pdo->prepare("
@@ -15,9 +13,7 @@ function buscarFavoritos($userId) {
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
-/**
- * Busca histórico recente do usuário
- */
+// Busca histórico recente do usuário
 function buscarHistorico($userId, $limite = 10) {
     global $pdo;
     $stmt = $pdo->prepare("
@@ -31,9 +27,7 @@ function buscarHistorico($userId, $limite = 10) {
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
-/**
- * Busca recomendações para o usuário
- */
+// Busca recomendações para o usuário
 function buscarRecomendacoes($userId) {
     global $pdo;
     $stmt = $pdo->prepare("
@@ -44,4 +38,3 @@ function buscarRecomendacoes($userId) {
     $stmt->execute([$userId]);
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
-
