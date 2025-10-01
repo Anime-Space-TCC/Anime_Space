@@ -1,15 +1,17 @@
 <?php
 require_once __DIR__ . '/../shared/auth.php';
 
+
+// Inicializa variáveis
 $erro = '';
 $sucesso = false;
 
+// Processa submissão do formulário
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $codigo = trim($_POST['codigo'] ?? '');
 
-    // verificarCodigo2FA
     if (verificarCodigo2FA($codigo)) {
-        // Sucesso → redireciona para página inicial (ou dashboard)
+        // Sucesso → redireciona para página inicial
         header("Location: ../../PHP/user/profile.php");
         exit;
     } else {
@@ -22,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8">
     <title>Verificação em Duas Etapas</title>
-    <link rel="stylesheet" href="../../CSS/teste.css"">
+    <link rel="stylesheet" href="../../CSS/teste.css">
     <link rel="icon" href="../../img/slogan3.png" type="image/png">
 </head>
 <body class="twofa-page">

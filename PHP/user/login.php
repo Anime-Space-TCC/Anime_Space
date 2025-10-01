@@ -20,9 +20,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     || !preg_match('/[a-z]/', $password) 
     || !preg_match('/[0-9]/', $password) 
     || !preg_match('/[\W]/', $password)) {
-    
-    $errors[] = "A senha deve ter pelo menos 8 caracteres, 
-                 incluindo maiúsculas, minúsculas, números e símbolos.";
+        $errors[] = "A senha deve ter pelo menos 8 caracteres, 
+                     incluindo maiúsculas, minúsculas, números e símbolos.";
     }
 
     // Tenta realizar login
@@ -31,11 +30,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if ($resultado['success']) {
             if ($resultado['2fa']) {
-                // Usuário usa 2FA → redireciona para a tela de verificação
+                // 2FA pendente → vai para a tela de verificação
                 header('Location: ../../PHP/shared/verificar_2fa.php');
                 exit;
             } else {
-                // Usuário não usa 2FA → entra direto
+                // Login direto
                 header('Location: ../../PHP/user/profile.php');
                 exit;
             }
@@ -45,7 +44,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
