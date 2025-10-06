@@ -133,11 +133,10 @@ body {
 /* ====== SLIDESHOW ====== */
 .home .slideshow-container {
     flex: 2;
-    max-width: 70%; 
+    max-width: 100%; 
     position: relative;
     border-radius: 12px;
     overflow: hidden;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.6);
 }
 
 /* Cada slide */
@@ -149,8 +148,8 @@ body {
 
 .home .slide img {
     width: 100%;
-    height: auto; 
-    max-height: 280px;
+    height: 100%; 
+    max-height: 300px;
     object-fit: cover;
     border-radius: 12px;
     image-rendering: -webkit-optimize-contrast; 
@@ -164,16 +163,14 @@ body {
 .home .slide .destaque {
     position: absolute;
     bottom: 0;
-    left: 0;
+    left: auto;
     width: 100%;
-    padding: 8px;
+    padding: 10px;
     text-align: center;
     background: rgba(0,0,0,0.65);
-    box-shadow: 0 4px 10px rgb(175, 134, 0);
     color: #ff9f00;
-    font-size: 0.95rem;
+    font-size: 1rem;
     font-weight: bold;
-    border-radius: 0 0 12px 12px;
     opacity: 0;
     transition: opacity 0.4s ease;
 }
@@ -642,7 +639,7 @@ header h1.titulo-pagina {
     display: flex;
     flex-direction: column;
     gap: 15px;
-    max-width: 900px;
+    max-width: 1000px;
     margin: 0 auto;
     padding: 0 15px;
 }
@@ -714,7 +711,7 @@ header h1.titulo-pagina {
     display: flex;
     flex-direction: column;
     gap: 15px;
-    max-width: 900px;
+    max-width: 1000px;
     margin: 0 auto;
     padding: 0 15px;
 }
@@ -1415,7 +1412,7 @@ header h1.titulo-pagina {
 }
 
 /* =========================
-        Notícias Atualizadas
+          Notícias 
 ========================= */
 
 .noticias {
@@ -1428,7 +1425,7 @@ header h1.titulo-pagina {
 }
 
 .noticia {
-  background: #1a1a1a; /* ligeiramente mais claro que preto absoluto */
+  background: #1a1a1a; 
   border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);

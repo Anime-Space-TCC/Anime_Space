@@ -26,6 +26,7 @@ $busca = $_GET['busca'] ?? '';
 
   <nav class="menu-lateral" id="menuLateral" aria-label="Menu principal">
     <a href="../../PHP/user/stream.php">Catálogo</a>
+    <a href="../../PHP/user/quiz.php">Quiz Animes</a>
     <a href="../../PHP/user/estreias_temporada.php">Estreias da Temporada</a>
     <a href="../../PHP/user/últimos_episodios.php">Lançamentos</a>
     <a href="../../PHP/user/noticias.php">Noticias</a>
