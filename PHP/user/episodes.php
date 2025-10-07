@@ -215,21 +215,24 @@ if (!empty($temporadas)) {
             <div class="grid">
               <?php foreach ($episodios as $ep): ?>
                 <div class="card" data-episodio-id="<?= $ep['id'] ?>">
+                  
+                  <!-- Lado esquerdo: miniatura e título -->
                   <div class="card-left">
                     <img src="../../img/<?= htmlspecialchars($ep['miniatura'] ?: 'logo.png') ?>" 
-                      alt="Miniatura Episódio <?= htmlspecialchars($ep['numero']) ?>">
+                        alt="Miniatura Episódio <?= htmlspecialchars($ep['numero']) ?>">
 
                     <div class="info-container">
                       <div class="episodio-numero">Episódio <?= htmlspecialchars($ep['numero']) ?></div>
                       <div class="titulo-e-descricao">
-                          <div class="episodio-titulo"><?= htmlspecialchars($ep['titulo']) ?></div>
-                          <?php if (!empty($ep['descricao'])): ?>
-                              <button class="btn-toggle-descricao" onclick="toggleDescricao(this)">▼</button>
-                          <?php endif; ?>
+                        <div class="episodio-titulo"><?= htmlspecialchars($ep['titulo']) ?></div>
+                        <?php if (!empty($ep['descricao'])): ?>
+                          <button class="btn-toggle-descricao" onclick="toggleDescricao(this)">▼</button>
+                        <?php endif; ?>
                       </div>
-                  </div>
+                    </div>
                   </div>
 
+                  <!-- Lado direito: info adicional, ações e botão assistir -->
                   <div class="card-right">
                     <div class="info-adicional">
                       <?php if (!empty($ep['duracao'])): ?>
@@ -240,28 +243,33 @@ if (!empty($temporadas)) {
                       <?php endif; ?>
                     </div>
 
+                    <!-- Ações de like/dislike -->
                     <div class="acoes">
                       <?php if (isset($_SESSION['user_id'])): ?>
                         <button class="reacao-btn btn-like" data-reacao="like">
-                          👍 Curtir <span class="contador-like"><?= $ep['likes'] ?></span>
+                          👍 <span class="contador-like"><?= $ep['likes'] ?></span>
                         </button>
                         <button class="reacao-btn btn-dislike" data-reacao="dislike">
-                          👎 Não Curtir <span class="contador-dislike"><?= $ep['dislikes'] ?></span>
+                          👎 <span class="contador-dislike"><?= $ep['dislikes'] ?></span>
                         </button>
                       <?php else: ?>
                         <span>👍 <?= $ep['likes'] ?> | 👎 <?= $ep['dislikes'] ?></span>
                       <?php endif; ?>
                     </div>
 
+                    <!-- Botão assistir -->
                     <a class="btn-assistir" 
                       href="?id=<?= $id ?>&episode_id=<?= $ep['id'] ?><?= $filtroLinguagemSelecionada ? '&linguagem=' . urlencode($filtroLinguagemSelecionada) : '' ?>">
                       Assistir
                     </a>
                   </div>
-                </div>
-                <?php if (!empty($ep['descricao'])): ?>
+
+                  <!-- Descrição escondida -->
+                  <?php if (!empty($ep['descricao'])): ?>
                     <div class="episodio-descricao hidden"><?= nl2br(htmlspecialchars($ep['descricao'])) ?></div>
-                <?php endif; ?>
+                  <?php endif; ?>
+
+                </div> 
               <?php endforeach; ?>
             </div>
           </div>
@@ -372,24 +380,48 @@ if (btnDropdown && dropdownList) {
 document.querySelectorAll('.reacao-btn').forEach(button => {
   button.addEventListener('click', () => {
     const card = button.closest('.card');
+    if (!card) {
+      console.error('Erro: card não encontrado para o botão clicado.');
+      return;
+    }
+
     const episodioId = card.dataset.episodioId;
     const reacao = button.dataset.reacao;
 
-    fetch('../shared/reagir.php', {
+    // Checagem de dados
+    if (!episodioId || !['like', 'dislike'].includes(reacao)) {
+      console.error('Erro: dados inválidos', { episodioId, reacao });
+      return;
+    }
+
+    fetch('../../PHP/shared/reagir.php', {
       method: 'POST',
-      headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: `episodio_id=${encodeURIComponent(episodioId)}&reacao=${encodeURIComponent(reacao)}`
     })
     .then(res => res.json())
     .then(data => {
+      console.log('Resposta da API:', data);
+
       if (data.sucesso) {
-        card.querySelector('.contador-like').textContent = data.likes;
-        card.querySelector('.contador-dislike').textContent = data.dislikes;
+        const likeSpan = card.querySelector('.contador-like');
+        const dislikeSpan = card.querySelector('.contador-dislike');
+
+        if (likeSpan) likeSpan.textContent = data.likes ?? 0;
+        if (dislikeSpan) dislikeSpan.textContent = data.dislikes ?? 0;
+
+        // Atualiza visual dos botões (opcional)
+        card.querySelectorAll('.reacao-btn').forEach(btn => btn.classList.remove('ativo'));
+        button.classList.add('ativo');
+
       } else {
         alert(data.erro || 'Erro ao processar reação.');
       }
     })
-    .catch(() => alert('Erro ao enviar reação.'));
+    .catch(err => {
+      console.error('Falha na requisição:', err);
+      alert('Erro ao enviar reação.');
+    });
   });
 });
 

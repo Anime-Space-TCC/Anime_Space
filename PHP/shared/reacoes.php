@@ -6,28 +6,20 @@ require_once __DIR__ . '/conexao.php';
 // =========================
 
 // Busca a reação atual de um usuário em um episódio
-function buscarReacaoUsuario(int $userId, int $episodioId): ?array {
-    global $pdo;
+function buscarReacaoUsuario(PDO $pdo, int $userId, int $episodioId): ?array {
     $stmt = $pdo->prepare("
         SELECT * 
         FROM episodio_reacoes 
         WHERE user_id = ? AND episodio_id = ?
+        LIMIT 1
     ");
     $stmt->execute([$userId, $episodioId]);
     return $stmt->fetch(PDO::FETCH_ASSOC) ?: null;
 }
 
 // Salva ou atualiza uma reação de usuário
-function salvarOuAtualizarReacao(int $userId, int $episodioId, string $reacao): ?array {
-    global $pdo;
-
-    $existente = buscarReacaoUsuario($userId, $episodioId);
-    $reacaoAtual = salvarOuAtualizarReacao($userId, $episodioId, $reacao);
-
-    // Se for a primeira vez reagindo, dá XP
-    if ($reacaoAtual && $existente === null) { 
-        adicionarXP($pdo, $userId, 10);
-    }
+function salvarOuAtualizarReacao(PDO $pdo, int $userId, int $episodioId, string $reacao): ?array {
+    $existente = buscarReacaoUsuario($pdo, $userId, $episodioId);
 
     if ($existente) {
         if ($existente['reacao'] === $reacao) {
@@ -48,13 +40,12 @@ function salvarOuAtualizarReacao(int $userId, int $episodioId, string $reacao): 
         $stmt->execute([$userId, $episodioId, $reacao]);
     }
 
-    return buscarReacaoUsuario($userId, $episodioId);
+    // Retorna a reação atualizada ou null se foi removida
+    return buscarReacaoUsuario($pdo, $userId, $episodioId);
 }
 
 // Conta todas as reações de um episódio
-function contarReacoesEpisodio(int $episodioId): array {
-    global $pdo;
-
+function contarReacoesEpisodio(PDO $pdo, int $episodioId): array {
     $stmt = $pdo->prepare("
         SELECT reacao, COUNT(*) as total
         FROM episodio_reacoes
@@ -65,9 +56,8 @@ function contarReacoesEpisodio(int $episodioId): array {
 
     $contagens = ['like' => 0, 'dislike' => 0];
     foreach ($stmt->fetchAll(PDO::FETCH_ASSOC) as $linha) {
-        if (isset($contagens[$linha['reacao']])) {
-            $contagens[$linha['reacao']] = (int)$linha['total'];
-        }
+        $tipo = $linha['reacao'];
+        $contagens[$tipo] = (int)$linha['total'];
     }
 
     return $contagens;
