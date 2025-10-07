@@ -2,6 +2,7 @@
 session_start();
 require_once __DIR__ . '/../shared/conexao.php';
 require_once __DIR__ . '/../shared/reacoes.php';
+require_once __DIR__ . '/../shared/gamificacao.php'; 
 
 header('Content-Type: application/json');
 
@@ -20,8 +21,18 @@ if (!$episodio_id || !in_array($reacao, ['like', 'dislike'], true)) {
     exit;
 }
 
+// Verifica se o usuário já tinha reagido antes
+$stmt = $pdo->prepare("SELECT reacao FROM reacoes WHERE user_id = ? AND episodio_id = ?");
+$stmt->execute([$user_id, $episodio_id]);
+$reacaoAnterior = $stmt->fetch(PDO::FETCH_ASSOC)['reacao'] ?? null;
+
 // Salva ou atualiza a reação
 $reacaoAtual = salvarOuAtualizarReacao($user_id, $episodio_id, $reacao);
+
+// Se for a primeira vez reagindo, dá XP
+if (!$reacaoAnterior) {
+    adicionarXP($pdo, $user_id, 10); 
+}
 
 // Conta as reações do episódio
 $contagens = contarReacoesEpisodio($episodio_id);

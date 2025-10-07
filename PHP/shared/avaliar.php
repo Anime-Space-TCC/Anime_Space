@@ -1,5 +1,6 @@
 <?php
 require __DIR__ . '/../shared/conexao.php';
+require __DIR__ . '/../shared/gamificacao.php'; // Importa a função de XP
 
 // Inicia a sessão apenas se não houver sessão ativa
 if (session_status() === PHP_SESSION_NONE) {
@@ -25,6 +26,11 @@ if (!$animeId || !is_numeric($avaliacao) || $avaliacao < 0 || $avaliacao > 10) {
 // Converte para float
 $nota = floatval($avaliacao);
 
+// Verifica se já existe avaliação anterior
+$stmtCheck = $pdo->prepare("SELECT nota FROM avaliacoes WHERE user_id = ? AND anime_id = ?");
+$stmtCheck->execute([$userId, $animeId]);
+$avaliacaoExistente = $stmtCheck->fetchColumn();
+
 // Salva ou atualiza avaliação
 $stmt = $pdo->prepare("
     INSERT INTO avaliacoes (user_id, anime_id, nota) 
@@ -33,4 +39,27 @@ $stmt = $pdo->prepare("
 ");
 $stmt->execute([$userId, $animeId, $nota, $nota]);
 
-echo json_encode(["sucesso" => true, "nota" => round($nota)]); // arredonda para exibir 10/10
+// Dá XP só se for a primeira vez avaliando
+if (!$avaliacaoExistente) {
+    // Verifica se já tem log de XP pra essa ação
+    $stmtLog = $pdo->prepare("
+        SELECT COUNT(*) FROM xp_logs 
+        WHERE user_id = ? AND tipo_acao = 'avaliacao' AND referencia_id = ?
+    ");
+    $stmtLog->execute([$userId, $animeId]);
+    $jaGanhouXP = $stmtLog->fetchColumn() > 0;
+
+    if (!$jaGanhouXP) {
+        adicionarXP($pdo, $userId, 25); // 🔹 +25 XP por avaliar um anime
+
+        // Registra log
+        $log = $pdo->prepare("
+            INSERT INTO xp_logs (user_id, tipo_acao, referencia_id, xp_ganho)
+            VALUES (?, 'avaliacao', ?, 25)
+        ");
+        $log->execute([$userId, $animeId]);
+    }
+}
+
+echo json_encode(["sucesso" => true, "nota" => round($nota)]);
+?>

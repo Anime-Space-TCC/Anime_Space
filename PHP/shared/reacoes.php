@@ -22,6 +22,12 @@ function salvarOuAtualizarReacao(int $userId, int $episodioId, string $reacao): 
     global $pdo;
 
     $existente = buscarReacaoUsuario($userId, $episodioId);
+    $reacaoAtual = salvarOuAtualizarReacao($userId, $episodioId, $reacao);
+
+    // Se for a primeira vez reagindo, dá XP
+    if ($reacaoAtual && $existente === null) { 
+        adicionarXP($pdo, $userId, 10);
+    }
 
     if ($existente) {
         if ($existente['reacao'] === $reacao) {

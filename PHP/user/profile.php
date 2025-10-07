@@ -2,6 +2,7 @@
 require_once '../shared/auth.php';
 require_once '../shared/usuarios.php';
 require_once '../shared/perfil.php';
+require_once '../shared/gamificacao.php';
 
 // Garante login
 verificarLogin();
@@ -25,6 +26,13 @@ $fotoPerfil = buscarFotoPerfil($pdo, $userId);
 $favoritos = buscarFavoritos($userId);
 $historico = buscarHistorico($userId);
 $recomendacoes = buscarRecomendacoes($userId);
+
+// Busca dados de XP e nível
+$dadosXP = getXP($pdo, $userId);
+$nivel = $dadosXP['nivel'] ?? 1;
+$xp = $dadosXP['xp'] ?? 0;
+$xpNecessario = $nivel * 100;
+$porcentagem = min(100, ($xp / $xpNecessario) * 100);
 ?>
 
 <!DOCTYPE html>
@@ -36,7 +44,6 @@ $recomendacoes = buscarRecomendacoes($userId);
     <link rel="icon" href="../../img/slogan3.png" type="image/png">
 </head>
 <body class="perfil">
-<!-- Menu lateral estilo RPG -->
 <div class="menu-lateral">
     <a href="../../PHP/user/index.php" class="home-btn" aria-label="Página Inicial" role="button" tabindex="0">
         <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" width="20" height="20" style="vertical-align: middle;">
@@ -74,10 +81,11 @@ $recomendacoes = buscarRecomendacoes($userId);
 
                     <div class="info-player">
                         <h2><?= htmlspecialchars($username) ?></h2>
-                        <div class="level">Nível: 10</div>
+                        <div class="level">Nível: <?= $nivel ?><p class="titulo"><?= tituloNivel($nivel) ?></p></div>
                         <div class="exp-bar">
-                            <div class="exp-fill" style="width: 70%;"></div>
+                            <div class="exp-fill" style="width: <?= $porcentagem ?>%;"></div>
                         </div>
+                        <p class="xp-text"><?= $xp ?> / <?= $xpNecessario ?> XP</p>
                     </div>
                 </div>
             </div>
