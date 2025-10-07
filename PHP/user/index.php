@@ -124,7 +124,7 @@ $busca = $_GET['busca'] ?? '';
     </p>
   </footer>
 
-  <script>
+  <script src="../../PHP/shared/global.js">
 
     // Menu lateral
     function toggleMenu() {

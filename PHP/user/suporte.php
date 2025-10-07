@@ -62,23 +62,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
 
     <h2>Informações de Contato</h2>
-    <p>📧 E-mail: suporte@animespace.com</p>
-    <p>📱 WhatsApp: <a target="_blank" alt="Chat on WhatsApp" href="https://wa.me/5561991585929?text=Ola%20tenho%20interesse%20em%20falar%20sobre%20animes">
-        Clique para enviar mensagem!</a>
-    </p>
-    <p>📍 Endereço: Brasília - DF</p>
+        <p>📧 E-mail: suporte@animespace.com</p>
+        <p>📱 WhatsApp: <a target="_blank" alt="Chat on WhatsApp" href="https://wa.me/5561991585929?text=Ola%20tenho%20interesse%20em%20falar%20sobre%20animes">
+            Clique para enviar mensagem!</a>
+        </p>
+        <p>📍 Endereço: Brasília - DF</p>
 
-    <div class="faq">
-        <h2>FAQ - Perguntas Frequentes</h2>
-        <h3>1. Não consigo assistir aos episódios, o que fazer?</h3>
-        <p>Verifique sua conexão com a internet e tente novamente. Caso persista, entre em contato pelo formulário acima.</p>
+        <div class="faq">
+            <h2>FAQ - Perguntas Frequentes</h2>
+            <h3>1. Não consigo assistir aos episódios, o que fazer?</h3>
+            <p>Verifique sua conexão com a internet e tente novamente. Caso persista, entre em contato pelo formulário acima.</p>
 
-        <h3>2. Como criar uma conta?</h3>
-        <p>Basta acessar a página de cadastro e preencher seus dados. Você poderá salvar episódios e fazer comentários.</p>
+            <h3>2. Como criar uma conta?</h3>
+            <p>Basta acessar a página de cadastro e preencher seus dados. Você poderá salvar episódios e fazer comentários.</p>
 
-        <h3>3. Como reportar um erro no site?</h3>
-        <p>Use o formulário de suporte, descrevendo o problema e enviando prints se possível.</p>
+            <h3>3. Como reportar um erro no site?</h3>
+            <p>Use o formulário de suporte, descrevendo o problema e enviando prints se possível.</p>
+        </div>
     </div>
-</div>
+
+    <!-- Script global de notificações e XP -->
+    <script src="/PHP/shared/global.js"></script>
 </body>
 </html>

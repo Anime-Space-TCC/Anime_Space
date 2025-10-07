@@ -112,6 +112,7 @@ $animes = getAnimesFiltrados($filtroGenero, $filtroAno, $filtroLinguagem, $busca
   <footer class="rodape">
     <p>&copy; 2025 - Anime Space. <a href="../../HTML/sobre.html">Sobre</a></p> <!-- Rodapé -->
   </footer>
-
+  <!-- Script global de notificações e XP -->
+  <script src="/PHP/shared/global.js"></script>
 </body>
 </html>

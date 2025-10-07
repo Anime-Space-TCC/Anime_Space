@@ -71,6 +71,7 @@ $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
   <footer class="loja-footer">
     <p>&copy; <?= date("Y") ?> Anime Space - Todos os direitos reservados.</p>
   </footer>
-
+  <!-- Script global de notificações e XP -->
+  <script src="/PHP/shared/global.js"></script>
 </body>
 </html>

@@ -65,7 +65,8 @@ if (!$perguntas) {
     </div>
 </div>
 
-<script>
+<script src="/PHP/shared/global.js">
+    
 document.getElementById('submitQuiz').addEventListener('click', function() {
     const perguntas = document.querySelectorAll('.quiz-question');
     let acertos = 0;
