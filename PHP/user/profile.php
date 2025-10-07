@@ -163,8 +163,9 @@ $porcentagem = min(100, ($xp / $xpNecessario) * 100);
 </div>
 
 <script>
+// ---------- Carrega e atualiza todos os dados do perfil ----------
 function carregarPerfil() {
-    fetch('../../PHP/shared/perfil_data.php')
+    fetch('../../PHP/shared/perfil_data.php', { cache: 'no-store' })
         .then(res => res.json())
         .then(data => {
             if (!data.sucesso) {
@@ -228,32 +229,40 @@ function carregarPerfil() {
         .catch(err => console.error('Falha ao carregar perfil:', err));
 }
 
-// Carrega o perfil ao abrir a página
+// ---------- Inicializa ----------
 carregarPerfil();
 
 // ---------- Atualização da foto via AJAX ----------
 document.getElementById('foto').addEventListener('change', function() {
+    const arquivo = this.files[0];
+    if (!arquivo) return;
+
     const formData = new FormData();
-    formData.append('foto', this.files[0]);
+    formData.append('foto', arquivo);
 
     fetch('../../PHP/shared/profile_upload.php', {
         method: 'POST',
-        body: formData
+        body: formData,
+        cache: 'no-store' // evita problemas de cache
     })
     .then(res => res.json())
     .then(data => {
         if(data.sucesso){
-            document.querySelector('.avatar img').src = data.novaFoto + '?t=' + new Date().getTime();
-            alert('Foto atualizada com sucesso!');
+            // Atualiza a imagem do avatar sem precisar recarregar
+            const avatarImg = document.querySelector('.avatar img');
+            avatarImg.src = data.novaFoto + '?t=' + new Date().getTime();
+
+            // Atualiza todos os dados do perfil (XP, nível, favoritos, etc.)
+            carregarPerfil();
         } else {
+            console.error('Erro ao atualizar foto:', data.erro);
             alert(data.erro || 'Erro ao atualizar foto.');
         }
-
-        // Atualiza XP e nível após enviar foto (se ganhar XP)
-        carregarPerfil();
     })
-    .catch(err => console.error(err));
+    .catch(err => console.error('Falha na requisição:', err));
 });
+
+
 </script>
 
 </body>

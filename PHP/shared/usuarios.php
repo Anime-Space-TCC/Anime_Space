@@ -23,8 +23,8 @@ function atualizarUsuario(PDO $pdo, int $id, string $username, string $email, ?s
     }
 }
 
-// Atualiza a foto de perfil do usuário
-function atualizarFotoPerfil(PDO $pdo, int $userId, array $file): string|bool {
+// Atualiza a foto de perfil do usuário via AJAX
+function atualizarFotoPerfil(PDO $pdo, int $userId, array $file): array {
     $diretorio_destino = __DIR__ . '/../../uploads/';
     if (!is_dir($diretorio_destino)) {
         mkdir($diretorio_destino, 0777, true);
@@ -35,28 +35,31 @@ function atualizarFotoPerfil(PDO $pdo, int $userId, array $file): string|bool {
     $tipos_permitidos = ['jpg', 'jpeg', 'png'];
 
     if (!in_array($extensao, $tipos_permitidos)) {
-        return "Erro: Apenas arquivos JPG, JPEG e PNG são permitidos.";
+        return ['sucesso' => false, 'erro' => "Apenas arquivos JPG, JPEG e PNG são permitidos."];
     }
 
     if ($file['size'] > 500000) {
-        return "Erro: O arquivo é muito grande (máx. 500KB).";
+        return ['sucesso' => false, 'erro' => "O arquivo é muito grande (máx. 500KB)."];
     }
 
     $nome_arquivo_unico = $userId . '.' . $extensao;
     $caminho_completo = $diretorio_destino . $nome_arquivo_unico;
 
     if (!move_uploaded_file($file['tmp_name'], $caminho_completo)) {
-        return "Erro ao mover o arquivo.";
+        return ['sucesso' => false, 'erro' => "Erro ao mover o arquivo."];
     }
 
     $caminho_relativo_db = 'uploads/' . $nome_arquivo_unico;
 
     $stmt = $pdo->prepare("UPDATE users SET foto_perfil = ? WHERE id = ?");
     if (!$stmt->execute([$caminho_relativo_db, $userId])) {
-        return "Erro ao salvar caminho no banco.";
+        return ['sucesso' => false, 'erro' => "Erro ao salvar caminho no banco."];
     }
 
-    return true;
+    return [
+        'sucesso' => true,
+        'novaFoto' => '../../' . $caminho_relativo_db
+    ];
 }
 
 // Busca a foto de perfil do usuário
