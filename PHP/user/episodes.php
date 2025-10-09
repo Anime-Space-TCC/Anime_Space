@@ -103,7 +103,7 @@ if (!empty($temporadas)) {
 </head>
 <body>
   <?php
-    $current_page = 'home'; 
+    $current_page = 'busca'; 
     include __DIR__ . '/navbar.php'; 
   ?>
 <main class="page-content">

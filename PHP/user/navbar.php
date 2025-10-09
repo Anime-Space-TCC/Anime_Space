@@ -36,22 +36,42 @@
       <?php
         require_once __DIR__ . '/../shared/conexao.php';
         require_once __DIR__ . '/../shared/usuarios.php';
+        require_once __DIR__ . '/../shared/gamificacao.php';
 
-        // busca a foto direto do banco
-        $caminhoFoto = buscarFotoPerfil($pdo, $_SESSION['user_id']);
+        // ID do usuário atual
+        $userId = $_SESSION['user_id'];
+
+        // Foto de perfil
+        $caminhoFoto = buscarFotoPerfil($pdo, $userId);
+
+        // Dados de XP e nível
+        $dadosXP = getXP($pdo, $userId);
+        $nivel = $dadosXP['nivel'] ?? 1;
+        $xp = $dadosXP['xp'] ?? 0;
+        $xpNecessario = $nivel * 100;
+        $porcentagem = min(100, ($xp / $xpNecessario) * 100);
       ?>
-      
-      <div class="perfil-area">
-        <a href="../../PHP/user/perfil.php" class="perfil-link" aria-label="Ver perfil">
-          <img src="../../<?= htmlspecialchars($caminhoFoto) ?>" alt="Foto de perfil" class="perfil-foto">
-        </a>
 
-        <div class="perfil-info">
-          <span class="perfil-nome"><?= htmlspecialchars($_SESSION['username'] ?? 'Usuário') ?></span>
-          <span class="perfil-nivel">Nível <?= $_SESSION['nivel'] ?? 1 ?></span>
+      <div class="perfil-card">
+        <div class="perfil-area">
+          <a href="../../PHP/user/perfil.php" class="perfil-link" aria-label="Ver perfil">
+            <img src="../../<?= htmlspecialchars($caminhoFoto) ?>" alt="Foto de perfil" class="perfil-foto">
+          </a>
+
+          <div class="perfil-info">
+            <h2 class="perfil-nome"><?= htmlspecialchars($_SESSION['username'] ?? 'Usuário') ?></h2>
+
+            <div class="perfil-nivel">
+              Nível: <?= $nivel ?>
+            </div>
+
+            <div class="exp-bar">
+              <div class="exp-fill" style="width: <?= $porcentagem ?>%;"></div>
+            </div>
+
+            <p class="xp-text"><?= $xp ?> / <?= $xpNecessario ?> XP</p>
+          </div>
         </div>
-
-        <a href="../../PHP/shared/logout.php" class="sair-btn">Sair</a>
       </div>
 
     <?php else: ?>

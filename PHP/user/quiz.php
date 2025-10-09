@@ -1,118 +1,55 @@
-<?php 
+<?php
 session_start();
-require __DIR__ . '/../shared/conexao.php';
-require __DIR__ . '/../shared/quizzes.php';
-require __DIR__ . '/../shared/animes.php'; 
-require_once __DIR__ . '/../shared/auth.php';
 
-// Bloqueia acesso se não estiver logado
-verificarLogin();
+// === Lógica PHP de desbloqueio e nível ===
+$nivel = $_SESSION['nivel'] ?? 3; // exemplo de nível do usuário
+$titulo = $_SESSION['titulo'] ?? "Aprendiz"; // título do usuário
+$favoritado = $_SESSION['favoritado'] ?? true; // anime favoritado
 
-// Pega o anime_id do GET e garante que seja inteiro
-$anime_id = isset($_GET['anime_id']) ? (int)$_GET['anime_id'] : 0;
-
-if ($anime_id <= 0) {
-    echo "Anime não informado.";
-    exit;
-}
-
-// Buscar anime pelo ID
-$anime = buscarAnimePorId($pdo, $anime_id);
-if (!$anime) {
-    echo "Anime não encontrado.";
-    exit;
-}
-
-// Verifica se uma temporada foi especificada
-$temporada = isset($_GET['temporada']) ? (int)$_GET['temporada'] : null;
-
-// Buscar perguntas do quiz (por anime e temporada)
-$perguntas = buscarQuizPorAnimeETemporada($pdo, $anime_id, $temporada);
-if (!$perguntas) {
-    echo "Nenhum quiz disponível para este anime" . ($temporada ? " na temporada $temporada" : "") . ".";
-    exit;
-}
+// Lista de quizzes
+$quizzes = [
+    ["nome" => "Quiz 1", "nivel" => 1],
+    ["nome" => "Quiz 2", "nivel" => 2],
+    ["nome" => "Quiz 3", "nivel" => 3],
+    ["nome" => "Quiz 4", "nivel" => 4],
+];
 ?>
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <title>Quiz - <?= htmlspecialchars($anime['nome']) ?> <?= $temporada ? " (Temporada $temporada)" : "" ?></title>
-    <link rel="stylesheet" href="../../CSS/styleEpi.css">
-    <link rel="icon" href="../../img/slogan3.png" type="image/png">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quizzes de Animes</title>
+<link rel="stylesheet" href="../../CSS/style.css" /> 
+<link rel="icon" href="../../img/slogan3.png" type="image/png" /> 
 </head>
-<body>
-<div class="quiz-container">
-    <h2>Quiz - <?= htmlspecialchars($anime['nome']) ?> <?= $temporada ? " - Temporada $temporada" : "" ?></h2>
+<body ">
+<?php
+    $current_page = 'busca'; 
+    include __DIR__ . '/navbar.php'; 
+?>
+    <main class="page-content">
+        <div class="quiz-page">
+            <h1 class="titulo-pagina">Quizzes de Animes</h1>
+            <div class="anime-quiz-card">
+                <img src="imagens/anime_exemplo.jpg" alt="Anime Favoritado" class="anime-img">
 
-    <form id="quizForm">
-        <?php foreach ($perguntas as $index => $q): ?>
-            <div class="quiz-question" data-resposta="<?= htmlspecialchars($q['resposta_correta']) ?>">
-                <p><strong>Pergunta <?= $index + 1 ?>:</strong> <?= htmlspecialchars($q['pergunta']) ?></p>
-                <label><input type="radio" name="q<?= $q['id'] ?>" value="A"> <?= htmlspecialchars($q['alternativa_a']) ?></label><br>
-                <label><input type="radio" name="q<?= $q['id'] ?>" value="B"> <?= htmlspecialchars($q['alternativa_b']) ?></label><br>
-                <label><input type="radio" name="q<?= $q['id'] ?>" value="C"> <?= htmlspecialchars($q['alternativa_c']) ?></label><br>
-                <label><input type="radio" name="q<?= $q['id'] ?>" value="D"> <?= htmlspecialchars($q['alternativa_d']) ?></label>
+                <div class="quizzes">
+                    <?php foreach ($quizzes as $q): 
+                        $desbloqueado = $favoritado && $nivel >= $q['nivel'];
+                    ?>
+                        <div class="quiz-box <?= $desbloqueado ? 'desbloqueado' : 'bloqueado' ?>">
+                            <?php if ($desbloqueado): ?>
+                                <a href="questao.php?quiz=<?= urlencode($q['nome']) ?>"><?= $q['nome'] ?></a>
+                            <?php else: ?>
+                                <span class="cadeado">🔒</span>
+                            <?php endif; ?>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
             </div>
-        <?php endforeach; ?>
-        <button type="button" id="submitQuiz">Enviar Respostas</button>
-    </form>
-
-    <div id="quizResultado" style="display:none;">
-        <h3>Resultado:</h3>
-        <p id="score"></p>
-    </div>
-</div>
-
-<script src="/PHP/shared/global.js">
-    
-document.getElementById('submitQuiz').addEventListener('click', function() {
-    const perguntas = document.querySelectorAll('.quiz-question');
-    let acertos = 0;
-    let respostas = [];
-
-    perguntas.forEach(q => {
-        const correta = q.getAttribute('data-resposta');
-        const selecionada = q.querySelector('input[type="radio"]:checked');
-        if (selecionada && selecionada.value === correta) {
-            acertos++;
-        }
-
-        const idPergunta = q.querySelector('input[type="radio"]').name.replace('q', '');
-        respostas.push({
-            pergunta_id: idPergunta,
-            resposta_usuario: selecionada ? selecionada.value : null,
-            correta: selecionada && selecionada.value === correta ? 1 : 0
-        });
-    });
-
-    const total = perguntas.length;
-    document.getElementById('score').textContent = `Você acertou ${acertos} de ${total} perguntas.`;
-    document.getElementById('quizResultado').style.display = 'block';
-
-    this.disabled = true; // Desabilita o botão para evitar múltiplos envios
-
-    fetch('salvar_quiz.php', {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({
-            anime_id: <?= $anime_id ?>,
-            temporada: <?= $temporada ?? 'null' ?>,
-            respostas
-        })
-    }).then(res => res.json()).then(data => {
-        if(data.status === 'duplicado') {
-            alert("Você já respondeu este quiz anteriormente!");
-        } else if(data.status === 'salvo') {
-            alert(`Respostas salvas! Você acertou ${data.acertos} de ${data.total} perguntas.`);
-        } else {
-            alert("Ocorreu um erro ao salvar suas respostas.");
-        }
-    }).catch(() => {
-        alert("Erro na comunicação com o servidor.");
-    });
-});
-</script>
+        </div>
+        <?php include __DIR__ . '/rodape.php'; ?>
+    </main>
 </body>
 </html>

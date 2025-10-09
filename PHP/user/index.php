@@ -30,7 +30,6 @@ $busca = $_GET['busca'] ?? '';
       <header class="cabeca" role="banner">
       <div class="slogan">
         <img src="../../img/slogan2.png" alt="Slogan Anime Space" class="img-slogan" /> 
-        <p><strong>Infinito é o universo dos animes</strong></p> 
       </div>
 
       <div class="slideshow-container">

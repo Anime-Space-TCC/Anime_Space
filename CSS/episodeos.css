@@ -565,119 +565,6 @@ html, body {
 }
 
 /* =========================
-        QUIZ PAGE
-========================= */
-
-.quiz-container {
-    max-width: 700px;
-    margin: 40px auto;
-    padding: 25px 30px;
-    background-color: rgba(30, 30, 30, 0.95);
-    border-radius: 15px;
-    color: #fff;
-    font-family: Arial, sans-serif;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.5);
-}
-
-.quiz-container h2 {
-    text-align: center;
-    margin-bottom: 25px;
-    color: var(--color-primary);
-}
-
-.quiz-question {
-    margin-bottom: 20px;
-    padding: 15px;
-    background-color: rgba(50, 50, 50, 0.8);
-    border-radius: 12px;
-}
-
-.quiz-question p {
-    margin-bottom: 10px;
-    font-weight: 600;
-}
-
-.quiz-question label {
-    display: block;
-    margin: 6px 0;
-    cursor: pointer;
-    font-size: 0.95rem;
-}
-
-.quiz-question input[type="radio"] {
-    margin-right: 8px;
-    cursor: pointer;
-}
-
-#submitQuiz {
-    display: block;
-    width: 100%;
-    margin-top: 20px;
-    padding: 12px 0;
-    font-size: 1rem;
-    font-weight: bold;
-    color: #fff;
-    background: linear-gradient(45deg, #ff6ec7, #6e8efb);
-    border: none;
-    border-radius: 12px;
-    cursor: pointer;
-    transition: transform 0.2s, box-shadow 0.3s;
-}
-
-#submitQuiz:hover {
-    transform: scale(1.03);
-    box-shadow: 0 0 15px rgba(255, 110, 199, 0.7);
-}
-
-#quizResultado {
-    margin-top: 25px;
-    padding: 15px;
-    background-color: rgba(0, 255, 13, 0.9);
-    border-radius: 12px;
-    text-align: center;
-}
-
-#quizResultado h3 {
-    margin-bottom: 10px;
-    color: #000000;
-}
-
-#quizResultado p {
-    font-weight: bold;
-    font-size: 1.1rem;
-}
-
-.btn-quiz {
-  display: none;
-  padding: 10px 16px;
-  border-radius: 10px;
-  background: #ffaa00;        
-  color: #222;
-  font-weight: 600;
-  text-decoration: none;
-  transition: filter .2s ease, transform .2s ease;
-}
-.btn-quiz:hover { 
-  filter: brightness(0.9); 
-  transform: scale(1.05);
-}
-.btn-quiz.show { display: inline-block; }
-
-.btn-quiz::after {
-  content: "✨";
-  position: relative;
-  left: 6px;
-  opacity: 0.8;
-  animation: sparkle 1.5s infinite;
-}
-
-/* Animação de brilho do Quiz */
-@keyframes sparkle {
-  0%, 100% { opacity: 0.8; transform: scale(1); }
-  50% { opacity: 1; transform: scale(1.2); }
-}
-
-/* =========================
         DESCRIÇÃO
    ========================= */
 .descricao {
@@ -910,65 +797,159 @@ html, body {
 
 
 /* =========================================
-   PERFIL (LOGADO E NÃO LOGADO)
+   PERFIL (LOGADO E NÃO LOGADO) 
 ========================================= */
 
+.perfil-card {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 20px 15px 15px;
+  background: rgba(0, 0, 0, 1);
+  border: 2px solid #ff9f00;
+  border-radius: 16px;
+  box-shadow: 0 0 20px rgba(255, 159, 0, 0.3);
+  position: relative;
+  width: 250px;
+  height: 150px;
+  transition: all 0.3s ease-in-out;
+}
+
+.perfil-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 0 25px rgba(255, 159, 0, 0.6);
+}
+
+.perfil-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 159, 0, 0.2);
+  background: radial-gradient(circle at top left, rgba(255, 159, 0, 0.15), transparent 10%);
+  pointer-events: none;
+}
+
 .perfil-area {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    color: #ff9f00;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  color: #ffcf6b;
+  width: 100%;
 }
 
 .perfil-foto {
-    width: 42px;
-    height: 42px;
-    border-radius: 50%;
-    border: 2px solid #ff9f00;
-    object-fit: cover;
-    box-shadow: 0 0 10px rgba(255, 159, 0, 0.6);
+  width: 70px;
+  height: 80px;
+  margin-top: 20px;
+  border-radius: 16%;
+  border: 2px solid #ff9f00;
+  object-fit: cover;
+  box-shadow: 0 0 12px rgba(255, 159, 0, 0.6);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
+
+.perfil-foto:hover {
+  transform: scale(1.08);
+  box-shadow: 0 0 16px rgba(255, 190, 70, 0.8);
+}
+
 
 .perfil-info {
-    display: flex;
-    flex-direction: column;
-    font-size: 0.9rem;
-    line-height: 1.2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex: 1;
+  min-width: 0;
+  background: rgba(0, 0, 0, 0.55);
+  padding: 5px 5px 5px;
+  border-radius: 12px;
+  box-shadow: inset 0 0 6px rgba(255, 200, 80, 0.25);
 }
 
-.sair-btn {
-    background: #ff9f00;
-    color: #000;
-    padding: 5px 10px;
-    border-radius: 6px;
-    text-decoration: none;
-    font-weight: bold;
-    transition: 0.3s;
+/* Nome destacado */
+.perfil-nome {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #ffd86b;
+  text-shadow: 0 0 10px rgba(255, 200, 80, 0.8), 0 0 20px rgba(255, 160, 0, 0.6);
+  letter-spacing: 0.5px;
+  margin-bottom: 6px;
+  margin-top: 20px;
+  text-align: center;
 }
 
-.sair-btn:hover {
-    background: #fff;
-    color: #000;
+/* Nível */
+.perfil-nivel {
+  font-size: 0.9rem;
+  color: #ffe7b3;
+  text-align: center;
+  text-shadow: 0 0 6px rgba(255, 200, 80, 0.4);
+  margin-bottom: 6px;
 }
 
-.perfil-btn {
-    background-color: rgba(0, 0, 0, 0.7);
-    color: #ff9f00;
-    font-size: 1.8rem;
-    border: none;
-    border-radius: 8px;
-    padding: 6px 10px;
-    cursor: pointer;
-    box-shadow: 0 0 8px rgba(255, 159, 0, 0.6);
-    transition: background-color 0.3s, transform 0.3s;
+/* Barra de experiência (XP) */
+.exp-bar {
+  width: 100px;
+  height: 12px;
+  background: #333;
+  border-radius: 10px;
+  margin: 6px auto;
+  overflow: hidden;
+  box-shadow: 0 0 5px rgba(0,0,0,0.5) inset, 0 0 6px rgba(255, 200, 50, 0.2);
 }
 
-.perfil-btn:hover {
-    background-color: #ff9f00;
-    color: #000;
-    transform: scale(1.1);
+.exp-fill {
+  height: 100%;
+  width: 45%; /* substituído dinamicamente pelo PHP */
+  background: linear-gradient(90deg, #ffce00, #ff4e50, #ffce00);
+  background-size: 200% 100%;
+  border-radius: 10px;
+  transition: width 0.4s ease-in-out, background-position 1.5s linear;
+  animation: xpFlow 2.5s linear infinite;
 }
 
+/* Animação leve de brilho na barra */
+@keyframes xpFlow {
+  0% {
+    background-position: 0% 0%;
+  }
+  100% {
+    background-position: 200% 0%;
+  }
+}
+
+/* Texto do XP */
+.xp-text {
+  font-size: 0.85rem;
+  color: #ccc;
+  text-align: center;
+  margin-top: 4px;
+  text-shadow: 0 0 5px rgba(255, 255, 255, 0.15);
+}
+
+/* Notificação de ganho de XP */
+.xp-notification {
+  position: fixed;
+  top: -60px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(90deg, #2ecc71, #27ae60);
+  color: white;
+  padding: 12px 25px;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: bold;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  transition: top 0.5s ease, opacity 0.5s ease;
+  opacity: 0;
+  z-index: 9999;
+}
+
+.xp-notification.show {
+  top: 20px;
+  opacity: 1;
+}
 
 /* =========================================
    MENU LATERAL
@@ -1049,7 +1030,7 @@ html, body {
     background-color: rgba(0, 0, 0, 0.7);
     box-shadow: 0 -2px 12px rgb(255, 159, 0);
     color: #f0f0f0;
-    margin-top: 80px;
+    margin-top: 50px;
 }
 
 .rodape p {
@@ -1073,14 +1054,23 @@ html, body {
 ========================================= */
 
 .titulo-pagina {
-    font-size: 2.4rem;
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 20px 30px;
+    border-radius: 30px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.8);
+    margin: 20px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     color: #ff9f00;
-    text-align: center;
-    margin: 120px 0 40px; /* empurra o conteúdo pra baixo */
+}
+
+.titulo-pagina h1 {
+    margin: 0;
+    font-size: 2rem;
     font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    text-shadow: 0 0 6px #ff9f00;
+    color: #ff9f00;
+    text-shadow: 2px 2px 5px #000;
 }
 
 /* =========================
