@@ -102,6 +102,11 @@ if (!empty($temporadas)) {
   <link rel="icon" href="../../img/slogan3.png" type="image/png">
 </head>
 <body>
+  <?php
+    $current_page = 'home'; 
+    include __DIR__ . '/navbar.php'; 
+  ?>
+<main class="page-content">
   <div class="episodio">
     <header>
       <div class="info-anime">
@@ -131,23 +136,13 @@ if (!empty($temporadas)) {
           <button type="button" class="btn-info" onclick="toggleSinopse()">▼</button>
         <?php endif; ?>
       </div>
-
-      <nav>
-        <a href="../../PHP/user/index.php" class="sinopse-btn" aria-label="Página Inicial" role="button" tabindex="0"
-           style="display: inline-flex; align-items: center; justify-content: center;">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" width="20" height="20" style="vertical-align: middle;">
-                <path d="M12 3l9 8h-3v9h-5v-6H11v6H6v-9H3z"/>
-            </svg>
-        </a>
-        <a href="../../PHP/user/stream.php" class="btn-nav">Voltar</a>
-      </nav>
     </header>
 
     <div class="sinopse-container" id="sinopse-container">
       <p><?= nl2br(htmlspecialchars($animeInfo['sinopse'])) ?></p>
     </div>
 
-    <main>
+    <section>
       <?php if ($episodioSelecionado): ?>
         <section class="video-player" style="text-align: center;">
           <?php
@@ -304,9 +299,10 @@ if (!empty($temporadas)) {
           <?php endforeach; ?>
         </section>
       <?php endif; ?>
-    </main>
+    </section>
   </div>
-
+  <?php include __DIR__ . '/rodape.php'; ?>
+</main>
 <script>
 // ========================
 // Alterna sinopse do anime

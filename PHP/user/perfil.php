@@ -51,7 +51,7 @@ $porcentagem = min(100, ($xp / $xpNecessario) * 100);
         </svg>
     </a>
     <a href="../../PHP/user/stream.php">Catálogo</a>
-    <a href="../../PHP/user/editar_perfil.php">Editar</a>
+    <a href="../../PHP/user/editar_perfil.php">Editar Perfil</a>
 
     <?php if ($userTipo === 'admin'): ?>
         <a href="../../PHP/admin/index.php">Administrador</a>
@@ -70,11 +70,11 @@ $porcentagem = min(100, ($xp / $xpNecessario) * 100);
             <div class="bloco avatar-section">
                 <div class="avatar-section">
                     <div class="avatar">
-                    <img src="<?= htmlspecialchars($fotoPerfil) ?>" alt="Avatar de <?= htmlspecialchars($username) ?>">
+                    <img src="../../<?= htmlspecialchars($fotoPerfil) ?>" alt="Avatar de <?= htmlspecialchars($username) ?>">
                     </div>
 
                     <!-- Botão abaixo da foto -->
-                    <form action="../../PHP/user/profile.php" method="post" enctype="multipart/form-data">
+                    <form action="../../PHP/user/perfil.php" method="post" enctype="multipart/form-data">
                       <label for="foto" class="btn-upload">Alterar Foto</label>
                       <input type="file" name="foto" id="foto" accept="image/*" style="display:none" onchange="this.form.submit()">
                     </form>

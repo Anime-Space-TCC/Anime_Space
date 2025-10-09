@@ -42,92 +42,81 @@ $noticias = $stmt->fetchAll(PDO::FETCH_ASSOC);
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Notícias de Animes</title>
-  <link rel="stylesheet" href="../../CSS/noticias.css" />
+  <link rel="stylesheet" href="../../CSS/style.css" />
   <link rel="icon" href="../../img/slogan3.png" type="image/png" /> 
 </head>
-
 <body class="noticias-page">
-<header>
-  <nav>
-    <a href="../../PHP/user/index.php" class="home-btn" aria-label="Página Inicial" role="button" tabindex="0">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" width="20" height="20" style="vertical-align: middle;">
-            <path d="M12 3l9 8h-3v9h-5v-6H11v6H6v-9H3z"/>
-        </svg>
-    </a>
-  </nav>
-</header>
+  <?php
+    $current_page = 'busca'; 
+    include __DIR__ . '/navbar.php'; 
+  ?>
+  <main class="page-content">
+    <!-- Lado esquerdo: área 1 e 2 -->
+    <div class="sidebar-container">
+      <!-- Área 1 - Cards de notícias -->
+      <div class="noticias">
+        <?php foreach ($noticias as $n): ?>
+          <article class="noticia">
+            <img src="../../img/<?= htmlspecialchars($n['imagem']) ?>" alt="<?= htmlspecialchars($n['titulo']) ?>">
+            <h2><?= htmlspecialchars($n['titulo']) ?></h2>
+            <p><?= htmlspecialchars($n['resumo']) ?></p>
+            <?php if (!empty($n['url_externa'])): ?>
+              <a href="<?= htmlspecialchars($n['url_externa']) ?>" target="_blank">Leia mais</a>
+            <?php else: ?>
+              <a href="noticia.php?id=<?= $n['id'] ?>">Leia mais</a>
+            <?php endif; ?>
+          </article>
+        <?php endforeach; ?>
+      </div>
 
-<main>
-  <!-- Lado esquerdo: área 1 e 2 -->
-  <div class="sidebar-container">
-    <!-- Área 1 - Cards de notícias -->
-    <div class="noticias">
-      <?php foreach ($noticias as $n): ?>
-        <article class="noticia">
-          <img src="../../img/<?= htmlspecialchars($n['imagem']) ?>" alt="<?= htmlspecialchars($n['titulo']) ?>">
-          <h2><?= htmlspecialchars($n['titulo']) ?></h2>
-          <p><?= htmlspecialchars($n['resumo']) ?></p>
-          <?php if (!empty($n['url_externa'])): ?>
-            <a href="<?= htmlspecialchars($n['url_externa']) ?>" target="_blank">Leia mais</a>
-          <?php else: ?>
-            <a href="noticia.php?id=<?= $n['id'] ?>">Leia mais</a>
-          <?php endif; ?>
-        </article>
-      <?php endforeach; ?>
+      <!-- Paginação -->
+      <div class="paginacao">
+        <?php if ($pagina > 1): ?>
+          <a href="?pagina=<?= $pagina - 1 ?>">&laquo; Anterior</a>
+        <?php endif; ?>
+
+        <?php for ($i = 1; $i <= $totalPaginas; $i++): ?>
+          <a href="?pagina=<?= $i ?>" class="<?= $i === $pagina ? 'ativo' : '' ?>"><?= $i ?></a>
+        <?php endfor; ?>
+
+        <?php if ($pagina < $totalPaginas): ?>
+          <a href="?pagina=<?= $pagina + 1 ?>">Próxima &raquo;</a>
+        <?php endif; ?>
+      </div>
+
+      <!-- Área 2 - Mais Populares -->
+      <div class="top-noticias">
+        <h3>Mais Populares</h3>
+        <?php foreach ($topNoticias as $t): ?>
+          <div class="mini-noticia">
+            <img src="../../img/<?= htmlspecialchars($t['imagem']) ?>" alt="<?= htmlspecialchars($t['titulo']) ?>">
+            <p><?= htmlspecialchars($t['titulo']) ?></p>
+          </div>
+        <?php endforeach; ?>
+      </div>
     </div>
 
-    <!-- Paginação -->
-    <div class="paginacao">
-      <?php if ($pagina > 1): ?>
-        <a href="?pagina=<?= $pagina - 1 ?>">&laquo; Anterior</a>
-      <?php endif; ?>
+    <!-- Lado direito: área 3 e 4 -->
+    <div class="conteudo-principal">
+      <!-- Área 4 - Barra de pesquisa -->
+      <div class="barra-pesquisa">
+        <form action="buscar.php" method="get">
+          <input type="text" name="q" placeholder="Buscar notícias...">
+        </form>
+      </div>
 
-      <?php for ($i = 1; $i <= $totalPaginas; $i++): ?>
-        <a href="?pagina=<?= $i ?>" class="<?= $i === $pagina ? 'ativo' : '' ?>"><?= $i ?></a>
-      <?php endfor; ?>
-
-      <?php if ($pagina < $totalPaginas): ?>
-        <a href="?pagina=<?= $pagina + 1 ?>">Próxima &raquo;</a>
-      <?php endif; ?>
+      <!-- Área 3 - Slide de notícias -->
+      <div class="slideshow">
+        <?php foreach ($slides as $i => $s): ?>
+          <div class="slide <?= $i === 0 ? 'active' : '' ?>">
+            <img src="../../img/<?= htmlspecialchars($s['imagem']) ?>" alt="<?= htmlspecialchars($s['titulo']) ?>">
+            <div class="slide-text"><?= htmlspecialchars($s['titulo']) ?></div>
+          </div>
+        <?php endforeach; ?>
+      </div>
     </div>
-
-    <!-- Área 2 - Mais Populares -->
-    <div class="top-noticias">
-      <h3>Mais Populares</h3>
-      <?php foreach ($topNoticias as $t): ?>
-        <div class="mini-noticia">
-          <img src="../../img/<?= htmlspecialchars($t['imagem']) ?>" alt="<?= htmlspecialchars($t['titulo']) ?>">
-          <p><?= htmlspecialchars($t['titulo']) ?></p>
-        </div>
-      <?php endforeach; ?>
-    </div>
-  </div>
-
-  <!-- Lado direito: área 3 e 4 -->
-  <div class="conteudo-principal">
-    <!-- Área 4 - Barra de pesquisa -->
-    <div class="barra-pesquisa">
-      <form action="buscar.php" method="get">
-        <input type="text" name="q" placeholder="Buscar notícias...">
-      </form>
-    </div>
-
-    <!-- Área 3 - Slide de notícias -->
-    <div class="slideshow">
-      <?php foreach ($slides as $i => $s): ?>
-        <div class="slide <?= $i === 0 ? 'active' : '' ?>">
-          <img src="../../img/<?= htmlspecialchars($s['imagem']) ?>" alt="<?= htmlspecialchars($s['titulo']) ?>">
-          <div class="slide-text"><?= htmlspecialchars($s['titulo']) ?></div>
-        </div>
-      <?php endforeach; ?>
-    </div>
-  </div>
-</main>
-
-<footer>
-  <p>&copy; 2025 Anime News Brasil</p>
-</footer>
-
+  </main>
+  <?php include __DIR__ . '/rodape.php'; ?>
 <script>
   // Troca automática dos slides
   let slideIndex = 0;

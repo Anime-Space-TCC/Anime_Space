@@ -20,58 +20,49 @@ $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 </head>
 <body class="loja">
 
-  <!-- Cabeçalho -->
-  <header class="loja-header">
-    <div class="loja-topo">
-      <h1>Loja Anime Space</h1>
-      <p>Produtos exclusivos para os fãs de animes</p>
-    </div>
-    <nav>
-        <a href="../../PHP/user/index.php" aria-label="Página Inicial" role="button" tabindex="0"
-           style="display: inline-flex; align-items: center; justify-content: center;">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" width="20" height="20" style="vertical-align: middle;">
-                <path d="M12 3l9 8h-3v9h-5v-6H11v6H6v-9H3z"/>
-            </svg>
-        </a>
-      </nav>
-  </header>
+<?php
+    $current_page = 'busca'; 
+    include __DIR__ . '/navbar.php'; 
+  ?>
+  <main class="page-content">
+    <header class="loja-header">
+      <div class="loja-topo">
+        <h1>Loja Anime Space</h1>
+        <p>Produtos exclusivos para os fãs de animes</p>
+      </div>
+    </header>
 
-  <!-- Banner de destaque -->
-  <section class="loja-banner">
-    <div class="banner-conteudo">
-      <h2>Promoção Especial</h2>
-      <p>Aproveite descontos imperdíveis em camisetas, quadros e acessórios temáticos!</p>
-      <a href="#produtos" class="btn-banner">Ver ofertas</a>
-    </div>
-  </section>
+    <!-- Banner de destaque -->
+    <section class="loja-banner">
+      <div class="banner-conteudo">
+        <h2>Promoção Especial</h2>
+        <p>Aproveite descontos imperdíveis em camisetas, quadros e acessórios temáticos!</p>
+        <a href="#produtos" class="btn-banner">Ver ofertas</a>
+      </div>
+    </section>
 
-  <!-- Grid de produtos -->
-  <main class="loja-conteudo" id="produtos">
-    <h2 class="secao-titulo">Novidades da Loja</h2>
-    <div class="produtos-grid">
-      <?php foreach ($produtos as $produto): ?>
-        <div class="produto-card">
-          <div class="produto-imagem-box">
-            <img src="../../img/<?= htmlspecialchars($produto['imagem']) ?>" 
-                 alt="<?= htmlspecialchars($produto['nome']) ?>" 
-                 class="produto-imagem">
+    <!-- Grid de produtos -->
+    <section class="loja-conteudo" id="produtos">
+      <h2 class="secao-titulo">Novidades da Loja</h2>
+      <div class="produtos-grid">
+        <?php foreach ($produtos as $produto): ?>
+          <div class="produto-card">
+            <div class="produto-imagem-box">
+              <img src="../../img/<?= htmlspecialchars($produto['imagem']) ?>" 
+                  alt="<?= htmlspecialchars($produto['nome']) ?>" 
+                  class="produto-imagem">
+            </div>
+            <div class="produto-info">
+              <h3 class="produto-nome"><?= htmlspecialchars($produto['nome']) ?></h3>
+              <p class="produto-descricao"><?= htmlspecialchars($produto['descricao']) ?></p>
+              <p class="produto-preco">R$ <?= number_format($produto['preco'], 2, ',', '.') ?></p>
+              <button class="btn-adicionar">Adicionar ao Carrinho</button>
+            </div>
           </div>
-          <div class="produto-info">
-            <h3 class="produto-nome"><?= htmlspecialchars($produto['nome']) ?></h3>
-            <p class="produto-descricao"><?= htmlspecialchars($produto['descricao']) ?></p>
-            <p class="produto-preco">R$ <?= number_format($produto['preco'], 2, ',', '.') ?></p>
-            <button class="btn-adicionar">Adicionar ao Carrinho</button>
-          </div>
-        </div>
-      <?php endforeach; ?>
-    </div>
+        <?php endforeach; ?>
+      </div>
+    </section>
   </main>
-
-  <!-- Rodapé -->
-  <footer class="loja-footer">
-    <p>&copy; <?= date("Y") ?> Anime Space - Todos os direitos reservados.</p>
-  </footer>
-  <!-- Script global de notificações e XP -->
-  <script src="/PHP/shared/global.js"></script>
+  <?php include __DIR__ . '/rodape.php'; ?>
 </body>
 </html>

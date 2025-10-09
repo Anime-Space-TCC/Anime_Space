@@ -35,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 exit;
             } else {
                 // Login direto
-                header('Location: ../../PHP/user/profile.php');
+                header('Location: ../../PHP/user/perfil.php');
                 exit;
             }
         } else {

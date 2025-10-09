@@ -53,30 +53,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="icon" href="../../img/slogan3.png" type="image/png">
 </head>
 <body class="streaming">
-    <section class="editar-perfil">
-        <h1>Editar Perfil</h1>
+        <section class="editar-perfil">
+            <h1>Editar Perfil</h1>
 
-        <?php if ($msg !== ''): ?>
-            <p class="mensagem-sucesso"><?= htmlspecialchars($msg) ?></p>
-        <?php endif; ?>
+            <?php if ($msg !== ''): ?>
+                <p class="mensagem-sucesso"><?= htmlspecialchars($msg) ?></p>
+            <?php endif; ?>
 
-        <form method="POST">
-            <label for="username">Nome de usuário:</label>
-            <input type="text" name="username" id="username"
-                   value="<?= htmlspecialchars($user['username']) ?>" required>
+            <form method="POST">
+                <label for="username">Nome de usuário:</label>
+                <input type="text" name="username" id="username"
+                    value="<?= htmlspecialchars($user['username']) ?>" required>
 
-            <label for="email">Email:</label>
-            <input type="email" name="email" id="email"
-                   value="<?= htmlspecialchars($user['email']) ?>" required>
+                <label for="email">Email:</label>
+                <input type="email" name="email" id="email"
+                    value="<?= htmlspecialchars($user['email']) ?>" required>
 
-            <label for="password">Nova Senha:</label>
-            <input type="password" name="password" id="password" 
-            placeholder="Digite uma nova senha" required>
+                <label for="password">Nova Senha:</label>
+                <input type="password" name="password" id="password" 
+                placeholder="Digite uma nova senha" required>
 
-            <button type="submit">Salvar Alterações</button>
-        </form>
+                <button type="submit">Salvar Alterações</button>
+            </form>
 
-        <a href="../user/profile.php" class="btn-voltar">Voltar</a>
-    </section>
+            <a href="../user/perfil.php" class="btn-voltar">Voltar</a>
+        </section>
 </body>
 </html>

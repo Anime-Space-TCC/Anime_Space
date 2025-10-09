@@ -153,7 +153,7 @@ html, body {
     box-shadow: 0 0 15px var(--color-primary);
 }
 
-.episodio main {
+.episodio section {
     width: 100%;
     max-width: 1200px;
     background-color: var(--color-dark-bg);
@@ -163,7 +163,7 @@ html, body {
 }
 
 
-.episodio main h2 {
+.episodio section h2 {
     font-size: 1.5rem;
     font-weight: 700;
     margin-bottom: 15px; 
@@ -779,6 +779,308 @@ html, body {
     margin: 5px 0 0;
     color: var(--color-gray);
     font-size: 0.95rem;
+}
+
+/* =========================================
+   NAVBAR SUPERIOR 
+========================================= */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 22px;
+    background-color: rgba(0, 0, 0, 0);
+    border-bottom: 3px solid #ff9f00;
+    box-shadow: 0 0 16px #ff9f00;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1400;
+    backdrop-filter: blur(5px);
+    height: 80px; 
+}
+
+/* =========================================
+   Espaço para o conteúdo 
+========================================= */
+.page-content {
+    padding-top: 80px; /* mesma altura da navbar */
+}
+
+/* ================= ÍCONES ================= */
+.menu-toggle,
+.perfil-btn,
+.busca-btn,
+.sinopse-btn {
+    background-color: rgba(0, 0, 0, 0.7);
+    border: none;
+    color: #ff9f00;
+    cursor: pointer;
+    border-radius: 10px;
+    padding: 6px 10px;
+    box-shadow: 0 0 8px rgba(255, 159, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.menu-toggle svg,
+.perfil-btn svg,
+.busca-btn svg,
+.sinopse-btn svg {
+    width: 30px;
+    height: 30px;
+    vertical-align: middle;
+    fill: currentColor;
+}
+
+.menu-toggle {
+    font-size: 1.8rem;
+    line-height: 1;
+    width: 50px;
+    height: 44px;
+}
+
+.menu-toggle:hover,
+.perfil-btn:hover,
+.busca-btn:hover,
+.sinopse-btn:hover {
+    background-color: #ff9f00;
+    color: #000;
+    transform: scale(1.1);
+}
+
+/* ================= CONTAINERS ================= */
+.nav-left,
+.nav-right {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.nav-right {
+    gap: 10px; /* espaçamento entre ícones/perfil */
+}
+
+.busca-container {
+    display: flex;
+    align-items: center;
+    gap: 6px; 
+}
+
+.busca-container input {
+    background: #1a1a1a;
+    border: 1px solid #ff9f00;
+    color: #ff9f00;
+    border-radius: 6px;
+    padding: 5px 8px; 
+    outline: none;
+    width: 250px;   /* largura maior */
+    height: 40px;   /* altura maior */
+}
+
+.busca-container button[type="submit"] {
+    background-color: #ff9f00;
+    color: #000;
+    border: none;
+    border-radius: 6px;
+    padding: 12px 12px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.busca-container button[type="submit"]:hover {
+    background-color: #ffa733;
+}
+
+/* Inicialmente escondido */
+.busca-container input,
+.busca-container .busca-label,
+.busca-container button[type="submit"] {
+    display: none;
+}
+
+/* Mostrar quando a classe 'active' estiver presente */
+.busca-container.active input,
+.busca-container.active .busca-label,
+.busca-container.active button[type="submit"] {
+    display: inline-flex;
+}
+
+
+/* =========================================
+   PERFIL (LOGADO E NÃO LOGADO)
+========================================= */
+
+.perfil-area {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #ff9f00;
+}
+
+.perfil-foto {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    border: 2px solid #ff9f00;
+    object-fit: cover;
+    box-shadow: 0 0 10px rgba(255, 159, 0, 0.6);
+}
+
+.perfil-info {
+    display: flex;
+    flex-direction: column;
+    font-size: 0.9rem;
+    line-height: 1.2;
+}
+
+.sair-btn {
+    background: #ff9f00;
+    color: #000;
+    padding: 5px 10px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.sair-btn:hover {
+    background: #fff;
+    color: #000;
+}
+
+.perfil-btn {
+    background-color: rgba(0, 0, 0, 0.7);
+    color: #ff9f00;
+    font-size: 1.8rem;
+    border: none;
+    border-radius: 8px;
+    padding: 6px 10px;
+    cursor: pointer;
+    box-shadow: 0 0 8px rgba(255, 159, 0, 0.6);
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.perfil-btn:hover {
+    background-color: #ff9f00;
+    color: #000;
+    transform: scale(1.1);
+}
+
+
+/* =========================================
+   MENU LATERAL
+========================================= */
+
+.menu-lateral {
+    position: fixed;
+    top: 0;
+    left: 0;               /* fixo no lugar certo */
+    width: 260px;
+    height: 100vh;
+    background-color: rgba(0,0,0,0.9);
+    overflow-y: auto;
+    transform: translateX(-100%); /* escondido inicialmente */
+    transition: transform 0.3s ease;
+    padding-top: 90px;
+    z-index: 1300;
+    box-shadow: 2px 0 10px rgba(255,159,0,0.6);
+    border-top-right-radius: 12px;
+    border-bottom-right-radius: 12px;
+}
+
+/* Menu aberto */
+.menu-lateral.open {
+    transform: translateX(0); /* entra na tela */
+}
+
+.menu-lateral a {
+    display: block;
+    padding: 1rem 2rem;
+    color: #ff9f00;
+    text-decoration: none;
+    font-weight: 600;
+    border-left: 4px solid transparent;
+    transition: background-color 0.25s, border-color 0.25s, color 0.25s;
+}
+
+.menu-lateral a:hover {
+    background-color: #ff9f00;
+    color: #000;
+    border-left-color: #000;
+}
+
+/* =========================================
+   BOTÃO SUPORTE FIXO
+========================================= */
+
+.btn-suporte {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #ff9f00;
+    padding: 12px;
+    border-radius: 50%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+    color: #000;
+    z-index: 1500;
+    transition: transform 0.2s ease-in-out, background 0.3s;
+}
+
+.btn-suporte:hover {
+    transform: scale(1.1);
+    background: rgba(114, 114, 114, 0.9);
+}
+
+.btn-suporte svg {
+    width: 22px;
+    height: 22px;
+}
+
+/* =========================================
+   RODAPÉ
+========================================= */
+
+.rodape {
+    text-align: center;
+    padding: 20px;
+    background-color: rgba(0, 0, 0, 0.7);
+    box-shadow: 0 -2px 12px rgb(255, 159, 0);
+    color: #f0f0f0;
+    margin-top: 80px;
+}
+
+.rodape p {
+    font-size: 16px;
+    line-height: 1.6;
+    margin-bottom: 10px;
+}
+
+.rodape a {
+    color: #ff9f00;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.rodape strong {
+    color: #ff9f00;
+}
+
+/* =========================================
+   TÍTULO GLOBAL / AJUSTE DE MARGEM
+========================================= */
+
+.titulo-pagina {
+    font-size: 2.4rem;
+    color: #ff9f00;
+    text-align: center;
+    margin: 120px 0 40px; /* empurra o conteúdo pra baixo */
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-shadow: 0 0 6px #ff9f00;
 }
 
 /* =========================

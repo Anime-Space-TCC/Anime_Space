@@ -24,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8">
     <title>Verificação em Duas Etapas</title>
-    <link rel="stylesheet" href="../../CSS/teste.css">
+    <link rel="stylesheet" href="../../CSS/style.css">
     <link rel="icon" href="../../img/slogan3.png" type="image/png">
 </head>
 <body class="twofa-page">

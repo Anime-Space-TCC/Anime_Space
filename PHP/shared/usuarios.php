@@ -62,26 +62,17 @@ function atualizarFotoPerfil(PDO $pdo, int $userId, array $file): array {
     ];
 }
 
-// Busca a foto de perfil do usuário
 function buscarFotoPerfil(PDO $pdo, int $userId): string {
     $stmt = $pdo->prepare("SELECT foto_perfil FROM users WHERE id = ?");
     $stmt->execute([$userId]);
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
     if ($user && !empty($user['foto_perfil'])) {
-        $foto = __DIR__ . '/../../' . $user['foto_perfil'];
-        if (file_exists($foto)) {
-            return '../../' . $user['foto_perfil'];
-        }
+        return $user['foto_perfil']; // retorna algo como "uploads/123.jpg"
     }
 
-    // fallback para foto padrão
-    $default = '../../img/default.jpg';
-    if (file_exists($default)) {
-        return $default;
-    }
-
-    return 'https://placehold.co/150x150/FFF/000?text=Sem+Foto';
+    // fallback para padrão
+    return 'img/default.jpg'; // ajuste de acordo com seu caminho
 }
 
 // Verifica se já existe username ou email
