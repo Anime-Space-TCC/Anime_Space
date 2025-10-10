@@ -1,4 +1,4 @@
-<?php 
+<?php
 require __DIR__ . '/../shared/catalogo.php';
 require_once __DIR__ . '/../shared/auth.php';
 
@@ -22,17 +22,19 @@ $animes = getAnimesFiltrados($filtroGenero, $filtroAno, $filtroLinguagem, $busca
 
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
   <meta charset="UTF-8">
   <title>Streaming de Animes</title>
-  <link rel="stylesheet" href="../../CSS/style.css"> 
-  <link rel="icon" href="../../img/slogan3.png" type="image/png"> 
+  <link rel="stylesheet" href="../../CSS/style.css">
+  <link rel="icon" href="../../img/slogan3.png" type="image/png">
 </head>
+
 <body class="streaming">
 
   <?php
-    $current_page = 'busca'; 
-    include __DIR__ . '/navbar.php'; 
+  $current_page = 'busca';
+  include __DIR__ . '/navbar.php';
   ?>
   <main class="page-content">
     <header class="titulo-pagina">
@@ -88,14 +90,13 @@ $animes = getAnimesFiltrados($filtroGenero, $filtroAno, $filtroLinguagem, $busca
       <?php if ($animes): ?>
         <?php foreach ($animes as $anime): ?>
           <article class="anime-item" data-genero="<?= strtolower($anime['generos']) ?>" data-ano="<?= $anime['ano'] ?>">
-            <!-- Imagem da capa do anime -->
-            <img src="../../img/<?= htmlspecialchars($anime['capa']) ?>" alt="<?= htmlspecialchars($anime['nome']) ?>" class="mini-img">
-            <div class="info">
-              <h3><?= htmlspecialchars($anime['nome']) ?></h3> <!-- Nome do anime -->
-              <p>Gêneros: <?= htmlspecialchars($anime['generos']) ?></p> <!-- Gêneros concatenados -->
-              <p>Ano: <?= htmlspecialchars($anime['ano']) ?></p> <!-- Ano de lançamento -->
-              <p>Nota: ⭐ <?= htmlspecialchars($anime['nota']) ?></p> <!-- Nota do anime -->
-              <a href="episodes.php?id=<?= $anime['id'] ?>">▶️ Ver Episódios</a> <!-- Link para episódios -->
+            <a href="episodes.php?id=<?= $anime['id'] ?>" class="anime-item" data-genero="<?= strtolower($anime['generos']) ?>" data-ano="<?= $anime['ano'] ?>">
+              <img src="../../img/<?= htmlspecialchars($anime['capa']) ?>" alt="<?= htmlspecialchars($anime['nome']) ?>" class="mini-img">
+              <span class="anime-nota">⭐ <?= htmlspecialchars($anime['nota']) ?></span>
+              <div class="info">
+                <h3><?= htmlspecialchars($anime['nome']) ?></h3>
+              </div>
+            </a>
             </div>
           </article>
         <?php endforeach; ?>
@@ -106,4 +107,5 @@ $animes = getAnimesFiltrados($filtroGenero, $filtroAno, $filtroLinguagem, $busca
   </main>
   <?php include __DIR__ . '/rodape.php'; ?>
 </body>
+
 </html>

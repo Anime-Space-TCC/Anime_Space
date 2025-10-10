@@ -34,10 +34,8 @@ $episodios = getUltimosEpisodios(20);
               <img src="../../img/<?= htmlspecialchars($ep['capa']) ?>" 
                   alt="Capa <?= htmlspecialchars($ep['anime_nome']) ?>" width="100" />
               <strong><?= htmlspecialchars($ep['anime_nome']) ?></strong> 
-              Temporada <?= htmlspecialchars($ep['temporada']) ?>, 
               Episódio <?= htmlspecialchars($ep['numero']) ?>: 
               <?= htmlspecialchars($ep['titulo']) ?> 
-              (Lançado em <?= date('d/m/Y', strtotime($ep['data_lancamento'])) ?>)
               <a href="episodes.php?id=<?= $ep['anime_id'] ?>">Ver Episódios</a>
             </li>
           <?php endforeach; ?>

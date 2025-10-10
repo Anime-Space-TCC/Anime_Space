@@ -1,7 +1,6 @@
-/* =========================
+/* ========================= 
           GLOBAIS
-   ========================= */
-
+========================= */
 * {
     margin: 0;
     padding: 0;
@@ -19,28 +18,9 @@ html, body {
     color: #eee;
 }
 
-
 /* =========================
-        VARIÁVEIS
-   ========================= */
-:root {
-    --color-primary: #ff9f00;
-    --color-primary-dark: #cc7f00;
-    --color-black: #000;
-    --color-white: #fff;
-    --color-gray-light: #eee;
-    --color-gray: #ccc;
-    --color-gray-dark: #bbb;
-    --color-dark-bg: rgba(0, 0, 0, 0.75);
-    --color-darker-bg: rgba(0, 0, 0, 0.85);
-    --color-light-bg: rgba(255, 255, 255, 0.07);
-    --shadow-glow: 0 0 10px var(--color-primary);
-    --shadow-strong: 0 5px 15px rgba(175, 134, 0, 0.8);
-    --transition: all 0.3s ease;
-}
-/* =========================
-        LAYOUT PRINCIPAL
-   ========================= */
+        LAYOUT HEADER
+========================= */
 .episodio {
     padding: 40px 20px;
     display: flex;
@@ -54,144 +34,196 @@ html, body {
 .episodio header { 
     width: 100%;
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start; /* para alinhar elementos à esquerda */
     align-items: center;
     flex-wrap: wrap;
-    background-color: var(--color-dark-bg);
-    padding: 15px 50px;
-    border-radius: 15px;
-    box-shadow: var(--shadow-strong);
-    color: var(--color-primary);
+    background-color: rgba(0,0,0,0.75);
+    padding: 0; /* remove o padding do header */
+    border-radius: 20px; /* remove arredondamento das bordas do header */
+    box-shadow: 0 5px 15px rgba(175, 134, 0, 0.8);
+    color: #ff9f00;
 }
 
+/* Container da imagem */
 .info-anime {
+    position: relative;
     display: flex;
     align-items: center;
-    gap: 20px;
+    gap: 0; /* remove o espaço entre elementos */
+    padding: 0; /* remove padding interno */
 }
 
 .info-anime img {
-    width: 90px;
+    width: 400px;
     height: 130px;
-    border-radius: 15px;
     object-fit: cover;
-    border: 3px solid var(--color-primary);
-    box-shadow: var(--shadow-glow);
+    border-radius: 20px;
+    mask-image: linear-gradient(to right, rgba(0,0,0,1) 50%, rgba(0,0,0,0) 100%);
+    -webkit-mask-image: linear-gradient(to right, rgba(0,0,0,1) 50%, rgba(0,0,0,0) 100%);
+    mask-repeat: no-repeat;
+    mask-size: cover;
+    -webkit-mask-repeat: no-repeat;
+    -webkit-mask-size: cover;
 }
 
-.info-anime h1 {
-    color: var(--color-primary);
-    font-size: 1.8rem;
-}
 
-/* NAVEGAÇÃO */
-.episodio header nav {
+/* NOVO - Estrutura do título e botões */
+.anime-titulo-meta {
     display: flex;
-    align-items: center;
+    flex-direction: column;
+    flex: 1;
     gap: 10px;
 }
 
-.episodio header nav a {
-    display: inline-block;
-    background-color: var(--color-primary);
-    color: var(--color-black);
-    font-weight: 700;
-    padding: 8px 18px;
-    border-radius: 20px;
-    text-decoration: none;
-    font-size: 1rem;
-    transition: var(--transition);
+.titulo-linha {
+    display: flex;
+    align-items: center;
+    gap: 15px; /* espaçamento entre nome, nota e favorito */
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+.titulo-linha h1 {
+    font-size: 1.8rem;
+    color: #ff9f00;
+    margin: 0;
     white-space: nowrap;
 }
 
-.episodio header nav a:hover {
-    background-color: var(--color-white);
-    color: var(--color-primary);
+.titulo-linha .meta-nota {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #ff9f00;
+    font-weight: 600;
+    padding: 3px 8px;
+    border-radius: 15px;
+    font-size: 0.85rem;
+    border: 1px solid #ff9f00;
+    flex-shrink: 0;
 }
 
-.home-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 40px;
-    height: 40px;
-    background-color: var(--color-primary);
-    border-radius: 50%;
-    transition: var(--transition);
-}
-
-.home-btn:hover {
-    background-color: var(--color-white);
-}
-
-.home-btn svg {
-    fill: var(--color-black);
-}
-
-.home-btn:hover svg {
-    fill: var(--color-primary);
-}
-
-/* BOTÕES */
-.btn-info {
+.titulo-linha .btn-favorito {
+    margin-left: 10px;
+    cursor: pointer;
     background: transparent;
-    border: 1px solid var(--color-primary);
-    color: var(--color-primary);
+    border: none;
+    font-size: 1.2rem;
+    transition: all 0.3s ease;
+}
+
+.titulo-linha .btn-favorito.ativo {
+    color: #ff0000;
+}
+
+.titulo-linha .btn-info {
+    margin-left: 480px; 
+}
+
+/* Linha de gêneros */
+.generos-linha {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+/* Estilo dos botões de gênero */
+.generos-linha .meta-btn {
+    background-color: #ff9f00;
+    color: #000;
+    font-weight: 700;
+    font-size: 0.9rem;
+    border-radius: 20px;
+    padding: 4px 10px;
+    text-decoration: none;
+    box-shadow: 0 2px 8px rgba(255, 159, 0, 0.6);
+    transition: all 0.3s ease;
+}
+
+.generos-linha .meta-btn:hover {
+    background-color: #fff;
+    color: #ff9f00;
+}
+
+
+/* BOTÕES INFO */
+.btn-info {
+    top: 10px;
+    right: 15px;
+    background: transparent;
+    border: 1px solid #ff9f00;
+    color: #ff9f00;
     font-weight: 700;
     padding: 8px 15px;
     border-radius: 20px;
     font-size: 0.9rem;
     cursor: pointer;
     white-space: nowrap;
-    transition: var(--transition);
+    transition: all 0.3s ease;
     box-shadow: 0 0 8px rgba(255, 159, 0, 0.3);
+    z-index: 2;              
 }
 
 .btn-info:hover {
-    background-color: var(--color-primary);
-    color: var(--color-black);
-    box-shadow: 0 0 15px var(--color-primary);
+    background-color: #ff9f00;
+    color: #000;
+    box-shadow: 0 0 15px #ff9f00;
 }
 
+/* SECTIONS */
 .episodio section {
     width: 100%;
     max-width: 1200px;
-    background-color: var(--color-dark-bg);
+    background-color: rgba(0,0,0,0.75);
     padding: 20px 40px 30px 40px; 
     border-radius: 15px;
-    box-shadow: var(--shadow-strong);
+    box-shadow: 0 5px 15px rgba(175, 134, 0, 0.8);
 }
-
 
 .episodio section h2 {
     font-size: 1.5rem;
     font-weight: 700;
     margin-bottom: 15px; 
-    color: var(--color-primary);
-    border-bottom: 2px solid var(--color-primary);
+    color: #ff9f00;
+    border-bottom: 2px solid #ff9f00;
     padding-bottom: 5px;
+}
+
+/* BOTÕES DE GÊNERO */
+.anime-meta .meta-btn {
+    background-color: #ff9f00;
+    color: #000;
+    font-weight: 700;
+    font-size: 0.9rem;
+    border-radius: 20px;
+    padding: 4px 10px;
+    text-decoration: none;
+    box-shadow: 0 2px 8px rgba(255, 159, 0, 0.6);
+    transition: all 0.3s ease;
+}
+
+.anime-meta .meta-btn:hover {
+    background-color: #fff;
+    color: #ff9f00;
 }
 
 /* =========================
         SINOPSE
-   ========================= */
-
+========================= */
 .sinopse-container {
     width: 92%;
     background-color: rgba(0, 0, 0, 0.9);
-    border: 2px solid var(--color-primary);
+    border: 2px solid #ff9f00;
     border-radius: 12px;
     padding: 2px;
-    margin: 10px 0 15px 0; /* REDUZIDO: margin superior de 15px para 10px */
+    margin: 10px 0 15px 0;
     box-shadow: 0 5px 20px rgba(255, 159, 0, 0.4);
     color: #eee;
 }
 
 .sinopse-container h3 {
-    color: var(--color-primary);
+    color: #ff9f00;
     font-size: 1.3rem;
     margin-bottom: 12px;
-    border-bottom: 2px solid var(--color-primary);
+    border-bottom: 2px solid #ff9f00;
     padding-bottom: 6px; 
     text-shadow: 0 0 8px rgba(255, 159, 0, 0.6);
 }
@@ -219,11 +251,12 @@ html, body {
     padding: 20px;
     border-width: 2px;
     margin: 10px 0 15px 0; 
+    animation: fadeIn 0.5s ease-out;
 }
 
 /* =========================
         VIDEO PLAYER
-   ========================= */
+========================= */
 .video-player {
     text-align: center;
     margin-bottom: 30px;
@@ -241,12 +274,12 @@ html, body {
     height: 450px;
     border-radius: 12px;
     box-shadow: 0 4px 15px rgba(255, 159, 0, 0.5);
-    border: 2px solid var(--color-primary);
+    border: 2px solid #ff9f00;
 }
 
 /* =========================
         CARDS DE EPISÓDIOS
-   ========================= */
+========================= */
 .grid {
     display: flex;
     flex-direction: column;
@@ -258,8 +291,8 @@ html, body {
     align-items: center;
     justify-content: space-between;
     gap: 20px;
-    background-color: var(--color-light-bg);
-    border: 1px solid var(--color-primary-dark);
+    background-color: rgba(255,255,255,0.07);
+    border: 1px solid #cc7f00;
     border-radius: 12px;
     padding: 10px 20px;
     transition: transform 0.3s ease;
@@ -282,36 +315,39 @@ html, body {
     height: 70px;
     border-radius: 12px;
     object-fit: contain;
-    border: 2px solid var(--color-primary);
-    background-color: var(--color-black);
-    box-shadow: var(--shadow-glow);
+    border: 2px solid #ff9f00;
+    background-color: #000;
+    box-shadow: 0 0 10px #ff9f00;
     flex-shrink: 0;
 }
 
 .info-container {
     display: flex;
-    flex-direction: column;
-    gap: 4px;
+    flex-direction: row; /* linha horizontal */
+    align-items: center; /* centraliza verticalmente todos os itens */
+    justify-content: space-between; /* espaço entre elementos */
+    gap: 20px; /* espaçamento uniforme entre os itens */
     min-width: 0;
 }
 
 .episodio-numero {
     font-weight: bold;
-    color: var(--color-primary);
+    color: #ff9f00;
     font-size: 1.1rem;
     white-space: nowrap;
 }
 
 .titulo-e-descricao {
     display: flex;
-    align-items: center;
+    align-items: center; /* centraliza verticalmente o título */
     gap: 10px;
+    flex: 1; /* faz ocupar espaço disponível */
     min-width: 0;
 }
 
 .episodio-titulo {
     font-size: 1rem;
-    color: var(--color-gray-light);
+    color: #eee;
     font-weight: 500;
     white-space: nowrap;
     overflow: hidden;
@@ -320,9 +356,15 @@ html, body {
     max-width: 350px;
 }
 
+.btn-toggle-descricao {
+    margin-left: auto; /* empurra o botão para a ponta direita */
+    align-self: center; /* centraliza verticalmente */
+}
+
+
 .info-adicional {
     font-size: 0.9rem;
-    color: var(--color-gray-dark);
+    color: #bbb;
     white-space: nowrap;
 }
 
@@ -344,12 +386,12 @@ html, body {
     display: block;
     margin: 5px 0 15px 0; 
     padding: 8px 10px;
-    background-color: var(--color-dark-bg, #111);
-    color: var(--color-gray-light, #f0f0f0);
+    background-color: rgba(0,0,0,0.75);
+    color: #eee;
     font-size: 0.9rem;
     line-height: 1.4;
     border-radius: 8px;
-    border: 1px solid var(--color-primary-dark, #444);
+    border: 1px solid #cc7f00;
     max-width: 100%; 
     white-space: normal;
     word-break: break-word;
@@ -360,8 +402,8 @@ html, body {
 }
 
 .btn-toggle-descricao {
-    background-color: var(--color-primary); /* cor do botão */
-    color: var(--color-dark-bg);
+    background-color: #ff9f00;
+    color: rgba(0,0,0,0.75);
     border: none;
     border-radius: 16px;
     padding: 8px 15px;
@@ -371,13 +413,13 @@ html, body {
 }
 
 .btn-toggle-descricao:hover {
-    background-color: var(--color-primary-dark);
+    background-color: #cc7f00;
     transform: translateY(-1px);
 }
 
 /* =========================
         FILTRO LINGUAGEM
-   ========================= */
+========================= */
 .filtro-linguagem {
     margin: 20px 0;
     text-align: center;
@@ -393,31 +435,31 @@ html, body {
     padding: 8px 20px;
     border-radius: 20px;
     background-color: transparent;
-    color: var(--color-primary);
+    color: #ff9f00;
     font-weight: 700;
     font-size: 1rem;
-    border: 2px solid var(--color-primary);
+    border: 2px solid #ff9f00;
     text-decoration: none;
     cursor: pointer;
-    transition: var(--transition);
+    transition: all 0.3s ease;
 }
 
 .btn-ling:hover {
-    background-color: var(--color-primary);
-    color: var(--color-black);
-    box-shadow: 0 0 15px var(--color-primary);
+    background-color: #ff9f00;
+    color: #000;
+    box-shadow: 0 0 15px #ff9f00;
 }
 
 .btn-ling.ativo {
-    background-color: var(--color-primary);
-    color: var(--color-black);
-    box-shadow: 0 0 20px var(--color-primary);
-    border-color: var(--color-primary-dark);
+    background-color: #ff9f00;
+    color: #000;
+    box-shadow: 0 0 20px #ff9f00;
+    border-color: #cc7f00;
 }
 
 /* =========================
         REAÇÕES
-   ========================= */
+========================= */
 .acoes {
     display: flex;
     align-items: center;
@@ -433,22 +475,22 @@ html, body {
     gap: 6px;
     min-width: 90px;
     background-color: transparent;
-    border: 2px solid var(--color-primary);
-    color: var(--color-primary);
+    border: 2px solid #ff9f00;
+    color: #ff9f00;
     font-weight: 700;
     padding: 4px 10px;
     border-radius: 20px;
     font-size: 0.8rem;
     cursor: pointer;
-    transition: var(--transition);
-    box-shadow: 0 0 5px var(--color-primary);
-    text-shadow: 0 0 3px var(--color-primary);
+    transition: all 0.3s ease;
+    box-shadow: 0 0 5px #ff9f00;
+    text-shadow: 0 0 3px #ff9f00;
 }
 
 .reacao-btn:hover {
-    background-color: var(--color-primary);
-    color: var(--color-black);
-    box-shadow: 0 0 12px var(--color-primary);
+    background-color: #ff9f00;
+    color: #000;
+    box-shadow: 0 0 12px #ff9f00;
 }
 
 .reacao-btn .contador {
@@ -460,22 +502,22 @@ html, body {
 
 /* =========================
         BOTÃO ASSISTIR
-   ========================= */
+========================= */
 .btn-assistir {
-    background-color: var(--color-primary);
-    color: var(--color-black);
+    background-color: #ff9f00;
+    color: #000;
     font-weight: 700;
     padding: 6px 14px;
     border-radius: 20px;
     text-decoration: none;
     font-size: 0.9rem;
-    transition: var(--transition);
+    transition: all 0.3s ease;
     white-space: nowrap;
 }
 
 .btn-assistir:hover {
-    background-color: var(--color-white);
-    color: var(--color-primary);
+    background-color: #fff;
+    color: #ff9f00;
 }
 
 /* =========================
@@ -505,60 +547,59 @@ html, body {
   transform: scale(1.2);
 }
 
-.info-anime .avaliacao-estrelas {
-  display: flex;
-  flex-direction: column; 
-  align-items: flex-start;
-  gap: 2px;
-  position: relative;
+.avaliacao-final {
+  margin: 40px 0 20px;
+  text-align: center;
 }
 
-.info-anime .avaliacao-estrelas .estrela-container {
-  display: flex;
-  flex-direction: row;  
+.avaliacao-final h3 {
+  color: #ff9f00;
+  margin-bottom: 10px;
+}
+
+.avaliacao-final .estrela-container {
+  display: inline-flex;
   gap: 5px;
 }
 
-.info-anime .avaliacao-estrelas .estrela {
-  font-size: 36px;       
+.avaliacao-final .estrela {
+  font-size: 3rem;
+  color: #ff9f00;
   background: none;
   border: none;
   cursor: pointer;
-  color: #ccc;
-  transition: transform 0.2s, color 0.2s;
-}
-.info-anime .avaliacao-estrelas .estrela:hover,
-.info-anime .avaliacao-estrelas .estrela.ativa {
-  color: #ffaa00;
-  transform: scale(1.2);
 }
 
-.info-anime .avaliacao-estrelas .nota-display {
-  font-size: 0.75rem;
-  color: #666;
-  margin-top: 2px; 
+.avaliacao-final .estrela.ativa {
+  text-shadow: 0 0 8px #ff9f00;
+}
+
+.avaliacao-final .nota-display {
+  margin-top: 5px;
+  color: #ccc;
+  font-size: 0.9rem;
 }
 
 /* =========================
         XP NOTIFICAÇÃO
-   ========================= */
-
-   .xp-notification {
+========================= */
+.xp-notification {
     position: fixed;
     top: -60px;
     left: 50%;
     transform: translateX(-50%);
-    background: #2ecc71;
+    background: linear-gradient(90deg, #2ecc71, #27ae60);
     color: white;
     padding: 12px 25px;
     border-radius: 12px;
     font-size: 1rem;
     font-weight: bold;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
     transition: top 0.5s ease, opacity 0.5s ease;
     opacity: 0;
     z-index: 9999;
 }
+
 .xp-notification.show {
     top: 20px;
     opacity: 1;
@@ -566,17 +607,17 @@ html, body {
 
 /* =========================
         DESCRIÇÃO
-   ========================= */
+========================= */
 .descricao {
     max-height: 0;
     overflow: hidden;
     font-size: 0.9rem;
-    color: var(--color-gray);
+    color: #bbb;
     margin-top: 10px;
     margin-left: 3px;
     padding: 0 12px;
-    background-color: var(--color-darker-bg);
-    border-left: 3px solid var(--color-primary);
+    background-color: rgba(0,0,0,0.85);
+    border-left: 3px solid #ff9f00;
     border-radius: 8px;
     box-shadow: 0 2px 10px rgba(255, 159, 0, 0.4);
     white-space: normal;
@@ -594,21 +635,21 @@ html, body {
 
 /* =========================
         COMENTÁRIOS
-   ========================= */
+========================= */
 .comentarios {
     margin-top: 40px;
     width: 100%;
-    background-color: var(--color-dark-bg);
+    background-color: rgba(0,0,0,0.75);
     padding: 30px 40px;
     border-radius: 15px;
-    box-shadow: var(--shadow-strong);
+    box-shadow: 0 5px 15px rgba(175, 134, 0, 0.8);
 }
 
 .comentarios h3 {
     font-size: 1.4rem;
-    color: var(--color-primary);
+    color: #ff9f00;
     margin-bottom: 20px;
-    border-bottom: 2px solid var(--color-primary);
+    border-bottom: 2px solid #ff9f00;
     padding-bottom: 5px;
 }
 
@@ -623,30 +664,30 @@ html, body {
     width: 100%;
     height: 80px;
     border-radius: 8px;
-    border: 1px solid var(--color-primary);
+    border: 1px solid #ff9f00;
     padding: 10px;
     font-size: 1rem;
     resize: none;
     background-color: #111;
-    color: var(--color-gray-light);
+    color: #eee;
 }
 
 .comentarios button {
     align-self: flex-end;
-    background-color: var(--color-primary);
-    color: var(--color-black);
+    background-color: #ff9f00;
+    color: #000;
     font-weight: 700;
     padding: 6px 16px;
     border: none;
     border-radius: 20px;
     cursor: pointer;
     font-size: 0.95rem;
-    transition: var(--transition);
+    transition: all 0.3s ease;
 }
 
 .comentarios button:hover {
-    background-color: var(--color-white);
-    color: var(--color-primary);
+    background-color: #fff;
+    color: #ff9f00;
 }
 
 .comentario {
@@ -659,12 +700,12 @@ html, body {
 }
 
 .comentario strong {
-    color: var(--color-primary);
+    color: #ff9f00;
 }
 
 .comentario p {
     margin: 5px 0 0;
-    color: var(--color-gray);
+    color: #bbb;
     font-size: 0.95rem;
 }
 

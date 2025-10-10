@@ -5,10 +5,8 @@ require __DIR__ . '/../shared/generos.php';
 
 // Buscar dados
 $topAnimes = buscarTopAnimes($pdo, 5);
-$generos   = buscarTodosGeneros($pdo);
-$lancamentos = buscarLancamentos($pdo, 20);
-$estreias = buscarEstreiasTemporada($pdo);
-$busca = $_GET['busca'] ?? '';
+$generos   = buscarGenerosLimit($pdo, 15);
+$lancamentos = buscarLancamentos($pdo, 9);
 ?>
 
 <!DOCTYPE html>

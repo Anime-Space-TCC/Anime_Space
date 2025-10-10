@@ -35,13 +35,10 @@ $estreias = buscarEstreiasTemporada($pdo);
               <?php if (!empty($ep['anime_capa'])): ?>
                 <img src="../../img/<?= htmlspecialchars($ep['anime_capa']) ?>" alt="Capa <?= htmlspecialchars($ep['anime_nome']) ?>" width="100" style="border-radius:6px;" />
               <?php else: ?>
-                <span style="display:inline-block;width:100px;height:140px;background:#ccc;text-align:center;line-height:140px;border-radius:6px;">Sem Capa</span>
+                <span>Sem Capa</span>
               <?php endif; ?>
-
-              <div style="display:inline-block; margin-left:10px; vertical-align:top;">
-                <strong><?= htmlspecialchars($ep['anime_nome']) ?></strong><br>
-                Temporada <?= $ep['temporada'] ?>, Episódio <?= $ep['numero'] ?>: <?= htmlspecialchars($ep['titulo']) ?><br>
-                (Estreia em <?= date('d/m/Y', strtotime($ep['data_lancamento'])) ?>)<br>
+              <div>
+                <strong><?= htmlspecialchars($ep['anime_nome']) ?></strong>: Temporada <?= $ep['temporada'] ?>
               </div>
               <a href="../../PHP/user/episodes.php?id=<?= $ep['anime_id'] ?>">Ver Episódios</a>
             </li>

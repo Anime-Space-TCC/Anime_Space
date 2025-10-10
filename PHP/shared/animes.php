@@ -12,11 +12,37 @@ if (session_status() === PHP_SESSION_NONE) {
 // Funções relacionadas a Animes
 // ==============================
 
-// Busca um anime pelo ID
+// Busca todos os generos disponiveis
 function buscarAnimePorId(PDO $pdo, int $id): ?array {
-    $stmt = $pdo->prepare("SELECT id, nome, capa, sinopse FROM animes WHERE id = ?");
+    // Busca os dados básicos do anime
+    $stmt = $pdo->prepare("
+        SELECT 
+            id,
+            nome,
+            capa,
+            sinopse,
+            ano,
+            nota
+        FROM animes
+        WHERE id = ?
+        LIMIT 1
+    ");
     $stmt->execute([$id]);
-    return $stmt->fetch(PDO::FETCH_ASSOC) ?: null;
+    $anime = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if (!$anime) return null;
+
+    // Busca os gêneros como array
+    $stmt2 = $pdo->prepare("
+        SELECT g.id, g.nome 
+        FROM generos g
+        JOIN anime_generos ag ON g.id = ag.genero_id
+        WHERE ag.anime_id = ?
+    ");
+    $stmt2->execute([$id]);
+    $anime['generos'] = $stmt2->fetchAll(PDO::FETCH_ASSOC);
+
+    return $anime;
 }
 
 // Busca os animes que estrearam na temporada atual
@@ -59,9 +85,17 @@ function buscarTopAnimes(PDO $pdo, int $limite = 5): array {
 }
 
 // Busca os lançamentos mais recentes (últimos cadastrados)
-function buscarLancamentos(PDO $pdo, int $limite = 20): array {
+function buscarLancamentos(PDO $pdo, int $limite = 9): array {
     $stmt = $pdo->prepare("SELECT id, nome, capa FROM animes ORDER BY id DESC LIMIT :limite");
     $stmt->bindValue(':limite', $limite, PDO::PARAM_INT);
     $stmt->execute();
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
+
+// Busca animes pelo nome (termo de pesquisa)
+function buscarAnimePorNome(PDO $pdo, string $nome): array {
+    $stmt = $pdo->prepare("SELECT id, nome, capa, sinopse FROM animes WHERE nome LIKE :nome");
+    $stmt->execute(['nome' => "%$nome%"]);
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
