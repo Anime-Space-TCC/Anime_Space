@@ -41,13 +41,6 @@ if (!isset($_SESSION['tipo']) || $_SESSION['tipo'] !== 'admin') {
     </div>
 
     <div class="admin-card">
-      <img src="../../img/slogan3.png" alt="Quizzes">
-      <h3>Quizzes</h3>
-      <p>Controle os quizzes disponíveis.</p><br>
-      <a href="../../PHP/admin/quiz/admin_quiz.php" class="admin-btn">📂 Acessar</a>
-    </div>
-
-    <div class="admin-card">
       <img src="../../img/slogan3.png" alt="Temporadas">
       <h3>Temporadas</h3>
       <p>Gerencie as temporadas dos animes.</p><br>

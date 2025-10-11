@@ -69,9 +69,10 @@ $porcentagem = min(100, ($xp / $xpNecessario) * 100);
             <!-- Avatar e info -->
             <div class="bloco avatar-section">
                 <div class="avatar-section">
-                    <div class="avatar">
-                    <img src="../../<?= htmlspecialchars($fotoPerfil) ?>" alt="Avatar de <?= htmlspecialchars($username) ?>">
+                   <div class="avatar">
+                        <img src="../../uploads/<?= htmlspecialchars($fotoPerfil) ?>" alt="Avatar de <?= htmlspecialchars($username) ?>">
                     </div>
+
 
                     <!-- Botão abaixo da foto -->
                     <form action="../../PHP/user/perfil.php" method="post" enctype="multipart/form-data">

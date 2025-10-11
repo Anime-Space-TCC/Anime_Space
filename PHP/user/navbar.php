@@ -12,7 +12,7 @@ if (isset($_SESSION['user_id'])):
 
     // Dados do usuário
     $userId = $_SESSION['user_id'];
-    $caminhoFoto = buscarFotoPerfil($pdo, $userId);
+    $caminhoFoto = buscarFotoPerfil($pdo, $userId); 
     
     $dadosXP = getXP($pdo, $userId);
     $nivel = $dadosXP['nivel'] ?? 1;
@@ -23,8 +23,11 @@ if (isset($_SESSION['user_id'])):
     // Busca de animes
     $busca = $_GET['busca'] ?? '';
     $lancamentos = $busca !== '' ? buscarAnimePorNome($pdo, $busca) : buscarLancamentos($pdo, 9);
+    // Pagina de busca
+    $paginasSemBusca = ['loja', 'meu-carrinho']; 
 
-endif; // fecha o if de sessão
+
+endif;
 ?>
 
 <!-- ===== NAVBAR HTML ===== -->
@@ -36,7 +39,7 @@ endif; // fecha o if de sessão
 
         <!-- Busca -->
         <div class="busca-container">
-            <?php if (!isset($current_page) || $current_page !== 'busca'): ?>
+            <?php if (!isset($current_page) || !in_array($current_page, $paginasSemBusca)): ?>
                 <button class="busca-btn" aria-label="Buscar anime" type="button" id="buscaBtn">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" width="24" height="24">
                         <path d="M10 2a8 8 0 105.29 14.29l4.7 4.7a1 1 0 001.42-1.42l-4.7-4.7A8 8 0 0010 2zm0 2a6 6 0 110 12A6 6 0 0110 4z"/>
@@ -61,14 +64,25 @@ endif; // fecha o if de sessão
 
     <!-- Lado direito -->
     <div class="nav-right">
+        <?php if ($current_page === 'loja' || $current_page === 'meu-carrinho'): ?>
+            <!-- Botão do Carrinho -->
+            <a href="../../PHP/user/meu-carrinho.php" class="nav-carrinho-btn" aria-label="Carrinho">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" width="24" height="24">
+                    <path d="M7 4h-2l-1 2h16l-3 9H8l-1-2H3" />
+                    <circle cx="10" cy="20" r="2"/>
+                    <circle cx="18" cy="20" r="2"/>
+                </svg>
+                <span id="totalCarrinho"><?= $totalCarrinho ?? 0 ?></span>
+            </a>
+        <?php endif; ?>
+
         <?php if (isset($_SESSION['user_id'])): ?>
             <!-- Usuário logado -->
             <div class="perfil-card">
                 <div class="perfil-area">
                     <a href="../../PHP/user/perfil.php" class="perfil-link" aria-label="Ver perfil">
-                        <img src="../../<?= htmlspecialchars($caminhoFoto) ?>" alt="Foto de perfil" class="perfil-foto">
+                        <img src="../../uploads/<?= htmlspecialchars($caminhoFoto) ?>" alt="Foto de perfil" class="perfil-foto">
                     </a>
-
                     <div class="perfil-info">
                         <h2 class="perfil-nome"><?= htmlspecialchars($_SESSION['username'] ?? 'Usuário') ?></h2>
                         <div class="perfil-nivel">Nível: <?= $nivel ?></div>
@@ -80,7 +94,6 @@ endif; // fecha o if de sessão
                 </div>
             </div>
         <?php else: ?>
-            <!-- Usuário não logado -->
             <a href="../../PHP/user/login.php" class="perfil-btn" aria-label="Entrar ou registrar">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="24" height="24">
                     <circle cx="12" cy="8" r="4" />
@@ -97,7 +110,7 @@ endif; // fecha o if de sessão
     <a href="../../PHP/user/estreias_temporada.php">Estreias</a>
     <a href="../../PHP/user/últimos_episodios.php">Lançamentos</a>
     <a href="../../PHP/user/noticias.php">Notícias</a>
-    <a href="../../PHP/user/vendas.php">Lojinha</a>
+    <a href="../../PHP/user/loja.php">Lojinha</a>
 </nav>
 
 <script>

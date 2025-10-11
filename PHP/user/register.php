@@ -5,6 +5,26 @@ require __DIR__ . '/../shared/usuarios.php';
 require __DIR__ . '/../shared/auth.php'; 
 require_once __DIR__ . '/../shared/register.php';
 
+$errors = [];
+$result = null;
+
+// se o formulário for enviado
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $result = registrarUsuario(
+        $pdo,
+        $_POST['username'] ?? '',
+        $_POST['email'] ?? '',
+        $_POST['password'] ?? '',
+        $_POST['password_confirm'] ?? ''
+    );
+
+    if ($result['success']) {
+        header('Location: login.php');
+        exit;
+    } else {
+        $errors = $result['errors'];
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -46,6 +66,7 @@ require_once __DIR__ . '/../shared/register.php';
     </form>
 
     <div class="links">
+      <a href="../../PHP/user/login.php">Esqueceu a senha?</a>
       <a href="../../PHP/user/login.php">Já tem conta? Faça login</a>
       <a href="../../PHP/user/index.php">Voltar</a>
     </div>

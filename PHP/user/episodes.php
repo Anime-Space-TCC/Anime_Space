@@ -266,7 +266,7 @@ if (!empty($temporadas)) {
             <?php
             $host = $_SERVER['HTTP_HOST'];
             $baseDir = rtrim(dirname($_SERVER['SCRIPT_NAME']), '/');
-            $formAction = "http://{$host}{$baseDir}/comentar.php";
+            $formAction = dirname($_SERVER['SCRIPT_NAME'], 2) . '/shared/comentar.php';
             ?>
             <form action="<?= htmlspecialchars($formAction) ?>" method="POST">
               <input type="hidden" name="episodio_id" value="<?= htmlspecialchars($episodioSelecionado['id']) ?>">

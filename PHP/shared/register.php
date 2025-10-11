@@ -3,7 +3,9 @@ require_once __DIR__ . '/conexao.php';
 require_once __DIR__ . '/usuarios.php';
 require_once __DIR__ . '/auth.php';
 
-// Função responsável por registrar um novo usuário no sistema.
+/**
+ * Função responsável por registrar um novo usuário no sistema.
+ */
 function registrarUsuario($pdo, $username, $email, $password, $password_confirm) {
     $errors = [];
 

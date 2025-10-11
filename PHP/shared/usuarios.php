@@ -68,12 +68,14 @@ function buscarFotoPerfil(PDO $pdo, int $userId): string {
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
     if ($user && !empty($user['foto_perfil'])) {
-        return $user['foto_perfil']; // retorna algo como "uploads/123.jpg"
+        return $user['foto_perfil'];
     }
 
-    // fallback para padrão
-    return 'img/default.jpg'; // ajuste de acordo com seu caminho
+    // caminho absoluto
+    return '../img/default.jpg'; // começa da raiz do site
 }
+
+
 
 // Verifica se já existe username ou email
 function usuarioExiste(PDO $pdo, string $username, string $email): bool {
