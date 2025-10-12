@@ -15,8 +15,10 @@ function buscarUsuarioPorId(PDO $pdo, int $id): ?array {
 // Atualiza username, email e senha de um usuário
 function atualizarUsuario(PDO $pdo, int $id, string $username, string $email, ?string $password = null): bool {
     if ($password !== null) {
+        // gera hash da senha antes de atualizar
+        $hash = password_hash($password, PASSWORD_DEFAULT);
         $stmt = $pdo->prepare("UPDATE users SET username = ?, email = ?, password = ? WHERE id = ?");
-        return $stmt->execute([$username, $email, $password, $id]);
+        return $stmt->execute([$username, $email, $hash, $id]);
     } else {
         $stmt = $pdo->prepare("UPDATE users SET username = ?, email = ? WHERE id = ?");
         return $stmt->execute([$username, $email, $id]);
@@ -25,7 +27,7 @@ function atualizarUsuario(PDO $pdo, int $id, string $username, string $email, ?s
 
 // Atualiza a foto de perfil do usuário via AJAX
 function atualizarFotoPerfil(PDO $pdo, int $userId, array $file): array {
-    $diretorio_destino = __DIR__ . '/../../uploads/';
+    $diretorio_destino = __DIR__ . '/../uploads/';
     if (!is_dir($diretorio_destino)) {
         mkdir($diretorio_destino, 0777, true);
     }
@@ -35,11 +37,11 @@ function atualizarFotoPerfil(PDO $pdo, int $userId, array $file): array {
     $tipos_permitidos = ['jpg', 'jpeg', 'png'];
 
     if (!in_array($extensao, $tipos_permitidos)) {
-        return ['sucesso' => false, 'erro' => "Apenas arquivos JPG, JPEG e PNG são permitidos."];
+        return ['sucesso' => false, 'erro' => "Apenas JPG, JPEG e PNG são permitidos."];
     }
 
     if ($file['size'] > 500000) {
-        return ['sucesso' => false, 'erro' => "O arquivo é muito grande (máx. 500KB)."];
+        return ['sucesso' => false, 'erro' => "Arquivo muito grande (máx. 500KB)."];
     }
 
     $nome_arquivo_unico = $userId . '.' . $extensao;
@@ -49,16 +51,16 @@ function atualizarFotoPerfil(PDO $pdo, int $userId, array $file): array {
         return ['sucesso' => false, 'erro' => "Erro ao mover o arquivo."];
     }
 
-    $caminho_relativo_db = 'uploads/' . $nome_arquivo_unico;
+    $caminho_relativo_db = '/PHP/uploads/' . $nome_arquivo_unico;
 
     $stmt = $pdo->prepare("UPDATE users SET foto_perfil = ? WHERE id = ?");
     if (!$stmt->execute([$caminho_relativo_db, $userId])) {
-        return ['sucesso' => false, 'erro' => "Erro ao salvar caminho no banco."];
+        return ['sucesso' => false, 'erro' => "Erro ao salvar no banco."];
     }
 
     return [
         'sucesso' => true,
-        'novaFoto' => '../../' . $caminho_relativo_db
+        'novaFoto' => $caminho_relativo_db . '?t=' . time()
     ];
 }
 
@@ -67,15 +69,17 @@ function buscarFotoPerfil(PDO $pdo, int $userId): string {
     $stmt->execute([$userId]);
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
+    $default = '/../uploads/default.jpg';
+
     if ($user && !empty($user['foto_perfil'])) {
-        return $user['foto_perfil'];
+        $caminho_fisico = __DIR__ . '/../uploads/' . basename($user['foto_perfil']);
+        if (file_exists($caminho_fisico)) {
+            return $user['foto_perfil'] . '?t=' . time();
+        }
     }
 
-    // caminho absoluto
-    return '../img/default.jpg'; // começa da raiz do site
+    return $default . '?t=' . time();
 }
-
-
 
 // Verifica se já existe username ou email
 function usuarioExiste(PDO $pdo, string $username, string $email): bool {

@@ -88,51 +88,8 @@ include __DIR__ . '/navbar.php';
     <?php endif; ?>
 </main>
 
-<script>
-// Remover produto
-const removerBotoes = document.querySelectorAll('.btn-remover');
-removerBotoes.forEach(btn => {
-    btn.addEventListener('click', () => {
-        const produtoId = btn.getAttribute('data-id');
-        fetch('../shared/carrinho.php', {
-            method: 'POST',
-            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-            body: `acao=remover&id=${produtoId}`
-        })
-        .then(res => res.json())
-        .then(data => { if(data.sucesso) location.reload(); });
-    });
-});
-
-// Alterar quantidade
-const quantidades = document.querySelectorAll('.quantidade');
-quantidades.forEach(input => {
-    input.addEventListener('change', () => {
-        const id = input.dataset.id;
-        let novaQtd = parseInt(input.value);
-        if(novaQtd < 1) novaQtd = 1;
-        input.value = novaQtd;
-
-        fetch('../shared/carrinho.php', {
-            method: 'POST',
-            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-            body: `acao=atualizar&id=${id}&quantidade=${novaQtd}`
-        })
-        .then(res => res.json())
-        .then(data => { if(data.sucesso) location.reload(); });
-    });
-});
-
-// Seleção de pagamento (apenas visual)
-const opcoes = document.querySelectorAll('.pagamento-opcao');
-opcoes.forEach(op => {
-    op.addEventListener('click', () => {
-        opcoes.forEach(o => o.style.boxShadow = '');
-        op.style.boxShadow = '0 0 30px #ff9f00';
-        alert(`Você selecionou ${op.dataset.metodo.toUpperCase()}`);
-    });
-});
-</script>
+<script src="../../JS/produto.js"></script>
+<script src="../../JS/pagamento.js"></script>
 
 </body>
 </html>

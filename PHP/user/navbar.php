@@ -1,6 +1,9 @@
 <?php 
 // ===== INÍCIO NAVBAR =====
 
+    // Pagina de busca
+    $paginasSemBusca = ['loja', 'meu-carrinho','noticias','episodeos','stream','suporte','lancamento','temporada']; 
+    
 // Verifica se o usuário está logado
 if (isset($_SESSION['user_id'])):
 
@@ -23,8 +26,6 @@ if (isset($_SESSION['user_id'])):
     // Busca de animes
     $busca = $_GET['busca'] ?? '';
     $lancamentos = $busca !== '' ? buscarAnimePorNome($pdo, $busca) : buscarLancamentos($pdo, 9);
-    // Pagina de busca
-    $paginasSemBusca = ['loja', 'meu-carrinho']; 
 
 
 endif;
@@ -81,7 +82,7 @@ endif;
             <div class="perfil-card">
                 <div class="perfil-area">
                     <a href="../../PHP/user/perfil.php" class="perfil-link" aria-label="Ver perfil">
-                        <img src="../../uploads/<?= htmlspecialchars($caminhoFoto) ?>" alt="Foto de perfil" class="perfil-foto">
+                        <img src="../uploads/<?= htmlspecialchars($caminhoFoto) ?>" alt="Foto de perfil" class="perfil-foto">
                     </a>
                     <div class="perfil-info">
                         <h2 class="perfil-nome"><?= htmlspecialchars($_SESSION['username'] ?? 'Usuário') ?></h2>
@@ -109,17 +110,8 @@ endif;
     <a href="../../PHP/user/stream.php">Catálogo</a>
     <a href="../../PHP/user/estreias_temporada.php">Estreias</a>
     <a href="../../PHP/user/últimos_episodios.php">Lançamentos</a>
-    <a href="../../PHP/user/noticias.php">Notícias</a>
+    <a href="../../PHP/user/noticias.php">Comunidade</a>
     <a href="../../PHP/user/loja.php">Lojinha</a>
 </nav>
 
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-    const menuBtn = document.querySelector('.menu-toggle');
-    const menu = document.getElementById('menuLateral');
-
-    if (menuBtn && menu) {
-        menuBtn.addEventListener('click', () => menu.classList.toggle('open'));
-    }
-});
-</script>
+<script src="../../JS/menu.js"></script>

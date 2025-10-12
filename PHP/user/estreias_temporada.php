@@ -20,7 +20,7 @@ $estreias = buscarEstreiasTemporada($pdo);
 </head>
 <body>  
   <?php
-    $current_page = 'busca'; 
+    $current_page = 'temporada'; 
     include __DIR__ . '/navbar.php'; 
   ?>
   <main class="page-content">

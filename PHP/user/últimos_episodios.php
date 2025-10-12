@@ -19,7 +19,7 @@ $episodios = getUltimosEpisodios(20);
 </head>
 <body>
   <?php
-    $current_page = 'busca'; 
+    $current_page = 'lancamento'; 
     include __DIR__ . '/navbar.php'; 
   ?>
   <main class="page-content">

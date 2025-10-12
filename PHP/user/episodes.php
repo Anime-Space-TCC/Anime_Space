@@ -92,7 +92,7 @@ if (!empty($temporadas)) {
 
 <body>
   <?php
-  $current_page = 'busca';
+  $current_page = 'episodeos';
   include __DIR__ . '/navbar.php';
   ?>
   <main class="page-content">
@@ -288,155 +288,10 @@ if (!empty($temporadas)) {
     </div>
     <?php include __DIR__ . '/rodape.php'; ?>
   </main>
-
-  <script>
-    // Toggle sinopse
-    function toggleSinopse() {
-      const sinopseContainer = document.getElementById('sinopse-container');
-      const btn = document.querySelector('header .btn-info');
-      if (sinopseContainer && btn) {
-        sinopseContainer.classList.toggle('active');
-        btn.textContent = sinopseContainer.classList.contains('active') ? '▲' : '▼';
-      }
-    }
-
-    // Toggle descrição
-    function toggleDescricao(btn) {
-      const card = btn.closest('.card');
-      if (!card) return;
-
-      const descricao = card.querySelector('.episodio-descricao');
-      if (!descricao) return;
-
-      descricao.classList.toggle('hidden');
-      btn.textContent = descricao.classList.contains('hidden') ? '▼' : '▲';
-    }
-
-    // Dropdown de temporadas
-    const btnDropdown = document.getElementById('btnDropdown');
-    const dropdownList = document.getElementById('dropdownList');
-
-    if (btnDropdown && dropdownList) {
-      const dropdownItems = dropdownList.querySelectorAll('li');
-
-      btnDropdown.addEventListener('click', () => {
-        dropdownList.classList.toggle('show');
-      });
-
-      dropdownItems.forEach(item => {
-        item.addEventListener('click', () => {
-          const temporada = item.dataset.temporada;
-          btnDropdown.textContent = `Temporada ${temporada}`;
-
-          document.querySelectorAll('.temporada-bloco').forEach(bloco => {
-            bloco.style.display = (bloco.dataset.temporada === temporada) ? "" : "none";
-          });
-
-          dropdownList.classList.remove('show');
-        });
-      });
-
-      document.addEventListener('click', e => {
-        if (!btnDropdown.contains(e.target) && !dropdownList.contains(e.target)) {
-          dropdownList.classList.remove('show');
-        }
-      });
-    }
-
-    // Reações
-    document.querySelectorAll('.reacao-btn').forEach(button => {
-      button.addEventListener('click', () => {
-        const card = button.closest('.card');
-        if (!card) return;
-
-        const episodioId = card.dataset.episodioId;
-        const reacao = button.dataset.reacao;
-
-        if (!episodioId || !['like', 'dislike'].includes(reacao)) return;
-
-        fetch('../../PHP/shared/reagir.php', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-            body: `episodio_id=${encodeURIComponent(episodioId)}&reacao=${encodeURIComponent(reacao)}`
-          })
-          .then(res => res.json())
-          .then(data => {
-            if (data.sucesso) {
-              const likeSpan = card.querySelector('.contador-like');
-              const dislikeSpan = card.querySelector('.contador-dislike');
-              if (likeSpan) likeSpan.textContent = data.likes ?? 0;
-              if (dislikeSpan) dislikeSpan.textContent = data.dislikes ?? 0;
-
-              card.querySelectorAll('.reacao-btn').forEach(btn => btn.classList.remove('ativo'));
-              button.classList.add('ativo');
-            } else {
-              alert(data.erro || 'Erro ao processar reação.');
-            }
-          })
-          .catch(() => alert('Erro ao enviar reação.'));
-      });
-    });
-
-    // Favoritos
-    document.querySelectorAll(".btn-favorito").forEach(btnFav => {
-      btnFav.addEventListener("click", (e) => {
-        e.preventDefault();
-        const animeId = btnFav.dataset.animeId;
-
-        fetch("../shared/favoritar.php", {
-            method: "POST",
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-            body: `anime_id=${encodeURIComponent(animeId)}`,
-            credentials: 'same-origin'
-          })
-          .then(res => res.json())
-          .then(data => {
-            if (data.sucesso) {
-              btnFav.textContent = data.favoritado ? "❤️" : "🤍";
-              btnFav.classList.toggle("ativo", data.favoritado);
-            } else {
-              alert(data.erro || 'Erro desconhecido.');
-            }
-          })
-          .catch(() => alert('Erro ao enviar favorito.'));
-      });
-    });
-
-    // Avaliação de estrelas
-    document.querySelectorAll('.avaliacao-estrelas').forEach(container => {
-      const animeId = container.dataset.animeId;
-      const estrelas = container.querySelectorAll('.estrela');
-      const notaBox = container.querySelector('.nota-display');
-
-      const atualizarEstrelas = valor => {
-        estrelas.forEach(e => e.classList.toggle('ativa', e.dataset.valor <= valor));
-      };
-
-      estrelas.forEach(estrela => {
-        estrela.addEventListener('click', e => {
-          e.preventDefault();
-          const valorEstrela = Number(estrela.dataset.valor);
-          const nota = valorEstrela * 2;
-
-          fetch('../shared/avaliar.php', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-              body: `anime_id=${encodeURIComponent(animeId)}&avaliacao=${nota}`,
-              credentials: 'same-origin'
-            })
-            .then(res => res.json())
-            .then(data => {
-              if (data.sucesso) {
-                atualizarEstrelas(valorEstrela);
-                notaBox.textContent = `Nota: ${data.nota}/10`;
-              } else {
-                alert(data.erro || 'Erro ao registrar avaliação.');
-              }
-            })
-            .catch(() => alert('Erro ao enviar avaliação.'));
-        });
-      });
-    });
-  </script>
+  <script src="../../JS/togge.js"></script>
+  <script src="../../JS/temporadas.js"></script>
+  <script src="../../JS/reacao.js"></script>
+  <script src="../../JS/favoritar.js"></script>
+  <script src="../../JS/avaliar.js"></script>
 </body>
 </html>

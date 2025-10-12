@@ -70,7 +70,7 @@ $porcentagem = min(100, ($xp / $xpNecessario) * 100);
             <div class="bloco avatar-section">
                 <div class="avatar-section">
                    <div class="avatar">
-                        <img src="../../uploads/<?= htmlspecialchars($fotoPerfil) ?>" alt="Avatar de <?= htmlspecialchars($username) ?>">
+                       <img src="<?= '../uploads/' . basename(buscarFotoPerfil($pdo, $userId)) . '?t=' . time() ?>" alt="Foto de perfil">
                     </div>
 
 

@@ -33,7 +33,7 @@ $animes = getAnimesFiltrados($filtroGenero, $filtroAno, $filtroLinguagem, $busca
 <body class="streaming">
 
   <?php
-  $current_page = 'busca';
+  $current_page = 'stream';
   include __DIR__ . '/navbar.php';
   ?>
   <main class="page-content">

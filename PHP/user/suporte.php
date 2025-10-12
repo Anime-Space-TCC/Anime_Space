@@ -1,13 +1,22 @@
 <?php
 session_start();
+require __DIR__ . '/../shared/auth.php';
 require __DIR__ . '/../shared/suporte.php';
-require_once __DIR__ . '/../shared/auth.php';
 
 // Bloqueia acesso se não estiver logado
 verificarLogin();
 
-// Indica se a mensagem de suporte foi enviada com sucesso.
+// Obtém o ID do usuário logado
+$userId = $_SESSION['user_id'] ?? null;
+if (!$userId) {
+    die("Usuário não encontrado. Faça login novamente.");
+}
+
 $mensagem_enviada = false;
+$erro_formulario = '';
+$nome = '';
+$email = '';
+$mensagem = '';
 
 // Processa envio do formulário
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -15,8 +24,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = trim($_POST['email'] ?? '');
     $mensagem = trim($_POST['mensagem'] ?? '');
 
-    if (enviarMensagemSuporte($nome, $email, $mensagem)) {
-        $mensagem_enviada = true;
+    if (!empty($nome) && !empty($email) && !empty($mensagem) && filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $nome = htmlspecialchars($nome, ENT_QUOTES, 'UTF-8');
+        $email = htmlspecialchars($email, ENT_QUOTES, 'UTF-8');
+        $mensagem = htmlspecialchars($mensagem, ENT_QUOTES, 'UTF-8');
+
+        if (enviarMensagemSuporte($userId, $nome, $email, $mensagem)) {
+            $mensagem_enviada = true;
+            // Limpa campos após envio
+            $nome = $email = $mensagem = '';
+        } else {
+            $erro_formulario = "Erro ao enviar a mensagem. Tente novamente mais tarde.";
+        }
+    } else {
+        $erro_formulario = "Por favor, preencha todos os campos corretamente.";
     }
 }
 ?>
@@ -31,37 +52,38 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 <body>
     <?php
-        $current_page = 'busca'; 
+        $current_page = 'suporte'; 
         include __DIR__ . '/navbar.php'; 
     ?>
     <main class="page-content">
-    <div class="suporte">
-        <h1>Suporte - Anime Space</h1>
-        <p>Bem-vindo ao suporte do Anime Space! Use o formulário abaixo para entrar em contato com nossa equipe.</p>
-        <?php if ($mensagem_enviada): ?>
-            <div class="msg-sucesso">✅ Sua mensagem foi enviada com sucesso! Entraremos em contato em breve.</div>
-        <?php endif; ?>
+        <div class="suporte">
+            <h1>Suporte - Anime Space</h1>
+            <p>Bem-vindo ao suporte do Anime Space! Use o formulário abaixo para entrar em contato com nossa equipe.</p>
 
-        <div class="form-suporte">
-            <form method="POST">
-                <label for="nome">Seu nome:</label>
-                <input type="text" name="nome" id="nome" required>
+            <?php if ($mensagem_enviada): ?>
+                <div class="msg-sucesso">✅ Sua mensagem foi enviada com sucesso! Entraremos em contato em breve.</div>
+            <?php elseif (!empty($erro_formulario)): ?>
+                <div class="msg-erro">❌ <?= $erro_formulario ?></div>
+            <?php endif; ?>
 
-                <label for="email">Seu e-mail:</label>
-                <input type="email" name="email" id="email" required>
+            <div class="form-suporte">
+                <form method="POST">
+                    <label for="nome">Seu nome:</label>
+                    <input type="text" name="nome" id="nome" required value="<?= htmlspecialchars($nome) ?>">
 
-                <label for="mensagem">Mensagem:</label>
-                <textarea name="mensagem" id="mensagem" rows="5" required></textarea>
+                    <label for="email">Seu e-mail:</label>
+                    <input type="email" name="email" id="email" required value="<?= htmlspecialchars($email) ?>">
 
-                <button type="submit">Enviar Mensagem</button>
-            </form>
-        </div>
+                    <label for="mensagem">Mensagem:</label>
+                    <textarea name="mensagem" id="mensagem" rows="5" required><?= htmlspecialchars($mensagem) ?></textarea>
 
-        <h2>Informações de Contato</h2>
+                    <button type="submit">Enviar Mensagem</button>
+                </form>
+            </div>
+
+            <h2>Informações de Contato</h2>
             <p>📧 E-mail: suporte@animespace.com</p>
-            <p>📱 WhatsApp: <a target="_blank" alt="Chat on WhatsApp" href="https://wa.me/5561991585929?text=Ola%20tenho%20interesse%20em%20falar%20sobre%20animes">
-                Clique para enviar mensagem!</a>
-            </p>
+            <p>📱 WhatsApp: <a target="_blank" alt="Chat on WhatsApp" href="https://wa.me/5561991585929?text=Ola%20tenho%20interesse%20em%20falar%20sobre%20animes">Clique para enviar mensagem!</a></p>
             <p>📍 Endereço: Brasília - DF</p>
 
             <div class="faq">

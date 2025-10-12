@@ -1665,75 +1665,181 @@ body {
 /* =========================
           NOTÍCIAS 
 ========================= */
-.noticias {
+
+.comunidade-container {
+  background: rgba(0, 0, 0, 0.6);
+  padding: 50px 30px; /* mais espaçamento interno */
+  border-radius: 20px;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.8);
+
+  display: flex;
+  flex-direction: column; /* itens em coluna */
+  align-items: center; /* centraliza horizontalmente */
+  justify-content: center; /* centraliza verticalmente */
+  gap: 40px; /* espaçamento entre os elementos internos */
+
+  padding-top: 90px;
+}
+
+
+/* =========================
+      CARROSSEL DE NOTÍCIAS
+========================= */
+.carrossel-noticias {
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  border-radius: 20px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
+}
+
+.carrossel-slides {
+  position: relative;
+  width: 100%;
+  height: 420px; 
+}
+
+.carrossel-slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.8s ease-in-out;
+}
+
+.carrossel-slide.ativo {
+  opacity: 1;
+}
+
+.carrossel-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.8);
+  border-radius: 20px;
+}
+
+.carrossel-info {
+  position: absolute;
+  bottom: 40px; 
+  left: 25px;
+  background: rgba(0, 0, 0, 0.7);
+  color: #fff;
+  padding: 18px 22px;
+  border-radius: 12px;
+  font-size: 1.25rem;
+  max-width: 85%;
+}
+
+/* =========================
+    HISTÓRIA DOS ANIMES
+========================= */
+.historia-section {
+  background: rgba(20, 20, 20, 0.85);
+  border-radius: 16px;
+  padding: 30px;
+  line-height: 1.8;
+  max-width: 1200px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+}
+
+.historia-section h2 {
+  color: #ffbf00;
+  margin-bottom: 15px;
+  text-align: center;
+  font-size: 1.8rem;
+}
+
+.historia-section p {
+  color: #ddd;
+  text-align: justify;
+}
+
+/* =========================
+     NOTÍCIAS RECENTES
+========================= */
+.noticias-section {
+  width: 100%;
+  max-width: 1120px;
+}
+
+.noticias-section h2 {
+  color: #ffbf00;
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 1.6rem;
+}
+
+.noticias-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 20px;
-  width: 100%;
-  max-width: 700px;
 }
 
-.noticia {
-  background: rgba(20, 20, 20, 0.85);
+.noticia-card {
+  background: rgba(20, 20, 20, 0.9);
   border-radius: 16px;
   overflow: hidden;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
   transition: transform 0.3s, box-shadow 0.3s;
 }
 
-.noticia:hover {
+.noticia-card:hover {
   transform: scale(1.03);
   box-shadow: 0 8px 18px rgba(0, 0, 0, 0.7);
 }
 
-.noticia img {
+.noticia-card img {
   width: 100%;
-  height: 160px;
+  height: 180px;
   object-fit: cover;
   transition: transform 0.3s;
 }
 
-.noticia:hover img {
+.noticia-card:hover img {
   transform: scale(1.05);
 }
 
-.noticia h2 {
-  font-size: 1.2rem;
-  margin: 12px;
+.noticia-info {
+  padding: 15px;
+}
+
+.noticia-info h3 {
+  font-size: 1.1rem;
   color: #ffbf00;
-  line-height: 1.3;
+  margin-bottom: 8px;
 }
 
-.noticia p {
+.noticia-info p {
   font-size: 0.95rem;
-  margin: 0 12px 12px;
-  color: #ddd;
-  line-height: 1.4;
+  color: #ccc;
+  margin-bottom: 12px;
 }
 
-.noticia a {
+.btn-leia {
   display: inline-block;
-  margin: 0 12px 12px;
-  padding: 8px 16px;
   background: #ffbf00;
   color: #111;
+  padding: 8px 14px;
   border-radius: 8px;
-  text-decoration: none;
   font-weight: bold;
-  transition: background 0.2s, transform 0.2s;
+  text-decoration: none;
+  transition: background 0.3s, transform 0.3s;
 }
 
-.noticia a:hover {
+.btn-leia:hover {
   background: #ffaa00;
   transform: translateY(-2px);
 }
 
 /* =========================
-          PAGINAÇÃO
+         PAGINAÇÃO
 ========================= */
 .paginacao {
   text-align: center;
-  margin: 30px 0;
+  margin-top: 30px;
 }
 
 .paginacao a {
@@ -1762,17 +1868,16 @@ body {
 /* =========================
       MAIS POPULARES
 ========================= */
-.top-noticias {
-  background: #000000;
-  border-radius: 20px;
-  padding: 30px 25px;
-  width: 700px;
-  max-width: 100%;
+.populares-section {
+  background: rgba(15, 15, 15, 0.9);
+  border-radius: 16px;
+  padding: 25px;
+  width: 100%;
+  max-width: 700px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
-  transition: transform 0.3s, box-shadow 0.3s;
 }
 
-.top-noticias h3 {
+.populares-section h2 {
   color: #ffbf00;
   margin-bottom: 15px;
   text-align: center;
@@ -1798,104 +1903,84 @@ body {
 }
 
 .mini-noticia p {
-  font-size: 0.85rem;
+  font-size: 0.9rem;
   color: #ffbf00;
 }
 
 /* =========================
-    SLIDESHOW NOTICIAS
+     CONTATO / COMUNIDADE
 ========================= */
-.noticias-page .slideshow {
-  position: relative;
-  width: 120%;
-  max-width: 700px;
-  height: 1200px;
+.contato-section {
+  background: rgba(20, 20, 20, 0.85);
   border-radius: 16px;
-  overflow: hidden;
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.7);
-  margin: 0 auto;
-}
-
-.noticias-page .slide {
-  position: absolute;
-  inset: 0;
-  opacity: 0;
-  transition: opacity 0.8s ease;
-}
-
-.noticias-page .slide.active {
-  opacity: 1;
-}
-
-.noticias-page .slide img {
+  padding: 30px;
+  text-align: center;
   width: 100%;
-  height: 100%;
-  object-fit: cover;
-  filter: brightness(0.85);
+  max-width: 700px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
 }
 
-.noticias-page .slide-text {
-  position: absolute;
-  bottom: 20px;
-  left: 20px;
-  background: rgba(0, 0, 0, 0.65);
-  color: #fff;
-  padding: 10px 16px;
-  border-radius: 12px;
-  font-size: 1rem;
+.contato-section h2 {
+  color: #ffbf00;
+  margin-bottom: 10px;
 }
 
-/* =========================
-    BARRA DE BUSCA NOTICIAS
-========================= */
-.noticias-page .barra-pesquisa {
-  display: flex;
-  justify-content: flex-end;
+.contato-section p {
+  color: #ddd;
   margin-bottom: 20px;
 }
 
-.noticias-page .barra-pesquisa input {
-  width: 120%;
-  max-width: 400px;
+.contato-links {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.contato-btn {
   padding: 10px 18px;
-  border: none;
-  border-radius: 25px;
-  font-size: 1rem;
-  background: rgba(255, 255, 255, 0.15);
-  color: #fff;
-  outline: none;
+  border-radius: 10px;
+  text-decoration: none;
+  font-weight: bold;
+  color: white;
   transition: 0.3s;
 }
 
-.noticias-page .barra-pesquisa input::placeholder {
-  color: #ccc;
+.contato-btn.whatsapp {
+  background: #25d366;
 }
 
-.noticias-page .barra-pesquisa input:focus {
-  background: rgba(255, 255, 255, 0.3);
+.contato-btn.discord {
+  background: #5865f2;
+}
+
+.contato-btn:hover {
+  opacity: 0.8;
+  transform: scale(1.05);
 }
 
 /* =========================
         RESPONSIVIDADE
 ========================= */
-
-  .noticias {
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  }
-
-  .top-noticias {
-    width: 100%;
-    max-width: 480px;
-    padding: 25px 20px;
-  }
-
-  .barra-pesquisa input {
-    width: 80%;
-  }
-
+@media (max-width: 768px) {
   .slideshow {
     height: 250px;
   }
+
+  .historia-section,
+  .populares-section,
+  .contato-section {
+    padding: 20px;
+  }
+
+  .noticias-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .contato-links {
+    flex-direction: column;
+  }
+}
+
 
 /* =========================
         SOBRE 
