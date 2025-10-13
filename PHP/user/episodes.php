@@ -197,7 +197,7 @@ if (!empty($temporadas)) {
                         <div class="titulo-e-descricao">
                           <div class="episodio-titulo"><?= htmlspecialchars($ep['titulo']) ?></div>
                           <?php if (!empty($ep['descricao'])): ?>
-                            <button class="btn-toggle-descricao" onclick="toggleDescricao(this)">▼</button>
+                            <button class="btn-toggle-descricao" onclick="toggleDescricao(this)">►</button>
                           <?php endif; ?>
                         </div>
                       </div>

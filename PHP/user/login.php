@@ -60,14 +60,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <?php endif; ?>
 
     <form action="login.php" method="post">
-      <div class="textbox">
+      <div class="campo-input">
         <input type="text" name="username" placeholder="Usuário" required 
-               value="<?= htmlspecialchars($_POST['username'] ?? '') ?>" />
+              value="<?= htmlspecialchars($_POST['username'] ?? '') ?>" />
       </div>
-      <div class="textbox">
+
+      <div class="campo-input">
         <input type="password" name="password" placeholder="Senha" required />
       </div>
-      <input type="submit" value="Entrar" class="btn" />
+
+      <input type="submit" value="Entrar" class="botao-login" />
     </form>
 
     <div class="links">

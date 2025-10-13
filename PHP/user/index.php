@@ -76,9 +76,9 @@ $lancamentos = buscarLancamentos($pdo, 9);
             </ul>
         </section>
       </section>
-      <?php include __DIR__ . '/rodape.php'; ?>
   </main>
-
+  
+  <?php include __DIR__ . '/rodape.php'; ?>
   <script src="../../JS/slideshow.js"></script>
   
 </body>

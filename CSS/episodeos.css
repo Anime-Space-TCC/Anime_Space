@@ -34,23 +34,22 @@ html, body {
 .episodio header { 
     width: 100%;
     display: flex;
-    justify-content: flex-start; /* para alinhar elementos à esquerda */
+    justify-content: flex-start; 
     align-items: center;
     flex-wrap: wrap;
     background-color: rgba(0,0,0,0.75);
-    padding: 0; /* remove o padding do header */
-    border-radius: 20px; /* remove arredondamento das bordas do header */
+    padding: 0; 
+    border-radius: 20px; 
     box-shadow: 0 5px 15px rgba(175, 134, 0, 0.8);
     color: #ff9f00;
 }
 
-/* Container da imagem */
 .info-anime {
     position: relative;
     display: flex;
     align-items: center;
-    gap: 0; /* remove o espaço entre elementos */
-    padding: 0; /* remove padding interno */
+    gap: 0; 
+    padding: 0; 
 }
 
 .info-anime img {
@@ -67,7 +66,6 @@ html, body {
 }
 
 
-/* NOVO - Estrutura do título e botões */
 .anime-titulo-meta {
     display: flex;
     flex-direction: column;
@@ -78,7 +76,7 @@ html, body {
 .titulo-linha {
     display: flex;
     align-items: center;
-    gap: 15px; /* espaçamento entre nome, nota e favorito */
+    gap: 15px; 
     flex-wrap: wrap;
     width: 100%;
 }
@@ -118,14 +116,12 @@ html, body {
     margin-left: 480px; 
 }
 
-/* Linha de gêneros */
 .generos-linha {
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
 }
 
-/* Estilo dos botões de gênero */
 .generos-linha .meta-btn {
     background-color: #ff9f00;
     color: #000;
@@ -323,10 +319,10 @@ html, body {
 
 .info-container {
     display: flex;
-    flex-direction: row; /* linha horizontal */
-    align-items: center; /* centraliza verticalmente todos os itens */
-    justify-content: space-between; /* espaço entre elementos */
-    gap: 20px; /* espaçamento uniforme entre os itens */
+    flex-direction: row; 
+    align-items: center; 
+    justify-content: space-between; 
+    gap: 20px; 
     min-width: 0;
 }
 
@@ -339,9 +335,9 @@ html, body {
 
 .titulo-e-descricao {
     display: flex;
-    align-items: center; /* centraliza verticalmente o título */
+    align-items: center; 
     gap: 10px;
-    flex: 1; /* faz ocupar espaço disponível */
+    flex: 1;
     min-width: 0;
 }
 
@@ -357,8 +353,8 @@ html, body {
 }
 
 .btn-toggle-descricao {
-    margin-left: auto; /* empurra o botão para a ponta direita */
-    align-self: center; /* centraliza verticalmente */
+    margin-left: auto;
+    align-self: center; 
 }
 
 
@@ -384,15 +380,14 @@ html, body {
 
 .episodio-descricao {
     display: block;
-    margin: 5px 0 15px 0; 
-    padding: 8px 10px;
+    padding: 10px 10px;
     background-color: rgba(0,0,0,0.75);
     color: #eee;
     font-size: 0.9rem;
     line-height: 1.4;
     border-radius: 8px;
     border: 1px solid #cc7f00;
-    max-width: 100%; 
+    max-width: 650px; 
     white-space: normal;
     word-break: break-word;
 }

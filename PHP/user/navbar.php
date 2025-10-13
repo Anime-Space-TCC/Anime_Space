@@ -2,7 +2,7 @@
 // ===== INÍCIO NAVBAR =====
 
     // Pagina de busca
-    $paginasSemBusca = ['loja', 'meu-carrinho','noticias','episodeos','stream','suporte','lancamento','temporada']; 
+    $paginasSemBusca = ['loja', 'meu-carrinho','noticias','episodeos','stream','suporte','lancamento','temporada','confirmar_pagamento']; 
     
 // Verifica se o usuário está logado
 if (isset($_SESSION['user_id'])):
