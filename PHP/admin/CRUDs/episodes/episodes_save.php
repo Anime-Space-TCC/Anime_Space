@@ -1,5 +1,5 @@
 <?php
-require __DIR__ . '/../../shared/conexao.php';
+require __DIR__ . '/../../../shared/conexao.php';
 session_start();
 
 // Verifica se o usuário é admin
