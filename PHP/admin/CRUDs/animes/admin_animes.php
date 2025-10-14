@@ -1,6 +1,6 @@
 <?php
 session_start(); // Inicia a sessão para gerenciar autenticação
-require __DIR__ . '/../../shared/conexao.php'; // Inclui conexão com o banco
+require __DIR__ . '/../../../shared/conexao.php'; // Inclui conexão com o banco
 
 // Verifica se o usuário é admin, se não for redireciona para login
 if (!isset($_SESSION['tipo']) || $_SESSION['tipo'] !== 'admin') {
@@ -32,17 +32,17 @@ unset($anime);
 <head>
   <meta charset="UTF-8" /> 
   <title>Admin - Animes</title>
-  <link rel="stylesheet" href="../../../CSS/style.css?v=2" />
-  <link rel="icon" href="../../../img/slogan3.png" type="image/png"> 
+  <link rel="stylesheet" href="../../../../CSS/style.css?v=2" />
+  <link rel="icon" href="../../../../img/slogan3.png" type="image/png"> 
 </head>
 <body class="admin">
   <div class="admin-links">
     <h1>Gerenciar Animes</h1>
     <nav>
-      <a href="../../../PHP/user/index.php" class="admin-btn">Home</a> 
-      <a href="../../../PHP/admin/animes/anime_form.php" class="admin-btn">Novo Anime</a> 
-      <a href="../../../PHP/admin/index.php" class="admin-btn">Voltar</a> 
-      <a href="../../../PHP/shared/logout.php" class="admin-btn">Sair</a> 
+      <a href="../../../../PHP/user/index.php" class="admin-btn">Home</a> 
+      <a href="../../../../PHP/admin/CRUDs/animes/anime_form.php" class="admin-btn">Novo Anime</a> 
+      <a href="../../../../PHP/admin/dashboard.php" class="admin-btn">Voltar</a> 
+      <a href="../../../../PHP/shared/logout.php" class="admin-btn">Sair</a> 
     </nav>
   </div>
 
@@ -60,13 +60,13 @@ unset($anime);
       <tbody>
         <?php foreach ($animes as $a): ?>
           <tr>
-            <td><img src="../../../img/<?= htmlspecialchars($a['capa']) ?>" alt="<?= htmlspecialchars($a['nome']) ?>" width="100"></td>
+            <td><img src="../../../../img/<?= htmlspecialchars($a['capa']) ?>" alt="<?= htmlspecialchars($a['nome']) ?>" width="100"></td>
             <td><?= htmlspecialchars($a['nome']) ?></td>
             <td><?= htmlspecialchars($a['generos']) ?></td>
             <td class="destaque"><?= number_format($a['nota'], 1) ?></td>
             <td>
-              <a href="../../../PHP/admin/animes/anime_form.php?id=<?= $a['id'] ?>" class="admin-btn">✏️ Editar</a>
-              <a href="../../../PHP/admin/animes/anime_delete.php?id=<?= $a['id'] ?>" class="admin-btn" onclick="return confirm('Excluir este anime?')">🗑️ Excluir</a>
+              <a href="../../../../PHP/admin/CRUDs/animes/anime_form.php?id=<?= $a['id'] ?>" class="admin-btn">Editar</a>
+              <a href="../../../../PHP/admin/CRUDs/animes/anime_delete.php?id=<?= $a['id'] ?>" class="admin-btn" onclick="return confirm('Excluir este anime?')">Excluir</a>
             </td>
           </tr>
         <?php endforeach; ?>

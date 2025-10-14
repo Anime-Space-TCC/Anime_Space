@@ -83,13 +83,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div class="admin-links">
         <h1><?= $id ? "Editar Episódio" : "Cadastrar Novo Episódio" ?></h1> 
         <nav>
-            <a href="../../../PHP/admin/episodes/admin_episodes.php" class="admin-btn">Voltar</a>
+            <a href="../../../PHP/admin/CRUDs/episodes/admin_episodes.php" class="admin-btn">Voltar</a>
             <a href="../../../PHP/shared/logout.php" class="admin-btn">Sair</a>
         </nav>
     </div>
 
     <main class="admin-form">
-        <form method="post" action="../../../PHP/admin/episodes/episodes_save.php">
+        <form method="post" action="../../../PHP/admin/CRUDs/episodes/episodes_save.php">
           <?php if (!empty($id)): ?>
             <input type="hidden" name="id" value="<?= (int)$id ?>">
           <?php endif; ?>

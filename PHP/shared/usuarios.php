@@ -69,7 +69,7 @@ function buscarFotoPerfil(PDO $pdo, int $userId): string {
     $stmt->execute([$userId]);
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    $default = '/../uploads/default.jpg';
+    $default = '/../../uploads/default.jpg';
 
     if ($user && !empty($user['foto_perfil'])) {
         $caminho_fisico = __DIR__ . '/../uploads/' . basename($user['foto_perfil']);
@@ -89,11 +89,11 @@ function usuarioExiste(PDO $pdo, string $username, string $email): bool {
 }
 
 // Cria um novo usuário
-function criarUsuario(PDO $pdo, string $username, string $email, string $password): int|false {
+function criarUsuario(PDO $pdo, string $username, string $email, string $password, string $tipo = 'user'): int|false {
     $hash = password_hash($password, PASSWORD_DEFAULT);
 
-    $stmt = $pdo->prepare("INSERT INTO users (username, email, password) VALUES (?, ?, ?)");
-    if ($stmt->execute([$username, $email, $hash])) {
+    $stmt = $pdo->prepare("INSERT INTO users (username, email, password, tipo) VALUES (?, ?, ?, ?)");
+    if ($stmt->execute([$username, $email, $hash, $tipo])) {
         return (int) $pdo->lastInsertId();
     }
 

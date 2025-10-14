@@ -2540,77 +2540,39 @@ body {
 }
 
 /* =========================
-   ADMIN - ESTILO CRUD
+   ADMIN GERAL
 ========================= */
 
-.admin-dashboard {
-  display: flex;
-  justify-content: center; 
-  align-items: stretch;
-  gap: 20px;
-  padding: 20px;
-  flex-wrap: nowrap; 
-  overflow-x: auto; 
-}
-
-.admin-cards {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr); 
-  gap: 30px; 
-  max-width: 900px;
-  margin: 30px auto; 
-}
-
-.admin-card {
-  background: #111;
-  border: 1px solid #444;
-  border-radius: 15px;
-  padding: 30px;
-  text-align: center;
-  box-shadow: 0 0 15px #000;
-  transition: transform 0.2s;
-  min-height: 250px;
-  font-size: 1.1rem; 
-}
-
-.admin-card:hover {
-  transform: scale(1.05);
-}
-
-.admin-card img {
-  margin-bottom: 15px;
-  max-width: 80px; 
-}
-
-.admin-card h3 {
-  margin: 15px 0;
-  color: #ffbf00;
-  font-size: 1.4rem;
+.admin {
+    background: #0f1720;
+    color: #e6eef8;
+    font-family: Inter, system-ui, Segoe UI, Roboto, Arial;
 }
 
 /* =========================
-    ADMIN LINKS E NAVBAR
+   ADMIN LINKS E NAVBAR
 ========================= */
 
 .admin .admin-links {
-    background-color: rgba(26, 26, 26, 0.9);
-    padding: 15px 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding: 16px 24px;
+    background: #071029;
     flex-wrap: wrap;
     border-bottom: 2px solid #ff9900;
 }
 
 .admin .admin-links h1 {
+    margin: 0;
     font-size: 1.8rem;
     color: #ff9900;
 }
 
 .admin .admin-links nav a {
-    color: #fff;
+    color: #cfe3ff;
+    margin-left: 12px;
     text-decoration: none;
-    margin-left: 15px;
     font-weight: bold;
     transition: 0.3s;
 }
@@ -2619,9 +2581,120 @@ body {
     color: #ff9900;
 }
 
+/* =========================
+   DASHBOARD E CARDS
+========================= */
+
+.admin-dashboard {
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+    gap: 20px;
+    padding: 24px;
+    max-width: 1200px;
+    margin: 0 auto;
+    flex-wrap: wrap;
+}
+
+.admin-cards {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 26px;
+}
+
+.admin-card {
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 8px;
+    width: 220px;
+    text-align: center;
+    padding: 14px;
+    min-height: 250px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.6);
+    transition: transform 0.2s;
+}
+
+.admin-card:hover {
+    transform: scale(1.05);
+}
+
+.admin-card img {
+    margin-bottom: 10px;
+    max-width: 150px;
+}
+
+.admin-card h3 {
+    margin: 15px 0;
+    color: #ffbf00;
+    font-size: 1.4rem;
+}
+
+.admin-btn {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 8px 12px;
+    background: #1f6feb;
+    color: #fff;
+    border-radius: 6px;
+    text-decoration: none;
+}
 
 /* =========================
-   ADMIN TABELA DE ANIMES
+   TABELAS
+========================= */
+
+.admin-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 12px;
+}
+
+.admin-table th,
+.admin-table td {
+    padding: 8px;
+    text-align: center;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+}
+
+.small {
+    font-size: 0.85rem;
+    color: #b9c7d9;
+}
+
+/* =========================
+   ESTATÍSTICAS E CHARTS
+========================= */
+
+.admin-stats {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
+.stat-card {
+    background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+    padding: 14px 18px;
+    border-radius: 8px;
+    min-width: 160px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.6);
+}
+
+.charts {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.chart-card {
+    background: rgba(255,255,255,0.02);
+    padding: 16px;
+    border-radius: 10px;
+    flex: 1 1 420px;
+}
+
+/* =========================
+   ADMIN TABELAS
 ========================= */
 
 .admin .admin-anime-table {
@@ -2662,7 +2735,14 @@ body {
 }
 
 .admin .admin-anime-table img {
-    border-radius: 5px;
+    width: 80px;           
+    height: 80px;          
+    object-fit: cover;     
+    border-radius: 8px;    
+    margin-bottom: 15px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;  
 }
 
 
@@ -2745,14 +2825,14 @@ body {
 
 
 /* =========================
-      ADMIN CHECKBOX (CHIPS)
+      ADMIN CHECKBOX 
 ========================= */
 
 .admin .generos-container {
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
-    max-height: 220px;       /* limite vertical */
+    max-height: 220px;       
     overflow-y: auto;
     padding: 10px;
     border: 1px solid #444;

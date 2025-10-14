@@ -497,6 +497,68 @@ body {
     text-align: center;
 }
 
+/* =========================
+    UPGRADE RPG
+========================= */
+    .upgrade-container {
+        max-width: 500px;
+        margin: 50px auto;
+        background-color: rgba(0,0,0,0.7);
+        padding: 30px;
+        border-radius: 10px;
+        color: #fff;
+    }
+
+    .upgrade-container h1 {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .upgrade-container label {
+        display: block;
+        margin: 15px 0 5px;
+    }
+
+    .upgrade-container input {
+        width: 100%;
+        padding: 8px;
+        border-radius: 5px;
+        border: none;
+    }
+
+    .upgrade-container button {
+        margin-top: 20px;
+        width: 100%;
+        padding: 10px;
+        background-color: #ff9800;
+        color: #000;
+        font-weight: bold;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .upgrade-container button:hover {
+        background-color: #ffa733;
+    }
+
+    .btn-upgrade {
+        display: inline-block;
+        margin-top: 10px;
+        background: linear-gradient(90deg, #ff6a00, #ee0979);
+        color: #fff;
+        font-weight: bold;
+        padding: 10px 16px;
+        border-radius: 8px;
+        text-decoration: none;
+        transition: transform 0.2s, box-shadow 0.2s;
+    }
+    
+    .btn-upgrade:hover {
+        transform: scale(1.05);
+        box-shadow: 0 0 10px #ee0979;
+    }
+
 
 /* =========================
          RESPONSIVO

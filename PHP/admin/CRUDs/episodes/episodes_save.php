@@ -10,7 +10,7 @@ if (!isset($_SESSION['tipo']) || $_SESSION['tipo'] !== 'admin') {
 
 // Verifica se o método da requisição é POST
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    header('Location: ../../../PHP/admin/episodes/admin_episodes.php');
+    header('Location: ../../../PHP/admin/CRUDs/episodes/admin_episodes.php');
     exit();
 }
 
@@ -30,7 +30,7 @@ $linguagem      = trim($_POST['linguagem'] ?? '');
 // Valida obrigatórios
 // validaCamposObrigatorios
 if ($anime_id <= 0 || $temporada <= 0 || $numero <= 0 || $titulo === '' || $video_url === '') {
-    die("Campos obrigatórios ausentes. <a href='../../../PHP/admin/episodes/admin_episodes.php'>Voltar</a>");
+    die("Campos obrigatórios ausentes. <a href='../../../PHP/admin/CRUDs/episodes/admin_episodes.php'>Voltar</a>");
 }
 
 // Normaliza opcionais para NULL quando vazios
@@ -66,17 +66,17 @@ try {
         ]);
     }
 
-    header('Location: ../../../PHP/admin/episodes/admin_episodes.php');
+    header('Location: ../../../PHP/admin/CRUDs/episodes/admin_episodes.php');
     exit();
 
 } catch (PDOException $e) {
     // trataErroBanco
     if ($e->getCode() === '23000') {
         echo "Já existe um episódio com esse número para este anime e temporada. ";
-        echo "<a href='../../../PHP/admin/episodes/admin_episodes.php'>Voltar</a>";
+        echo "<a href='../../../PHP/admin/CRUDs/episodes/admin_episodes.php'>Voltar</a>";
         exit();
     }
     echo "Erro ao salvar episódio: " . htmlspecialchars($e->getMessage()) . " ";
-    echo "<a href='../../../PHP/admin/episodes/admin_episodes.php'>Voltar</a>";
+    echo "<a href='../../../PHP/admin/CRUDs/episodes/admin_episodes.php'>Voltar</a>";
     exit();
 }

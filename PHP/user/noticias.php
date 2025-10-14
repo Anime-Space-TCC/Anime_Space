@@ -82,7 +82,7 @@ $noticias = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <div class="noticia-info">
               <h3><?= htmlspecialchars($n['titulo']) ?></h3>
               <p><?= htmlspecialchars($n['resumo']) ?></p>
-              <a href="<?= !empty($n['url_externa']) ? htmlspecialchars($n['url_externa']) : 'noticia.php?id=' . $n['id'] ?>" target="_blank" class="btn-leia">Leia mais</a>
+              <a href="../../PHP/shared/noticias_redirect.php?id=<?= $n['id'] ?>" target="_blank" class="btn-leia">Leia mais</a>
             </div>
           </article>
         <?php endforeach; ?>
@@ -120,8 +120,8 @@ $noticias = $stmt->fetchAll(PDO::FETCH_ASSOC);
       <h2>💬 Conecte-se com a Comunidade</h2>
       <p>Participe dos nossos grupos para trocar ideias, memes, notícias e indicações!</p>
       <div class="contato-links">
-        <a href="#" class="contato-btn whatsapp">💚 Grupo do WhatsApp</a>
-        <a href="#" class="contato-btn discord">💜 Servidor no Discord</a>
+        <a href="#" class="contato-btn whatsapp">Grupo do WhatsApp</a>
+        <a href="#" class="contato-btn discord">Servidor no Discord</a>
       </div>
     </section>
   </main>

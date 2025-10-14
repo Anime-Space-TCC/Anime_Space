@@ -1,10 +1,10 @@
 <?php
-require __DIR__ . '/../../shared/conexao.php';
+require __DIR__ . '/../../../shared/conexao.php';
 session_start();
 
 // Verifica se o usuário é admin
 if (!isset($_SESSION['tipo']) || $_SESSION['tipo'] !== 'admin') {
-    header('Location: ../../../PHP/user/login.php');
+    header('Location: ../../../../PHP/user/login.php');
     exit();
 }
 
@@ -81,8 +81,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8"> 
     <title><?= $id ? "Editar Anime" : "Novo Anime" ?></title> 
-    <link rel="stylesheet" href="../../../CSS/style.css?v=2" />
-    <link rel="icon" href="../../../img/slogan3.png" type="image/png"> 
+    <link rel="stylesheet" href="../../../../CSS/style.css?v=2" />
+    <link rel="icon" href="../../../../img/slogan3.png" type="image/png"> 
 </head>
 <body class="admin">
     <div class="admin-links">

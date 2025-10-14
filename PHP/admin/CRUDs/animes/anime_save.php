@@ -1,10 +1,10 @@
 <?php
-require __DIR__ . '/../../shared/conexao.php';
+require __DIR__ . '/../../../shared/conexao.php';
 session_start();
 
 // Verifica se o usuário é admin
 if (!isset($_SESSION['tipo']) || $_SESSION['tipo'] !== 'admin') {
-    header('Location: ../../PHP/user/login.php');
+    header('Location: ../../../../PHP/user/login.php');
     exit();
 }
 

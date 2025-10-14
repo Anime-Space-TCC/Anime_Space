@@ -1,10 +1,10 @@
 <?php
 session_start();
-require __DIR__ . '/../../shared/conexao.php';
+require __DIR__ . '/../../../shared/conexao.php';
 
 // Verifica se o usuário é admin
 if (!isset($_SESSION['tipo']) || $_SESSION['tipo'] !== 'admin') {
-    header('Location: ../../../PHP/user/login.php');
+    header('Location: ../../../../PHP/user/login.php');
     exit();
 }
 
@@ -23,17 +23,17 @@ $episodios = $pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
 <head>
   <meta charset="UTF-8" /> 
   <title>Admin - Episódios</title>
-  <link rel="stylesheet" href="../../../CSS/style.css?v=2" />
-  <link rel="icon" href="../../../img/slogan3.png" type="image/png"> 
+  <link rel="stylesheet" href="../../../../CSS/style.css?v=2" />
+  <link rel="icon" href="../../../../img/slogan3.png" type="image/png"> 
 </head>
 <body class="admin">
   <div class="admin-links">
     <h1>Gerenciar Episódios</h1>
     <nav>
-      <a href="../../../PHP/user/index.php" class="admin-btn">Home</a> 
-      <a href="../../../PHP/admin/episodes/episodes_form.php" class="admin-btn">Novo Episódio</a> 
-      <a href="../../../PHP/admin/index.php" class="admin-btn">Voltar</a> 
-      <a href="../../../PHP/shared/logout.php" class="admin-btn">Sair</a> 
+      <a href="../../../../PHP/user/index.php" class="admin-btn">Home</a> 
+      <a href="../../../../PHP/admin/episodes/episodes_form.php" class="admin-btn">Novo Episódio</a> 
+      <a href="../../../../PHP/admin/dashboard.php" class="admin-btn">Voltar</a> 
+      <a href="../../../../PHP/shared/logout.php" class="admin-btn">Sair</a> 
     </nav>
   </div>
 
@@ -54,7 +54,7 @@ $episodios = $pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
           <tr>
             <td>
               <?php if (!empty($e['miniatura'])): ?>
-                <img src="../../../img/<?= htmlspecialchars($e['miniatura']) ?>" alt="<?= htmlspecialchars($e['titulo']) ?>" width="100">
+                <img src="../../../../img/<?= htmlspecialchars($e['miniatura']) ?>" alt="<?= htmlspecialchars($e['titulo']) ?>" width="100">
               <?php else: ?>
                 —
               <?php endif; ?>
@@ -64,8 +64,8 @@ $episodios = $pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
             <td><?= htmlspecialchars($e['numero']) ?></td>
             <td><?= htmlspecialchars($e['titulo']) ?></td>
             <td>
-              <a href="../../../PHP/admin/episodes/episodes_form.php?id=<?= $e['id'] ?>" class="admin-btn">✏️ Editar</a>
-              <a href="../../../PHP/admin/episodes/episodes_delete.php?id=<?= $e['id'] ?>" class="admin-btn" onclick="return confirm('Excluir este episódio?')">🗑️ Excluir</a>
+              <a href="../../../../PHP/admin/CRUDs/episodes/episodes_form.php?id=<?= $e['id'] ?>" class="admin-btn">Editar</a>
+              <a href="../../../../PHP/admin/CRUDs/episodes/episodes_delete.php?id=<?= $e['id'] ?>" class="admin-btn" onclick="return confirm('Excluir este episódio?')">Excluir</a>
             </td>
           </tr>
         <?php endforeach; ?>

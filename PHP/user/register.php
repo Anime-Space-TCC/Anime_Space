@@ -48,21 +48,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <?php endif; ?>
 
     <form action="register.php" method="post">
-      <div class="textbox">
+      <div class="campo-input">
         <input type="text" name="username" placeholder="Nome de usuário" required 
                value="<?= htmlspecialchars($_POST['username'] ?? '') ?>" />
       </div>
-      <div class="textbox">
+      <div class="campo-input">
         <input type="email" name="email" placeholder="Email" required 
                value="<?= htmlspecialchars($_POST['email'] ?? '') ?>" />
       </div>
-      <div class="textbox">
+      <div class="campo-input">
         <input type="password" name="password" placeholder="Senha" required />
       </div>
-      <div class="textbox">
+      <div class="campo-input">
         <input type="password" name="password_confirm" placeholder="Confirme a senha" required />
       </div>
-      <input type="submit" value="Cadastrar" class="btn" />
+      <input type="submit" value="Cadastrar" class="botao-login" />
     </form>
 
     <div class="links">

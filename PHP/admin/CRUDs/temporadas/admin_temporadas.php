@@ -1,10 +1,10 @@
 <?php
 session_start();
-require __DIR__ . '/../../shared/conexao.php';
+require __DIR__ . '/../../../shared/conexao.php';
 
 // Verifica se o usuário é admin
 if (!isset($_SESSION['tipo']) || $_SESSION['tipo'] !== 'admin') {
-    header('Location: ../../../PHP/user/login.php');
+    header('Location: ../../../../PHP/user/login.php');
     exit();
 }
 
@@ -21,17 +21,17 @@ $temporadas = $pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
 <head>
   <meta charset="UTF-8">
   <title>Admin - Temporadas</title>
-  <link rel="stylesheet" href="../../../CSS/style.css?v=2">
-  <link rel="icon" href="../../../img/slogan3.png" type="image/png">
+  <link rel="stylesheet" href="../../../../CSS/style.css?v=2">
+  <link rel="icon" href="../../../../img/slogan3.png" type="image/png">
 </head>
 <body class="admin">
   <div class="admin-links">
     <h1>Gerenciar Temporadas</h1>
     <nav>
-      <a href="../../../PHP/user/index.php" class="admin-btn">Home</a>
-      <a href="../../../PHP/admin/temporadas/temporadas_form.php" class="admin-btn">Nova Temporada</a>
-      <a href="../../../PHP/admin/index.php" class="admin-btn">Voltar</a> 
-      <a href="../../../PHP/shared/logout.php" class="admin-btn">Sair</a>
+      <a href="../../../../PHP/user/index.php" class="admin-btn">Home</a>
+      <a href="../../../../PHP/admin/temporadas/temporadas_form.php" class="admin-btn">Nova Temporada</a>
+      <a href="../../../../PHP/admin/dashboard.php" class="admin-btn">Voltar</a>
+      <a href="../../../../PHP/shared/logout.php" class="admin-btn">Sair</a>
     </nav>
   </div>
 
@@ -66,8 +66,8 @@ $temporadas = $pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
             <?php endif; ?>
           </td>
           <td>
-            <a href="../../../PHP/admin/temporadas/temporadas_form.php?id=<?= $t['id'] ?>" class="admin-btn">✏️ Editar</a>
-            <a href="../../../PHP/admin/temporadas/temporadas_delete.php?id=<?= $t['id'] ?>" class="admin-btn" onclick="return confirm('Excluir esta temporada?')">🗑️ Excluir</a>
+            <a href="../../../../PHP/admin/CRUDs/temporadas/temporadas_form.php?id=<?= $t['id'] ?>" class="admin-btn">Editar</a>
+            <a href="../../../../PHP/admin/CRUDs/temporadas/temporadas_delete.php?id=<?= $t['id'] ?>" class="admin-btn" onclick="return confirm('Excluir esta temporada?')">Excluir</a>
           </td>
         </tr>
         <?php endforeach; ?>

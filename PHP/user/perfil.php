@@ -33,6 +33,11 @@ $nivel = $dadosXP['nivel'] ?? 1;
 $xp = $dadosXP['xp'] ?? 0;
 $xpNecessario = $nivel * 100;
 $porcentagem = min(100, ($xp / $xpNecessario) * 100);
+
+// Verifica se o perfil já foi aprimorado
+$stmt = $pdo->prepare("SELECT perfil_completo FROM users WHERE id = ?");
+$stmt->execute([$userId]);
+$perfilCompleto = (bool)$stmt->fetchColumn();
 ?>
 
 <!DOCTYPE html>
@@ -54,7 +59,7 @@ $porcentagem = min(100, ($xp / $xpNecessario) * 100);
     <a href="../../PHP/user/editar_perfil.php">Editar Perfil</a>
 
     <?php if ($userTipo === 'admin'): ?>
-        <a href="../../PHP/admin/index.php">Administrador</a>
+        <a href="../../PHP/admin/dashboard.php">Administrador</a>
     <?php endif; ?>
 
     <form action="../shared/logout.php" method="post" class="form-logout">
@@ -77,7 +82,10 @@ $porcentagem = min(100, ($xp / $xpNecessario) * 100);
                     <!-- Botão abaixo da foto -->
                     <form action="../../PHP/user/perfil.php" method="post" enctype="multipart/form-data">
                       <label for="foto" class="btn-upload">Alterar Foto</label>
-                      <input type="file" name="foto" id="foto" accept="image/*" style="display:none" onchange="this.form.submit()">
+                      <input type="file" name="foto" id="foto" accept="image/*" style="display:none" onchange="this.form.submit()"><br>
+                      <?php if (!$perfilCompleto): ?>
+                        <a href="../../PHP/user/upgrade_perfil.php" class="btn-upgrade">🔥 Aprimorar Perfil</a>
+                      <?php endif; ?>
                     </form>
 
                     <div class="info-player">
