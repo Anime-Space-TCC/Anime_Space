@@ -2558,7 +2558,7 @@ body {
     justify-content: space-between;
     align-items: center;
     padding: 16px 24px;
-    background: #071029;
+    background: #000000;
     flex-wrap: wrap;
     border-bottom: 2px solid #ff9900;
 }
@@ -2590,8 +2590,8 @@ body {
     justify-content: center;
     align-items: stretch;
     gap: 20px;
-    padding: 24px;
-    max-width: 1200px;
+    padding: 25px;
+    max-width: 1000px;
     margin: 0 auto;
     flex-wrap: wrap;
 }
@@ -2604,7 +2604,7 @@ body {
 }
 
 .admin-card {
-    background: rgba(255, 255, 255, 0.03);
+    background: rgba(0, 0, 0, 0.03);
     border-radius: 8px;
     width: 220px;
     text-align: center;
@@ -2822,7 +2822,6 @@ body {
 .admin .admin-form button:hover {
     background-color: #e68a00;
 }
-
 
 /* =========================
       ADMIN CHECKBOX 

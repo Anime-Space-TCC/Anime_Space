@@ -3,6 +3,7 @@ require_once '../shared/auth.php';
 require_once '../shared/usuarios.php';
 require_once '../shared/perfil.php';
 require_once '../shared/gamificacao.php';
+require __DIR__ . '/../shared/acessos.php';
 
 // Garante login
 verificarLogin();

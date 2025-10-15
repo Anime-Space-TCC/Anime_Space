@@ -25,8 +25,8 @@ if (!isset($_SESSION['tipo']) || $_SESSION['tipo'] !== 'admin') {
   <div class="admin-links">
     <h1>Painel de Controle</h1>
     <nav>
-      <a href="../user/index.php">🏠 Home</a>
-      <a href="../shared/logout.php" class="admin-btn">🚪 Sair</a>
+      <a href="../user/index.php">Home</a>
+      <a href="../shared/logout.php" class="admin-btn">Sair</a>
     </nav>
   </div>
 
@@ -42,8 +42,13 @@ if (!isset($_SESSION['tipo']) || $_SESSION['tipo'] !== 'admin') {
 
     <div class="charts">
       <div class="chart-card">
-        <h3>Crescimento de Usuários (ult. 6 meses)</h3>
-        <canvas id="chartUsuarios" height="130"></canvas>
+        <h3>Idade dos Usuários</h3>
+        <canvas id="chartIdade" height="130"></canvas>
+      </div>
+
+      <div class="chart-card">
+        <h3>Nacionalidade dos Usuários</h3>
+        <canvas id="chartNacionalidade" height="130"></canvas>
       </div>
 
       <div class="chart-card">
@@ -52,7 +57,7 @@ if (!isset($_SESSION['tipo']) || $_SESSION['tipo'] !== 'admin') {
       </div>
     </div>
 
-    <section style="margin-top:18px;">
+    <section class="admin-dashboard">
       <h3>Últimos acessos</h3>
       <div class="small">Os 10 acessos mais recentes registrados na tabela <code>acessos</code>.</div>
       <table class="admin-table" id="tabela-acessos" aria-live="polite">
@@ -60,19 +65,16 @@ if (!isset($_SESSION['tipo']) || $_SESSION['tipo'] !== 'admin') {
           <tr>
             <th>ID</th>
             <th>Usuário</th>
-            <th>IP</th>
             <th>Página</th>
             <th>Origem</th>
-            <th>Tipo</th>
             <th>Data</th>
           </tr>
         </thead>
         <tbody>
-          <tr><td colspan="7">Carregando...</td></tr>
+          <tr><td colspan="5">Carregando...</td></tr>
         </tbody>
       </table>
     </section>
-    <br>
     <h3>Gerenciar CRUDs</h3>
     <div class="admin-cards">
       <div class="admin-card">
@@ -103,78 +105,7 @@ if (!isset($_SESSION['tipo']) || $_SESSION['tipo'] !== 'admin') {
     </div>
   </main>
 
-<script>
-async function carregarAnalytics() {
-  try {
-    const res = await fetch('../../PHP/admin/analytics.php', { credentials: 'same-origin' });
-    if (!res.ok) throw new Error('Falha ao buscar analytics: ' + res.status);
-    const data = await res.json();
-
-    // ===== Cards de visão geral =====
-    const statWrap = document.getElementById('estatisticas-gerais');
-    statWrap.innerHTML = `
-      <div class="stat-card">👥 Usuários<br><strong>${data.geral.usuarios}</strong></div>
-      <div class="stat-card">🎬 Animes<br><strong>${data.geral.animes}</strong></div>
-      <div class="stat-card">📺 Episódios<br><strong>${data.geral.episodios}</strong></div>
-      <div class="stat-card">🌍 Acessos<br><strong>${data.geral.acessos}</strong></div>
-    `;
-
-    // ===== Gráfico usuários por mês =====
-    new Chart(document.getElementById('chartUsuarios'), {
-      type: 'line',
-      data: {
-        labels: data.usuarios_por_mes.map(x => x.mes),
-        datasets: [{
-          label: 'Novos usuários',
-          data: data.usuarios_por_mes.map(x => x.total),
-          borderColor: 'blue',
-          fill: false
-        }]
-      }
-    });
-
-    // ===== Gráfico acessos por dia =====
-    new Chart(document.getElementById('chartAcessos'), {
-      type: 'bar',
-      data: {
-        labels: data.acessos_por_dia.map(x => x.dia),
-        datasets: [{
-          label: 'Acessos',
-          data: data.acessos_por_dia.map(x => x.total),
-          backgroundColor: 'green'
-        }]
-      }
-    });
-
-    // ===== Últimos acessos =====
-    const tbody = document.querySelector('#tabela-acessos tbody');
-    tbody.innerHTML = '';
-    if(data.acessos_recentes.length) {
-      data.acessos_recentes.forEach(a => {
-        const tr = document.createElement('tr');
-        tr.innerHTML = `
-          <td>${a.id}</td>
-          <td>${a.usuario || 'Visitante'}</td>
-          <td>${a.ip}</td>
-          <td>${a.pagina}</td>
-          <td>${a.origem}</td>
-          <td>${a.tipo}</td>
-          <td>${new Date(a.data_acesso).toLocaleString()}</td>
-        `;
-        tbody.appendChild(tr);
-      });
-    } else {
-      tbody.innerHTML = '<tr><td colspan="7">Nenhum acesso registrado.</td></tr>';
-    }
-
-  } catch(err) {
-    console.error(err);
-    alert('Erro ao carregar dados: ' + err.message);
-  }
-}
-
-carregarAnalytics();
-</script>
+<script src="../../JS/administrador.js"></script>
 
 </body>
 </html>

@@ -2,6 +2,7 @@
 require __DIR__ . '/../shared/conexao.php';
 require __DIR__ . '/../shared/animes.php';
 require __DIR__ . '/../shared/generos.php';
+require __DIR__ . '/../shared/acessos.php';
 
 // Buscar dados
 $topAnimes = buscarTopAnimes($pdo, 5);

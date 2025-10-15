@@ -2,6 +2,7 @@
 session_start();
 require __DIR__ . '/../shared/auth.php';
 require __DIR__ . '/../shared/suporte.php';
+require __DIR__ . '/../shared/acessos.php';
 
 // Bloqueia acesso se não estiver logado
 verificarLogin();

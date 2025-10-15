@@ -11,7 +11,7 @@ if (!usuarioLogado()) {
     exit();
 }
 
-//Obtém o ID do usuário atualmente autenticado no sistema.
+// Obtém o ID do usuário atualmente autenticado
 $id = obterUsuarioAtualId();
 
 // 2. Busca usuário
@@ -29,19 +29,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Validação básica
     if ($novoNome === '' || $novoEmail === '') {
-    $msg = "Preencha os campos de nome e email.";
+        $msg = "Preencha os campos de nome e email.";
     } else {
-    if ($novaSenha !== '') {
-        // Atualizar com a nova senha
-        $hashSenha = password_hash($novaSenha, PASSWORD_DEFAULT);
-        $atualizou = atualizarUsuario($pdo, $id, $novoNome, $novoEmail, $hashSenha);
-    } else {
-        // Atualizar apenas nome e email
-        $atualizou = atualizarUsuario($pdo, $id, $novoNome, $novoEmail, null);
-    }
+        if ($novaSenha !== '') {
+            // Atualizar com a nova senha
+            $hashSenha = password_hash($novaSenha, PASSWORD_DEFAULT);
+            $atualizou = atualizarUsuario($pdo, $id, $novoNome, $novoEmail, $hashSenha);
+        } else {
+            // Atualizar apenas nome e email
+            $atualizou = atualizarUsuario($pdo, $id, $novoNome, $novoEmail, null);
+        }
 
-    $msg = $atualizou ? "Perfil atualizado com sucesso!" : "Erro ao atualizar perfil.";
-}
+        $msg = $atualizou ? "Perfil atualizado com sucesso!" : "Erro ao atualizar perfil.";
+    }
 }
 ?>
 <!DOCTYPE html>
@@ -52,31 +52,35 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="stylesheet" href="../../CSS/stylePerf.css">
     <link rel="icon" href="../../img/slogan3.png" type="image/png">
 </head>
-<body class="streaming">
-        <section class="editar-perfil">
-            <h1>Editar Perfil</h1>
+<body class="perfil">
+
+    <main class="perfil-container">
+        <section class="perfil-editar-card">
+            <h1 class="perfil-titulo">Editar Perfil</h1>
 
             <?php if ($msg !== ''): ?>
-                <p class="mensagem-sucesso"><?= htmlspecialchars($msg) ?></p>
+                <p class="perfil-mensagem"><?= htmlspecialchars($msg) ?></p>
             <?php endif; ?>
 
-            <form method="POST">
-                <label for="username">Nome de usuário:</label>
-                <input type="text" name="username" id="username"
+            <form method="POST" class="perfil-form">
+                <label for="username" class="perfil-label">Nome de usuário:</label>
+                <input type="text" name="username" id="username" class="perfil-input"
                     value="<?= htmlspecialchars($user['username']) ?>" required>
 
-                <label for="email">Email:</label>
-                <input type="email" name="email" id="email"
+                <label for="email" class="perfil-label">Email:</label>
+                <input type="email" name="email" id="email" class="perfil-input"
                     value="<?= htmlspecialchars($user['email']) ?>" required>
 
-                <label for="password">Nova Senha:</label>
-                <input type="password" name="password" id="password" 
-                placeholder="Digite uma nova senha" required>
+                <label for="password" class="perfil-label">Nova Senha:</label>
+                <input type="password" name="password" id="password" class="perfil-input"
+                    placeholder="Deixe em branco para manter a senha atual">
 
-                <button type="submit">Salvar Alterações</button>
+                <button type="submit" class="perfil-btn">Salvar Alterações</button>
             </form>
 
-            <a href="../user/perfil.php" class="btn-voltar">Voltar</a>
+            <a href="../user/perfil.php" class="perfil-link-voltar">Voltar</a>
         </section>
+    </main>
+
 </body>
 </html>

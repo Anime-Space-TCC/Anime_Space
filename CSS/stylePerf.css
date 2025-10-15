@@ -284,7 +284,7 @@ body {
 
 
 /* =========================
-       CARDS (Favoritos, Histórico, Recomendações)
+       CARDS 
 ========================= */
 
 .cards-container {
@@ -341,7 +341,7 @@ body {
 
 
 /* =========================
-     FORMULÁRIO AVATAR/EDITAR
+     FORMULÁRIO AVATAR
 ========================= */
 
 .upload-avatar-form {
@@ -380,23 +380,69 @@ body {
     box-shadow: 0 0 8px #ff9f00;
 }
 
-.editar-perfil label {
+
+/* =========================
+         EDITAR PERFIL
+========================= */
+
+.perfil {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: rgba(0, 0, 0, 0.8); /* fundo mais escuro */
+}
+
+.perfil-container {
+    width: 100%;
+    max-width: 650px;  /* <-- Aumentei as laterais (antes 500px) */
+    padding: 30px 40px; /* <-- Mais espaço interno nas laterais */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.perfil-editar-card {
+    background-color: rgba(0, 0, 0, 0.6); /* meio preto opaco */
+    padding: 30px 40px; /* <-- aumentei o padding lateral */
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(255, 159, 0, 0.3); /* corrigido */
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.perfil-titulo {
+    text-align: center;
+    font-size: 1.8rem;
+    color: #ff9f00; 
+    margin-bottom: 10px;
+}
+
+.perfil-mensagem {
+    text-align: center;
+    color: #2e7d32; 
+    font-weight: 500;
+}
+
+.perfil-form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.perfil-label {
     display: block;
     margin: 0;
     padding-left: 5px;
     font-weight: bold;
     font-size: 1rem;
     color: #ff9f00;
-    text-align: left;
-    width: 100%;
 }
 
-.editar-perfil input[type="text"],
-.editar-perfil input[type="email"],
-.editar-perfil input[type="password"],
-.editar-perfil input[type="file"] {
+.perfil-input {
     width: calc(100% - 20px);
-    margin: 5px 10px 15px 10px;
+    margin: 5px 10px 10px 10px;
     padding: 12px 15px;
     border-radius: 8px;
     border: 2px solid #ff9f00;
@@ -406,95 +452,61 @@ body {
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-
-/* =========================
-         EDITAR PERFIL
-========================= */
-
-.editar-perfil {
-    display: flex;
-    flex-direction: column;
-    max-width: 600px;
-    margin: 110px auto;
-    padding: 40px 30px;
-    background-color: rgba(0, 0, 0, 0.65);
-    border-radius: 20px;
-    box-shadow: 0 5px 15px rgb(175, 134, 0);
-    color: #eee;
-    font-family: 'Segoe UI', sans-serif;
+.perfil-input:focus {
+    border-color: #ffb733;
+    box-shadow: 0 0 5px rgba(255, 159, 0, 0.6);
 }
 
-.editar-perfil .topo-editar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 40px;
-}
-
-.editar-perfil .topo-editar h1 {
-    color: #ff9f00;
-    font-size: 2rem;
-    margin: 0;
-    text-shadow: 1px 1px 3px #000;
-}
-
-.editar-perfil .btn-voltar {
-    padding: 8px 20px;
-    background-color: transparent;
-    color: #ff9f00;
-    font-weight: 700;
-    font-size: 1rem;
-    cursor: pointer;
-    text-decoration: none;
-    border-radius: 8px;
-    transition: background-color 0.3s, color 0.3s, box-shadow 0.3s;
-}
-
-.editar-perfil .btn-voltar:hover {
+.perfil-btn {
+    padding: 10px;
     background-color: #ff9f00;
-    color: #000;
-    box-shadow: 0 0 6px #fff;
-}
-
-.editar-perfil form {
-    display: flex;
-    flex-direction: column;
-    margin-top: 20px;
-}
-
-.editar-perfil input:focus {
-    border-color: #fff;
-    box-shadow: 0 0 8px #ff9f00;
-}
-
-.editar-perfil button {
-    align-self: center;
-    padding: 12px 25px;
+    color: #222;
+    font-weight: bold;
     border: none;
-    border-radius: 25px;
-    background-color: #ff9f00;
-    color: #000;
-    font-weight: 700;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: background-color 0.3s, color 0.3s, box-shadow 0.3s;
-    margin-top: 20px;
-    margin-bottom: 20px;
-    box-shadow: 0 4px 10px rgba(255, 159, 0, 0.7);
-}
-
-.editar-perfil button:hover {
-    background-color: #fff;
-    color: #ff9f00;
-}
-
-.editar-perfil .mensagem-sucesso {
-    background-color: #28a745;
-    color: #fff;
-    padding: 8px 12px;
     border-radius: 8px;
-    margin-bottom: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.perfil-btn:hover {
+    background-color: #ffb733;
+    color: #111;
+}
+
+.perfil-link-voltar {
     text-align: center;
+    display: block;
+    margin-top: 10px;
+    color: #ff9f00;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.perfil-link-voltar:hover {
+    color: #ffb733;
+}
+
+/* ============================
+   Responsividade
+============================ */
+@media (max-width: 500px) {
+    .perfil-container {
+        padding: 10px;
+    }
+
+    .perfil-editar-card {
+        padding: 20px 15px;
+    }
+
+    .perfil-titulo {
+        font-size: 1.6rem;
+    }
+
+    .perfil-btn {
+        font-size: 0.95rem;
+        padding: 9px;
+    }
 }
 
 /* =========================
