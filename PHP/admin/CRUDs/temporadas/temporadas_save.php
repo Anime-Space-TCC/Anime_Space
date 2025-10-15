@@ -1,16 +1,16 @@
 <?php
-require __DIR__ . '/../../shared/conexao.php';
+require __DIR__ . '/../../../shared/conexao.php';
 session_start();
 
 // Verifica se o usuário é admin
 if (!isset($_SESSION['tipo']) || $_SESSION['tipo'] !== 'admin') {
-    header('Location: ../../../PHP/user/login.php');
+    header('Location: ../../../../PHP/user/login.php');
     exit();
 }
 
 // Verifica se o método é POST
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    header('Location: ../../../PHP/admin/temporadas/admin_temporadas.php');
+    header('Location: ../../../../PHP/admin/CRUDs/temporadas/admin_temporadas.php');
     exit();
 }
 
@@ -26,7 +26,7 @@ $capa          = trim($_POST['capa'] ?? '');
 
 // Valida campos obrigatórios
 if (!$anime_id || !$numero) {
-    die("Anime e número da temporada são obrigatórios. <a href='../../../PHP/admin/temporadas/admin_temporadas.php'>Voltar</a>");
+    die("Anime e número da temporada são obrigatórios. <a href='../../../../PHP/admin/CRUDs/temporadas/admin_temporadas.php'>Voltar</a>");
 }
 
 try {
@@ -49,14 +49,14 @@ try {
     }
 
     // Redireciona após salvar
-    header('Location: ../../../PHP/admin/temporadas/admin_temporadas.php');
+    header('Location: ../../../../PHP/admin/CRUDs/temporadas/admin_temporadas.php');
     exit();
 
 } catch (PDOException $e) {
     // Trata erro de duplicidade
     if ($e->getCode() === '23000') {
         echo "⚠️ Já existe uma temporada com esse número para este anime. ";
-        echo "<a href='../../../PHP/admin/temporadas/admin_temporadas.php'>Voltar</a>";
+        echo "<a href='../../../../PHP/admin/CRUDs/temporadas/admin_temporadas.php'>Voltar</a>";
         exit();
     }
     // Trata outros erros

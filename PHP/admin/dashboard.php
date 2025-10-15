@@ -88,7 +88,7 @@ if (!isset($_SESSION['tipo']) || $_SESSION['tipo'] !== 'admin') {
       <div class="admin-card">
         <img src="../../img/slogan3.png" alt="Episódios" style="width:70px;height:70px;object-fit:contain">
         <h4>Episódios</h4>
-        <a href="../../PHP/admin/CRUDs/episodios/admin_episodes.php" class="admin-btn">📂 Acessar</a>
+        <a href="../../PHP/admin/CRUDs/episodes/admin_episodes.php" class="admin-btn">📂 Acessar</a>
       </div>
       <div class="admin-card">
         <img src="../../img/slogan3.png" alt="Produtos" style="width:70px;height:70px;object-fit:contain">

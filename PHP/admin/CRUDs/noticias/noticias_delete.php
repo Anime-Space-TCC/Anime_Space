@@ -14,7 +14,7 @@ if ($id) {
     $stmt->execute([$id]);
     $noticia = $stmt->fetch(PDO::FETCH_ASSOC);
     if ($noticia && $noticia['imagem']) {
-        @unlink(__DIR__ . '/../../../uploads/' . $noticia['imagem']);
+        @unlink(__DIR__ . '/../../../../img/' . $noticia['imagem']);
     }
 
     // Deleta a notícia

@@ -18,7 +18,7 @@ $imagem_nome = null;
 if (!empty($_FILES['imagem']['name'])) {
     $ext = pathinfo($_FILES['imagem']['name'], PATHINFO_EXTENSION);
     $imagem_nome = uniqid() . '.' . $ext;
-    move_uploaded_file($_FILES['imagem']['tmp_name'], __DIR__ . '/../../../uploads/' . $imagem_nome);
+    move_uploaded_file($_FILES['imagem']['tmp_name'], __DIR__ . '/../../../../img/' . $imagem_nome);
 }
 
 if ($id) {

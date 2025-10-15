@@ -26,7 +26,7 @@ $noticias = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <h1>Gerenciar Noticias</h1>
     <nav>
       <a href="../../../../PHP/user/index.php" class="admin-btn">Home</a> 
-      <a href="../../../../PHP/admin/noticias/noticias_form.php" class="admin-btn">Nova Notícia</a> 
+      <a href="../../../../PHP/admin/CRUDs/noticias/noticias_form.php" class="admin-btn">Nova Notícia</a> 
       <a href="../../../../PHP/admin/dashboard.php" class="admin-btn">Voltar</a> 
       <a href="../../../../PHP/shared/logout.php" class="admin-btn">Sair</a> 
     </nav>
@@ -40,6 +40,7 @@ $noticias = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <th>Título</th>
             <th>Tags</th>
             <th>Visualizações</th>
+            <th>Imagem</th>
             <th>Ações</th>
         </tr>
     </thead>
@@ -51,7 +52,14 @@ $noticias = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <td><?= htmlspecialchars($noticia['tags']) ?></td>
             <td><?= $noticia['visualizacoes'] ?></td>
             <td>
-                <a href="noticias_form.php?id=<?= $noticia['id'] ?>"  class="admin-btn">Editar</a> |
+              <?php if (!empty($noticia['imagem'])): ?>
+                <img src="../../../../img/<?= htmlspecialchars($noticia['imagem']) ?>" alt="<?= htmlspecialchars($noticia['titulo']) ?>">
+              <?php else: ?>
+                <em>Sem imagem</em>
+              <?php endif; ?>
+            </td>
+            <td>
+                <a href="noticias_form.php?id=<?= $noticia['id'] ?>"  class="admin-btn">Editar</a>
                 <a href="noticias_delete.php?id=<?= $noticia['id'] ?>" onclick="return confirm('Deseja realmente deletar?');" class="admin-btn">Deletar</a>
             </td>
         </tr>

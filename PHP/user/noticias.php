@@ -18,7 +18,7 @@ $slideStmt = $pdo->query("SELECT * FROM noticias ORDER BY data_publicacao DESC L
 $slides = $slideStmt->fetchAll(PDO::FETCH_ASSOC);
 
 // Paginação
-$porPagina = 4;
+$porPagina = 6;
 $pagina = isset($_GET['pagina']) ? (int) $_GET['pagina'] : 1;
 if ($pagina < 1) $pagina = 1;
 $offset = ($pagina - 1) * $porPagina;
@@ -64,7 +64,7 @@ $noticias = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     <!-- 📜 HISTÓRIA DOS ANIMES -->
     <section class="historia-section">
-      <h2>📜 História dos Animes</h2>
+      <h2>História dos Animes</h2>
       <p>Desde as primeiras animações japonesas no início do século XX, 
         os animes evoluíram de curtas experimentais para obras mundialmente reconhecidas. 
         Séries como *Astro Boy (1963)* marcaram o início da indústria moderna, e décadas 
@@ -74,7 +74,7 @@ $noticias = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     <!-- 🗞️ NOTÍCIAS DA COMUNIDADE -->
     <section class="noticias-section">
-      <h2>🗞️ Notícias Recentes</h2>
+      <h2>Notícias Recentes</h2>
       <div class="noticias-grid">
         <?php foreach ($noticias as $n): ?>
           <article class="noticia-card">
@@ -106,7 +106,7 @@ $noticias = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     <!-- 🔥 TOP 5 POPULARES -->
     <aside class="populares-section">
-      <h2>🔥 Mais Populares</h2>
+      <h2>Mais Populares</h2>
       <?php foreach ($topNoticias as $t): ?>
         <div class="mini-noticia">
           <img src="../../img/<?= htmlspecialchars($t['imagem']) ?>" alt="<?= htmlspecialchars($t['titulo']) ?>">

@@ -1,10 +1,10 @@
 <?php
-require __DIR__ . '/../../shared/conexao.php';
+require __DIR__ . '/../../../shared/conexao.php';
 session_start();
 
 // Verifica admin
 if (!isset($_SESSION['tipo']) || $_SESSION['tipo'] !== 'admin') {
-    header('Location: ../../../PHP/user/login.php');
+    header('Location: ../../../../PHP/user/login.php');
     exit();
 }
 
@@ -35,20 +35,20 @@ if ($id) {
 <head>
   <meta charset="UTF-8">
   <title><?= $id ? "Editar Temporada" : "Nova Temporada" ?></title>
-  <link rel="stylesheet" href="../../../CSS/style.css?v=2">
-  <link rel="icon" href="../../../img/slogan3.png" type="image/png">
+  <link rel="stylesheet" href="../../../../CSS/style.css?v=2">
+  <link rel="icon" href="../../../../img/slogan3.png" type="image/png">
 </head>
 <body class="admin">
   <div class="admin-links">
     <h1><?= $id ? "Editar Temporada" : "Cadastrar Nova Temporada" ?></h1>
     <nav>
-      <a href="../../../PHP/admin/temporadas/admin_temporadas.php" class="admin-btn">Voltar</a>
-      <a href="../../../PHP/shared/logout.php" class="admin-btn">Sair</a>
+      <a href="../../../../PHP/admin/CRUDs/temporadas/admin_temporadas.php" class="admin-btn">Voltar</a>
+      <a href="../../../../PHP/shared/logout.php" class="admin-btn">Sair</a>
     </nav>
   </div>
 
   <main class="admin-form">
-    <form method="post" action="../../../PHP/admin/temporadas/temporadas_save.php">
+    <form method="post" action="../../../../PHP/admin/CRUDs/temporadas/temporadas_save.php">
       <?php if ($id): ?>
         <input type="hidden" name="id" value="<?= (int)$id ?>">
       <?php endif; ?>

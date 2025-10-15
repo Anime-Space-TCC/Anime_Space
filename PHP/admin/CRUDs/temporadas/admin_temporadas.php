@@ -29,7 +29,7 @@ $temporadas = $pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
     <h1>Gerenciar Temporadas</h1>
     <nav>
       <a href="../../../../PHP/user/index.php" class="admin-btn">Home</a>
-      <a href="../../../../PHP/admin/temporadas/temporadas_form.php" class="admin-btn">Nova Temporada</a>
+      <a href="../../../../PHP/admin/CRUDs/temporadas/temporadas_form.php" class="admin-btn">Nova Temporada</a>
       <a href="../../../../PHP/admin/dashboard.php" class="admin-btn">Voltar</a>
       <a href="../../../../PHP/shared/logout.php" class="admin-btn">Sair</a>
     </nav>
@@ -60,7 +60,7 @@ $temporadas = $pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
           <td><?= htmlspecialchars($t['qtd_episodios']) ?></td>
           <td>
             <?php if (!empty($t['capa'])): ?>
-              <img src="../../../img/<?= htmlspecialchars($t['capa']) ?>" alt="<?= htmlspecialchars($t['anime_id']) ?>" width="100">
+              <img src="../../../../img/<?= htmlspecialchars($t['capa']) ?>" alt="<?= htmlspecialchars($t['anime_id']) ?>" width="100">
             <?php else: ?>
               —
             <?php endif; ?>

@@ -1,5 +1,5 @@
 <?php
-require __DIR__ . '/../../shared/conexao.php';
+require __DIR__ . '/../../../shared/conexao.php';
 session_start();
 
 // Verifica se o usuário é admin
@@ -47,5 +47,5 @@ if ($id) {
 }
 
 // Redireciona para o painel de produtos
-header('Location: ../../PHP/admin/produtos/admin_produto.php');
+header('Location: ../../../../PHP/admin/CRUDs/produtos/admin_produto.php');
 exit();

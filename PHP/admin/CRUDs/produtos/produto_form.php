@@ -1,5 +1,5 @@
 <?php
-require __DIR__ . '/../../shared/conexao.php';
+require __DIR__ . '/../../../shared/conexao.php';
 session_start();
 
 // Verifica se o usuário é admin
@@ -70,15 +70,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8"> 
     <title><?= $id ? "Editar Produto" : "Novo Produto" ?></title> 
-    <link rel="stylesheet" href="../../../CSS/style.css?v=3" />
-    <link rel="icon" href="../../../img/slogan3.png" type="image/png">
+    <link rel="stylesheet" href="../../../../CSS/style.css?v=3" />
+    <link rel="icon" href="../../../../img/slogan3.png" type="image/png">
 </head>
 <body class="admin">
     <div class="admin-links">
         <h1><?= $id ? "Editar Produto" : "Cadastrar Novo Produto" ?></h1> 
         <nav>
-            <a href="admin_produto.php" class="admin-btn">⬅️ Voltar</a>
-            <a href="../../../PHP/shared/logout.php" class="admin-btn">🚪 Sair</a>
+            <a href="admin_produto.php" class="admin-btn">Voltar</a>
+            <a href="../../../../PHP/shared/logout.php" class="admin-btn">Sair</a>
         </nav>
     </div>
 
@@ -111,7 +111,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <label>Status:</label><br>
             <input type="checkbox" name="ativo" class="checkbox" <?= $produto['ativo'] ? 'checked' : '' ?>> Produto ativo<br><br>
 
-            <input type="submit" value="💾 Salvar" class="admin-btn">
+            <input type="submit" value="Salvar" class="admin-btn">
         </form>
     </main>
 </body>

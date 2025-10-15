@@ -2,16 +2,22 @@
 require __DIR__ . '/../../../shared/conexao.php';
 session_start();
 
+// ==============================
 // Verifica se o usuário é admin
+// ==============================
 if (!isset($_SESSION['tipo']) || $_SESSION['tipo'] !== 'admin') {
     header('Location: ../../../PHP/user/login.php');
     exit();
 }
 
-// Recebe o ID para edição
+// ==============================
+// Recebe o ID (edição) ou cria novo
+// ==============================
 $id = $_GET['id'] ?? null;
 
-// Campos padrão
+// ==============================
+// Campos padrão do episódio
+// ==============================
 $episodio = [
     'anime_id' => '',
     'temporada' => 1,
@@ -25,10 +31,14 @@ $episodio = [
     'linguagem' => ''
 ];
 
-// Busca lista de animes (para dropdown)
+// ==============================
+// Lista de animes (dropdown)
+// ==============================
 $animes = $pdo->query("SELECT id, nome FROM animes ORDER BY nome")->fetchAll(PDO::FETCH_ASSOC);
 
-// Se for edição, busca os dados do episódio
+// ==============================
+// Caso de edição: busca o episódio
+// ==============================
 if ($id) {
     $stmt = $pdo->prepare("SELECT * FROM episodios WHERE id = ?");
     $stmt->execute([$id]);
@@ -39,7 +49,9 @@ if ($id) {
     }
 }
 
+// ==============================
 // Processa envio do formulário
+// ==============================
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $anime_id = $_POST['anime_id'] ?? '';
     $temporada = $_POST['temporada'] ?? 1;
@@ -53,20 +65,47 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $linguagem = $_POST['linguagem'] ?? '';
 
     if ($id) {
-        // Atualiza
+        // ==========================
+        // Atualiza episódio existente
+        // ==========================
         $sql = "UPDATE episodios 
-                SET anime_id=?, temporada=?, numero=?, titulo=?, descricao=?, duracao=?, data_lancamento=?, miniatura=?, video_url=?, link_download=?, linguagem=? 
+                SET anime_id=?, temporada=?, numero=?, titulo=?, descricao=?, duracao=?, data_lancamento=?, miniatura=?, video_url=?, linguagem=? 
                 WHERE id=?";
-        $pdo->prepare($sql)->execute([$anime_id, $temporada, $numero, $titulo, $descricao, $duracao, $data_lancamento, $miniatura, $video_url, $link_download, $linguagem, $id]);
+        $pdo->prepare($sql)->execute([
+            $anime_id, $temporada, $numero, $titulo, $descricao, 
+            $duracao, $data_lancamento, $miniatura, $video_url, $linguagem, $id
+        ]);
     } else {
-        // Insere novo
+        // ==========================
+        // Verifica duplicidade antes de inserir
+        // ==========================
+        $check = $pdo->prepare("
+            SELECT COUNT(*) FROM episodios 
+            WHERE anime_id = ? AND temporada = ? AND numero = ?
+        ");
+        $check->execute([$anime_id, $temporada, $numero]);
+        $existe = $check->fetchColumn();
+
+        if ($existe > 0) {
+            die("<h3 style='color:red;text-align:center;margin-top:50px;'>
+                ⚠️ Episódio já existe para este anime, temporada e número.
+                <br><a href='admin_episodes.php'>Voltar</a>
+            </h3>");
+        }
+
+        // ==========================
+        // Insere novo episódio
+        // ==========================
         $sql = "INSERT INTO episodios 
-                (anime_id, temporada, numero, titulo, descricao, duracao, data_lancamento, miniatura, video_url, link_download, linguagem) 
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        $pdo->prepare($sql)->execute([$anime_id, $temporada, $numero, $titulo, $descricao, $duracao, $data_lancamento, $miniatura, $video_url, $link_download, $linguagem]);
+                (anime_id, temporada, numero, titulo, descricao, duracao, data_lancamento, miniatura, video_url, linguagem) 
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        $pdo->prepare($sql)->execute([
+            $anime_id, $temporada, $numero, $titulo, $descricao,
+            $duracao, $data_lancamento, $miniatura, $video_url, $linguagem
+        ]);
     }
 
-    header('Location: admin_episodios.php');
+    header('Location: ../../../../PHP/admin/CRUDs/episodes/admin_episodes.php');
     exit();
 }
 ?>
@@ -76,20 +115,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8"> 
     <title><?= $id ? "Editar Episódio" : "Novo Episódio" ?></title> 
-    <link rel="stylesheet" href="../../../CSS/style.css?v=2" />
-    <link rel="icon" href="../../../img/slogan3.png" type="image/png"> 
+    <link rel="stylesheet" href="../../../../CSS/style.css?v=2" />
+    <link rel="icon" href="../../../../img/slogan3.png" type="image/png">
 </head>
 <body class="admin">
     <div class="admin-links">
         <h1><?= $id ? "Editar Episódio" : "Cadastrar Novo Episódio" ?></h1> 
         <nav>
-            <a href="../../../PHP/admin/CRUDs/episodes/admin_episodes.php" class="admin-btn">Voltar</a>
-            <a href="../../../PHP/shared/logout.php" class="admin-btn">Sair</a>
+            <a href="../../../../PHP/admin/CRUDs/episodes/admin_episodes.php" class="admin-btn">Voltar</a>
+            <a href="../../../../PHP/shared/logout.php" class="admin-btn">Sair</a>
         </nav>
     </div>
 
     <main class="admin-form">
-        <form method="post" action="../../../PHP/admin/CRUDs/episodes/episodes_save.php">
+        <form method="post">
           <?php if (!empty($id)): ?>
             <input type="hidden" name="id" value="<?= (int)$id ?>">
           <?php endif; ?>

@@ -29,10 +29,10 @@ $produtos = $pdo->query("
   <div class="admin-links">
     <h1>Gerenciar Produtos</h1>
     <nav>
-      <a href="../../../../PHP/user/index.php" class="admin-btn">🏠 Home</a> 
-      <a href="../../../../PHP/admin/produtos/produto_form.php" class="admin-btn">➕ Novo Produto</a> 
-      <a href="../../../../PHP/admin/dashboard.php" class="admin-btn">⬅️ Voltar</a> 
-      <a href="../../../../PHP/shared/logout.php" class="admin-btn">🚪 Sair</a> 
+      <a href="../../../../PHP/user/index.php" class="admin-btn">Home</a> 
+      <a href="../../../../PHP/admin/CRUDs/produtos/produto_form.php" class="admin-btn">Novo Produto</a> 
+      <a href="../../../../PHP/admin/dashboard.php" class="admin-btn">Voltar</a> 
+      <a href="../../../../PHP/shared/logout.php" class="admin-btn">Sair</a> 
     </nav>
   </div>
 
@@ -71,8 +71,8 @@ $produtos = $pdo->query("
               <?= $p['ativo'] ? 'Ativo' : 'Inativo' ?>
             </td>
             <td>
-              <a href="../../../../PHP/admin/CRUDs/produtos/produto_form.php?id=<?= $p['id'] ?>" class="admin-btn">✏️ Editar</a>
-              <a href="../../../../PHP/admin/CRUDs/produtos/produto_delete.php?id=<?= $p['id'] ?>" class="admin-btn" onclick="return confirm('Excluir este produto?')">🗑️ Excluir</a>
+              <a href="../../../../PHP/admin/CRUDs/produtos/produto_form.php?id=<?= $p['id'] ?>" class="admin-btn">Editar</a>
+              <a href="../../../../PHP/admin/CRUDs/produtos/produto_delete.php?id=<?= $p['id'] ?>" class="admin-btn" onclick="return confirm('Excluir este produto?')">Excluir</a>
             </td>
           </tr>
         <?php endforeach; ?>

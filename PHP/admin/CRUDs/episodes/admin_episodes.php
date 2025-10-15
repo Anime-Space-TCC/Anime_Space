@@ -24,14 +24,14 @@ $episodios = $pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
   <meta charset="UTF-8" /> 
   <title>Admin - Episódios</title>
   <link rel="stylesheet" href="../../../../CSS/style.css?v=2" />
-  <link rel="icon" href="../../../../img/slogan3.png" type="image/png"> 
+  <link rel="icon" href="../../../../img/slogan3.png" type="image/png">
 </head>
 <body class="admin">
   <div class="admin-links">
     <h1>Gerenciar Episódios</h1>
     <nav>
       <a href="../../../../PHP/user/index.php" class="admin-btn">Home</a> 
-      <a href="../../../../PHP/admin/episodes/episodes_form.php" class="admin-btn">Novo Episódio</a> 
+      <a href="../../../../PHP/admin/CRUDs/episodes/episodes_form.php" class="admin-btn">Novo Episódio</a> 
       <a href="../../../../PHP/admin/dashboard.php" class="admin-btn">Voltar</a> 
       <a href="../../../../PHP/shared/logout.php" class="admin-btn">Sair</a> 
     </nav>
