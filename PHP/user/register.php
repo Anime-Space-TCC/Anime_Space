@@ -8,7 +8,7 @@ require_once __DIR__ . '/../shared/register.php';
 $errors = [];
 $result = null;
 
-// se o formulário for enviado
+// Cadastro de usuario
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $result = registrarUsuario(
         $pdo,

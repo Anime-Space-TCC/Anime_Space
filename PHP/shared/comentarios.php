@@ -3,7 +3,7 @@ require_once __DIR__ . '/gamificacao.php'; // garante que a função adicionarXP
 
 function inserirComentario(PDO $pdo, int $userId, int $episodioId, string $comentario): bool {
     try {
-        // 1️⃣ Insere o comentário normalmente
+        // Insere o comentário normalmente
         $stmt = $pdo->prepare("
             INSERT INTO comentarios (user_id, episodio_id, comentario, data_comentario)
             VALUES (?, ?, ?, NOW())
@@ -12,7 +12,7 @@ function inserirComentario(PDO $pdo, int $userId, int $episodioId, string $comen
 
         if (!$ok) return false;
 
-        // 2️⃣ Verifica se o usuário já ganhou XP por comentar neste episódio
+        // Verifica se o usuário já ganhou XP por comentar neste episódio
         $stmtLog = $pdo->prepare("
             SELECT COUNT(*) FROM xp_logs
             WHERE user_id = ? AND tipo_acao = 'comentario' AND referencia_id = ?
@@ -20,7 +20,7 @@ function inserirComentario(PDO $pdo, int $userId, int $episodioId, string $comen
         $stmtLog->execute([$userId, $episodioId]);
         $jaGanhouXP = $stmtLog->fetchColumn() > 0;
 
-        // 3️⃣ Só adiciona XP na primeira vez que comenta em um episódio específico
+        // Só adiciona XP na primeira vez que comenta em um episódio específico
         if (!$jaGanhouXP) {
             adicionarXP($pdo, $userId, 15); // 🔹 exemplo: +15 XP por comentário
 

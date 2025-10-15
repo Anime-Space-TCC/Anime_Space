@@ -1,4 +1,4 @@
-// ---------- Carrega e atualiza todos os dados do perfil ----------
+//  Carrega e atualiza todos os dados do perfil 
 function carregarPerfil() {
     fetch('../../PHP/shared/perfil_data.php', { cache: 'no-store' })
         .then(res => res.json())
@@ -8,7 +8,7 @@ function carregarPerfil() {
                 return;
             }
 
-            // ---------- Favoritos ----------
+            //  Favoritos 
             const favContainer = document.querySelector('.favoritos-section .cards-container');
             favContainer.innerHTML = '';
             if (data.favoritos.length) {
@@ -23,7 +23,7 @@ function carregarPerfil() {
                 favContainer.innerHTML = '<p>Nenhum favorito ainda.</p>';
             }
 
-            // ---------- Histórico ----------
+            //  Histórico 
             const histContainer = document.querySelector('.historico-section .cards-container');
             histContainer.innerHTML = '';
             if (data.historico.length) {
@@ -39,7 +39,7 @@ function carregarPerfil() {
                 histContainer.innerHTML = '<p>Nenhum episódio assistido recentemente.</p>';
             }
 
-            // ---------- Recomendações ----------
+            //  Recomendações 
             const recContainer = document.querySelector('.recomendacoes-section .cards-container');
             recContainer.innerHTML = '';
             if (data.recomendacoes.length) {
@@ -55,7 +55,7 @@ function carregarPerfil() {
                 recContainer.innerHTML = '<p>Sem recomendações no momento.</p>';
             }
 
-            // ---------- XP e Nível ----------
+            //  XP e Nível
             document.querySelector('.level').innerHTML = `Nível: ${data.nivel}<p class="titulo">${data.tituloNivel}</p>`;
             const expFill = document.querySelector('.exp-fill');
             expFill.style.width = data.porcentagem + '%';
@@ -64,10 +64,10 @@ function carregarPerfil() {
         .catch(err => console.error('Falha ao carregar perfil:', err));
 }
 
-// ---------- Inicializa ----------
+//  Inicializa 
 carregarPerfil();
 
-// ---------- Atualização da foto via AJAX ----------
+//  Atualização da foto via AJAX 
 document.getElementById('foto').addEventListener('change', function() {
     const arquivo = this.files[0];
     if (!arquivo) return;

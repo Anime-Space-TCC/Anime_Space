@@ -1,8 +1,12 @@
 <?php 
 // ===== INÍCIO NAVBAR =====
 
-    // Pagina de busca
-    $paginasSemBusca = ['loja', 'meu-carrinho','noticias','episodeos','stream','suporte','lancamento','temporada','confirmar_pagamento']; 
+    // Páginas que não possuem busca
+    $paginasSemBusca = ['loja', 'meu-carrinho',
+                        'noticias','episodeos',
+                        'stream','suporte',
+                        'lancamento','temporada',
+                        'confirmar_pagamento']; 
     
 // Verifica se o usuário está logado
 if (isset($_SESSION['user_id'])):
@@ -17,6 +21,7 @@ if (isset($_SESSION['user_id'])):
     $userId = $_SESSION['user_id'];
     $caminhoFoto = buscarFotoPerfil($pdo, $userId); 
     
+    // Dados do carrinho
     $dadosXP = getXP($pdo, $userId);
     $nivel = $dadosXP['nivel'] ?? 1;
     $xp = $dadosXP['xp'] ?? 0;

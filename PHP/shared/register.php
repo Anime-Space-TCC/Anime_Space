@@ -3,9 +3,9 @@ require_once __DIR__ . '/conexao.php';
 require_once __DIR__ . '/usuarios.php';
 require_once __DIR__ . '/auth.php';
 
-/**
- * Função responsável por registrar um novo usuário no sistema.
- */
+// ===========================================================
+// Função responsável por registrar um novo usuário no sistema.
+// ===========================================================
 function registrarUsuario(PDO $pdo, string $username, string $email, string $password, string $password_confirm): array {
     $errors = [];
 
@@ -15,7 +15,7 @@ function registrarUsuario(PDO $pdo, string $username, string $email, string $pas
     $password = $password ?? '';
     $password_confirm = $password_confirm ?? '';
 
-    // 1️⃣ Validação de campos obrigatórios
+    // Validação de campos obrigatórios
     if (empty($username)) {
         $errors[] = "Informe um nome de usuário.";
     }
@@ -28,7 +28,7 @@ function registrarUsuario(PDO $pdo, string $username, string $email, string $pas
         $errors[] = "Informe e confirme a senha.";
     }
 
-    // 2️⃣ Validação da força da senha (usa função do auth.php)
+    // Validação da força da senha (usa função do auth.php)
     if (empty($errors)) {
         $erroSenha = validarSenhaForte($password);
         if ($erroSenha) {
@@ -36,17 +36,17 @@ function registrarUsuario(PDO $pdo, string $username, string $email, string $pas
         }
     }
 
-    // 3️⃣ Confirmação das senhas
+    // Confirmação das senhas
     if ($password !== $password_confirm) {
         $errors[] = "As senhas não conferem.";
     }
 
-    // 4️⃣ Verificação de usuário/e-mail duplicado
+    // Verificação de usuário/e-mail duplicado
     if (empty($errors) && usuarioExiste($pdo, $username, $email)) {
         $errors[] = "Usuário ou e-mail já cadastrado.";
     }
 
-    // 5️⃣ Criação do usuário se tudo estiver certo
+    // Criação do usuário se tudo estiver certo
     if (empty($errors)) {
         // ⚡ IMPORTANTE: criarUsuario já aplica password_hash, não precisa fazer novamente
         $novoId = criarUsuario($pdo, $username, $email, $password);
@@ -62,7 +62,7 @@ function registrarUsuario(PDO $pdo, string $username, string $email, string $pas
         }
     }
 
-    // 6️⃣ Retorno em caso de erro
+    // Retorno em caso de erro
     return [
         'success' => false,
         'errors'  => $errors

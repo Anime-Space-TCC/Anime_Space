@@ -6,8 +6,8 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 
 try {
-    $userId = $_SESSION['user_id'] ?? null;       // ID do usuário ou null se visitante
-    $tipo = $_SESSION['tipo'] ?? 'visitante';    // Tipo: admin, user ou visitante
+    $userId = $_SESSION['user_id'] ?? null;       
+    $tipo = $_SESSION['tipo'] ?? 'visitante';    
     $ip = $_SERVER['REMOTE_ADDR'] ?? 'desconhecido';
     $pagina = $_SERVER['REQUEST_URI'] ?? 'desconhecida';
     $origem = $_SERVER['HTTP_REFERER'] ?? 'Direto';

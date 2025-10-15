@@ -9,8 +9,6 @@ header('Content-Type: application/json');
 // ============================
 // Debug temporário (opcional)
 // ============================
-//error_reporting(E_ALL);
-//ini_set('display_errors', 1);
 
 // Verifica se o usuário está logado
 if (!isset($_SESSION['user_id'])) {

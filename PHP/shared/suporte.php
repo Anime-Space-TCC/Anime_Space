@@ -11,7 +11,7 @@ function enviarMensagemSuporte(int $userId, string $nome, string $email, string 
     }
 
     try {
-        // 1️⃣ Insere a mensagem no banco
+        // Insere a mensagem no banco
         $stmt = $pdo->prepare("
             INSERT INTO suporte (nome, email, mensagem, data_envio)
             VALUES (?, ?, ?, NOW())
@@ -20,7 +20,7 @@ function enviarMensagemSuporte(int $userId, string $nome, string $email, string 
 
         if (!$ok) return false;
 
-        // 2️⃣ Verifica se o usuário já ganhou XP por suporte
+        // Verifica se o usuário já ganhou XP por suporte
         $stmtLog = $pdo->prepare("
             SELECT COUNT(*) 
             FROM xp_logs 
@@ -29,7 +29,7 @@ function enviarMensagemSuporte(int $userId, string $nome, string $email, string 
         $stmtLog->execute([$userId]);
         $jaGanhouXP = $stmtLog->fetchColumn() > 0;
 
-        // 3️⃣ Só adiciona XP se ainda não ganhou
+        // Só adiciona XP se ainda não ganhou
         if (!$jaGanhouXP) {
             adicionarXP($pdo, $userId, 100); // +100 XP por ajudar o site
 

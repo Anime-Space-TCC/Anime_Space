@@ -1,9 +1,9 @@
 <?php
 require_once __DIR__ . '/conexao.php';
 
-/**
- * Registra um novo pagamento no sistema
- */
+//==============================
+// Registra um novo pagamento no sistema
+//==============================
 function registrarPagamento(PDO $pdo, int $user_id, int $produto_id, string $metodo): ?array {
     // Verifica se o produto existe e está ativo
     $stmt = $pdo->prepare("SELECT nome, preco FROM produtos WHERE id = ? AND ativo = 1");
@@ -44,9 +44,9 @@ function registrarPagamento(PDO $pdo, int $user_id, int $produto_id, string $met
     return $pagamento;
 }
 
-/**
- * Cancela um pagamento, se ainda estiver pendente
- */
+// ==============================
+// Confirma um pagamento (simulado)
+// ==============================
 function cancelarPagamento(PDO $pdo, int $user_id, string $codigo_referencia): bool {
     // Verifica se o pagamento existe e pertence ao usuário
     $stmt = $pdo->prepare("SELECT id, status FROM pagamentos WHERE codigo_referencia = ? AND user_id = ?");

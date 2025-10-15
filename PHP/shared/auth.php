@@ -96,9 +96,9 @@ function obterUsuarioAtualId(): ?int {
     return $_SESSION['user_id'] ?? null;
 }
 
-// ------------------------------
+// ==============================
 // Função principal de login
-// ------------------------------
+// ==============================
 function login(PDO $pdo, string $username, string $password): array {
     $username = trim($username);
     $password = trim($password);
