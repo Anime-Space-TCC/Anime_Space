@@ -66,23 +66,27 @@ function atualizarFotoPerfil(PDO $pdo, int $userId, array $file): array {
     ];
 }
 
-// Retorna o caminho da foto de perfil (ou default)
 function buscarFotoPerfil(PDO $pdo, int $userId): string {
     $stmt = $pdo->prepare("SELECT foto_perfil FROM users WHERE id = ?");
     $stmt->execute([$userId]);
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    $default = '/PHP/uploads/default.jpg';
+    $defaultUrl = '/PHP/uploads/default.jpg';
+
+    // Caminho físico absoluto para a pasta uploads no servidor
+    $uploadsDir = realpath(__DIR__ . '/../uploads');
 
     if ($user && !empty($user['foto_perfil'])) {
-        $caminho_fisico = __DIR__ . '/../uploads/' . basename($user['foto_perfil']);
+        $caminho_fisico = $uploadsDir . '/' . basename($user['foto_perfil']);
+
         if (file_exists($caminho_fisico)) {
-            return $user['foto_perfil'] . '?t=' . time();
+            return '/PHP/uploads/' . basename($user['foto_perfil']) . '?t=' . time();
         }
     }
 
-    return $default . '?t=' . time();
+    return $defaultUrl . '?t=' . time();
 }
+
 
 // Verifica se já existe username ou email (para validação)
 function usuarioExiste(PDO $pdo, string $username, string $email, ?int $excludeId = null): bool {

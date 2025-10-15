@@ -87,7 +87,7 @@ endif;
             <div class="perfil-card">
                 <div class="perfil-area">
                     <a href="../../PHP/user/perfil.php" class="perfil-link" aria-label="Ver perfil">
-                        <img src="../uploads/<?= htmlspecialchars($caminhoFoto) ?>" alt="Foto de perfil" class="perfil-foto">
+                        <img src="../..<?= htmlspecialchars($caminhoFoto) ?>" alt="Foto de perfil" class="perfil-foto">
                     </a>
                     <div class="perfil-info">
                         <h2 class="perfil-nome"><?= htmlspecialchars($_SESSION['username'] ?? 'Usuário') ?></h2>
