@@ -42,7 +42,7 @@ $animes = getAnimesFiltrados($filtroGenero, $filtroAno, $filtroLinguagem, $busca
       <h1>Animes Disponíveis</h1> <!-- Título principal -->
     </header>
     <section class="busca-filtros">
-      <form method="GET" action="stream.php" style="display: flex; flex-wrap: wrap; gap: 10px; align-items: center;">
+      <form method="GET" action="stream.php" class="busca-filtros-form">
         <div class="barra-pesquisa">
           <!-- Campo de busca por nome ou gênero -->
           <input type="text" name="busca" placeholder="Buscar anime por nome ou gênero..." value="<?= htmlspecialchars($busca) ?>">
@@ -90,8 +90,8 @@ $animes = getAnimesFiltrados($filtroGenero, $filtroAno, $filtroLinguagem, $busca
     <section class="anime-catalogo">
       <?php if ($animes): ?>
         <?php foreach ($animes as $anime): ?>
-          <article class="anime-item" data-genero="<?= strtolower($anime['generos']) ?>" data-ano="<?= $anime['ano'] ?>">
-            <a href="episodes.php?id=<?= $anime['id'] ?>" class="anime-item" data-genero="<?= strtolower($anime['generos']) ?>" data-ano="<?= $anime['ano'] ?>">
+          <article class="anime-item">
+            <a href="episodes.php?id=<?= $anime['id'] ?>" class="anime-item">
               <img src="../../img/<?= htmlspecialchars($anime['capa']) ?>" alt="<?= htmlspecialchars($anime['nome']) ?>" class="mini-img">
               <span class="anime-nota">⭐ <?= htmlspecialchars($anime['nota']) ?></span>
               <div class="info">

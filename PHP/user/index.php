@@ -6,7 +6,7 @@ require __DIR__ . '/../shared/acessos.php';
 
 // Buscar dados
 $topAnimes = buscarTopAnimes($pdo, 5);
-$generos   = buscarGenerosLimit($pdo, 15);
+$generos   = buscarGenerosLimit($pdo, 17);
 $lancamentos = buscarLancamentos($pdo, 9);
 ?>
 
@@ -46,7 +46,6 @@ $lancamentos = buscarLancamentos($pdo, 9);
         <a class="next" onclick="plusSlides(1)">&#10095;</a>
       </div>
       </header>
-
 
       <section>
         <section class="lancamentos" aria-labelledby="lancamentos-title">

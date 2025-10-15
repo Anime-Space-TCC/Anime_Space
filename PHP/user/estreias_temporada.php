@@ -42,7 +42,6 @@ $estreias = buscarEstreiasTemporada($pdo);
               </div>
               <a href="../../PHP/user/episodes.php?id=<?= $ep['anime_id'] ?>">Ver Episódios</a>
             </li>
-            <hr>
           <?php endforeach; ?>
         </ul>
       <?php else: ?>

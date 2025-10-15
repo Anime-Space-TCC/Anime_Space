@@ -74,7 +74,7 @@ include __DIR__ . '/navbar.php';
         <p class="total-itens"><strong>Total de itens:</strong> <span id="totalCarrinho"><?= $totalCarrinho ?></span></p>
 
         <!-- 🔽 MÉTODOS DE PAGAMENTO (fora da lista) -->
-        <form action="../../PHP/user/processar_pagamento.php" method="POST" class="form-pagamento">
+        <form action="../../PHP/shared/processar_pagamento.php" method="POST" class="form-pagamento">
             <input type="hidden" name="metodo" class="input-metodo" value="">
             <div class="pagamento-container">
                 <h2>Escolha sua forma de pagamento</h2>
@@ -95,7 +95,12 @@ include __DIR__ . '/navbar.php';
         </form>
     <?php endif; ?>
 </main>
-<?php include __DIR__ . '/rodape.php'; ?>
+<?php
+$carrinhoVazio = empty($_SESSION['carrinho']);
+?>
+<div id="footer-carrinho" style="<?= $carrinhoVazio ? 'position: absolute; bottom: 0; width: 100%;' : '' ?>">
+    <?php include __DIR__ . '/rodape.php'; ?>
+</div>
 
 <script src="../../JS/carrinho.js"></script>
 <script src="../../JS/produto.js"></script>

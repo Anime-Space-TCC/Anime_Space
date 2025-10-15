@@ -120,7 +120,7 @@ if (!empty($temporadas)) {
             <?php if (!empty($animeInfo['generos'])): ?>
               <div class="generos-linha">
                 <?php foreach ($animeInfo['generos'] as $genero): ?>
-                  <a href="catalogo.php?genero=<?= $genero['id'] ?>" class="meta-btn">
+                  <a href="../user/stream.php?id=<?= $genero['id'] ?>" class="meta-btn">
                     <?= htmlspecialchars($genero['nome']) ?>
                   </a>
                 <?php endforeach; ?>

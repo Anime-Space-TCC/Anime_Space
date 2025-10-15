@@ -107,7 +107,7 @@ $noticias = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     <!-- 🔥 TOP 5 POPULARES -->
     <aside class="populares-section">
-      <h2>Mais Populares</h2>
+      <h2>🔥 Mais Populares</h2>
       <?php foreach ($topNoticias as $t): ?>
         <div class="mini-noticia">
           <img src="../../img/<?= htmlspecialchars($t['imagem']) ?>" alt="<?= htmlspecialchars($t['titulo']) ?>">
@@ -118,11 +118,11 @@ $noticias = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     <!-- 💬 CONTATOS / COMUNIDADE -->
     <section class="contato-section">
-      <h2>💬 Conecte-se com a Comunidade</h2>
+      <h2>Conecte-se com a Comunidade</h2>
       <p>Participe dos nossos grupos para trocar ideias, memes, notícias e indicações!</p>
       <div class="contato-links">
-        <a href="#" class="contato-btn whatsapp">Grupo do WhatsApp</a>
-        <a href="#" class="contato-btn discord">Servidor no Discord</a>
+        <a href="#" class="contato-btn whatsapp">💬 Grupo do WhatsApp</a>
+        <a href="#" class="contato-btn discord">💬 Servidor no Discord</a>
       </div>
     </section>
   </main>
