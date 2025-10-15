@@ -7,7 +7,7 @@ require __DIR__ . '/../shared/acessos.php';
 // Buscar dados
 $topAnimes = buscarTopAnimes($pdo, 5);
 $generos   = buscarGenerosLimit($pdo, 17);
-$lancamentos = buscarLancamentos($pdo, 9);
+$lancamentos = buscarLancamentos($pdo, 10);
 ?>
 
 <!DOCTYPE html>
