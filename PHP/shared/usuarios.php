@@ -7,15 +7,17 @@ require_once __DIR__ . '/conexao.php';
 
 // Busca um usuário pelo ID
 function buscarUsuarioPorId(PDO $pdo, int $id): ?array {
-    $stmt = $pdo->prepare("SELECT username, email FROM users WHERE id = ?");
+    $stmt = $pdo->prepare("SELECT id, username, email, tipo, foto_perfil FROM users WHERE id = ?");
     $stmt->execute([$id]);
     return $stmt->fetch(PDO::FETCH_ASSOC) ?: null;
 }
 
 // Atualiza username, email e senha de um usuário
 function atualizarUsuario(PDO $pdo, int $id, string $username, string $email, ?string $password = null): bool {
+    $username = normalizarTexto($username);
+    $email = trim($email);
+
     if ($password !== null) {
-        // gera hash da senha antes de atualizar
         $hash = password_hash($password, PASSWORD_DEFAULT);
         $stmt = $pdo->prepare("UPDATE users SET username = ?, email = ?, password = ? WHERE id = ?");
         return $stmt->execute([$username, $email, $hash, $id]);
@@ -25,7 +27,7 @@ function atualizarUsuario(PDO $pdo, int $id, string $username, string $email, ?s
     }
 }
 
-// Atualiza a foto de perfil do usuário via AJAX
+// Atualiza a foto de perfil do usuário via upload
 function atualizarFotoPerfil(PDO $pdo, int $userId, array $file): array {
     $diretorio_destino = __DIR__ . '/../uploads/';
     if (!is_dir($diretorio_destino)) {
@@ -64,12 +66,13 @@ function atualizarFotoPerfil(PDO $pdo, int $userId, array $file): array {
     ];
 }
 
+// Retorna o caminho da foto de perfil (ou default)
 function buscarFotoPerfil(PDO $pdo, int $userId): string {
     $stmt = $pdo->prepare("SELECT foto_perfil FROM users WHERE id = ?");
     $stmt->execute([$userId]);
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    $default = '/../../uploads/default.jpg';
+    $default = '/PHP/uploads/default.jpg';
 
     if ($user && !empty($user['foto_perfil'])) {
         $caminho_fisico = __DIR__ . '/../uploads/' . basename($user['foto_perfil']);
@@ -81,15 +84,29 @@ function buscarFotoPerfil(PDO $pdo, int $userId): string {
     return $default . '?t=' . time();
 }
 
-// Verifica se já existe username ou email
-function usuarioExiste(PDO $pdo, string $username, string $email): bool {
-    $stmt = $pdo->prepare("SELECT COUNT(*) FROM users WHERE username = ? OR email = ?");
-    $stmt->execute([$username, $email]);
+// Verifica se já existe username ou email (para validação)
+function usuarioExiste(PDO $pdo, string $username, string $email, ?int $excludeId = null): bool {
+    $username = normalizarTexto($username);
+    $email = trim($email);
+
+    $sql = "SELECT COUNT(*) FROM users WHERE (username = :username OR email = :email)";
+    $params = [':username' => $username, ':email' => $email];
+
+    if ($excludeId !== null) {
+        $sql .= " AND id != :excludeId";
+        $params[':excludeId'] = $excludeId;
+    }
+
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute($params);
+
     return $stmt->fetchColumn() > 0;
 }
 
 // Cria um novo usuário
 function criarUsuario(PDO $pdo, string $username, string $email, string $password, string $tipo = 'user'): int|false {
+    $username = normalizarTexto($username);
+    $email = trim($email);
     $hash = password_hash($password, PASSWORD_DEFAULT);
 
     $stmt = $pdo->prepare("INSERT INTO users (username, email, password, tipo) VALUES (?, ?, ?, ?)");

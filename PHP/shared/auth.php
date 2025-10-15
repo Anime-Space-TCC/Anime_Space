@@ -1,6 +1,6 @@
 <?php
 require_once __DIR__ . '/conexao.php';
-require __DIR__ . '/../../vendor/autoload.php'; // PHPMailer autoload
+require __DIR__ . '/../../vendor/autoload.php';
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
@@ -81,7 +81,7 @@ function enviarCodigo2FA(string $email, int $codigo): bool {
 function usuarioLogado(): bool {
     return isset($_SESSION['user_id']) && empty($_SESSION['aguardando_2fa']);
 }
-
+// Redireciona se não estiver logado
 function verificarLogin(): void {
     $paginaAtual = basename($_SERVER['PHP_SELF']);
     $paginasPublicas = ['login.php', 'register.php', 'verificar-2fa.php'];
@@ -91,62 +91,118 @@ function verificarLogin(): void {
         exit;
     }
 }
-
+// Retorna o ID do usuario logado
 function obterUsuarioAtualId(): ?int {
     return $_SESSION['user_id'] ?? null;
 }
 
+// ------------------------------
+// Função principal de login
+// ------------------------------
 function login(PDO $pdo, string $username, string $password): array {
     $username = trim($username);
     $password = trim($password);
 
-    if (!$username || !$password) {
+    if ($username === '' || $password === '') {
+        return ['success' => false, 'error' => 'Informe usuário e senha.'];
+    }
+
+    // Normaliza espaços invisíveis e acentuação
+    $usernameNormalized = normalizarTexto($username);
+
+    // Busca direta no banco (collation já é case-insensitive)
+    $stmt = $pdo->prepare("SELECT id, username, password, tipo FROM users WHERE username COLLATE utf8mb4_unicode_ci = :username LIMIT 1");
+    $stmt->execute([':username' => $usernameNormalized]);
+    $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if (!$user) {
+        return ['success' => false, 'error' => 'Usuário ou senha inválidos.'];
+    }
+
+    // Verifica se o hash é reconhecido (bcrypt)
+    $hashInfo = password_get_info($user['password']);
+    if ($hashInfo['algo'] !== 0) {
+        $valid = password_verify($password, $user['password']);
+    } else {
+        $valid = hash_equals($user['password'], $password);
+    }
+
+    if (!$valid) {
+        return ['success' => false, 'error' => 'Usuário ou senha inválidos.'];
+    }
+
+    // Sucesso: inicializa sessão
+    $_SESSION['user_id']  = $user['id'];
+    $_SESSION['username'] = $user['username'];
+    $_SESSION['tipo']     = $user['tipo'];
+
+    return ['success' => true];
+}
+
+/*
+function login(PDO $pdo, string $username, string $password): array {
+    $username = trim($username);
+    $password = trim($password);
+
+    if ($username === '' || $password === '') {
         return ['success' => false, 'error' => 'Informe usuário e senha.', '2fa' => false];
     }
 
-    // Busca usuário ignorando maiúsculas/minúsculas e espaços
-    $stmt = $pdo->prepare("SELECT id, username, password, tipo, email, uses_2fa FROM users");
-    $stmt->execute();
-    $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    // Normaliza espaços invisíveis e acentuação
+    $usernameNormalized = normalizarTexto($username);
 
-    $userEncontrado = null;
+    // Busca usuário no banco
+    $stmt = $pdo->prepare("SELECT id, username, password, tipo, email, uses_2fa FROM users WHERE username COLLATE utf8mb4_unicode_ci = :username LIMIT 1");
+    $stmt->execute([':username' => $usernameNormalized]);
+    $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    foreach ($users as $u) {
-        if (strcasecmp(trim($u['username']), $username) === 0) {
-            $userEncontrado = $u;
-            break;
-        }
-    }
-
-    if (!$userEncontrado) {
+    if (!$user) {
         return ['success' => false, 'error' => 'Usuário ou senha inválidos.', '2fa' => false];
     }
 
     // Verifica senha
-    if (!password_verify($password, $userEncontrado['password'])) {
+    $hashInfo = password_get_info($user['password']);
+    if ($hashInfo['algo'] !== 0) {
+        $valid = password_verify($password, $user['password']);
+    } else {
+        $valid = hash_equals($user['password'], $password);
+    }
+
+    if (!$valid) {
         return ['success' => false, 'error' => 'Usuário ou senha inválidos.', '2fa' => false];
     }
 
     // Se não usa 2FA, login direto
-    if (!$userEncontrado['uses_2fa']) {
-        $_SESSION['user_id']  = $userEncontrado['id'];
-        $_SESSION['username'] = $userEncontrado['username'];
-        $_SESSION['tipo']     = $userEncontrado['tipo'];
-        return ['success' => true, 'error' => null, '2fa' => false];
+    if (!$user['uses_2fa']) {
+        $_SESSION['user_id']  = $user['id'];
+        $_SESSION['username'] = $user['username'];
+        $_SESSION['tipo']     = $user['tipo'];
+        return ['success' => true, '2fa' => false];
     }
 
-    // Se usa 2FA → gerar código
+    // Se usa 2FA → gerar código e salvar sessão temporária
     $codigo = random_int(100000, 999999);
     $_SESSION['aguardando_2fa'] = true;
-    $_SESSION['2fa_user'] = $userEncontrado;
-    $_SESSION['2fa_code'] = $codigo;
-    $_SESSION['2fa_expires'] = time() + 300; // 5 minutos
+    $_SESSION['2fa_user']       = $user;
+    $_SESSION['2fa_code']       = $codigo;
+    $_SESSION['2fa_expires']    = time() + 300; // 5 minutos
 
-    enviarCodigo2FA($userEncontrado['email'], $codigo);
+    enviarCodigo2FA($user['email'], $codigo);
 
     return ['success' => true, 'error' => null, '2fa' => true];
 }
+*/
 
+// Normaliza texto (username/email) 
+if (!function_exists('normalizarTexto')) {
+    function normalizarTexto(string $texto): string {
+        $texto = trim($texto);
+        $texto = mb_strtolower($texto, 'UTF-8');
+        return $texto;
+    }
+}
+
+// Inicia processo 2FA
 function verificarCodigo2FA(string $codigo): bool {
     if (!isset($_SESSION['2fa_user'], $_SESSION['2fa_code'], $_SESSION['2fa_expires'])) {
         return false;
@@ -170,11 +226,13 @@ function verificarCodigo2FA(string $codigo): bool {
     return false;
 }
 
+// Função de logout
 function logout(): void {
     session_unset();
     session_destroy();
 }
 
+// Valida a força da senha
 function validarSenhaForte(string $pwd): ?string {
     if (strlen($pwd) < 8) return "Senha deve ter ao menos 8 caracteres.";
     if (!preg_match('/[A-Z]/', $pwd)) return "Inclua pelo menos 1 letra maiúscula.";

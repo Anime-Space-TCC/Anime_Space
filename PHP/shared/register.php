@@ -1,7 +1,7 @@
 <?php
-require_once __DIR__ . '/../conexao.php';
-require_once __DIR__ . '/../usuarios.php';
-require_once __DIR__ . '/../auth.php';
+require_once __DIR__ . '/conexao.php';
+require_once __DIR__ . '/usuarios.php';
+require_once __DIR__ . '/auth.php';
 
 /**
  * Função responsável por registrar um novo usuário no sistema.
@@ -48,8 +48,8 @@ function registrarUsuario(PDO $pdo, string $username, string $email, string $pas
 
     // 5️⃣ Criação do usuário se tudo estiver certo
     if (empty($errors)) {
-        $senhaHash = password_hash($password, PASSWORD_DEFAULT);
-        $novoId = criarUsuario($pdo, $username, $email, $senhaHash);
+        // ⚡ IMPORTANTE: criarUsuario já aplica password_hash, não precisa fazer novamente
+        $novoId = criarUsuario($pdo, $username, $email, $password);
 
         if ($novoId) {
             return [
