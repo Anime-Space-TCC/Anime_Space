@@ -12,43 +12,61 @@ $estreias = buscarEstreiasTemporada($pdo);
 
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
-  <meta charset="UTF-8" /> 
-  <title>Estreias da Temporada</title> 
-  <link rel="stylesheet" href="../../CSS/style.css" /> 
+  <meta charset="UTF-8" />
+  <title>Estreias da Temporada</title>
+  <link rel="stylesheet" href="../../CSS/style.css" />
   <link rel="icon" href="../../img/slogan3.png" type="image/png">
 </head>
-<body>  
+
+<body>
   <?php
-    $current_page = 'temporada'; 
-    include __DIR__ . '/navbar.php'; 
+  $current_page = 'temporada';
+  include __DIR__ . '/navbar.php';
   ?>
   <main class="page-content">
-    <header>
-      <h1 class="titulo-pagina">Estreias da Temporada</h1>
-    </header>
-    <section class="temporada">
-      <?php if ($estreias): ?>
-        <ul class="episodios-lista">
-          <?php foreach ($estreias as $ep): ?>
-            <li>
-              <?php if (!empty($ep['anime_capa'])): ?>
-                <img src="../../img/<?= htmlspecialchars($ep['anime_capa']) ?>" alt="Capa <?= htmlspecialchars($ep['anime_nome']) ?>" width="100" style="border-radius:6px;" />
-              <?php else: ?>
-                <span>Sem Capa</span>
-              <?php endif; ?>
-              <div>
-                <strong><?= htmlspecialchars($ep['anime_nome']) ?></strong>: Temporada <?= $ep['temporada'] ?>
-              </div>
-              <a href="../../PHP/user/episodes.php?id=<?= $ep['anime_id'] ?>">Ver Episódios</a>
-            </li>
-          <?php endforeach; ?>
-        </ul>
-      <?php else: ?>
-        <p>Nenhuma estreia para esta temporada.</p>
-      <?php endif; ?>
-    </section>
+    <div class="layout-anuncios">
+      <!-- Coluna da esquerda (anúncios) -->
+      <aside class="ads-lateral esquerda">
+        <div class="ad-item"><img src="../../img/ads/propaganda7.jpg" alt="Anúncio 7"></div>
+        <div class="ad-item"><img src="../../img/ads/propaganda8.jpg" alt="Anúncio 8"></div>
+      </aside>
+
+      <!-- Conteúdo principal -->
+      <section class="temporada">
+        <header>
+          <h1 class="titulo-pagina">Estreias da Temporada</h1>
+        </header>
+        <?php if ($estreias): ?>
+          <ul class="episodios-lista">
+            <?php foreach ($estreias as $ep): ?>
+              <li>
+                <?php if (!empty($ep['anime_capa'])): ?>
+                  <img src="../../img/<?= htmlspecialchars($ep['anime_capa']) ?>" alt="Capa <?= htmlspecialchars($ep['anime_nome']) ?>" width="100" style="border-radius:6px;" />
+                <?php else: ?>
+                  <span>Sem Capa</span>
+                <?php endif; ?>
+                <div>
+                  <strong><?= htmlspecialchars($ep['anime_nome']) ?></strong>: Temporada <?= $ep['temporada'] ?>
+                </div>
+                <a href="../../PHP/user/episodes.php?id=<?= $ep['anime_id'] ?>">Ver Episódios</a>
+              </li>
+            <?php endforeach; ?>
+          </ul>
+        <?php else: ?>
+          <p>Nenhuma estreia para esta temporada.</p>
+        <?php endif; ?>
+      </section>
+
+      <!-- Coluna da direita (anúncios) -->
+      <aside class="ads-lateral direita">
+        <div class="ad-item"><img src="../../img/ads/propaganda9.jpg" alt="Anúncio 9"></div>
+        <div class="ad-item"><img src="../../img/ads/propaganda10.jpg" alt="Anúncio 10"></div>
+      </aside>
+    </div>
   </main>
   <?php include __DIR__ . '/rodape.php'; ?>
 </body>
+
 </html>

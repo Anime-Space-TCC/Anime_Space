@@ -52,12 +52,12 @@ endif;
                     </svg>
                 </button>
             <?php endif; ?>
-
+            <!-- Busca expandida -->
             <form method="GET" action="../../PHP/user/stream.php">
                 <input type="text" name="busca" placeholder="Digite o anime..." />
                 <button type="submit">Ir</button>
             </form>
-
+            <!-- Botão Pagina inicial -->
             <?php if (!isset($current_page) || $current_page !== 'home'): ?>
                 <a href="../../PHP/user/index.php" class="sinopse-btn" aria-label="Página Inicial" role="button">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" width="20" height="20">

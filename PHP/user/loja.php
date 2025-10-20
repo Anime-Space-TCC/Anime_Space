@@ -66,7 +66,9 @@ include __DIR__ . '/navbar.php';
                         <h3 class="produto-nome"><?= htmlspecialchars($produto['nome']) ?></h3>
                         <p class="produto-descricao"><?= htmlspecialchars($produto['descricao']) ?></p>
                         <p class="produto-preco">R$ <?= number_format($produto['preco'], 2, ',', '.') ?></p>
-                        <p class="produto-estoque">Estoque: <?= $produto['estoque'] ?></p>
+                        <?php if (isset($_SESSION['tipo']) && $_SESSION['tipo'] === 'admin'): ?>
+                            <p class="produto-estoque">Estoque: <?= $produto['estoque'] ?></p>
+                        <?php endif; ?>
                         <?php if($produto['estoque'] > 0): ?>
                             <button class="btn-adicionar" data-id="<?= $produto['id'] ?>">Adicionar ao Carrinho</button>
                         <?php else: ?>

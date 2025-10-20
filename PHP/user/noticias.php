@@ -106,26 +106,53 @@ $noticias = $stmt->fetchAll(PDO::FETCH_ASSOC);
       </div>
     </section>
 
-    <!-- 🔥 TOP 5 POPULARES -->
-    <aside class="populares-section">
-      <h2>🔥 Mais Populares</h2>
-      <?php foreach ($topNoticias as $t): ?>
-        <div class="mini-noticia">
-          <img src="../../img/<?= htmlspecialchars($t['imagem']) ?>" alt="<?= htmlspecialchars($t['titulo']) ?>">
-          <p><?= htmlspecialchars($t['titulo']) ?></p>
+    <div class="layout-populares-anuncios">
+  
+      <!-- Lateral esquerda: anúncios -->
+      <div class="ads-lateral">
+        <div class="ad-item">
+          <img src="../../img/ads/propaganda7.jpg" alt="Propaganda 7">
         </div>
-      <?php endforeach; ?>
-    </aside>
-
-    <!-- 💬 CONTATOS / COMUNIDADE -->
-    <section class="contato-section">
-      <h2>Conecte-se com a Comunidade</h2>
-      <p>Participe dos nossos grupos para trocar ideias, memes, notícias e indicações!</p>
-      <div class="contato-links">
-        <a href="#" class="contato-btn whatsapp">💬 Grupo do WhatsApp</a>
-        <a href="#" class="contato-btn discord">💬 Servidor no Discord</a>
+        <div class="ad-item">
+          <img src="../../img/ads/propaganda8.jpg" alt="Propaganda 8">
+        </div>
       </div>
-    </section>
+
+      <div class="populares-contato">
+        <!-- 🔥 TOP 5 POPULARES -->
+        <aside class="populares-section">
+          <h2>🔥 Mais Populares</h2>
+          <?php foreach ($topNoticias as $t): ?>
+            <div class="mini-noticia">
+              <img src="../../img/<?= htmlspecialchars($t['imagem']) ?>" alt="<?= htmlspecialchars($t['titulo']) ?>">
+              <p><?= htmlspecialchars($t['titulo']) ?></p>
+            </div>
+          <?php endforeach; ?>
+        </aside>
+
+        <!-- 💬 CONTATOS / COMUNIDADE -->
+        <section class="contato-section">
+          <h2>Conecte-se com a Comunidade</h2>
+          <p>Participe dos nossos grupos para trocar ideias, memes, notícias e indicações!</p>
+          <div class="contato-links">
+            <a href="#" class="contato-btn whatsapp">💬 Grupo do WhatsApp</a>
+            <a href="#" class="contato-btn discord">💬 Servidor no Discord</a>
+          </div>
+        </section>
+
+      </div>
+
+      <!-- Lateral direita: anúncios -->
+      <div class="ads-lateral">
+        <div class="ad-item">
+          <img src="../../img/ads/propaganda9.jpg" alt="Propaganda 9">
+        </div>
+        <div class="ad-item">
+          <img src="../../img/ads/propaganda10.jpg" alt="Propaganda 10">
+        </div>
+      </div>
+
+     </div>
   </main>
 
   <?php include __DIR__ . '/rodape.php'; ?>
