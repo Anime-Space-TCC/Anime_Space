@@ -6,7 +6,7 @@
                         'noticias','episodeos',
                         'stream','suporte',
                         'lancamento','temporada',
-                        'confirmar_pagamento']; 
+                        'confirmar_pagamento','quizzes']; 
     
 // Verifica se o usuário está logado
 if (isset($_SESSION['user_id'])):
@@ -115,6 +115,7 @@ endif;
     <a href="../../PHP/user/stream.php">Catálogo</a>
     <a href="../../PHP/user/estreias_temporada.php">Estreias</a>
     <a href="../../PHP/user/últimos_episodios.php">Lançamentos</a>
+    <a href="../../PHP/user/quizzes.php">Quizzes</a>
     <a href="../../PHP/user/noticias.php">Comunidade</a>
     <a href="../../PHP/user/loja.php">Lojinha</a>
 </nav>

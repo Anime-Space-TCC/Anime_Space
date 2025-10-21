@@ -6,6 +6,7 @@ require __DIR__ . '/../shared/auth.php';
 require __DIR__ . '/../shared/animes.php';
 require __DIR__ . '/../shared/episodios.php';
 require __DIR__ . '/../shared/comentarios.php';
+require __DIR__ . '/../shared/perfil.php';
 
 // Bloqueia acesso se não estiver logado
 verificarLogin();
@@ -77,6 +78,13 @@ if (!empty($temporadas)) {
   } else {
     $temporadaInicial = array_key_first($temporadas);
   }
+}
+
+// Registra historico de visualizacao
+if (isset($_GET['id']) && isset($_SESSION['user_id'])) {
+    $animeId = intval($_GET['id']);
+    $userId = $_SESSION['user_id'];
+    registrarHistoricoAnime($pdo, $userId, $animeId);
 }
 ?>
 
@@ -286,8 +294,8 @@ if (!empty($temporadas)) {
         <?php endif; ?>
       </section>
     </div>
-    <?php include __DIR__ . '/rodape.php'; ?>
   </main>
+  <?php include __DIR__ . '/rodape.php'; ?>
   <script src="../../JS/togge.js"></script>
   <script src="../../JS/temporadas.js"></script>
   <script src="../../JS/reacao.js"></script>
