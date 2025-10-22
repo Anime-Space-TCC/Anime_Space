@@ -61,7 +61,6 @@ $atributos = [
 
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
     <meta charset="UTF-8">
     <title>Perfil - Anime Space</title>
@@ -70,24 +69,11 @@ $atributos = [
 </head>
 
 <body class="perfil">
-    <div class="menu-lateral">
-        <a href="../../PHP/user/index.php" class="home-btn" aria-label="Página Inicial" role="button" tabindex="0">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" width="20" height="20" style="vertical-align: middle;">
-                <path d="M12 3l9 8h-3v9h-5v-6H11v6H6v-9H3z" />
-            </svg>
-        </a>
-        <a href="../../PHP/user/stream.php">Catálogo</a>
-        <a href="../../PHP/user/editar_perfil.php">Editar Perfil</a>
-
-        <?php if ($userTipo === 'admin'): ?>
-            <a href="../../PHP/admin/dashboard.php">Administrador</a>
-        <?php endif; ?>
-
-        <form action="../shared/logout.php" method="post" class="form-logout">
-            <input type="submit" value="Sair">
-        </form>
-    </div>
-
+<?php
+    $current_page = 'perfil';
+    include __DIR__ . '/navbar.php';
+  ?>
+  <main class="page-content">
     <div class="perfil-rpg">
         <div class="perfil-bainha">
             <div class="blocos">
@@ -220,7 +206,7 @@ $atributos = [
 
         </div>
     </div>
-
+    </main>
     <script src="../../JS/perfil.js"></script>
 
 </body>

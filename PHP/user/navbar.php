@@ -6,7 +6,8 @@
                         'noticias','episodeos',
                         'stream','suporte',
                         'lancamento','temporada',
-                        'confirmar_pagamento','quizzes']; 
+                        'confirmar_pagamento','quizzes',
+                        'perfil']; 
     
 // Verifica se o usuário está logado
 if (isset($_SESSION['user_id'])):
@@ -69,45 +70,46 @@ endif;
     </div>
 
     <!-- Lado direito -->
-    <div class="nav-right">
-        <?php if ($current_page === 'loja' || $current_page === 'meu-carrinho'): ?>
-            <!-- Botão do Carrinho -->
-            <a href="../../PHP/user/meu-carrinho.php" class="nav-carrinho-btn" aria-label="Carrinho">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" width="24" height="24">
-                    <path d="M7 4h-2l-1 2h16l-3 9H8l-1-2H3" />
-                    <circle cx="10" cy="20" r="2"/>
-                    <circle cx="18" cy="20" r="2"/>
-                </svg>
-                <span id="totalCarrinho"><?= $totalCarrinho ?? 0 ?></span>
-            </a>
-        <?php endif; ?>
+<div class="nav-right">
+    <?php if ($current_page === 'loja' || $current_page === 'meu-carrinho'): ?>
+        <!-- Botão do Carrinho -->
+        <a href="../../PHP/user/meu-carrinho.php" class="nav-carrinho-btn" aria-label="Carrinho">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" width="24" height="24">
+                <path d="M7 4h-2l-1 2h16l-3 9H8l-1-2H3" />
+                <circle cx="10" cy="20" r="2"/>
+                <circle cx="18" cy="20" r="2"/>
+            </svg>
+            <span id="totalCarrinho"><?= $totalCarrinho ?? 0 ?></span>
+        </a>
+    <?php endif; ?>
 
-        <?php if (isset($_SESSION['user_id'])): ?>
-            <!-- Usuário logado -->
-            <div class="perfil-card">
-                <div class="perfil-area">
-                    <a href="../../PHP/user/perfil.php" class="perfil-link" aria-label="Ver perfil">
-                        <img src="../..<?= htmlspecialchars($caminhoFoto) ?>" alt="Foto de perfil" class="perfil-foto">
-                    </a>
-                    <div class="perfil-info">
-                        <h2 class="perfil-nome"><?= htmlspecialchars($_SESSION['username'] ?? 'Usuário') ?></h2>
-                        <div class="perfil-nivel">Nível: <?= $nivel ?></div>
-                        <div class="exp-bar">
-                            <div class="exp-fill" style="width: <?= $porcentagem ?>%;"></div>
-                        </div>
-                        <p class="xp-text"><?= $xp ?> / <?= $xpNecessario ?> XP</p>
+    <?php if (isset($_SESSION['user_id']) && $current_page !== 'perfil'): ?>
+        <!-- Usuário logado (exceto na página de perfil) -->
+        <div class="perfil-card">
+            <div class="perfil-area">
+                <a href="../../PHP/user/perfil.php" class="perfil-link" aria-label="Ver perfil">
+                    <img src="../..<?= htmlspecialchars($caminhoFoto) ?>" alt="Foto de perfil" class="perfil-foto">
+                </a>
+                <div class="perfil-info">
+                    <h2 class="perfil-nome"><?= htmlspecialchars($_SESSION['username'] ?? 'Usuário') ?></h2>
+                    <div class="perfil-nivel">Nível: <?= $nivel ?></div>
+                    <div class="exp-bar">
+                        <div class="exp-fill" style="width: <?= $porcentagem ?>%;"></div>
                     </div>
+                    <p class="xp-text"><?= $xp ?> / <?= $xpNecessario ?> XP</p>
                 </div>
             </div>
-        <?php else: ?>
-            <a href="../../PHP/user/login.php" class="perfil-btn" aria-label="Entrar ou registrar">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="24" height="24">
-                    <circle cx="12" cy="8" r="4" />
-                    <path d="M4 20c0-4 8-4 8-4s8 0 8 4v1H4v-1z" />
-                </svg>
-            </a>
-        <?php endif; ?>
-    </div>
+        </div>
+    <?php elseif (!isset($_SESSION['user_id'])): ?>
+        <a href="../../PHP/user/login.php" class="perfil-btn" aria-label="Entrar ou registrar">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="24" height="24">
+                <circle cx="12" cy="8" r="4" />
+                <path d="M4 20c0-4 8-4 8-4s8 0 8 4v1H4v-1z" />
+            </svg>
+        </a>
+    <?php endif; ?>
+</div>
+
 </header>
 
 <!-- ===== MENU LATERAL ===== -->
@@ -118,6 +120,11 @@ endif;
     <a href="../../PHP/user/quizzes.php">Quizzes</a>
     <a href="../../PHP/user/noticias.php">Comunidade</a>
     <a href="../../PHP/user/loja.php">Lojinha</a>
+
+    <?php if (isset($_SESSION['tipo']) && $_SESSION['tipo'] === 'admin'): ?>
+        <a href="../../PHP/admin/dashboard.php">Administrador</a>
+    <?php endif; ?>
 </nav>
+
 
 <script src="../../JS/menu.js"></script>

@@ -1,8 +1,8 @@
-/* =========================
+/* ========================= 
           GLOBAIS
-========================= */
+   ========================= */
 
-* {
+   * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -10,108 +10,337 @@
 
 html,
 body {
-    font-family: 'Segoe UI', sans-serif;
-    min-height: 100vh;
-    background-color: #0a0a0a;
+    background-color: rgb(0, 0, 0);
+    font-family: Arial, sans-serif;
     background-image: url('../img/earth-1756274.jpg');
     background-size: cover;
+    background-repeat: no-repeat;
     background-position: center;
+    min-height: 100vh;
     color: #eee;
+    overflow-x: hidden;
+}
+
+/* =========================================
+   NAVBAR SUPERIOR 
+========================================= */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 22px;
+    background-color: rgba(0, 0, 0, 0);
+    border-bottom: 3px solid #ff9f00;
+    box-shadow: 0 0 16px #ff9f00;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1400;
+    backdrop-filter: blur(5px);
+    height: 80px; 
+}
+
+/* =========================================
+   Espaço para o conteúdo 
+========================================= */
+.page-content {
+    padding-top: 60px;
+}
+
+/* ================= ÍCONES ================= */
+.menu-toggle,
+.perfil-btn,
+.busca-btn,
+.sinopse-btn {
+    background-color: rgba(0, 0, 0, 0.7);
+    border: none;
+    color: #ff9f00;
+    cursor: pointer;
+    border-radius: 10px;
+    padding: 6px 10px;
+    box-shadow: 0 0 8px rgba(255, 159, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.menu-toggle svg,
+.perfil-btn svg,
+.busca-btn svg,
+.sinopse-btn svg {
+    width: 30px;
+    height: 30px;
+    vertical-align: middle;
+    fill: currentColor;
+}
+
+.menu-toggle {
+    font-size: 1.8rem;
+    line-height: 1;
+    width: 50px;
+    height: 44px;
+}
+
+.menu-toggle:hover,
+.perfil-btn:hover,
+.busca-btn:hover,
+.sinopse-btn:hover {
+    background-color: #ff9f00;
+    color: #000;
+    transform: scale(1.1);
+}
+
+/* ================= CONTAINERS ================= */
+.nav-left,
+.nav-right {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.nav-right {
+    gap: 10px; 
+}
+
+.busca-container {
+    display: flex;
+    align-items: center;
+    gap: 6px; 
+}
+
+.busca-container input {
+    background: #1a1a1a;
+    border: 1px solid #ff9f00;
+    color: #ff9f00;
+    border-radius: 6px;
+    padding: 5px 8px; 
+    outline: none;
+    width: 250px;   
+    height: 40px;   
+}
+
+.busca-container button[type="submit"] {
+    background-color: #ff9f00;
+    color: #000;
+    border: none;
+    border-radius: 6px;
+    padding: 12px 12px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.busca-container button[type="submit"]:hover {
+    background-color: #ffa733;
+}
+
+.busca-container input,
+.busca-container .busca-label,
+.busca-container button[type="submit"] {
+    display: none;
+}
+
+.busca-container.active input,
+.busca-container.active .busca-label,
+.busca-container.active button[type="submit"] {
+    display: inline-flex;
 }
 
 
-/* =========================
-        MENU LATERAL
-========================= */
+/* =========================================
+   PERFIL (LOGADO E NÃO LOGADO) 
+========================================= */
+
+.perfil-card {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 20px 15px 15px;
+  background: rgba(0, 0, 0, 1);
+  border: 2px solid #ff9f00;
+  border-radius: 16px;
+  box-shadow: 0 0 20px rgba(255, 159, 0, 0.3);
+  position: relative;
+  width: 250px;
+  height: 150px;
+  transition: all 0.3s ease-in-out;
+}
+
+.perfil-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 0 25px rgba(255, 159, 0, 0.6);
+}
+
+.perfil-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 159, 0, 0.2);
+  background: radial-gradient(circle at top left, rgba(255, 159, 0, 0.15), transparent 10%);
+  pointer-events: none;
+}
+
+.perfil-area {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  color: #ffcf6b;
+  width: 100%;
+}
+
+.perfil-foto {
+  width: 70px;
+  height: 80px;
+  margin-top: 20px;
+  border-radius: 16%;
+  border: 2px solid #ff9f00;
+  object-fit: cover;
+  box-shadow: 0 0 12px rgba(255, 159, 0, 0.6);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.perfil-foto:hover {
+  transform: scale(1.08);
+  box-shadow: 0 0 16px rgba(255, 190, 70, 0.8);
+}
+
+
+.perfil-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex: 1;
+  min-width: 0;
+  background: rgba(0, 0, 0, 0.55);
+  padding: 5px 5px 5px;
+  border-radius: 12px;
+  box-shadow: inset 0 0 6px rgba(255, 200, 80, 0.25);
+}
+
+/* Nome destacado */
+.perfil-nome {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #ffd86b;
+  text-shadow: 0 0 10px rgba(255, 200, 80, 0.8), 0 0 20px rgba(255, 160, 0, 0.6);
+  letter-spacing: 0.5px;
+  margin-bottom: 6px;
+  margin-top: 20px;
+  text-align: center;
+}
+
+/* Nível */
+.perfil-nivel {
+  font-size: 0.9rem;
+  color: #ffe7b3;
+  text-align: center;
+  text-shadow: 0 0 6px rgba(255, 200, 80, 0.4);
+  margin-bottom: 6px;
+}
+
+/* Barra de experiência (XP) */
+.exp-bar {
+  width: 100px;
+  height: 12px;
+  background: #333;
+  border-radius: 10px;
+  margin: 6px auto;
+  overflow: hidden;
+  box-shadow: 0 0 5px rgba(0,0,0,0.5) inset, 0 0 6px rgba(255, 200, 50, 0.2);
+}
+
+.exp-fill {
+  height: 100%;
+  width: 45%; 
+  background: linear-gradient(90deg, #ffce00, #ff4e50, #ffce00);
+  background-size: 200% 100%;
+  border-radius: 10px;
+  transition: width 0.4s ease-in-out, background-position 1.5s linear;
+  animation: xpFlow 2.5s linear infinite;
+}
+
+/* Texto do XP */
+.xp-text {
+  font-size: 0.85rem;
+  color: #ccc;
+  text-align: center;
+  margin-top: 4px;
+  text-shadow: 0 0 5px rgba(255, 255, 255, 0.15);
+}
+
+/* Notificação de ganho de XP */
+.xp-notification {
+  position: fixed;
+  top: -60px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(90deg, #2ecc71, #27ae60);
+  color: white;
+  padding: 12px 25px;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: bold;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  transition: top 0.5s ease, opacity 0.5s ease;
+  opacity: 0;
+  z-index: 9999;
+}
+
+.xp-notification.show {
+  top: 20px;
+  opacity: 1;
+}
+
+@keyframes xpFlow {
+  0% {
+    background-position: 0% 0%;
+  }
+  100% {
+    background-position: 200% 0%;
+  }
+}
+
+/* =========================================
+   MENU LATERAL
+========================================= */
 
 .menu-lateral {
     position: fixed;
-    top: 3rem;
-    left: 0.5rem;
-    background-color: rgba(0, 0, 0, 0.6);
-    padding: 8px;
-    border-radius: 8px;
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    box-shadow: 0 0 6px #ff9f00;
-    z-index: 1000;
-    width: 130px;
+    top: 0;
+    left: 0;               
+    width: 260px;
+    height: 100vh;
+    background-color: rgba(0,0,0,0.9);
+    overflow-y: auto;
+    transform: translateX(-100%); 
+    transition: transform 0.3s ease;
+    padding-top: 90px;
+    z-index: 1300;
+    box-shadow: 2px 0 10px rgba(255,159,0,0.6);
+    border-top-right-radius: 12px;
+    border-bottom-right-radius: 12px;
 }
 
-
-/* Links */
+.menu-lateral.open {
+    transform: translateX(0); 
+}
 
 .menu-lateral a {
+    display: block;
+    padding: 1rem 2rem;
     color: #ff9f00;
     text-decoration: none;
-    padding: 6px 8px;
-    border-radius: 5px;
-    transition: all 0.3s ease;
-    font-weight: bold;
-    font-size: 0.9rem;
-    display: block;
-    text-align: center;
+    font-weight: 600;
+    border-left: 4px solid transparent;
+    transition: background-color 0.25s, border-color 0.25s, color 0.25s;
 }
-
-
-/* Hover */
 
 .menu-lateral a:hover {
     background-color: #ff9f00;
     color: #000;
-    box-shadow: 0 0 4px #fff;
+    border-left-color: #000;
 }
-
-
-/* Botão de submit */
-
-.menu-lateral input[type="submit"] {
-    background-color: #ff9f00;
-    color: #000;
-    border: none;
-    border-radius: 5px;
-    padding: 6px;
-    font-weight: bold;
-    font-size: 0.9rem;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    text-align: center;
-}
-
-
-/* Hover no botão */
-
-.menu-lateral input[type="submit"]:hover {
-    background-color: #fff;
-    color: #ff9f00;
-    box-shadow: 0 0 4px #fff;
-}
-
-.form-logout {
-    text-align: center;
-    margin-top: 8px;
-}
-
-.form-logout input[type="submit"] {
-    background-color: #ff9f00;
-    color: #000;
-    border: none;
-    border-radius: 5px;
-    padding: 6px 12px;
-    font-weight: bold;
-    font-size: 0.9rem;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    display: inline-block;
-}
-
-.form-logout input[type="submit"]:hover {
-    background-color: #fff;
-    color: #ff9f00;
-    box-shadow: 0 0 4px #fff;
-}
-
 
 /* =========================
        PERFIL RPG CENTRALIZADO
@@ -120,7 +349,7 @@ body {
 .perfil-rpg {
     max-width: 1000px;
     margin: 0 auto;
-    padding: 80px 20px 50px 20px;
+    padding: 80px 20px 80px 30px;
     position: relative;
     z-index: 1;
     display: flex;
@@ -150,11 +379,11 @@ body {
 
 .blocos {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(50px, 2fr));
     gap: 40px; /* menor que 100px */
     width: 100%;
-    max-width: 950px;
-    margin-bottom: 30px;
+    max-width: 1000px;
+    margin-bottom: 50px;
 }
 
 .bloco {
