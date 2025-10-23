@@ -35,19 +35,19 @@ unset($anime);
   <link rel="stylesheet" href="../../../../CSS/style.css?v=2" />
   <link rel="icon" href="../../../../img/slogan3.png" type="image/png"> 
 </head>
-<body class="admin">
+<body class="admin-cruds">
   <div class="admin-links">
     <h1>Gerenciar Animes</h1>
     <nav>
       <a href="../../../../PHP/user/index.php" class="admin-btn">Home</a> 
       <a href="../../../../PHP/admin/CRUDs/animes/anime_form.php" class="admin-btn">Novo Anime</a> 
-      <a href="../../../../PHP/admin/dashboard.php" class="admin-btn">Voltar</a> 
+      <a href="../../../../PHP/admin/index.php" class="admin-btn">Voltar</a> 
       <a href="../../../../PHP/shared/logout.php" class="admin-btn">Sair</a> 
     </nav>
   </div>
 
   <main>
-    <table class="admin-anime-table">
+    <table class="admin-table">
       <thead>
         <tr>
           <th>Imagem</th>

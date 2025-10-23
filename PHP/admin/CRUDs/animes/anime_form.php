@@ -84,7 +84,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="stylesheet" href="../../../../CSS/style.css?v=2" />
     <link rel="icon" href="../../../../img/slogan3.png" type="image/png"> 
 </head>
-<body class="admin">
+<body class="admin-cruds">
     <div class="admin-links">
         <h1><?= $id ? "Editar Anime" : "Cadastrar Novo Anime" ?></h1> 
         <nav>
@@ -118,8 +118,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <label>Nota:</label><br>
             <input type="number" name="nota" step="0.1" min="0" max="10" value="<?= htmlspecialchars($anime['nota']) ?>" required><br><br>
 
-            <label>Nome do arquivo da imagem:</label><br>
-            <input type="text" name="capa" value="<?= htmlspecialchars($anime['capa']) ?>" required><br><br>
+            <label>Imagem:</label><br>
+            <input type="file" name="capa"><br>
+            <?php if (!empty($anime['capa'])): ?>
+                <img src="../../../../img/<?= htmlspecialchars($anime['capa']) ?>" alt="Capa do Anime" width="150">
+            <?php endif; ?>
+            <br>
 
             <input type="submit" value="Salvar" class="admin-btn"> 
         </form>

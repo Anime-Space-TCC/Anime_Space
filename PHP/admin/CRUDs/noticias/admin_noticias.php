@@ -21,23 +21,21 @@ $noticias = $stmt->fetchAll(PDO::FETCH_ASSOC);
   <link rel="stylesheet" href="../../../../CSS/style.css?v=3" />
   <link rel="icon" href="../../../../img/slogan3.png" type="image/png"> 
 </head>
-<body class="admin">
+<body class="admin-cruds">
   <div class="admin-links">
     <h1>Gerenciar Noticias</h1>
     <nav>
       <a href="../../../../PHP/user/index.php" class="admin-btn">Home</a> 
       <a href="../../../../PHP/admin/CRUDs/noticias/noticias_form.php" class="admin-btn">Nova Notícia</a> 
-      <a href="../../../../PHP/admin/dashboard.php" class="admin-btn">Voltar</a> 
+      <a href="../../../../PHP/admin/index.php" class="admin-btn">Voltar</a> 
       <a href="../../../../PHP/shared/logout.php" class="admin-btn">Sair</a> 
     </nav>
   </div>
 
 <main>
-<table class="admin-anime-table">
+<table class="admin-table">
     <thead>
         <tr>
-            <th>ID</th>
-            <th>Título</th>
             <th>Tags</th>
             <th>Visualizações</th>
             <th>Imagem</th>
@@ -47,8 +45,6 @@ $noticias = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <tbody>
         <?php foreach ($noticias as $noticia): ?>
         <tr>
-            <td><?= $noticia['id'] ?></td>
-            <td><?= htmlspecialchars($noticia['titulo']) ?></td>
             <td><?= htmlspecialchars($noticia['tags']) ?></td>
             <td><?= $noticia['visualizacoes'] ?></td>
             <td>

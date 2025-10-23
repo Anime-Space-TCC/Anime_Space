@@ -118,7 +118,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="stylesheet" href="../../../../CSS/style.css?v=2" />
     <link rel="icon" href="../../../../img/slogan3.png" type="image/png">
 </head>
-<body class="admin">
+<body class="admin-cruds">
     <div class="admin-links">
         <h1><?= $id ? "Editar Episódio" : "Cadastrar Novo Episódio" ?></h1> 
         <nav>
@@ -160,14 +160,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <label>Data de Lançamento:</label><br>
             <input type="date" name="data_lancamento" value="<?= htmlspecialchars($episodio['data_lancamento']) ?>"><br><br>
 
-            <label>Arquivo da Miniatura:</label><br>
-            <input type="text" name="miniatura" value="<?= htmlspecialchars($episodio['miniatura']) ?>"><br><br>
-
             <label>URL do Vídeo:</label><br>
             <input type="text" name="video_url" value="<?= htmlspecialchars($episodio['video_url']) ?>" required><br><br>
 
             <label>Linguagem:</label><br>
             <input type="text" name="linguagem" value="<?= htmlspecialchars($episodio['linguagem']) ?>"><br><br>
+
+            <label>Mini-imagem:</label><br>
+            <input type="file" name="miniatura"><br>
+            <?php if (!empty($episodio['miniatura'])): ?>
+                 <img src="../../../../img/<?= htmlspecialchars($episodio['miniatura']) ?>" alt="Mini-imagem do Episódio" width="150"><br>
+            <?php endif; ?>
+            <br>
 
             <input type="submit" value="Salvar" class="admin-btn"> 
         </form>

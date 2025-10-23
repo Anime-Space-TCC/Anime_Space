@@ -122,7 +122,7 @@ endif;
     <a href="../../PHP/user/loja.php">Lojinha</a>
 
     <?php if (isset($_SESSION['tipo']) && $_SESSION['tipo'] === 'admin'): ?>
-        <a href="../../PHP/admin/dashboard.php">Administrador</a>
+        <a href="../../PHP/admin/index.php">Administrador</a>
     <?php endif; ?>
 </nav>
 

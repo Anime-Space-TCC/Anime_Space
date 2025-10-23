@@ -4,41 +4,43 @@ session_start();
 
 // Verifica admin
 if (!isset($_SESSION['tipo']) || $_SESSION['tipo'] !== 'admin') {
-    header('Location: ../../../../PHP/user/login.php');
-    exit();
+  header('Location: ../../../../PHP/user/login.php');
+  exit();
 }
 
 $id = $_GET['id'] ?? null;
 
 $temporada = [
-    'anime_id'      => '',
-    'numero'        => '',
-    'nome'          => '',
-    'ano_inicio'    => '',
-    'ano_fim'       => '',
-    'qtd_episodios' => '',
-    'capa'          => ''
+  'anime_id'      => '',
+  'numero'        => '',
+  'nome'          => '',
+  'ano_inicio'    => '',
+  'ano_fim'       => '',
+  'qtd_episodios' => '',
+  'capa'          => ''
 ];
 
 // Busca todos os animes
 $animes = $pdo->query("SELECT id, nome FROM animes ORDER BY nome")->fetchAll(PDO::FETCH_ASSOC);
 
 if ($id) {
-    $stmt = $pdo->prepare("SELECT * FROM temporadas WHERE id = ?");
-    $stmt->execute([$id]);
-    $temporada = $stmt->fetch(PDO::FETCH_ASSOC) ?: $temporada;
+  $stmt = $pdo->prepare("SELECT * FROM temporadas WHERE id = ?");
+  $stmt->execute([$id]);
+  $temporada = $stmt->fetch(PDO::FETCH_ASSOC) ?: $temporada;
 }
 ?>
 
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
   <meta charset="UTF-8">
   <title><?= $id ? "Editar Temporada" : "Nova Temporada" ?></title>
   <link rel="stylesheet" href="../../../../CSS/style.css?v=2">
   <link rel="icon" href="../../../../img/slogan3.png" type="image/png">
 </head>
-<body class="admin">
+
+<body class="admin-cruds">
   <div class="admin-links">
     <h1><?= $id ? "Editar Temporada" : "Cadastrar Nova Temporada" ?></h1>
     <nav>
@@ -78,11 +80,16 @@ if ($id) {
       <label>Quantidade de Episódios:</label><br>
       <input type="number" name="qtd_episodios" value="<?= htmlspecialchars($temporada['qtd_episodios']) ?>"><br><br>
 
-      <label>URL da Capa:</label><br>
-      <input type="text" name="capa" value="<?= htmlspecialchars($temporada['capa']) ?>"><br><br>
+      <label>Imagem de Capa:</label><br>
+      <input type="file" name="capa"><br>
+      <?php if (!empty($temporada['capa'])): ?>
+        <img src="../../../../img/<?= htmlspecialchars($temporada['capa']) ?>" alt="Imagem da Temporada" width="150"><br>
+      <?php endif; ?>
+      <br>
 
       <input type="submit" value="Salvar" class="admin-btn">
     </form>
   </main>
 </body>
+
 </html>

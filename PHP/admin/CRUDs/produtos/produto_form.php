@@ -73,7 +73,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="stylesheet" href="../../../../CSS/style.css?v=3" />
     <link rel="icon" href="../../../../img/slogan3.png" type="image/png">
 </head>
-<body class="admin">
+<body class="admin-cruds">
     <div class="admin-links">
         <h1><?= $id ? "Editar Produto" : "Cadastrar Novo Produto" ?></h1> 
         <nav>
@@ -105,9 +105,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <label>Descrição:</label>
             <textarea name="descricao" rows="5"><?= htmlspecialchars($produto['descricao']) ?></textarea><br><br>
 
-            <label>Nome do arquivo da imagem:</label>
-            <input type="text" name="imagem" value="<?= htmlspecialchars($produto['imagem']) ?>"><br><br>
-
+            <label>Imagem:</label><br>
+            <input type="file" name="imagem"><br>
+            <?php if (!empty($produto['imagem'])): ?>
+                 <img src="../../../../img/<?= htmlspecialchars($produto['imagem']) ?>" alt="Imagem do Produto" width="150"><br>
+            <?php endif; ?>
+            <br>
+            
             <label>Status:</label><br>
             <input type="checkbox" name="ativo" class="checkbox" <?= $produto['ativo'] ? 'checked' : '' ?>> Produto ativo<br><br>
 

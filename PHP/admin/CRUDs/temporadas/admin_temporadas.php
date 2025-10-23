@@ -24,47 +24,43 @@ $temporadas = $pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
   <link rel="stylesheet" href="../../../../CSS/style.css?v=2">
   <link rel="icon" href="../../../../img/slogan3.png" type="image/png">
 </head>
-<body class="admin">
+<body class="admin-cruds">
   <div class="admin-links">
     <h1>Gerenciar Temporadas</h1>
     <nav>
       <a href="../../../../PHP/user/index.php" class="admin-btn">Home</a>
       <a href="../../../../PHP/admin/CRUDs/temporadas/temporadas_form.php" class="admin-btn">Nova Temporada</a>
-      <a href="../../../../PHP/admin/dashboard.php" class="admin-btn">Voltar</a>
+      <a href="../../../../PHP/admin/index.php" class="admin-btn">Voltar</a>
       <a href="../../../../PHP/shared/logout.php" class="admin-btn">Sair</a>
     </nav>
   </div>
 
   <main>
-    <table class="admin-anime-table">
+    <table class="admin-table">
       <thead>
         <tr>
+          <th>Capa</th>
           <th>Anime</th>
           <th>Número</th>
-          <th>Nome</th>
           <th>Ano Início</th>
           <th>Ano Fim</th>
           <th>Episódios</th>
-          <th>Capa</th>
           <th>Ações</th>
         </tr>
       </thead>
       <tbody>
         <?php foreach($temporadas as $t): ?>
         <tr>
-          <td><?= htmlspecialchars($t['anime_nome']) ?></td>
-          <td><?= htmlspecialchars($t['numero']) ?></td>
-          <td><?= htmlspecialchars($t['nome']) ?></td>
-          <td><?= htmlspecialchars($t['ano_inicio']) ?></td>
-          <td><?= htmlspecialchars($t['ano_fim']) ?></td>
-          <td><?= htmlspecialchars($t['qtd_episodios']) ?></td>
           <td>
             <?php if (!empty($t['capa'])): ?>
               <img src="../../../../img/<?= htmlspecialchars($t['capa']) ?>" alt="<?= htmlspecialchars($t['anime_id']) ?>" width="100">
-            <?php else: ?>
-              —
             <?php endif; ?>
           </td>
+          <td><?= htmlspecialchars($t['anime_nome']) ?></td>
+          <td><?= htmlspecialchars($t['numero']) ?></td>
+          <td><?= htmlspecialchars($t['ano_inicio']) ?></td>
+          <td><?= htmlspecialchars($t['ano_fim']) ?></td>
+          <td><?= htmlspecialchars($t['qtd_episodios']) ?></td>
           <td>
             <a href="../../../../PHP/admin/CRUDs/temporadas/temporadas_form.php?id=<?= $t['id'] ?>" class="admin-btn">Editar</a>
             <a href="../../../../PHP/admin/CRUDs/temporadas/temporadas_delete.php?id=<?= $t['id'] ?>" class="admin-btn" onclick="return confirm('Excluir esta temporada?')">Excluir</a>
