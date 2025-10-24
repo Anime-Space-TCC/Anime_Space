@@ -1,9 +1,10 @@
 <?php
 session_start();
 header('Content-Type: application/json; charset=utf-8');
-error_reporting(0); // Evita notices que quebram o JSON
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
 
-require __DIR__ . '/../conexao.php'; 
+require __DIR__ . '/conexao.php';
 
 if (!isset($_SESSION['tipo']) || $_SESSION['tipo'] !== 'admin') {
     http_response_code(403);
@@ -12,12 +13,15 @@ if (!isset($_SESSION['tipo']) || $_SESSION['tipo'] !== 'admin') {
 }
 
 try {
-    // ===== Estatísticas gerais =====
-    $totalUsuarios   = (int) $pdo->query("SELECT COUNT(*) FROM users")->fetchColumn();
-    $totalAnimes     = (int) $pdo->query("SELECT COUNT(*) FROM animes")->fetchColumn();
-    $totalEpisodios  = (int) $pdo->query("SELECT COUNT(*) FROM episodios")->fetchColumn();
-    $totalProdutos   = (int) $pdo->query("SELECT COUNT(*) FROM produtos")->fetchColumn();
-    $totalAcessos    = (int) $pdo->query("SELECT COUNT(*) FROM acessos")->fetchColumn();
+    // ===== Totais gerais em uma query =====
+    $totais = $pdo->query("
+        SELECT
+            (SELECT COUNT(*) FROM users) AS usuarios,
+            (SELECT COUNT(*) FROM animes) AS animes,
+            (SELECT COUNT(*) FROM episodios) AS episodios,
+            (SELECT COUNT(*) FROM produtos) AS produtos,
+            (SELECT COUNT(*) FROM acessos) AS acessos
+    ")->fetch(PDO::FETCH_ASSOC);
 
     // ===== Acessos últimos 7 dias =====
     $acessosPorDia = $pdo->query("
@@ -28,7 +32,7 @@ try {
         ORDER BY dia
     ")->fetchAll(PDO::FETCH_ASSOC);
 
-    // ===== Últimos 10 acessos =====
+    // ===== Últimos 10 acessos (somente info essencial) =====
     $acessosRecentes = $pdo->query("
         SELECT 
             a.id, 
@@ -57,7 +61,7 @@ try {
         ORDER BY faixa
     ")->fetchAll(PDO::FETCH_ASSOC);
 
-    // ===== Usuários por nacionalidade =====
+    // ===== Usuários por nacionalidade (top 6) =====
     $usuariosNacionalidade = $pdo->query("
         SELECT 
             COALESCE(nacionalidade, 'Não informado') AS pais,
@@ -65,27 +69,32 @@ try {
         FROM users
         GROUP BY pais
         ORDER BY total DESC
+        LIMIT 6
     ")->fetchAll(PDO::FETCH_ASSOC);
 
-    // ===== Saída JSON =====
+    // ===== Top 10 Animes mais assistidos =====
+    $topAnimes = $pdo->query("
+        SELECT a.nome AS titulo, COUNT(*) AS total
+        FROM historico h
+        JOIN animes a ON h.anime_id = a.id
+        GROUP BY h.anime_id
+        ORDER BY total DESC
+        LIMIT 10
+    ")->fetchAll(PDO::FETCH_ASSOC);
+
+    // ===== Saída JSON otimizada =====
     echo json_encode([
-        'geral' => [
-            'usuarios'   => $totalUsuarios,
-            'animes'     => $totalAnimes,
-            'episodios'  => $totalEpisodios,
-            'produtos'   => $totalProdutos,
-            'acessos'    => $totalAcessos
-        ],
+        'geral'                   => $totais,
         'acessos_por_dia'         => $acessosPorDia,
         'acessos_recentes'        => $acessosRecentes,
         'usuarios_idade'          => $usuariosIdade,
-        'usuarios_nacionalidade'  => $usuariosNacionalidade
-    ], JSON_UNESCAPED_UNICODE);
-
+        'usuarios_nacionalidade'  => $usuariosNacionalidade,
+        'top_animes'              => $topAnimes
+    ], JSON_UNESCAPED_UNICODE | JSON_NUMERIC_CHECK);
 } catch (PDOException $e) {
     http_response_code(500);
     echo json_encode([
-        'erro' => 'Falha ao carregar dados',
-        'mensagem' => $e->getMessage()
-    ]);
+        'erro'      => 'Falha ao carregar dados',
+        'mensagem'  => $e->getMessage()
+    ], JSON_UNESCAPED_UNICODE);
 }

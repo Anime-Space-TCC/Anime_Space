@@ -627,23 +627,23 @@ body {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background-color: rgba(0, 0, 0, 0.8); /* fundo mais escuro */
+    background-color: rgba(0, 0, 0, 0.8); 
 }
 
 .perfil-container {
     width: 100%;
-    max-width: 650px;  /* <-- Aumentei as laterais (antes 500px) */
-    padding: 30px 40px; /* <-- Mais espaço interno nas laterais */
+    max-width: 650px;  
+    padding: 30px 40px;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
 .perfil-editar-card {
-    background-color: rgba(0, 0, 0, 0.6); /* meio preto opaco */
-    padding: 30px 40px; /* <-- aumentei o padding lateral */
+    background-color: rgba(0, 0, 0, 0.6); 
+    padding: 30px 40px; 
     border-radius: 12px;
-    box-shadow: 0 4px 15px rgba(255, 159, 0, 0.3); /* corrigido */
+    box-shadow: 0 4px 15px rgba(255, 159, 0, 0.3); 
     display: flex;
     flex-direction: column;
     gap: 18px;
@@ -842,62 +842,6 @@ body {
     text-align: center;  
 }
 
-
-@media (max-width: 800px) {
-    .atributos { gap: 25px; }
-    .blocos { gap: 25px; }
-}
-
-/* Responsividade */
-@media (max-width: 800px) {
-  .atributos {
-    gap: 25px;
-  }
-
-  .circulo {
-    width: 70px;
-    height: 70px;
-  }
-
-  .circulo span {
-    font-size: 1.3em;
-  }
-}
-
-@media (max-width: 500px) {
-  .atributos {
-    flex-direction: column;
-    gap: 15px;
-  }
-
-  .ficha-rpg-section {
-    padding: 25px 15px;
-  }
-}
-
-
-/* ============================
-   Responsividade
-============================ */
-@media (max-width: 500px) {
-    .perfil-container {
-        padding: 10px;
-    }
-
-    .perfil-editar-card {
-        padding: 20px 15px;
-    }
-
-    .perfil-titulo {
-        font-size: 1.6rem;
-    }
-
-    .perfil-btn {
-        font-size: 0.95rem;
-        padding: 9px;
-    }
-}
-
 /* =========================
     UPGRADE RPG
 ========================= */
@@ -960,38 +904,251 @@ body {
         box-shadow: 0 0 10px #ee0979;
     }
 
-
 /* =========================
-         RESPONSIVO
+    RESPONSIVIDADE
 ========================= */
 
-@media (max-width: 768px) {
+/* Para telas até 1200px */
+@media (max-width: 1200px) {
+    .blocos {
+        gap: 30px;
+    }
+
     .perfil-rpg {
-        padding: 120px 20px 50px 20px;
+        padding: 60px 15px 60px 15px;
     }
-    .avatar-section {
-        width: 80%;
+
+    .ficha-rpg-section {
+        padding: 30px 20px;
     }
-    .exp-bar {
-        width: 200px;
+
+    .atributos {
+        gap: 25px;
     }
-    .cards-container {
-        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-    }
-    .menu-lateral {
-        position: relative;
-        top: 0;
-        left: 0;
-        flex-direction: row;
-        padding: 10px;
-        border-radius: 0;
-        justify-content: space-around;
-        width: 100%;
-    }
-    .menu-lateral a,
-    .menu-lateral input[type="submit"] {
-        font-size: 14px;
-        padding: 6px 8px;
+
+    .upgrade-container {
+        margin: 40px 20px;
+        padding: 25px;
     }
 }
 
+/* Para telas até 992px */
+@media (max-width: 992px) {
+    .navbar {
+        padding: 10px 15px;
+        height: 70px;
+    }
+
+    .menu-toggle,
+    .perfil-btn,
+    .busca-btn,
+    .sinopse-btn {
+        width: 40px;
+        height: 40px;
+    }
+
+    .busca-container input {
+        width: 200px;
+    }
+
+    .perfil-card {
+        width: 200px;
+        height: 140px;
+        padding: 15px 10px;
+    }
+
+    .blocos {
+        gap: 25px;
+    }
+
+    .bloco {
+        padding: 35px;
+    }
+
+    .avatar {
+        width: 250px;
+        height: 250px;
+    }
+
+    .cards-container .card {
+        flex: 1 1 calc(33% - 10px);
+        max-width: 90px;
+        max-height: 140px;
+    }
+
+    .historico-animes-section .cards-container .card {
+        flex: 1 1 calc(25% - 8px);
+        max-width: 90px;
+        max-height: 220px;
+    }
+}
+
+/* Para telas até 768px (tablet e landscape mobile) */
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        align-items: flex-start;
+        height: auto;
+        padding: 8px 12px;
+    }
+
+    .nav-left,
+    .nav-right {
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    .busca-container input {
+        width: 150px;
+        height: 35px;
+    }
+
+    .perfil-card {
+        flex-direction: column;
+        width: 100%;
+        height: auto;
+        padding: 15px;
+    }
+
+    .perfil-area {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .blocos {
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+        gap: 20px;
+    }
+
+    .bloco {
+        padding: 25px;
+    }
+
+    .avatar {
+        width: 200px;
+        height: 200px;
+    }
+
+    .cards-container .card {
+        flex: 1 1 calc(50% - 10px);
+        max-width: 90px;
+        max-height: 140px;
+    }
+
+    .historico-animes-section .cards-container .card {
+        flex: 1 1 calc(50% - 8px);
+        max-width: 90px;
+        max-height: 200px;
+    }
+
+    .ficha-rpg-section {
+        padding: 25px 15px;
+    }
+
+    .atributos {
+        gap: 20px;
+    }
+
+    .circulo {
+        width: 70px;
+        height: 70px;
+    }
+
+    .circulo span {
+        font-size: 1.2em;
+    }
+
+    .medalhas {
+        gap: 15px;
+    }
+
+    .medalha {
+        font-size: 2em;
+    }
+}
+
+/* Para telas até 576px (mobile) */
+@media (max-width: 576px) {
+    .navbar {
+        padding: 6px 10px;
+    }
+
+    .menu-toggle,
+    .perfil-btn,
+    .busca-btn,
+    .sinopse-btn {
+        width: 35px;
+        height: 35px;
+    }
+
+    .busca-container input {
+        width: 120px;
+        height: 32px;
+    }
+
+    .perfil-card {
+        width: 100%;
+        height: auto;
+        padding: 10px;
+    }
+
+    .perfil-area {
+        gap: 6px;
+    }
+
+    .blocos {
+        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+        gap: 15px;
+    }
+
+    .bloco {
+        padding: 20px;
+    }
+
+    .avatar {
+        width: 150px;
+        height: 150px;
+    }
+
+    .cards-container .card,
+    .historico-animes-section .cards-container .card {
+        flex: 1 1 100%;
+        max-width: 100%;
+        max-height: auto;
+    }
+
+    .ficha-rpg-section {
+        padding: 20px 10px;
+    }
+
+    .atributos {
+        gap: 15px;
+    }
+
+    .circulo {
+        width: 60px;
+        height: 60px;
+    }
+
+    .circulo span {
+        font-size: 1em;
+    }
+
+    .medalhas {
+        gap: 10px;
+    }
+
+    .medalha {
+        font-size: 1.8em;
+    }
+
+    .upgrade-container {
+        margin: 20px 10px;
+        padding: 20px;
+    }
+
+    .upgrade-container h1 {
+        font-size: 1.5rem;
+    }
+}

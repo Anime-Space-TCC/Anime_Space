@@ -36,7 +36,6 @@ body {
     top: 0;
     width: 100%;
     z-index: 1400;
-    backdrop-filter: blur(5px);
     height: 80px; 
 }
 
@@ -594,20 +593,6 @@ body {
     background-color: rgba(0,0,0,0.9);
 }
 
-/* Responsivo */
-@media (max-width: 900px) {
-    .home .cabeca {
-        flex-direction: column;
-    }
-    .home .cabeca .slogan,
-    .home .slideshow-container {
-        max-width: 100%;
-    }
-    .home .slide img {
-        max-height: 200px; 
-    }
-}
-
 /* =========================
         HOME GENEROS
    ========================= */
@@ -767,34 +752,6 @@ body {
     to { opacity: 1; transform: translateY(0); }
 }
 
-/* =========================
-       RESPONSIVIDADE
-   ========================= */
-
-@media (max-width: 768px) {
-    .navbar {
-        flex-direction: row;
-        justify-content: space-between;
-        padding: 8px 12px;
-    }
-
-    .perfil-area .perfil-info {
-        display: none;
-    }
-
-    .search-bar input {
-        width: 180px;
-    }
-
-    .grid-lancamentos {
-        grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-    }
-
-    .slideshow-container {
-        max-width: 100%;
-    }
-}
-
 /* ========================= 
       Últimas
 ========================= */
@@ -921,17 +878,6 @@ body {
     transform: scale(1.03);
 }
 
-@media (max-width: 900px) {
-    .ads-lateral {
-        display: none;
-    }
-
-    .layout-anuncios {
-        flex-direction: column;
-        align-items: center;
-    }
-}
-
 /* =========================
       Temporada
 ========================= */
@@ -1056,17 +1002,6 @@ body {
 
 .ads-lateral .ad-item:hover img {
     transform: scale(1.03);
-}
-
-@media (max-width: 900px) {
-    .ads-lateral {
-        display: none;
-    }
-
-    .layout-anuncios {
-        flex-direction: column;
-        align-items: center;
-    }
 }
 
 /* =======================
@@ -1552,17 +1487,6 @@ body {
     background: #777;
 }
 
-/* Responsivo */
-@media (max-width: 600px) {
-    .page-content h1 {
-        font-size: 1.4rem;
-    }
-    .carrinho-item img {
-        width: 45px;
-        height: 45px;
-    }
-}
-
 /* =========================
    PAGAMENTO CONFIRMAÇÃO
 ========================= */
@@ -1698,31 +1622,6 @@ body {
     box-shadow: 0 0 20px #ff9f00;
 }
 
-/* Responsividade */
-@media screen and (max-width: 600px) {
-    .pagamento-confirmacao {
-        margin: 20px;
-        padding: 20px;
-    }
-
-    .pagamento-confirmacao h1 {
-        font-size: 1.8rem;
-    }
-
-    .pagamento-confirmacao h2 {
-        font-size: 1.4rem;
-    }
-
-    .pagamento-confirmacao p, 
-    .pagamento-confirmacao ul li {
-        font-size: 1rem;
-    }
-
-    .qrcode img {
-        width: 140px;
-    }
-}
-
 /* ======================
    NAV CARRINHO
 ====================== */
@@ -1743,30 +1642,6 @@ body {
 
 .nav-carrinho-btn:hover {
     transform: scale(1.08); 
-}
-
-/* ======================
-   RESPONSIVIDADE
-====================== */
-@media screen and (max-width: 600px) {
-    .loja-header h1,
-    .loja-banner h2 {
-        font-size: 2rem;
-    }
-    .loja-banner p {
-        font-size: 1rem;
-    }
-    .produtos-grid {
-        grid-template-columns: 1fr;
-        gap: 15px;
-    }
-    .carrinho-item {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-    .pagamento-opcao {
-        width: 90%;
-    }
 }
 
 /* =========================
@@ -2567,17 +2442,6 @@ body {
   transform: scale(1.03);
 }
 
-/* Responsividade */
-@media (max-width: 900px) {
-  .layout-populares-anuncios {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .layout-populares-anuncios .ads-lateral {
-    display: none;
-  }
-}
 
 /* =========================
       MAIS POPULARES
@@ -2671,30 +2535,6 @@ body {
   opacity: 0.8;
   transform: scale(1.05);
 }
-
-/* =========================
-        RESPONSIVIDADE
-========================= */
-@media (max-width: 768px) {
-  .slideshow {
-    height: 250px;
-  }
-
-  .historia-section,
-  .populares-section,
-  .contato-section {
-    padding: 20px;
-  }
-
-  .noticias-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .contato-links {
-    flex-direction: column;
-  }
-}
-
 
 /* =========================
         SOBRE 
@@ -2950,6 +2790,1064 @@ body {
     background: rgba(114, 114, 114, 0.9);
 }
 
+/* =========================================
+   RESPONSIVIDADE GERAL
+========================================= */
+
+/* ==== Telas grandes (até 1200px) ==== */
+@media (max-width: 1200px) {
+  .home .cabeca {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .home .cabeca .slogan {
+    max-width: 90%;
+  }
+
+  .busca-container input {
+    width: 180px;
+  }
+
+  .layout-anuncios {
+    gap: 20px;
+  }
+
+  .ads-lateral {
+    width: 100px;
+  }
+}
+
+/* ==== Tablets (até 992px) ==== */
+@media (max-width: 992px) {
+  .navbar {
+    padding: 10px 16px;
+    height: 70px;
+  }
+
+  .busca-container input {
+    width: 160px;
+  }
+
+  .perfil-card {
+    width: 220px;
+    height: auto;
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .perfil-foto {
+    width: 60px;
+    height: 60px;
+    margin: 10px auto;
+  }
+
+  .layout-anuncios {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .ads-lateral {
+    flex-direction: row;
+    width: 90%;
+    justify-content: center;
+  }
+
+  .ads-lateral .ad-item {
+    height: 160px;
+  }
+
+  .home .grid-lancamentos {
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  }
+
+  .home .cabeca .slogan .img-slogan {
+    max-width: 100%;
+  }
+}
+
+/* ==== Celulares médios (até 768px) ==== */
+@media (max-width: 768px) {
+  .navbar {
+    flex-wrap: wrap;
+    height: auto;
+    justify-content: space-between;
+  }
+
+  .nav-left, .nav-right {
+    width: 100%;
+    justify-content: space-between;
+    margin-top: 8px;
+  }
+
+  .menu-lateral {
+    width: 230px;
+  }
+
+  .busca-container input {
+    width: 100%;
+  }
+
+  .perfil-card {
+    width: 90%;
+    height: auto;
+    flex-direction: column;
+  }
+
+  .layout-anuncios {
+    flex-direction: column;
+    gap: 25px;
+    padding: 10px;
+  }
+
+  .ads-lateral {
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100%;
+  }
+
+  .ads-lateral .ad-item {
+    width: 48%;
+    height: 150px;
+  }
+
+  .home .cabeca {
+    flex-direction: column;
+    padding: 10px;
+  }
+
+  .home .cabeca .slogan {
+    max-width: 100%;
+    margin-bottom: 15px;
+  }
+
+  .home .slideshow-container {
+    width: 100%;
+  }
+
+  .home .grid-lancamentos {
+    grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+    gap: 10px;
+  }
+
+  .ultimas .episodios-lista li img {
+    width: 80px;
+  }
+
+  .ad-item {
+    width: 95%;
+    height: 100px;
+  }
+}
+
+/* ==== Celulares pequenos (até 480px) ==== */
+@media (max-width: 480px) {
+  .navbar {
+    padding: 8px 12px;
+  }
+
+  .menu-toggle svg,
+  .perfil-btn svg,
+  .busca-btn svg {
+    width: 26px;
+    height: 26px;
+  }
+
+  .busca-container.active input {
+    width: 100%;
+  }
+
+  .perfil-card {
+    width: 100%;
+    height: auto;
+    padding: 12px;
+  }
+
+  .perfil-foto {
+    width: 50px;
+    height: 50px;
+  }
+
+  .perfil-nome {
+    font-size: 1rem;
+  }
+
+  .perfil-nivel {
+    font-size: 0.8rem;
+  }
+
+  .exp-bar {
+    width: 80px;
+  }
+
+  .titulo-pagina {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .home .grid-lancamentos {
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  }
+
+  .ads-lateral .ad-item {
+    width: 100%;
+    height: 120px;
+  }
+
+  .rodape {
+    font-size: 0.9rem;
+    padding: 15px 5px;
+  }
+
+  .btn-suporte {
+    bottom: 15px;
+    right: 15px;
+    padding: 10px;
+  }
+}
+
+/* =========================================
+   RESPONSIVIDADE TEMPORADA / LOJA
+========================================= */
+
+/* ==== Telas grandes (até 1200px) ==== */
+@media (max-width: 1200px) {
+  .temporada .episodios-lista li img {
+    width: 90px;
+  }
+
+  .ads-lateral {
+    width: 100px;
+  }
+
+  .ads-lateral .ad-item {
+    height: 400px;
+  }
+
+  .produtos-grid {
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  }
+
+  .produto-imagem-box {
+    height: 160px;
+  }
+
+  .slide img {
+    height: 300px;
+  }
+}
+
+/* ==== Tablets (até 992px) ==== */
+@media (max-width: 992px) {
+  .layout-anuncios {
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .ads-lateral {
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 90%;
+    justify-content: center;
+  }
+
+  .ads-lateral .ad-item {
+    width: 48%;
+    height: 150px;
+  }
+
+  .temporada .episodios-lista li {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .temporada .episodios-lista li img {
+    width: 80px;
+    margin-bottom: 10px;
+  }
+
+  .produtos-grid {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  }
+
+  .produto-imagem-box {
+    height: 140px;
+  }
+
+  .slide img {
+    height: 250px;
+  }
+}
+
+/* ==== Celulares médios (até 768px) ==== */
+@media (max-width: 768px) {
+  .temporada .episodios-lista li {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .temporada .episodios-lista li img {
+    width: 70px;
+  }
+
+  .temporada .episodios-lista li a {
+    margin-left: 0;
+    margin-top: 8px;
+  }
+
+  .ads-lateral {
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100%;
+  }
+
+  .ads-lateral .ad-item {
+    width: 48%;
+    height: 120px;
+  }
+
+  .produtos-grid {
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  }
+
+  .produto-imagem-box {
+    height: 120px;
+  }
+
+  .slide img {
+    height: 200px;
+  }
+
+  .slide-info h3 {
+    font-size: 1.4rem;
+  }
+
+  .slide-info p {
+    font-size: 1rem;
+  }
+
+  .btn-adicionar-slide {
+    padding: 6px 12px;
+  }
+}
+
+/* ==== Celulares pequenos (até 480px) ==== */
+@media (max-width: 480px) {
+  .temporada .episodios-lista li img {
+    width: 60px;
+  }
+
+  .temporada .episodios-lista li {
+    padding: 10px 12px;
+  }
+
+  .temporada .episodios-lista li a {
+    width: 100%;
+  }
+
+  .ads-lateral .ad-item {
+    width: 100%;
+    height: 100px;
+  }
+
+  .produtos-grid {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 10px;
+  }
+
+  .produto-imagem-box {
+    height: 100px;
+  }
+
+  .slide img {
+    height: 150px;
+  }
+
+  .slide-info h3 {
+    font-size: 1.2rem;
+  }
+
+  .slide-info p {
+    font-size: 0.9rem;
+  }
+
+  .btn-adicionar-slide {
+    padding: 5px 10px;
+    font-size: 0.9rem;
+  }
+
+  .loja-header h1 {
+    font-size: 2rem;
+  }
+
+  .loja-header p {
+    font-size: 1rem;
+  }
+
+  .loja-banner h2 {
+    font-size: 1.5rem;
+  }
+
+  .loja-banner p {
+    font-size: 1rem;
+  }
+}
+
+/* =========================================
+   RESPONSIVIDADE CARRINHO / LOGIN
+========================================= */
+
+/* ==== Telas grandes (até 1200px) ==== */
+@media (max-width: 1200px) {
+  .carrinho-item img {
+    width: 55px;
+    height: 55px;
+  }
+
+  .quantidade {
+    width: 40px;
+  }
+
+  .form-cartao {
+    max-width: 350px;
+  }
+
+  .pagamento-container h2 {
+    font-size: 1.1rem;
+  }
+
+  .pagamento-opcao img {
+    width: 30px;
+    height: 30px;
+  }
+}
+
+/* ==== Tablets (até 992px) ==== */
+@media (max-width: 992px) {
+  .carrinho-container {
+    width: 95%;
+    padding: 12px;
+  }
+
+  .carrinho-lista {
+    max-height: 200px;
+  }
+
+  .carrinho-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+  }
+
+  .carrinho-info {
+    margin-left: 0;
+  }
+
+  .pagamento-opcao {
+    width: 95%;
+  }
+
+  .form-cartao {
+    max-width: 300px;
+    padding: 15px;
+  }
+
+  .pagamento-confirmacao {
+    max-width: 95%;
+    padding: 20px;
+  }
+}
+
+/* ==== Celulares médios (até 768px) ==== */
+@media (max-width: 768px) {
+  .carrinho-item img {
+    width: 50px;
+    height: 50px;
+  }
+
+  .btn-cancelar, .btn-finalizar {
+    width: 100%;
+    padding: 8px 15px;
+  }
+
+  .quantidade {
+    width: 35px;
+  }
+
+  .pagamento-opcao img {
+    width: 28px;
+    height: 28px;
+  }
+
+  .pagamento-opcao {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .form-cartao input[type="text"],
+  .form-cartao input[type="number"] {
+    font-size: 0.9rem;
+  }
+
+  .pagamento-confirmacao h1 {
+    font-size: 1.8rem;
+  }
+
+  .pagamento-confirmacao h2 {
+    font-size: 1.4rem;
+  }
+
+  .pagamento-confirmacao p, .pagamento-confirmacao ul li {
+    font-size: 1rem;
+  }
+
+  .qrcode, .linha-digitavel {
+    font-size: 1rem;
+    padding: 10px;
+  }
+
+  .btn-confirmar {
+    padding: 10px 20px;
+  }
+}
+
+/* ==== Celulares pequenos (até 480px) ==== */
+@media (max-width: 480px) {
+  .carrinho-item img {
+    width: 45px;
+    height: 45px;
+  }
+
+  .carrinho-item {
+    font-size: 0.8rem;
+    padding: 6px 8px;
+  }
+
+  .quantidade {
+    width: 30px;
+  }
+
+  .btn-cancelar, .btn-finalizar {
+    font-size: 0.9rem;
+    padding: 6px 12px;
+  }
+
+  .pagamento-opcao {
+    width: 100%;
+    font-size: 0.9rem;
+    padding: 6px 10px;
+  }
+
+  .pagamento-opcao img {
+    width: 25px;
+    height: 25px;
+  }
+
+  .form-cartao {
+    max-width: 90%;
+    padding: 12px;
+  }
+
+  .form-cartao input[type="text"],
+  .form-cartao input[type="number"] {
+    font-size: 0.85rem;
+  }
+
+  .pagamento-confirmacao h1 {
+    font-size: 1.6rem;
+  }
+
+  .pagamento-confirmacao h2 {
+    font-size: 1.2rem;
+  }
+
+  .pagamento-confirmacao p, .pagamento-confirmacao ul li {
+    font-size: 0.9rem;
+  }
+
+  .qrcode, .linha-digitavel {
+    font-size: 0.9rem;
+    padding: 8px;
+  }
+
+  .btn-confirmar {
+    font-size: 0.9rem;
+    padding: 8px 16px;
+  }
+
+  /* Login */
+  .login .login-box {
+    width: 90%;
+    padding: 20px;
+  }
+
+  .login h2 {
+    font-size: 20px;
+  }
+
+  .login .campo-input input {
+    font-size: 14px;
+    padding: 8px;
+  }
+
+  .login .botao-login {
+    font-size: 14px;
+    padding: 8px;
+  }
+
+  .login .links {
+    font-size: 12px;
+  }
+
+  .login .login-image {
+    max-width: 120px;
+  }
+}
+
+/* =========================================
+   RESPONSIVIDADE 2FA / STREAMING / QUIZ
+========================================= */
+
+/* ==== Telas grandes (até 1200px) ==== */
+@media (max-width: 1200px) {
+  .twofa-box h2 {
+    font-size: 22px;
+  }
+
+  .twofa-page .twofa-textbox input,
+  .twofa-page .twofa-btn {
+    font-size: 15px;
+  }
+
+  .streaming .barra-pesquisa {
+    width: 350px;
+  }
+
+  .streaming .anime-item {
+    width: 140px;
+    height: 180px;
+  }
+
+  .quiz-header img {
+    width: 70px;
+  }
+
+  .quiz-card {
+    width: 75px;
+    height: 75px;
+    font-size: 20px;
+  }
+
+  .pergunta h2 {
+    font-size: 20px;
+  }
+}
+
+/* ==== Tablets (até 992px) ==== */
+@media (max-width: 992px) {
+  .twofa-page .twofa-container {
+    max-width: 350px;
+    padding: 15px;
+  }
+
+  .twofa-box {
+    padding: 25px 20px;
+  }
+
+  .streaming .barra-pesquisa {
+    width: 100%;
+  }
+
+  .streaming .filtros {
+    flex-wrap: wrap;
+  }
+
+  .streaming .anime-item {
+    width: 120px;
+    height: 160px;
+  }
+
+  .quiz-container {
+    padding: 30px 20px;
+  }
+
+  .quiz-header img {
+    width: 60px;
+  }
+
+  .quiz-card {
+    width: 70px;
+    height: 70px;
+  }
+
+  .pergunta h2 {
+    font-size: 18px;
+  }
+}
+
+/* ==== Celulares médios (até 768px) ==== */
+@media (max-width: 768px) {
+  .twofa-box h2 {
+    font-size: 20px;
+  }
+
+  .twofa-page .twofa-textbox input,
+  .twofa-page .twofa-btn {
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  .streaming .anime-item {
+    width: 110px;
+    height: 150px;
+  }
+
+  .streaming .anime-item .info h3 {
+    font-size: 0.9rem;
+  }
+
+  .quiz-card {
+    width: 60px;
+    height: 60px;
+  }
+
+  .quiz-header img {
+    width: 50px;
+  }
+
+  .pergunta h2 {
+    font-size: 16px;
+  }
+
+  .btn-final, #btn-proximo {
+    font-size: 0.9rem;
+    padding: 8px 14px;
+  }
+}
+
+/* ==== Celulares pequenos (até 480px) ==== */
+@media (max-width: 480px) {
+  .twofa-box h2 {
+    font-size: 18px;
+  }
+
+  .twofa-page .twofa-textbox input,
+  .twofa-page .twofa-btn {
+    font-size: 13px;
+    padding: 8px;
+  }
+
+  .streaming .anime-item {
+    width: 90px;
+    height: 130px;
+  }
+
+  .streaming .anime-item .info h3 {
+    font-size: 0.8rem;
+  }
+
+  .quiz-container {
+    padding: 20px 15px;
+  }
+
+  .quiz-header img {
+    width: 40px;
+  }
+
+  .quiz-card {
+    width: 50px;
+    height: 50px;
+    font-size: 18px;
+  }
+
+  .pergunta h2 {
+    font-size: 15px;
+  }
+
+  .btn-final, #btn-proximo {
+    font-size: 0.85rem;
+    padding: 6px 12px;
+  }
+}
+
+/* =========================================
+   RESPONSIVIDADE NOTÍCIAS / COMUNIDADE / SOBRE / SUPORTE
+========================================= */
+
+/* ==== Telas grandes (até 1200px) ==== */
+@media (max-width: 1200px) {
+  .comunidade-container {
+    padding: 40px 25px;
+  }
+
+  .carrossel-slides {
+    height: 380px;
+  }
+
+  .carrossel-info {
+    font-size: 1.15rem;
+    bottom: 30px;
+  }
+
+  .historia-section h2 {
+    font-size: 1.6rem;
+  }
+
+  .noticias-section h2 {
+    font-size: 1.5rem;
+  }
+
+  .noticia-card img {
+    height: 160px;
+  }
+
+  .noticia-info h3 {
+    font-size: 1rem;
+  }
+
+  .noticia-info p {
+    font-size: 0.9rem;
+  }
+
+  .populares-section h2 {
+    font-size: 1.4rem;
+  }
+
+  .mini-noticia img {
+    width: 50px;
+    height: 50px;
+  }
+
+  .mini-noticia p {
+    font-size: 0.85rem;
+  }
+
+  .contato-section h2 {
+    font-size: 1.5rem;
+  }
+
+  .sobre .links h1 {
+    font-size: 32px;
+  }
+
+  .sobre h2 {
+    font-size: 24px;
+  }
+
+  .sobre .equipe img {
+    width: 130px;
+    height: 130px;
+  }
+
+  .suporte h1, .suporte h2 {
+    font-size: 20px;
+  }
+}
+
+/* ==== Tablets (até 992px) ==== */
+@media (max-width: 992px) {
+  .comunidade-container {
+    padding: 35px 20px;
+  }
+
+  .carrossel-slides {
+    height: 340px;
+  }
+
+  .carrossel-info {
+    font-size: 1.1rem;
+    bottom: 25px;
+  }
+
+  .historia-section {
+    padding: 25px;
+  }
+
+  .historia-section h2 {
+    font-size: 1.5rem;
+  }
+
+  .noticia-card img {
+    height: 150px;
+  }
+
+  .sobre .links h1 {
+    font-size: 28px;
+  }
+
+  .sobre h2 {
+    font-size: 22px;
+  }
+
+  .sobre .equipe img {
+    width: 120px;
+    height: 120px;
+  }
+
+  .suporte {
+    padding: 15px;
+  }
+
+  .suporte h1, .suporte h2 {
+    font-size: 18px;
+  }
+}
+
+/* ==== Celulares médios (até 768px) ==== */
+@media (max-width: 768px) {
+  .comunidade-container {
+    padding: 30px 15px;
+    gap: 30px;
+  }
+
+  .carrossel-slides {
+    height: 300px;
+  }
+
+  .carrossel-info {
+    font-size: 1rem;
+    bottom: 20px;
+    left: 15px;
+    max-width: 90%;
+  }
+
+  .historia-section h2 {
+    font-size: 1.3rem;
+  }
+
+  .noticia-card img {
+    height: 140px;
+  }
+
+  .noticia-info h3 {
+    font-size: 0.95rem;
+  }
+
+  .noticia-info p {
+    font-size: 0.85rem;
+  }
+
+  .populares-section {
+    padding: 20px;
+  }
+
+  .mini-noticia img {
+    width: 45px;
+    height: 45px;
+  }
+
+  .mini-noticia p {
+    font-size: 0.8rem;
+  }
+
+  .contato-section h2 {
+    font-size: 1.3rem;
+  }
+
+  .sobre .links h1 {
+    font-size: 26px;
+  }
+
+  .sobre h2 {
+    font-size: 20px;
+  }
+
+  .sobre .equipe img {
+    width: 110px;
+    height: 110px;
+  }
+
+  .suporte {
+    padding: 12px;
+  }
+
+  .suporte h1, .suporte h2 {
+    font-size: 16px;
+  }
+}
+
+/* ==== Celulares pequenos (até 480px) ==== */
+@media (max-width: 480px) {
+  .comunidade-container {
+    padding: 20px 10px;
+    gap: 20px;
+  }
+
+  .carrossel-slides {
+    height: 250px;
+  }
+
+  .carrossel-info {
+    font-size: 0.95rem;
+    bottom: 15px;
+    left: 10px;
+  }
+
+  .historia-section h2 {
+    font-size: 1.2rem;
+  }
+
+  .noticia-card img {
+    height: 120px;
+  }
+
+  .noticia-info h3 {
+    font-size: 0.9rem;
+  }
+
+  .noticia-info p {
+    font-size: 0.8rem;
+  }
+
+  .populares-section {
+    padding: 15px;
+  }
+
+  .mini-noticia img {
+    width: 40px;
+    height: 40px;
+  }
+
+  .mini-noticia p {
+    font-size: 0.75rem;
+  }
+
+  .contato-section h2 {
+    font-size: 1.2rem;
+  }
+
+  .sobre .links h1 {
+    font-size: 24px;
+  }
+
+  .sobre h2 {
+    font-size: 18px;
+  }
+
+  .sobre .equipe img {
+    width: 90px;
+    height: 90px;
+  }
+
+  .suporte {
+    padding: 10px;
+  }
+
+  .suporte h1, .suporte h2 {
+    font-size: 15px;
+  }
+
+  .suporte input,
+  .suporte textarea,
+  .suporte button {
+    font-size: 14px;
+  }
+}
+
+
 /* =========================
    ADMIN PAINEL CONTROLE
 ========================= */
@@ -2959,7 +3857,7 @@ body {
   min-height: 100vh;
   background-color: #0a0a0a;
   color: #fff;
-  font-family: 'Segoe UI', sans-serif;
+  font-family: Arial, sans-serif;
 }
 
 /* Menu lateral fixo */
@@ -3401,32 +4299,150 @@ body {
 }
 
 .chart-card {
-    background-color: rgba(255,255,255,0.02);
+    background-color: rgba(0, 0, 0, 0.05);
     padding: 16px;
     border-radius: 10px;
     flex: 1 1 400px;
     max-width: 480px; 
     box-shadow: 0 6px 18px rgba(0,0,0,0.5);
+    min-height: 300px;
 }
 
 /* =========================
-    ADMIN RESPONSIVO
+   RESPONSIVO ADMIN
 ========================= */
 
-@media screen and (max-width: 768px) {
-    .admin .admin-links {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-    .admin .admin-links nav {
-        margin-top: 10px;
-    }
-    .admin .admin-anime-table th,
-    .admin .admin-anime-table td {
-        font-size: 0.85rem;
-        padding: 8px 5px;
-    }
-    .admin .admin-form {
+/* Menor que 1200px → reduz sidebar e main */
+@media (max-width: 1200px) {
+    .admin-sidebar {
+        width: 200px;
         padding: 15px;
+    }
+
+    .admin-main {
+        margin-left: 220px;
+        padding: 20px;
+    }
+
+    .admin-card {
+        width: 200px;
+        min-height: 220px;
+    }
+
+    .admin-table-acesso,
+    .admin-cruds .admin-table {
+        width: 90%;
+    }
+}
+
+/* Tablets / médio screens (768px a 992px) */
+@media (max-width: 992px) {
+    .admin-sidebar {
+        width: 180px;
+        padding: 10px;
+    }
+
+    .admin-main {
+        margin-left: 190px;
+        padding: 15px;
+    }
+
+    .admin-dashboard {
+        justify-content: center;
+        gap: 15px;
+    }
+
+    .admin-card {
+        width: 45%;
+        min-height: 200px;
+    }
+}
+
+/* Mobile / menor que 768px */
+@media (max-width: 768px) {
+    .admin {
+        flex-direction: column;
+    }
+
+    /* Sidebar se torna top nav */
+    .admin-sidebar {
+        position: relative;
+        width: 100%;
+        height: auto;
+        flex-direction: row;
+        overflow-x: auto;
+        padding: 10px 0;
+    }
+
+    .sidebar-header {
+        display: none;
+    }
+
+    .sidebar-menu {
+        display: flex;
+        flex-direction: row;
+        gap: 8px;
+        flex-wrap: nowrap;
+    }
+
+    .sidebar-menu a {
+        padding: 8px 12px;
+        font-size: 0.9rem;
+    }
+
+    .logout {
+        margin-top: 0;
+    }
+
+    .admin-main {
+        margin-left: 0;
+        padding: 15px;
+    }
+
+    .admin-card {
+        width: 100%;
+        min-height: 180px;
+    }
+
+    .admin-cruds .admin-table,
+    .admin-table-acesso {
+        width: 100%;
+        font-size: 0.8rem;
+    }
+
+    .charts,
+    .admin-stats {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .chart-card {
+        max-width: 100%;
+    }
+
+    .admin-cruds .generos-container {
+        max-height: 180px;
+    }
+}
+
+/* Ajustes finais para telas muito pequenas */
+@media (max-width: 480px) {
+    .admin-card h3 {
+        font-size: 1.2rem;
+    }
+
+    .admin-cruds .admin-links h1 {
+        font-size: 1.5rem;
+    }
+
+    .admin-cruds .admin-links nav a {
+        font-size: 0.85rem;
+        margin-left: 6px;
+        padding-left: 6px;
+    }
+
+    .admin-btn {
+        padding: 6px 10px;
+        font-size: 0.85rem;
     }
 }
