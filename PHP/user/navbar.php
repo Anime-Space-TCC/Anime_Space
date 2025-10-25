@@ -5,7 +5,7 @@
     $paginasSemBusca = ['loja', 'meu-carrinho',
                         'noticias','episodeos',
                         'stream','suporte',
-                        'lancamento','temporada',
+                        'lancamento','semanal',
                         'confirmar_pagamento','quizzes',
                         'perfil']; 
     
@@ -115,7 +115,7 @@ endif;
 <!-- ===== MENU LATERAL ===== -->
 <nav class="menu-lateral" id="menuLateral">
     <a href="../../PHP/user/stream.php">Catálogo</a>
-    <a href="../../PHP/user/estreias_temporada.php">Estreias</a>
+    <a href="../../PHP/user/estreias_semanais.php">Estreias</a>
     <a href="../../PHP/user/últimos_episodios.php">Lançamentos</a>
     <a href="../../PHP/user/quizzes.php">Quizzes</a>
     <a href="../../PHP/user/noticias.php">Comunidade</a>

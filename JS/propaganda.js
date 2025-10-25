@@ -1,26 +1,50 @@
 // ================================
-// Script universal de propagandas
+// Script Universal de Propagandas
 // ================================
 
-// Detecta a página pela URL
-const currentPage = window.location.pathname; // ex: "/HTML/home.html" ou "/PHP/user/estreias.php"
+// Detecta a página atual
+const currentPage = window.location.pathname;
 
-// Seleciona todas as imagens de anúncios
+// Seleciona áreas de anúncios (se existirem)
 const lateralAds = document.querySelectorAll('.ads-lateral .ad-item img');
-const footerAds  = document.querySelectorAll('.ads-rodape .ad-item img');
+const letreiro = document.getElementById('letreiro'); // usado no rodapé animado
 
-// Define conjuntos de banners
+// ================================
+// Conjuntos de banners
+// ================================
 const banners = {
   rodape: [
-    ['../../img/ads/propaganda1.jpg', '../../img/ads/propaganda2.jpg', '../../img/ads/propaganda3.jpg'],
-    ['../../img/ads/propaganda4.jpg', '../../img/ads/propaganda5.jpg', '../../img/ads/propaganda6.jpg']
+    '../../img/ads/propaganda1.jpg',
+    '../../img/ads/propaganda2.jpg',
+    '../../img/ads/propaganda3.jpg',
+    '../../img/ads/propaganda4.jpg',
+    '../../img/ads/propaganda5.jpg',
+    '../../img/ads/propaganda6.jpg'
   ],
   laterais: [
-    ['../../img/ads/propaganda7.jpg', '../../img/ads/propaganda8.jpg', '../../img/ads/propaganda9.jpg', '../../img/ads/propaganda10.jpg']
+    ['../../img/ads/propaganda7.jpg', '../../img/ads/propaganda8.jpg'],
+    ['../../img/ads/propaganda9.jpg', '../../img/ads/propaganda10.jpg']
   ]
 };
 
-// Função para rotacionar banners
+// ================================
+// Letreiro do rodapé (animado)
+// ================================
+function carregarLetreiro(imagens) {
+  if (!letreiro) return;
+
+  // Gera dinamicamente os blocos de propaganda
+  letreiro.innerHTML = imagens
+    .map(src => `<div class="propaganda"><img src="${src}" alt="Anúncio"></div>`)
+    .join('');
+
+  // Duplica o conteúdo para efeito de rolagem contínua
+  letreiro.innerHTML += letreiro.innerHTML;
+}
+
+// ================================
+// Rotacionar anúncios laterais
+// ================================
 function rotateAds(adElements, adGroups, interval = 8000) {
   if (!adElements.length || !adGroups.length) return;
   let index = 0;
@@ -33,13 +57,13 @@ function rotateAds(adElements, adGroups, interval = 8000) {
 }
 
 // ================================
-// Rodapé: sempre ativo se existir
+// Execuções automáticas
 // ================================
-rotateAds(footerAds, banners.rodape);
 
-// ================================
-// Laterais: apenas em estreias ou lançamentos
-// ================================
+// Rodapé: sempre ativo se o letreiro existir
+carregarLetreiro(banners.rodape);
+
+// Laterais: apenas em páginas específicas
 if (currentPage.includes('estreias') || currentPage.includes('lancamentos')) {
   rotateAds(lateralAds, banners.laterais);
 }

@@ -45,35 +45,19 @@ function buscarAnimePorId(PDO $pdo, int $id): ?array {
     return $anime;
 }
 
-// Busca os animes que estrearam na temporada atual
-function buscarEstreiasTemporada(PDO $pdo): array {
-    $sql = "
-        SELECT 
-            t.id AS temporada_id,
-            t.anime_id,
-            t.numero AS temporada,
-            t.nome AS temporada_nome,
-            a.nome AS anime_nome,
-            a.capa AS anime_capa,
-            e.numero AS numero,
-            e.titulo AS titulo,
-            e.data_lancamento
-        FROM temporadas t
-        JOIN animes a ON t.anime_id = a.id
-        LEFT JOIN episodios e 
-            ON e.anime_id = t.anime_id 
-           AND e.temporada = t.numero
-           AND e.numero = (
-               SELECT MIN(e2.numero)
-               FROM episodios e2
-               WHERE e2.anime_id = t.anime_id
-                 AND e2.temporada = t.numero
-           )
-        ORDER BY a.nome, t.numero
-    ";
-    
-    $stmt = $pdo->query($sql);
-    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+// Buscar a grade semanal de animes
+function buscarGradeSemanal($pdo) {
+  $sql = "SELECT * FROM animes WHERE dia_exibicao IS NOT NULL ORDER BY FIELD(dia_exibicao, 'segunda','terça','quarta','quinta','sexta','sábado','domingo'), hora_exibicao";
+  $stmt = $pdo->query($sql);
+  $animes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+  // Agrupar por dia
+  $grade = [];
+  foreach ($animes as $anime) {
+    $dia = ucfirst($anime['dia_exibicao']);
+    $grade[$dia][] = $anime;
+  }
+  return $grade;
 }
 
 // Busca os animes com maior nota

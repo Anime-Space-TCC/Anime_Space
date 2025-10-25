@@ -31,6 +31,7 @@ if (!isset($_SESSION['tipo']) || $_SESSION['tipo'] !== 'admin') {
     <nav class="sidebar-menu">
       <a href="#" data-page="dashboard.php" class="active">Dashboard</a>
       <a href="#" data-page="analises.php">Análises</a>
+      <a href="#" data-page="CRUDs/index.php">CRUDs</a>
       <a href="../../PHP/user/index.php" aria-label="Página Inicial" role="button">
         <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" width="20" height="20">
           <path d="M12 3l9 8h-3v9h-5v-6H11v6H6v-9H3z" />
@@ -45,44 +46,7 @@ if (!isset($_SESSION['tipo']) || $_SESSION['tipo'] !== 'admin') {
     <?php include __DIR__ . '/dashboard.php'; ?>
   </main>
 
-  <script>
-    // Inicializa imediatamente ao carregar a página
-    window.addEventListener('DOMContentLoaded', () => {
-      if (typeof inicializarDashboard === 'function') {
-        inicializarDashboard();
-      }
-    });
-    // Quando carrega a página inicialmente
-    document.addEventListener('DOMContentLoaded', () => {
-      const dashboard = document.getElementById('conteudo').querySelector('.painel-conteudo');
-      if (dashboard && typeof inicializarDashboard === 'function') {
-        inicializarDashboard();
-      }
-    });
-
-    // Quando troca de página via SPA
-    document.querySelectorAll('.sidebar-menu a[data-page]').forEach(link => {
-      link.addEventListener('click', e => {
-        e.preventDefault();
-        const page = link.getAttribute('data-page');
-
-        document.querySelectorAll('.sidebar-menu a').forEach(a => a.classList.remove('active'));
-        link.classList.add('active');
-
-        fetch(page)
-          .then(res => res.ok ? res.text() : Promise.reject('Erro ao carregar ' + page))
-          .then(html => {
-            document.getElementById('conteudo').innerHTML = html;
-            // Só chama depois de inserir o conteúdo
-            if (typeof inicializarDashboard === 'function') inicializarDashboard();
-          })
-          .catch(err => {
-            console.error(err);
-            document.getElementById('conteudo').innerHTML = `<p>Falha ao carregar ${page}</p>`;
-          });
-      });
-    });
-  </script>
+  <script src="../../JS/painel.js"></script>
   <script src="../../JS/administrador.js?v=6"></script>
 </body>
 

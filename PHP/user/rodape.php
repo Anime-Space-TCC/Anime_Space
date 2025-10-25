@@ -1,10 +1,51 @@
 <!-- ===== Rodapé ===== -->
 <footer class="rodape">
-  <p>
-    © <?= date('Y') ?> <strong>Anime Space</strong> — o universo infinito dos animes.  
-    <a href="../../HTML/sobre.html">Sobre o site</a> | 
-    <a href="../../PHP/user/suporte.php">Suporte</a>
-  </p>
 
+  <!-- Faixa de propagandas -->
   <?php include __DIR__ . '/../shared/propaganda.php'; ?>
+
+  <!-- Conteúdo principal do rodapé -->
+  <div class="rodape-container">
+
+    <div class="rodape-coluna">
+      <h3>Anime Space</h3>
+      <p>O universo infinito dos animes — notícias, lançamentos e comunidade para todos os otakus.</p>
+    </div>
+
+    <div class="rodape-coluna">
+      <h4>Navegação</h4>
+      <ul>
+        <li><a href="../../PHP/user/index.html">Início</a></li>
+        <li><a href="../../PHP/user/noticias.html">Notícias</a></li>
+        <li><a href="../../PHP/user/comunidade.html">Comunidade</a></li>
+        <li><a href="../../PHP/user/sobre.html">Sobre o site</a></li>
+      </ul>
+    </div>
+
+    <div class="rodape-coluna">
+      <h4>Suporte</h4>
+      <ul>
+        <li><a href="../../PHP/user/suporte.php">Central de Ajuda</a></li>
+        <li><a href="../../PHP/user/contato.php">Contato</a></li>
+        <li><a href="#">Termos de Uso</a></li>
+        <li><a href="#">Política de Privacidade</a></li>
+      </ul>
+    </div>
+
+    <div class="rodape-coluna">
+      <h4>Siga-nos</h4>
+      <div class="rodape-redes">
+        <a href="#"><img src="../../img/icons/facebook.jpg" alt="Facebook"></a>
+        <a href="#"><img src="../../img/icons/x.jpg" alt="X/Twitter"></a>
+        <a href="#"><img src="../../img/icons/instagram.jpg" alt="Instagram"></a>
+        <a href="#"><img src="../../img/icons/youtube.jpg" alt="YouTube"></a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Barra inferior -->
+  <div class="rodape-final">
+    <p>© <?= date('Y') ?> <strong>Anime Space</strong> — Todos os direitos reservados.</p>
+  </div>
+
 </footer>
