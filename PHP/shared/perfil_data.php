@@ -1,39 +1,53 @@
 <?php
 session_start();
-require_once 'conexao.php';
-require_once 'perfil.php';
-require_once 'gamificacao.php';
-header('Content-Type: application/json');
+header('Content-Type: application/json; charset=utf-8');
 
-// Verifica login
-if (!isset($_SESSION['user_id'])) {
-    echo json_encode(['erro' => 'Usuário não logado']);
-    exit;
+require_once '../shared/auth.php';
+require_once '../shared/usuarios.php';
+require_once '../shared/perfil.php';
+require_once '../shared/gamificacao.php';
+
+$response = ['sucesso' => false,
+             'erro' => '', 
+             'favoritos' => [], 
+             'historico' => [], 
+             'recomendacoes' => [], 
+             'nivel' => 0, 
+             'tituloNivel' => '', 
+             'xp' => 0, 
+             'xpNecessario' => 100, 
+             'porcentagem' => 0];
+
+try {
+    verificarLogin();
+    $userId = $_SESSION['user_id'];
+    $username = $_SESSION['username'];
+
+    // Dados do usuário
+    $favoritos = buscarFavoritos($userId) ?? [];
+    $historico = buscarHistoricoAnimes($pdo, $userId) ?? [];
+    $recomendacoes = buscarRecomendacoes($userId) ?? [];
+    $dadosXP = getXP($pdo, $userId);
+
+    $nivel = $dadosXP['nivel'] ?? 1;
+    $xp = $dadosXP['xp'] ?? 0;
+    $xpNecessario = $nivel * 100;
+    $porcentagem = min(100, ($xp / $xpNecessario) * 100);
+
+    $response = [
+        'sucesso' => true,
+        'favoritos' => $favoritos,
+        'historico' => $historico,
+        'recomendacoes' => $recomendacoes,
+        'nivel' => $nivel,
+        'tituloNivel' => tituloNivel($nivel),
+        'xp' => $xp,
+        'xpNecessario' => $xpNecessario,
+        'porcentagem' => $porcentagem
+    ];
+} catch (Exception $e) {
+    $response['erro'] = $e->getMessage();
 }
 
-$userId = $_SESSION['user_id'];
-
-// Dados do perfil
-$favoritos     = buscarFavoritos($userId);
-$historico     = buscarHistorico($userId);
-$recomendacoes = buscarRecomendacoes($userId);
-
-// Dados de XP e nível
-$dadosXP = getXP($pdo, $userId);
-$nivel = $dadosXP['nivel'] ?? 1;
-$xp    = $dadosXP['xp'] ?? 0;
-$xpNecessario = $nivel * 100;
-$porcentagem = min(100, ($xp / $xpNecessario) * 100);
-
-// Retorna JSON completo
-echo json_encode([
-    'sucesso' => true,
-    'favoritos' => $favoritos,
-    'historico' => $historico,
-    'recomendacoes' => $recomendacoes,
-    'nivel' => $nivel,
-    'xp' => $xp,
-    'xpNecessario' => $xpNecessario,
-    'porcentagem' => $porcentagem,
-    'tituloNivel' => tituloNivel($nivel)
-]);
+echo json_encode($response, JSON_UNESCAPED_UNICODE);
+exit;

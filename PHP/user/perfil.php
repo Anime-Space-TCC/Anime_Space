@@ -10,15 +10,9 @@ verificarLogin();
 
 //Recupera informações do usuário da sessão atual.
 $userId = $_SESSION['user_id'];
-$username = $_SESSION['username'];
+$userData = buscarUsuarioPorId($pdo, $userId);
+$username = $userData['username'] ?? 'Usuário';
 $userTipo = $_SESSION['tipo'] ?? 'user';
-$mensagem = "";
-
-// Upload da foto
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['foto'])) {
-    $resultado = atualizarFotoPerfil($pdo, $userId, $_FILES['foto']);
-    $mensagem = $resultado === true ? "Foto de perfil atualizada com sucesso!" : $resultado;
-}
 
 // Busca a foto do perfil
 $fotoPerfil = buscarFotoPerfil($pdo, $userId);
@@ -52,11 +46,10 @@ $quizzesPerfeitos = $stmt->fetchColumn() ?? 0;
 
 // Atributos baseados nas ações do usuário
 $atributos = [
-    'Dedicação'    => count($historicoAnimes),       // 1 por episódio assistido
-    'Fama'         => count($favoritos),       // 1 por favorito
-    'Conhecimento' => $quizzesPerfeitos * 5,  // +5 por quiz perfeito
+    'Dedicação'    => count($historicoAnimes),
+    'Fama'         => count($favoritos),
+    'Conhecimento' => $quizzesPerfeitos * 5,
 ];
-
 ?>
 
 <!DOCTYPE html>
@@ -72,8 +65,8 @@ $atributos = [
 <?php
     $current_page = 'perfil';
     include __DIR__ . '/navbar.php';
-  ?>
-  <main class="page-content">
+?>
+<main class="page-content">
     <div class="perfil-rpg">
         <div class="perfil-bainha">
             <div class="blocos">
@@ -82,23 +75,22 @@ $atributos = [
                 <div class="bloco avatar-section">
                     <div class="avatar-section">
                         <div class="avatar">
-                            <img src="<?= '../uploads/' . basename(buscarFotoPerfil($pdo, $userId)) . '?t=' . time() ?>" alt="Foto de perfil">
+                            <img src="<?= '../uploads/' . basename($fotoPerfil) . '?t=' . time() ?>" alt="Foto de perfil">
                         </div>
 
-
-                        <!-- Botão abaixo da foto -->
-                        <form action="../../PHP/user/perfil.php" method="post" enctype="multipart/form-data">
-                            <label for="foto" class="btn-upload">Alterar Foto</label>
-                            <input type="file" name="foto" id="foto" accept="image/*" style="display:none" onchange="this.form.submit()"><br>
+                        <!-- Botões abaixo da foto -->
+                        <div class="botoes-perfil">
+                            <a href="editar_perfil.php" class="btn-upload">Editar Perfil</a><br>
                             <?php if (!$perfilCompleto): ?>
                                 <a href="../../PHP/user/upgrade_perfil.php" class="btn-upgrade">🔥 Aprimorar Perfil</a>
                             <?php endif; ?>
-                        </form>
+                        </div>
 
                         <div class="info-player">
                             <h2><?= htmlspecialchars($username) ?></h2>
-                            <div class="level">Nível: <?= $nivel ?><p class="titulo">
-                                    <?= tituloNivel($nivel) ?></p>
+                            <div class="level">
+                                Nível: <?= $nivel ?>
+                                <p class="titulo"><?= tituloNivel($nivel) ?></p>
                             </div>
                             <div class="exp-bar">
                                 <div class="exp-fill" style="width: <?= $porcentagem ?>%;"></div>
@@ -111,15 +103,11 @@ $atributos = [
                 <!-- Ficha RPG -->
                 <div class="bloco ficha-rpg-section">
                     <h3>Ficha de Status</h3>
-
-                    <!-- Atributos -->
                     <div class="atributos">
                         <?php foreach ($atributos as $nome => $valor): ?>
                             <div class="atributo">
                                 <p class="nome-atributo"><?= htmlspecialchars($nome) ?></p>
-                                <div class="circulo">
-                                    <span><?= $valor ?></span>
-                                </div>
+                                <div class="circulo"><span><?= $valor ?></span></div>
                             </div>
                         <?php endforeach; ?>
                     </div>
@@ -128,24 +116,15 @@ $atributos = [
                     <div class="medalhas-section">
                         <h4>Medalhas de Conquista</h4>
                         <div class="medalhas">
-                            <?php if ($quizzesPerfeitos >= 10): ?>
-                                <div class="medalha" title="Otaku Mestre — 10 quizzes perfeitos">🧠</div>
-                            <?php endif; ?>
-                            <?php if (count($favoritos) >= 10): ?>
-                                <div class="medalha" title="Colecionador — 20 animes favoritados">⭐</div>
-                            <?php endif; ?>
-                            <?php if (count($historicoAnimes) >= 10): ?>
-                                <div class="medalha" title="Maratonista — 50 episódios assistidos">🔥</div>
-                            <?php endif; ?>
-                            <?php if ($nivel >= 10): ?>
-                                <div class="medalha" title="Veterano — Chegou ao nível 10">🏆</div>
-                            <?php endif; ?>
+                            <?php if ($quizzesPerfeitos >= 10): ?><div class="medalha" title="Otaku Mestre — 10 quizzes perfeitos">🧠</div><?php endif; ?>
+                            <?php if (count($favoritos) >= 10): ?><div class="medalha" title="Colecionador — 20 animes favoritados">⭐</div><?php endif; ?>
+                            <?php if (count($historicoAnimes) >= 10): ?><div class="medalha" title="Maratonista — 50 episódios assistidos">🔥</div><?php endif; ?>
+                            <?php if ($nivel >= 10): ?><div class="medalha" title="Veterano — Chegou ao nível 10">🏆</div><?php endif; ?>
                         </div>
                     </div>
                 </div>
-
-
             </div>
+
             <div class="blocos">
                 <!-- Favoritos -->
                 <div class="favoritos-section">
@@ -173,9 +152,7 @@ $atributos = [
                                 <div class="card">
                                     <img src="../../img/<?= htmlspecialchars($r['capa']) ?>" alt="<?= htmlspecialchars($r['nome']) ?>">
                                     <p><?= htmlspecialchars($r['nome']) ?></p>
-                                    <?php if (!empty($r['motivo'])): ?>
-                                        <small><?= htmlspecialchars($r['motivo']) ?></small>
-                                    <?php endif; ?>
+                                    <?php if (!empty($r['motivo'])): ?><small><?= htmlspecialchars($r['motivo']) ?></small><?php endif; ?>
                                 </div>
                             <?php endforeach; ?>
                         <?php else: ?>
@@ -183,10 +160,9 @@ $atributos = [
                         <?php endif; ?>
                     </div>
                 </div>
-
             </div>
 
-            <!-- Histórico de Animes -->
+            <!-- Histórico -->
             <div class="bloco historico-animes-section">
                 <h3>Últimos Animes Acessados</h3>
                 <div class="cards-container">
@@ -203,12 +179,9 @@ $atributos = [
                     <?php endif; ?>
                 </div>
             </div>
-
         </div>
     </div>
-    </main>
-    <script src="../../JS/perfil.js"></script>
-
+</main>
+<script src="../../JS/perfil.js"></script>
 </body>
-
 </html>

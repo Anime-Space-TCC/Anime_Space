@@ -9,8 +9,23 @@ require_once __DIR__ . '/conexao.php';
 function buscarUsuarioPorId(PDO $pdo, int $id): ?array {
     $stmt = $pdo->prepare("SELECT id, username, email, tipo, foto_perfil FROM users WHERE id = ?");
     $stmt->execute([$id]);
-    return $stmt->fetch(PDO::FETCH_ASSOC) ?: null;
+
+    $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    // Retorna null se não encontrar nada ou o array plano com os dados
+    if (!$usuario || !is_array($usuario)) {
+        return null;
+    }
+
+    return [
+        'id'          => $usuario['id'],
+        'username'    => $usuario['username'] ?? '',
+        'email'       => $usuario['email'] ?? '',
+        'tipo'        => $usuario['tipo'] ?? 'user',
+        'foto_perfil' => $usuario['foto_perfil'] ?? null
+    ];
 }
+
 
 // Atualiza username, email e senha de um usuário
 function atualizarUsuario(PDO $pdo, int $id, string $username, string $email, ?string $password = null): bool {
@@ -32,7 +47,10 @@ function atualizarFotoPerfil(PDO $pdo, int $userId, array $file): array {
     $diretorio_destino = __DIR__ . '/../uploads/';
     if (!is_dir($diretorio_destino)) {
         mkdir($diretorio_destino, 0777, true);
+        error_log("DEBUG: Diretório criado em {$diretorio_destino}");
     }
+
+    error_log("DEBUG: Iniciando upload da foto para usuário {$userId}");
 
     $nome_original = basename($file['name']);
     $extensao = strtolower(pathinfo($nome_original, PATHINFO_EXTENSION));
@@ -42,21 +60,33 @@ function atualizarFotoPerfil(PDO $pdo, int $userId, array $file): array {
         return ['sucesso' => false, 'erro' => "Apenas JPG, JPEG e PNG são permitidos."];
     }
 
-    if ($file['size'] > 500000) {
-        return ['sucesso' => false, 'erro' => "Arquivo muito grande (máx. 500KB)."];
+    if ($file['size'] > 5 * 1024 * 1024) { // 5MB
+        return ['sucesso' => false, 'erro' => "Arquivo muito grande (máx. 5MB)."];
+    }
+
+    if ($file['error'] !== UPLOAD_ERR_OK) {
+        error_log("ERRO PHP UPLOAD: código " . $file['error']);
+        return ['sucesso' => false, 'erro' => "Erro no upload (código {$file['error']})."];
     }
 
     $nome_arquivo_unico = $userId . '.' . $extensao;
     $caminho_completo = $diretorio_destino . $nome_arquivo_unico;
 
+    error_log("DEBUG: Tentando mover arquivo para {$caminho_completo}");
+
     if (!move_uploaded_file($file['tmp_name'], $caminho_completo)) {
-        return ['sucesso' => false, 'erro' => "Erro ao mover o arquivo."];
+        $erroDetalhado = error_get_last();
+        error_log("ERRO AO MOVER ARQUIVO: " . print_r($erroDetalhado, true));
+        return ['sucesso' => false, 'erro' => "Falha ao mover o arquivo para {$caminho_completo}."];
     }
 
     $caminho_relativo_db = '/PHP/uploads/' . $nome_arquivo_unico;
+    error_log("DEBUG: Caminho salvo no banco = {$caminho_relativo_db}");
 
     $stmt = $pdo->prepare("UPDATE users SET foto_perfil = ? WHERE id = ?");
     if (!$stmt->execute([$caminho_relativo_db, $userId])) {
+        $erro = $stmt->errorInfo();
+        error_log("ERRO SQL AO ATUALIZAR FOTO: " . print_r($erro, true));
         return ['sucesso' => false, 'erro' => "Erro ao salvar no banco."];
     }
 
@@ -65,6 +95,7 @@ function atualizarFotoPerfil(PDO $pdo, int $userId, array $file): array {
         'novaFoto' => $caminho_relativo_db . '?t=' . time()
     ];
 }
+
 
 function buscarFotoPerfil(PDO $pdo, int $userId): string {
     $stmt = $pdo->prepare("SELECT foto_perfil FROM users WHERE id = ?");

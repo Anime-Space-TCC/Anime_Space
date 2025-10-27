@@ -18,6 +18,7 @@ $descricao = trim($_POST['descricao'] ?? '');
 $ano = intval($_POST['ano'] ?? 0);
 $generosSelecionados = $_POST['generos'] ?? [];
 
+
 // Validação básica
 if ($nome === '') {
     die("O campo Nome é obrigatório.");

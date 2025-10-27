@@ -1,35 +1,39 @@
 <?php
 session_start();
-require_once 'conexao.php';
-require_once 'perfil.php';
-require_once 'gamificacao.php';
-header('Content-Type: application/json');
+header('Content-Type: application/json; charset=utf-8');
 
-// Verifica login
-if (!isset($_SESSION['user_id'])) {
-    echo json_encode(['erro' => 'Usuário não logado']);
-    exit;
+require __DIR__ . '/conexao.php';
+require __DIR__ . '/auth.php';
+require __DIR__ . '/usuarios.php';
+require __DIR__ . '/perfil.php';
+
+$response = ['sucesso' => false, 'erro' => '', 'novaFoto' => ''];
+
+try {
+    if (!usuarioLogado()) {
+        throw new Exception("Usuário não logado");
+    }
+
+    $id = intval(obterUsuarioAtualId());
+
+    if (!isset($_FILES['foto'])) {
+        throw new Exception("Nenhum arquivo enviado");
+    }
+
+    $resultado = atualizarFotoPerfil($pdo, $id, $_FILES['foto']);
+
+    if (is_array($resultado) && !empty($resultado['sucesso'])) {
+        $response['sucesso'] = true;
+        $response['novaFoto'] = $resultado['novaFoto'];
+    } elseif (is_array($resultado) && isset($resultado['erro'])) {
+        throw new Exception($resultado['erro']);
+    } else {
+        throw new Exception("Erro inesperado ao atualizar foto");
+    }
+} catch (Exception $e) {
+    $response['erro'] = $e->getMessage();
 }
 
-$userId = $_SESSION['user_id'];
-
-if (!isset($_FILES['foto'])) {
-    echo json_encode(['erro' => 'Nenhum arquivo enviado']);
-    exit;
-}
-
-// Atualiza foto usando função já existente
-$resultado = atualizarFotoPerfil($pdo, $userId, $_FILES['foto']);
-
-if ($resultado === true) {
-    $novaFoto = buscarFotoPerfil($pdo, $userId);
-    echo json_encode([
-        'sucesso' => true,
-        'novaFoto' => $novaFoto
-    ]);
-} else {
-    echo json_encode([
-        'sucesso' => false,
-        'erro' => $resultado
-    ]);
-}
+// Garante que nada mais será impresso
+echo json_encode($response, JSON_UNESCAPED_UNICODE);
+exit;
