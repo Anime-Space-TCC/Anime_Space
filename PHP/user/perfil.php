@@ -87,6 +87,7 @@ $atributos = [
                         </div>
 
                         <div class="info-player">
+                            <br>
                             <h2><?= htmlspecialchars($username) ?></h2>
                             <div class="level">
                                 Nível: <?= $nivel ?>

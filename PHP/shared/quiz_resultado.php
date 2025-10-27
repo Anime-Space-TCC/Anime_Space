@@ -10,7 +10,7 @@ $quizId = $_GET['quiz_id'] ?? null;
 $xp = $_GET['xp'] ?? 0;
 
 if (!$quizId || !$xp) {
-    header("Location: quizzes.php");
+    header("Location: ../user/quizzes.php");
     exit;
 }
 

@@ -1926,6 +1926,58 @@ body {
     display: block;
 }
 
+.login .checkbox-termos {
+    margin-top: 15px;
+    text-align: left;
+    font-size: 14px;
+    color: #ccc;
+  }
+.login .checkbox-termos a {
+    color: #f39c12;
+    text-decoration: underline;
+  }
+.login .checkbox-termos a:hover {
+    color: #ffa726;
+  }
+
+  .termos-container {
+    max-width: 600px;
+    margin: 0 auto;
+    background: rgba(0, 0, 0, 0.39);
+    padding: 40px;
+    border-radius: 10px;
+    font-size: 12.5px;
+  }
+  .termos-container h1 {
+    text-align: center;
+    color: #f39c12;
+    margin-bottom: 20px;
+  }
+
+  .termos-container h2 {
+    text-align: left;
+    color: #f39c12;
+    margin-bottom: 20px;
+  }
+
+   .termos-container p {
+    color: #ffffffff;;
+   }
+
+  .termos-container a.voltar {
+    display: inline-block;
+    margin-top: 25px;
+    padding: 10px 20px;
+    background: #f39c12;
+    color: #000000ff;
+    text-decoration: none;
+    border-radius: 6px;
+  }
+  .termos-container a.voltar:hover {
+    background: #d8890f;
+    color: #ffffffff;
+  }
+
 /* =========================
         Autenticação 2FA 
    ========================= */
@@ -4176,10 +4228,13 @@ body {
 }
 
 .admin-card img {
-    margin-bottom: 10px;
+    margin-bottom: 30px;
     max-width: 150px;
     border-radius: 6px;
     border: 1px solid #555; 
+    width:70px;
+    height:70px;
+    object-fit:contain;
 }
 
 .admin-card h3 {

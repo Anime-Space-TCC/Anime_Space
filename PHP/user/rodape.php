@@ -15,9 +15,9 @@
     <div class="rodape-coluna">
       <h4>Navegação</h4>
       <ul>
-        <li><a href="../../PHP/user/index.html">Início</a></li>
-        <li><a href="../../PHP/user/noticias.html">Notícias</a></li>
-        <li><a href="../../PHP/user/comunidade.html">Comunidade</a></li>
+        <li><a href="../../PHP/user/index.php">Início</a></li>
+        <li><a href="../../PHP/user/noticias.php">Notícias</a></li>
+        <li><a href="../../PHP/user/loja.php">Loja</a></li>
         <li><a href="../../PHP/user/sobre.html">Sobre o site</a></li>
       </ul>
     </div>
@@ -26,9 +26,8 @@
       <h4>Suporte</h4>
       <ul>
         <li><a href="../../PHP/user/suporte.php">Central de Ajuda</a></li>
-        <li><a href="../../PHP/user/contato.php">Contato</a></li>
-        <li><a href="#">Termos de Uso</a></li>
-        <li><a href="#">Política de Privacidade</a></li>
+        <li><a href="../../PHP/user/suporte.php">Contato</a></li>
+        <li><a href="../../PHP/user/termos_uso.php">Termos de Uso</a></li>
       </ul>
     </div>
 

@@ -10,19 +10,24 @@ $result = null;
 
 // Cadastro de usuario
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $result = registrarUsuario(
-        $pdo,
-        $_POST['username'] ?? '',
-        $_POST['email'] ?? '',
-        $_POST['password'] ?? '',
-        $_POST['password_confirm'] ?? ''
-    );
-
-    if ($result['success']) {
-        header('Location: login.php');
-        exit;
+    // Verifica se o usuário aceitou os termos
+    if (empty($_POST['aceitar_termos'])) {
+        $errors[] = "Você deve aceitar os Termos de Uso antes de se cadastrar.";
     } else {
-        $errors = $result['errors'];
+        $result = registrarUsuario(
+            $pdo,
+            $_POST['username'] ?? '',
+            $_POST['email'] ?? '',
+            $_POST['password'] ?? '',
+            $_POST['password_confirm'] ?? ''
+        );
+
+        if ($result['success']) {
+            header('Location: login.php');
+            exit;
+        } else {
+            $errors = $result['errors'];
+        }
     }
 }
 ?>
@@ -38,7 +43,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <div class="login-container">
   <div class="login-box">
     <h2>Cadastro</h2> 
-    
     <?php if ($errors): ?>
       <ul>
         <?php foreach ($errors as $error): ?>
@@ -62,6 +66,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       <div class="campo-input">
         <input type="password" name="password_confirm" placeholder="Confirme a senha" required />
       </div>
+
+      <div class="checkbox-termos">
+        <label>
+          <input type="checkbox" name="aceitar_termos" value="1" required>
+          Li e aceito os <a href="termos_uso.php" target="_blank">Termos de Uso</a>.
+        </label>
+      </div>
+      <br>
       <input type="submit" value="Cadastrar" class="botao-login" />
     </form>
 
