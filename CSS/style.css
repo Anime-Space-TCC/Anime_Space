@@ -1662,37 +1662,48 @@ body {
 }
 
 /* =========================
-   PAGAMENTO CONFIRMAÇÃO
+   PAGAMENTO - CONFIRMAÇÃO
 ========================= */
 
 .pagamento-confirmacao {
     max-width: 700px;
     margin: 40px auto;
     padding: 25px 30px;
-    background-color: #000;         /* fundo preto */
-    color: #ff9f00;                 /* cor do site */
+    background: #000;
+    color: #ff9f00;
     border-radius: 15px;
     box-shadow: 0 0 15px #ff9f00;
     text-align: center;
-    font-family: 'Arial', sans-serif;
+    font-family: Arial, sans-serif;
+
+    /* ANIMAÇÃO */
+    opacity: 0;
+    transform: translateY(25px);
+    animation: fadeUp 0.7s ease forwards;
+}
+
+/* SUAVE ENTRADA DO CARD */
+@keyframes fadeUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .pagamento-confirmacao h1 {
     font-size: 2.2rem;
     margin-bottom: 20px;
-    color: #ff9f00;
 }
 
 .pagamento-confirmacao h2 {
-    font-size: 1.8rem;
-    margin-top: 25px;
-    margin-bottom: 15px;
+    font-size: 1.6rem;
+    margin: 20px 0 10px;
     color: #ffbf40;
 }
 
-.pagamento-confirmacao p {
-    font-size: 1.2rem;
-    margin: 8px 0;
+.pagamento-confirmacao p,
+.pagamento-confirmacao li {
+    font-size: 1.1rem;
 }
 
 .pagamento-confirmacao ul {
@@ -1703,98 +1714,145 @@ body {
     overflow-y: auto;
     border: 1px solid #ff9f00;
     border-radius: 10px;
-    background-color: #111;
+    background: #111;
 }
 
 .pagamento-confirmacao ul li {
     padding: 8px 12px;
     border-bottom: 1px solid #333;
-    font-size: 1rem;
 }
-
 .pagamento-confirmacao ul li:last-child {
     border-bottom: none;
 }
 
+/* PIX e BOLETO BOX */
 .qrcode, .linha-digitavel {
     margin: 20px auto;
-    background-color: #111;
+    background: #111;
     padding: 15px;
     border-radius: 12px;
     display: inline-block;
-    font-size: 1.1rem;
 }
-
 .qrcode img {
     margin-bottom: 10px;
     border: 2px solid #ff9f00;
     border-radius: 10px;
 }
 
-.btn-confirmar {
-    margin-top: 20px;
-    background: linear-gradient(45deg, #ff9f00, #ffff00);
-    border: none;
-    padding: 12px 25px;
-    border-radius: 12px;
-    font-weight: bold;
-    cursor: pointer;
-    color: #000;
-    transition: 0.3s;
-}
-
-.btn-confirmar:hover {
-    transform: scale(1.05);
-    box-shadow: 0 0 20px #ff9f00;
-}
+/* FORM CARTÃO */
 .form-cartao {
-    background-color: #1c1c1c;   
+    background: #1c1c1c;
     padding: 20px;
     border-radius: 12px;
     max-width: 400px;
     margin: 20px auto;
-    box-shadow: 0 0 15px #ff9f00;
     display: flex;
     flex-direction: column;
     gap: 12px;
+    box-shadow: 0 0 12px #ff9f00;
 }
 
-.form-cartao h2 {
-    color: #ff9f00;
-    text-align: center;
-    margin-bottom: 10px;
-}
-
-.form-cartao input[type="text"],
-.form-cartao input[type="number"] {
+.form-cartao input {
     width: 100%;
     padding: 10px;
     border-radius: 8px;
     border: none;
     background: #222;
     color: #fff;
-    font-size: 1rem;
 }
-
 .form-cartao input::placeholder {
-    color: #aaa;
+    color: #bbb;
 }
 
-.form-cartao button.btn-confirmar {
-    background: linear-gradient(45deg, #ff9f00, #ffff00);
-    color: #000;
+/* BOTÃO GERAL */
+.btn-confirmar,
+.btn-confirmar-real,
+.btn-cancelar {
+    padding: 12px 22px;
     border: none;
-    padding: 12px;
     border-radius: 10px;
     font-weight: bold;
     cursor: pointer;
     transition: 0.3s;
 }
 
+/* Confirmar pagamento normal */
+.btn-confirmar,
+.form-cartao button.btn-confirmar {
+    background: linear-gradient(45deg, #ff9f00, #ffff00);
+    color: #000;
+}
+.btn-confirmar:hover,
 .form-cartao button.btn-confirmar:hover {
     transform: scale(1.05);
-    box-shadow: 0 0 20px #ff9f00;
+    box-shadow: 0 0 18px #ff9f00;
 }
+
+/* BOTÕES FINAL */
+.acoes-pagamento {
+    display: flex;
+    justify-content: center;  
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+    margin: 30px auto 20px;
+    flex-wrap: wrap;  
+}
+
+/* Confirmar pagamento real */
+.btn-confirmar-real {
+    background: #28a745;
+    color: #fff;
+    font-size: 20px;
+}
+.btn-confirmar-real:hover {
+    background: #218838;
+    transform: scale(1.06);
+}
+
+/* Cancelar pagamento */
+.btn-cancelar {
+    background: #dc3545;
+    color: #fff;
+    font-size: 20px;
+}
+.btn-cancelar:hover {
+    background: #b52b38;
+    transform: scale(1.06);
+}
+
+.comprovante {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 30px;
+            background:#000;
+            color:#ff9f00;
+            border-radius:15px;
+            box-shadow:0 0 15px #ff9f00;
+            font-family: Arial, sans-serif;
+        }
+        .comprovante h1 { text-align:center; margin-bottom:20px; }
+        .comprovante table {
+            width:100%;
+            border-collapse: collapse;
+            margin-top:20px;
+        }
+        .comprovante th, .comprovante td {
+            border:1px solid #ff9f00;
+            padding:10px;
+            text-align:center;
+        }
+        .comprovante th { background:#111; }
+        .btn-voltar-comprovante {
+            display:inline-block;
+            margin-top:20px;
+            padding:12px 25px;
+            background:#28a745;
+            color:#fff;
+            border-radius:8px;
+            text-decoration:none;
+        }
+
 
 /* ======================
    NAV CARRINHO

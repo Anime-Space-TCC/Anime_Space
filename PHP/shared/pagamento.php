@@ -6,7 +6,7 @@ require_once __DIR__ . '/conexao.php';
 //==============================
 function registrarPagamento(PDO $pdo, int $user_id, int $produto_id, string $metodo): ?array {
     // Verifica se o produto existe e está ativo
-    $stmt = $pdo->prepare("SELECT nome, preco FROM produtos WHERE id = ? AND ativo = 1");
+    $stmt = $pdo->prepare("SELECT nome, preco, sku FROM produtos WHERE id = ? AND ativo = 1");
     $stmt->execute([$produto_id]);
     $produto = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -25,7 +25,8 @@ function registrarPagamento(PDO $pdo, int $user_id, int $produto_id, string $met
     $pagamento = [
         'codigo' => $codigo,
         'status' => $status,
-        'valor' => number_format($valor, 2, ',', '.')
+        'valor' => number_format($valor, 2, ',', '.'),
+        'sku' => $produto['sku'], // ✅ adiciona SKU
     ];
 
     // Simulações de acordo com o método
@@ -45,24 +46,17 @@ function registrarPagamento(PDO $pdo, int $user_id, int $produto_id, string $met
 }
 
 // ==============================
-// Confirma um pagamento (simulado)
+// Cancela um pagamento (simulado)
 // ==============================
 function cancelarPagamento(PDO $pdo, int $user_id, string $codigo_referencia): bool {
-    // Verifica se o pagamento existe e pertence ao usuário
     $stmt = $pdo->prepare("SELECT id, status FROM pagamentos WHERE codigo_referencia = ? AND user_id = ?");
     $stmt->execute([$codigo_referencia, $user_id]);
     $pagamento = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    if (!$pagamento) {
-        return false; // pagamento não encontrado
-    }
+    if (!$pagamento) return false;
 
-    // Só permite cancelar se ainda estiver pendente
-    if ($pagamento['status'] !== 'pendente') {
-        return false; // já foi processado ou cancelado
-    }
+    if ($pagamento['status'] !== 'pendente') return false;
 
-    // Atualiza o status para "cancelado"
     $stmt = $pdo->prepare("UPDATE pagamentos SET status = 'cancelado', data_cancelamento = NOW() WHERE id = ?");
     $stmt->execute([$pagamento['id']]);
 

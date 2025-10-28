@@ -1,18 +1,16 @@
 <?php
 session_start();
 $pagamentos = $_SESSION['pagamentos_confirmados'] ?? [];
-if (empty($pagamentos)) {
-    die("Nenhum pagamento encontrado.");
-}
+if (empty($pagamentos)) die("Nenhum pagamento encontrado.");
 
-// Calcula total
+// Total
 $total = 0;
 foreach ($pagamentos as $p) {
     $valorItem = floatval(str_replace(',', '.', str_replace('.', '', $p['valor'])));
     $total += $valorItem;
 }
 
-// Método do primeiro pagamento (todos devem ter o mesmo)
+// Método do primeiro pagamento
 $metodo = $pagamentos[0]['tipo'] ?? '';
 ?>
 
@@ -25,71 +23,62 @@ $metodo = $pagamentos[0]['tipo'] ?? '';
     <link rel="icon" href="../../img/slogan3.png" type="image/png">
 </head>
 <body>
-    <?php
-    $current_page = 'confirmar_pagamento';
-    include __DIR__ . '/navbar.php';
-    ?>
+<?php
+$current_page = 'confirmar_pagamento';
+include __DIR__ . '/navbar.php';
+?>
 
-    <main class="loja-content">
-        <div class="pagamento-confirmacao">
-            <h1>Confirmação de Pagamento</h1>
-            <p>Método selecionado: <strong><?= htmlspecialchars(ucfirst($metodo)) ?></strong></p>
+<main class="loja-content">
+    <div class="pagamento-confirmacao">
+        <h1>Confirmação de Pagamento</h1>
+        <p>Método selecionado: <strong><?= htmlspecialchars(ucfirst($metodo)) ?></strong></p>
 
-            <h2>Itens Comprados:</h2>
-            <ul>
-                <?php foreach ($pagamentos as $p):
-                    $valorItem = floatval(str_replace(',', '.', str_replace('.', '', $p['valor'])));
-                ?>
-                    <li>Código: <?= htmlspecialchars($p['codigo']) ?> - Valor: R$ <?= number_format($valorItem, 2, ',', '.') ?></li>
-                <?php endforeach; ?>
-            </ul>
+        <h2>Itens Comprados:</h2>
+        <ul>
+            <?php foreach ($pagamentos as $p):
+                $valorItem = floatval(str_replace(',', '.', str_replace('.', '', $p['valor'])));
+            ?>
+            <li>SKU: <?= htmlspecialchars($p['sku'] ?? 'Não informado') ?> - Valor: R$ <?= number_format($valorItem, 2, ',', '.') ?></li>
+            <?php endforeach; ?>
+        </ul>
 
-            <p class="total-itens"><strong>Total Geral:</strong> R$ <?= number_format($total, 2, ',', '.') ?></p>
+        <p class="total-itens"><strong>Total Geral:</strong> R$ <?= number_format($total, 2, ',', '.') ?></p>
 
-            <?php if ($metodo === 'cartao'): ?>
-                <h2>Pagamento com Cartão</h2>
-                <form method="post" action="../shared/processar_pagamento.php" class="form-cartao">
-                    <input type="hidden" name="metodo" value="cartao">
-                    <input type="text" name="numero_cartao" placeholder="Número do Cartão" required><br>
-                    <input type="text" name="nome_titular" placeholder="Nome do Titular" required><br>
-                    <input type="text" name="validade" placeholder="Validade (MM/AA)" required><br>
-                    <input type="number" name="cvv" placeholder="CVV" required><br>
-                    <button type="submit" class="btn-confirmar">Confirmar Pagamento</button>
-                </form>
+        <?php if ($metodo === 'cartao'): ?>
+            <h2>Pagamento com Cartão</h2>
+            <form method="post" action="../shared/processar_pagamento.php" class="form-cartao">
+                <input type="hidden" name="metodo" value="cartao">
+                <input type="text" name="numero_cartao" placeholder="Número do Cartão" required>
+                <input type="text" name="nome_titular" placeholder="Nome do Titular" required>
+                <input type="text" name="validade" placeholder="Validade (MM/AA)" required>
+                <input type="number" name="cvv" placeholder="CVV" required>
+                <button type="submit" class="btn-confirmar">Confirmar Pagamento</button>
+            </form>
+        <?php elseif ($metodo === 'pix'): ?>
+            <h2>Pagamento via PIX</h2>
+            <div class="qrcode">
+                <img src="../../img/qrcode_pix.jpg" alt="QR Code PIX" width="180"><br>
+                <code><?= htmlspecialchars($pagamentos[0]['codigo']) ?></code>
+            </div>
+        <?php elseif ($metodo === 'boleto'): ?>
+            <h2>Pagamento com Boleto</h2>
+            <div class="linha-digitavel">
+                <?= htmlspecialchars($pagamentos[0]['linha_digitavel'] ?? '') ?>
+            </div>
+            <p>Vencimento: <?= htmlspecialchars($pagamentos[0]['vencimento'] ?? '') ?></p>
+        <?php endif; ?>
+    </div>
 
-                <!-- Botão de Cancelar Pagamento -->
-                <form method="post" action="../../PHP/shared/processar_pagamento.php" class="form-cancelar">
-                    <input type="hidden" name="cancelar_pagamento" value="1">
-                    <button type="submit" class="btn-cancelar">Cancelar Pagamento</button>
-                </form>
+    <div class="acoes-pagamento">
+        <form method="post" action="../../PHP/shared/processar_pagamento_real.php">
+            <button type="submit" class="btn-confirmar-real">Confirmar Pagamento</button>
+        </form>
 
-            <?php elseif ($metodo === 'pix'): ?>
-                <h2>Pagamento via PIX</h2>
-                <p>Escaneie o QR Code abaixo ou copie o código PIX para pagar:</p>
-                <div class="qrcode">
-                    <img src="../../img/qrcode_pix.jpg" alt="QR Code PIX" width="180"><br>
-                    <code><?= $pagamentos[0]['codigo'] ?></code>
-                </div>
-
-                <!-- Botão de Cancelar Pagamento -->
-                <form method="post" action="../../PHP/shared/processar_pagamento.php" class="form-cancelar">
-                    <input type="hidden" name="cancelar_pagamento" value="1">
-                    <button type="submit" class="btn-cancelar">Cancelar Pagamento</button>
-                </form>
-
-            <?php elseif ($metodo === 'boleto'): ?>
-                <h2>Pagamento com Boleto</h2>
-                <div class="linha-digitavel">
-                    <?= $pagamentos[0]['linha_digitavel'] ?? '' ?>
-                </div>
-                <p>Vencimento: <?= $pagamentos[0]['vencimento'] ?? '' ?></p>
-
-                <form method="post" action="../../PHP/shared/processar_pagamento.php" class="form-cancelar">
-                    <input type="hidden" name="cancelar_pagamento" value="1">
-                    <button type="submit" class="btn-cancelar">Cancelar Pagamento</button>
-                </form>
-            <?php endif; ?>
-        </div>
-    </main>
+        <form method="post" action="../../PHP/shared/processar_pagamento.php">
+            <input type="hidden" name="cancelar_pagamento" value="1">
+            <button type="submit" class="btn-cancelar">Cancelar Pagamento</button>
+        </form>
+    </div>
+</main>
 </body>
 </html>
