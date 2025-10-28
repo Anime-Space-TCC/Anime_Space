@@ -8,6 +8,14 @@ verificarLogin();
 
 // Busca os 20 episódios mais recentes
 $episodios = getUltimosEpisodios(20);
+
+// Paginação
+$porPagina = 10;
+$pagina = isset($_GET['pagina']) ? (int) $_GET['pagina'] : 1;
+if ($pagina < 1) $pagina = 1;
+$offset = ($pagina - 1) * $porPagina;
+$totalEpisodios = $pdo->query("SELECT COUNT(*) FROM episodios")->fetchColumn();
+$totalPaginas = ceil($totalEpisodios / $porPagina);
 ?>
 
 <!DOCTYPE html>
@@ -52,6 +60,22 @@ $episodios = getUltimosEpisodios(20);
         <?php else: ?>
           <p>Nenhum episódio encontrado.</p>
         <?php endif; ?>
+
+        <!-- Paginação -->
+        <div class="paginacao">
+          <?php if ($pagina > 1): ?>
+            <a href="?pagina=<?= $pagina - 1 ?>">&laquo; Anterior</a>
+          <?php endif; ?>
+
+          <?php for ($i = 1; $i <= $totalPaginas; $i++): ?>
+            <a href="?pagina=<?= $i ?>" class="<?= $i === $pagina ? 'ativo' : '' ?>"><?= $i ?></a>
+          <?php endfor; ?>
+
+          <?php if ($pagina < $totalPaginas): ?>
+            <a href="?pagina=<?= $pagina + 1 ?>">Próxima &raquo;</a>
+          <?php endif; ?>
+        </div>
+    </section>
       </section>
       <!-- Coluna da direita (anúncios) -->
       <aside class="ads-lateral direita">

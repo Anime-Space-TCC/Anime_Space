@@ -576,31 +576,6 @@ html, body {
 }
 
 /* =========================
-        XP NOTIFICAÇÃO
-========================= */
-.xp-notification {
-    position: fixed;
-    top: -60px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: linear-gradient(90deg, #2ecc71, #27ae60);
-    color: white;
-    padding: 12px 25px;
-    border-radius: 12px;
-    font-size: 1rem;
-    font-weight: bold;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-    transition: top 0.5s ease, opacity 0.5s ease;
-    opacity: 0;
-    z-index: 9999;
-}
-
-.xp-notification.show {
-    top: 20px;
-    opacity: 1;
-}
-
-/* =========================
         DESCRIÇÃO
 ========================= */
 .descricao {
@@ -971,12 +946,12 @@ html, body {
 .menu-lateral {
     position: fixed;
     top: 0;
-    left: 0;               /* fixo no lugar certo */
+    left: 0;               
     width: 260px;
     height: 100vh;
     background-color: rgba(0,0,0,0.9);
     overflow-y: auto;
-    transform: translateX(-100%); /* escondido inicialmente */
+    transform: translateX(-100%); 
     transition: transform 0.3s ease;
     padding-top: 90px;
     z-index: 1300;
@@ -985,9 +960,8 @@ html, body {
     border-bottom-right-radius: 12px;
 }
 
-/* Menu aberto */
 .menu-lateral.open {
-    transform: translateX(0); /* entra na tela */
+    transform: translateX(0); 
 }
 
 .menu-lateral a {
@@ -1034,36 +1008,179 @@ html, body {
 }
 
 /* =========================================
-   RODAPÉ
+                RODAPÉ
 ========================================= */
 
 .rodape {
-    position: relative;
-    bottom: 0;
-    left: 0;
-    width: 100%;
+  background-color: #0a0a0a;
+  color: #f0f0f0;
+  font-family: Arial, sans-serif;
+  width: 100%;
+  margin-top: 50px;
+  border-top: 3px solid #ff9f00;
+  box-shadow: 0 -2px 12px rgba(255, 159, 0, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.letreiro-container {
+  position: relative;
+  width: 100%;
+  height: 100px;
+  background: rgba(0, 0, 0, 0.8);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  border-top: 2px solid #ff9f00;
+  border-bottom: 2px solid #ff9f00;
+}
+
+.letreiro {
+  display: flex;
+  align-items: center;
+  gap: 50px;
+  animation: rolar 25s linear infinite;
+}
+
+.letreiro-container:hover .letreiro {
+  animation-play-state: paused; /* pausa ao passar o mouse */
+}
+
+.propaganda img {
+  height: 80px;
+  border-radius: 10px;
+  transition: transform 0.3s ease;
+}
+
+.propaganda img:hover {
+  transform: scale(1.1);
+}
+
+/* Animação do letreiro */
+@keyframes rolar {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+/* === Conteúdo principal === */
+.rodape-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 30px;
+  padding: 50px 40px;
+  background: linear-gradient(to top, #000, #111);
+}
+
+.rodape-coluna h3,
+.rodape-coluna h4 {
+  color: #ff9f00;
+  margin-bottom: 15px;
+}
+
+.rodape-coluna p {
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: #ddd;
+}
+
+.rodape-coluna ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.rodape-coluna ul li {
+  margin-bottom: 10px;
+}
+
+.rodape-coluna ul li a {
+  color: #bbb;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s;
+}
+
+.rodape-coluna ul li a:hover {
+  color: #ff9f00;
+}
+
+/* === Redes sociais === */
+.rodape-redes {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+  justify-content: left;
+}
+
+.rodape-redes a img {
+  width: 40px;     
+  height: 40px;     
+  border-radius: 50%;         
+  border: 2px solid #ff9f00;   
+  filter: brightness(1);  
+  transition: transform 0.3s, filter 0.3s, box-shadow 0.3s, border 0.3s;
+}
+
+.rodape-redes a img:hover {
+  transform: scale(1.4); 
+  filter: brightness(1.3); 
+  border-color: #ff9f00;         
+}
+
+/* === Barra inferior === */
+.rodape-final {
+  background-color: #000;
+  text-align: center;
+  padding: 15px;
+  font-size: 0.85rem;
+  border-top: 1px solid #222;
+  color: #aaa;
+}
+
+.rodape-final strong {
+  color: #ff9f00;
+}
+
+/* === Responsividade === */
+@media (max-width: 768px) {
+  .letreiro-container {
+    height: 70px;
+  }
+
+  .propaganda img {
+    height: 60px;
+  }
+
+  .rodape-container {
+    padding: 30px 20px;
+    gap: 20px;
+  }
+
+  .rodape-coluna {
     text-align: center;
-    padding: 20px;
-    background-color: rgba(0, 0, 0, 0.7);
-    box-shadow: 0 -2px 12px rgb(255, 159, 0);
-    color: #f0f0f0;
-    margin-top: 50px;
+  }
+
+  .rodape-redes {
+    justify-content: center;
+  }
 }
 
-.rodape p {
-    font-size: 16px;
-    line-height: 1.6;
-    margin-bottom: 10px;
-}
+@media (max-width: 480px) {
+  .letreiro-container {
+    height: 60px;
+  }
 
-.rodape a {
-    color: #ff9f00;
-    text-decoration: none;
-    font-weight: 600;
-}
+  .propaganda img {
+    height: 50px;
+  }
 
-.rodape strong {
-    color: #ff9f00;
+  .rodape-final {
+    font-size: 0.8rem;
+  }
 }
 
 /* =========================================

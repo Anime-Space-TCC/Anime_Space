@@ -49,18 +49,24 @@ $lancamentos = buscarLancamentos($pdo, 9);
 
       <section>
         <section class="lancamentos" aria-labelledby="lancamentos-title">
-          <h3 id="lancamentos-title">Lançamentos</h3>
-          <div class="grid-lancamentos">
-            <?php foreach ($lancamentos as $anime): ?>
-              <div class="card-anime">
-                <a href="../../PHP/user/episodes.php?id=<?= $anime['id'] ?>">
-                  <img src="../../img/<?= htmlspecialchars($anime['capa']) ?>" 
-                      alt="<?= htmlspecialchars($anime['nome']) ?>" class="capa-anime" />
-                  <p class="nome-anime"><?= htmlspecialchars($anime['nome']) ?></p>
-                </a>
-              </div>
-            <?php endforeach; ?>
-          </div>
+            <h3 id="lancamentos-title">Lançamentos</h3>
+            <div class="grid-lancamentos">
+                <?php foreach ($lancamentos as $anime): ?>
+                    <div class="card-anime">
+                        <a href="episodes.php?id=<?= $anime['id'] ?>" class="anime-item">
+                            <img src="../../img/<?= htmlspecialchars($anime['capa']) ?>" alt="<?= htmlspecialchars($anime['nome']) ?>" class="capa-anime">
+                            
+                            <?php if (!empty($anime['nota'])): ?>
+                                <span class="anime-nota">⭐ <?= htmlspecialchars($anime['nota']) ?></span>
+                            <?php endif; ?>
+
+                            <div class="info">
+                                <h3 class="nome-anime"><?= htmlspecialchars($anime['nome']) ?></h3>
+                            </div>
+                        </a>
+                    </div>
+                <?php endforeach; ?>
+            </div>
         </section>
 
         <section class="genres" aria-labelledby="genres-title">

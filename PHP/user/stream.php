@@ -102,7 +102,7 @@ $animes = getAnimesFiltrados($filtroGenero, $filtroAno, $filtroLinguagem, $busca
           </article>
         <?php endforeach; ?>
       <?php else: ?>
-        <p style="color: #ccc;">Nenhum anime cadastrado ainda.</p> <!-- Mensagem caso não haja animes -->
+        <p">Nenhum anime cadastrado ainda.</p>
       <?php endif; ?>
     </section>
   </main>

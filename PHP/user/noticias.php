@@ -3,20 +3,19 @@ session_start();
 require __DIR__ . '/../shared/conexao.php';
 require_once __DIR__ . '/../shared/auth.php';
 require __DIR__ . '/../shared/acessos.php';
+require __DIR__ . '/../shared/noticias.php';
 
 verificarLogin();
 
-// Notícias
+// Buscar Top 5 Populares
+$topNoticias = buscarNoticiasPopulares($pdo, 5);
+
+// Buscar todas
 $stmt = $pdo->query("SELECT * FROM noticias ORDER BY data_publicacao DESC");
 $noticias = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-// Top 5
-$topStmt = $pdo->query("SELECT * FROM noticias ORDER BY visualizacoes DESC LIMIT 5");
-$topNoticias = $topStmt->fetchAll(PDO::FETCH_ASSOC);
-
 // Últimas 3 (slide)
-$slideStmt = $pdo->query("SELECT * FROM noticias ORDER BY data_publicacao DESC LIMIT 3");
-$slides = $slideStmt->fetchAll(PDO::FETCH_ASSOC);
+$slides = array_slice($noticias, 0, 3);
 
 // Paginação
 $porPagina = 6;
@@ -26,13 +25,13 @@ $offset = ($pagina - 1) * $porPagina;
 $totalNoticias = $pdo->query("SELECT COUNT(*) FROM noticias")->fetchColumn();
 $totalPaginas = ceil($totalNoticias / $porPagina);
 
-// Buscar noticias paginadas
 $stmt = $pdo->prepare("SELECT * FROM noticias ORDER BY data_publicacao DESC LIMIT :limit OFFSET :offset");
 $stmt->bindValue(':limit', $porPagina, PDO::PARAM_INT);
 $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
 $stmt->execute();
 $noticias = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -135,8 +134,10 @@ $noticias = $stmt->fetchAll(PDO::FETCH_ASSOC);
           <h2>Conecte-se com a Comunidade</h2>
           <p>Participe dos nossos grupos para trocar ideias, memes, notícias e indicações!</p>
           <div class="contato-links">
-            <a href="#" class="contato-btn whatsapp">💬 Grupo do WhatsApp</a>
-            <a href="#" class="contato-btn discord">💬 Servidor no Discord</a>
+            <a href="#" class="contato-btn whatsapp">
+              <img src="../../img/icons/wat.jpg" alt=""> Grupo do WhatsApp</a>
+            <a href="#" class="contato-btn discord">
+              <img src="../../img/icons/discord.jpg" alt=""> Servidor no Discord</a>
           </div>
         </section>
 
