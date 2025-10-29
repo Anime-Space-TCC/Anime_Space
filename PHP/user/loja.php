@@ -20,6 +20,14 @@ $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 // Total de itens no carrinho
 $totalCarrinho = array_sum($_SESSION['carrinho']);
+
+// Paginação
+$porPagina = 14;
+$pagina = isset($_GET['pagina']) ? (int) $_GET['pagina'] : 1;
+if ($pagina < 1) $pagina = 1;
+$offset = ($pagina - 1) * $porPagina;
+$totalProdutos = $pdo->query("SELECT COUNT(*) FROM produtos WHERE ativo = 1")->fetchColumn();
+$totalPaginas = ceil($totalProdutos / $porPagina);
 ?>
 
 <!DOCTYPE html>
@@ -70,7 +78,7 @@ include __DIR__ . '/navbar.php';
                             <p class="produto-estoque">Estoque: <?= $produto['estoque'] ?></p>
                         <?php endif; ?>
                         <?php if($produto['estoque'] > 0): ?>
-                            <button class="btn-adicionar" data-id="<?= $produto['id'] ?>">Adicionar ao Carrinho</button>
+                            <button class="btn-adicionar" data-id="<?= $produto['id'] ?>">Adicionar</button>
                         <?php else: ?>
                             <button class="btn-adicionar" disabled>Indisponível</button>
                         <?php endif; ?>
@@ -79,6 +87,20 @@ include __DIR__ . '/navbar.php';
             <?php endforeach; ?>
         </div>
     </section>
+    <!-- Paginação -->
+      <div class="paginacao">
+        <?php if ($pagina > 1): ?>
+          <a href="?pagina=<?= $pagina - 1 ?>">&laquo; Anterior</a>
+        <?php endif; ?>
+
+        <?php for ($i = 1; $i <= $totalPaginas; $i++): ?>
+          <a href="?pagina=<?= $i ?>" class="<?= $i === $pagina ? 'ativo' : '' ?>"><?= $i ?></a>
+        <?php endfor; ?>
+
+        <?php if ($pagina < $totalPaginas): ?>
+          <a href="?pagina=<?= $pagina + 1 ?>">Próxima &raquo;</a>
+        <?php endif; ?>
+      </div>
 </main>
 
 <?php include __DIR__ . '/rodape.php'; ?>

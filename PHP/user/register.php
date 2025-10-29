@@ -70,7 +70,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       <div class="checkbox-termos">
         <label>
           <input type="checkbox" name="aceitar_termos" value="1" required>
-          Li e aceito os <a href="termos_uso.php" target="_blank">Termos de Uso</a>.
+          Li e aceito os <a href="termos_uso.php">Termos de Uso</a>.
         </label>
       </div>
       <br>

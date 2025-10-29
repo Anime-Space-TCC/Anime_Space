@@ -1,6 +1,6 @@
 <?php
 session_start(); // Inicia a sessão para gerenciar autenticação
-require __DIR__ . '/../../../shared/conexao.php'; // Inclui conexão com o banco
+require __DIR__ . '/../../../shared/conexao.php'; 
 
 // Verifica se o usuário é admin, se não for redireciona para login
 if (!isset($_SESSION['tipo']) || $_SESSION['tipo'] !== 'admin') {
@@ -8,8 +8,18 @@ if (!isset($_SESSION['tipo']) || $_SESSION['tipo'] !== 'admin') {
     exit();
 }
 
-// Consulta todos os animes
-$animes = $pdo->query("SELECT * FROM animes ORDER BY nota DESC")->fetchAll(PDO::FETCH_ASSOC);
+// Verifica se há pesquisa
+$busca = $_GET['buscarAnime'] ?? '';
+
+// Se tiver busca, filtra pelo nome
+if (!empty($busca)) {
+    $stmt = $pdo->prepare("SELECT * FROM animes WHERE nome LIKE ? ORDER BY nota DESC");
+    $stmt->execute(["%$busca%"]);
+    $animes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+} else {
+    // Senão, lista todos
+    $animes = $pdo->query("SELECT * FROM animes ORDER BY nota DESC")->fetchAll(PDO::FETCH_ASSOC);
+}
 
 // Para cada anime, busca os gêneros relacionados
 foreach ($animes as &$anime) {
@@ -24,8 +34,9 @@ foreach ($animes as &$anime) {
     $generos = $stmt->fetchAll(PDO::FETCH_COLUMN);
     $anime['generos'] = implode(', ', $generos);
 }
-unset($anime); 
+unset($anime);
 ?>
+
 
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -38,11 +49,17 @@ unset($anime);
 <body class="admin-cruds">
   <div class="admin-links">
     <h1>Gerenciar Animes</h1>
+    <form method="GET" class="admin-busca">
+      <input type="text" name="buscarAnime" placeholder="Buscar anime..." value="<?= htmlspecialchars($_GET['buscarAnime'] ?? '') ?>">
+      <button type="submit">Buscar</button>
+      <?php if (!empty($_GET['buscarAnime'])): ?>
+        <a href="admin_animes.php" class="limpar-btn">Limpar</a>
+      <?php endif; ?>
+    </form>
     <nav>
       <a href="../../../../PHP/user/index.php" class="admin-btn">Home</a> 
       <a href="../../../../PHP/admin/CRUDs/animes/anime_form.php" class="admin-btn">Novo Anime</a> 
       <a href="../../../../PHP/admin/index.php" class="admin-btn">Voltar</a> 
-      <a href="../../../../PHP/shared/logout.php" class="admin-btn">Sair</a> 
     </nav>
   </div>
 

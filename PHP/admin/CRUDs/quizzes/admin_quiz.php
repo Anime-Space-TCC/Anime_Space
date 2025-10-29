@@ -8,14 +8,33 @@ if (!isset($_SESSION['tipo']) || $_SESSION['tipo'] !== 'admin') {
     exit();
 }
 
-// Consulta todos os quizzes com o nome do anime relacionado
-$sql = "
-    SELECT q.*, a.nome AS anime_nome
-    FROM quizzes q
-    INNER JOIN animes a ON q.anime_id = a.id
-    ORDER BY q.data_criacao DESC
-";
-$quizzes = $pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
+// Verifica se há pesquisa
+$busca = $_GET['buscarQuiz'] ?? '';
+
+if (!empty($busca)) {
+    $stmt = $pdo->prepare("
+        SELECT q.*, a.nome AS anime_nome
+        FROM quizzes q
+        INNER JOIN animes a ON q.anime_id = a.id
+        WHERE q.titulo LIKE :busca1 OR a.nome LIKE :busca2
+        ORDER BY q.data_criacao DESC
+    ");
+    $stmt->execute([
+        ':busca1' => "%$busca%",
+        ':busca2' => "%$busca%"
+    ]);
+    $quizzes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+} else {
+    $stmt = $pdo->prepare("
+        SELECT q.*, a.nome AS anime_nome
+        FROM quizzes q
+        INNER JOIN animes a ON q.anime_id = a.id
+        ORDER BY q.data_criacao DESC
+    ");
+    $stmt->execute();
+    $quizzes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
 ?>
 
 <!DOCTYPE html>
@@ -29,11 +48,17 @@ $quizzes = $pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
 <body class="admin-cruds">
   <div class="admin-links">
     <h1>Gerenciar Quizzes</h1>
+    <form method="GET" class="admin-busca">
+      <input type="text" name="buscarQuiz" placeholder="Buscar quiz..." value="<?= htmlspecialchars($_GET['buscarQuiz'] ?? '') ?>">
+      <button type="submit">Buscar</button>
+      <?php if (!empty($_GET['buscarQuiz'])): ?>
+        <a href="admin_quiz.php" class="limpar-btn">Limpar</a>
+      <?php endif; ?>
+    </form>
     <nav>
       <a href="../../../../PHP/user/index.php" class="admin-btn">Home</a>
       <a href="../../../../PHP/admin/CRUDs/quizzes/quiz_form.php" class="admin-btn">Novo Quiz</a>
       <a href="../../../../PHP/admin/index.php" class="admin-btn">Voltar</a>
-      <a href="../../../../PHP/shared/logout.php" class="admin-btn">Sair</a>
     </nav>
   </div>
 

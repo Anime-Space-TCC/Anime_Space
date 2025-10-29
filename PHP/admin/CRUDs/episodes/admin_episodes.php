@@ -8,14 +8,33 @@ if (!isset($_SESSION['tipo']) || $_SESSION['tipo'] !== 'admin') {
     exit();
 }
 
-// Consulta todos os episódios com o nome do anime
-$sql = "
-    SELECT e.*, a.nome AS anime_nome
-    FROM episodios e
-    INNER JOIN animes a ON e.anime_id = a.id
-    ORDER BY a.nome, e.temporada, e.numero
-";
-$episodios = $pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
+// Verifica se há pesquisa
+$busca = $_GET['buscarEpisodio'] ?? '';
+
+if (!empty($busca)) {
+    $stmt = $pdo->prepare("
+        SELECT e.*, a.nome AS anime_nome
+        FROM episodios e
+        INNER JOIN animes a ON e.anime_id = a.id
+        WHERE e.titulo LIKE :busca1 OR a.nome LIKE :busca2
+        ORDER BY a.nome, e.temporada, e.numero
+    ");
+    $stmt->execute([
+        ':busca1' => "%$busca%",
+        ':busca2' => "%$busca%"
+    ]);
+    $episodios = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+} else {
+    $stmt = $pdo->prepare("
+        SELECT e.*, a.nome AS anime_nome
+        FROM episodios e
+        INNER JOIN animes a ON e.anime_id = a.id
+        ORDER BY a.nome, e.temporada, e.numero
+    ");
+    $stmt->execute();
+    $episodios = $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
 ?>
 
 <!DOCTYPE html>
@@ -29,11 +48,17 @@ $episodios = $pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
 <body class="admin-cruds">
   <div class="admin-links">
     <h1>Gerenciar Episódios</h1>
+    <form method="GET" class="admin-busca">
+      <input type="text" name="buscarEpisodio" placeholder="Buscar episódio..." value="<?= htmlspecialchars($_GET['buscarEpisodio'] ?? '') ?>">
+      <button type="submit">Buscar</button>
+      <?php if (!empty($_GET['buscarEpisodio'])): ?>
+        <a href="admin_episodes.php" class="limpar-btn">Limpar</a>
+      <?php endif; ?>
+    </form>
     <nav>
       <a href="../../../../PHP/user/index.php" class="admin-btn">Home</a> 
       <a href="../../../../PHP/admin/CRUDs/episodes/episodes_form.php" class="admin-btn">Novo Episódio</a> 
       <a href="../../../../PHP/admin/index.php" class="admin-btn">Voltar</a> 
-      <a href="../../../../PHP/shared/logout.php" class="admin-btn">Sair</a> 
     </nav>
   </div>
 

@@ -2,6 +2,13 @@
   <h2 class="painel-titulo">Gerenciar CRUDs</h2>
 
   <div class="admin-cards">
+
+    <div class="admin-card">
+      <img src="../../img/slogan3.png" alt="Usuarios">
+      <h4>Usuarios</h4>
+      <a href="../../PHP/admin/CRUDs/usuarios/admin_user.php" class="admin-btn">📂 Acessar</a>
+    </div>
+
     <div class="admin-card">
       <img src="../../img/slogan3.png" alt="Animes">
       <h4>Animes</h4>

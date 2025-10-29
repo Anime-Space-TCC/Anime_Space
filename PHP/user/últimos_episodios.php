@@ -36,7 +36,7 @@ $totalPaginas = ceil($totalEpisodios / $porPagina);
   <main class="page-content">
     <div class="layout-anuncios">
       <!-- Coluna da esquerda (anúncios) -->
-      <aside class="ads-lateral esquerda">
+      <aside class="ads-lateral-esquerda">
         <div class="ad-item"><img src="../../img/ads/propaganda7.jpg" alt="Anúncio 7"></div>
         <div class="ad-item"><img src="../../img/ads/propaganda8.jpg" alt="Anúncio 8"></div>
       </aside>
@@ -78,7 +78,7 @@ $totalPaginas = ceil($totalEpisodios / $porPagina);
     </section>
       </section>
       <!-- Coluna da direita (anúncios) -->
-      <aside class="ads-lateral direita">
+      <aside class="ads-lateral-direita">
         <div class="ad-item"><img src="../../img/ads/propaganda9.jpg" alt="Anúncio 9"></div>
         <div class="ad-item"><img src="../../img/ads/propaganda10.jpg" alt="Anúncio 10"></div>
       </aside>

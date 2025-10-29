@@ -8,12 +8,33 @@ if (!isset($_SESSION['tipo']) || $_SESSION['tipo'] !== 'admin') {
     exit();
 }
 
-// Busca todas as temporadas com nome do anime
-$sql = "SELECT t.*, a.nome AS anime_nome
+// Verifica se há pesquisa
+$busca = $_GET['buscarTemporada'] ?? '';
+
+if (!empty($busca)) {
+    $stmt = $pdo->prepare("
+        SELECT t.*, a.nome AS anime_nome
         FROM temporadas t
         JOIN animes a ON a.id = t.anime_id
-        ORDER BY a.nome, t.numero";
-$temporadas = $pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
+        WHERE t.nome LIKE :busca1 OR a.nome LIKE :busca2
+        ORDER BY a.nome, t.numero
+    ");
+    $stmt->execute([
+        ':busca1' => "%$busca%",
+        ':busca2' => "%$busca%"
+    ]);
+    $temporadas = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+} else {
+    $stmt = $pdo->prepare("
+        SELECT t.*, a.nome AS anime_nome
+        FROM temporadas t
+        JOIN animes a ON a.id = t.anime_id
+        ORDER BY a.nome, t.numero
+    ");
+    $stmt->execute();
+    $temporadas = $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
 ?>
 
 <!DOCTYPE html>
@@ -27,11 +48,17 @@ $temporadas = $pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
 <body class="admin-cruds">
   <div class="admin-links">
     <h1>Gerenciar Temporadas</h1>
+    <form method="GET" class="admin-busca">
+      <input type="text" name="buscarTemporada" placeholder="Buscar temporada..." value="<?= htmlspecialchars($_GET['buscarTemporada'] ?? '') ?>">
+      <button type="submit">Buscar</button>
+      <?php if (!empty($_GET['buscarTemporada'])): ?>
+        <a href="admin_temporadas.php" class="limpar-btn">Limpar</a>
+      <?php endif; ?>
+    </form>
     <nav>
       <a href="../../../../PHP/user/index.php" class="admin-btn">Home</a>
       <a href="../../../../PHP/admin/CRUDs/temporadas/temporadas_form.php" class="admin-btn">Nova Temporada</a>
       <a href="../../../../PHP/admin/index.php" class="admin-btn">Voltar</a>
-      <a href="../../../../PHP/shared/logout.php" class="admin-btn">Sair</a>
     </nav>
   </div>
 

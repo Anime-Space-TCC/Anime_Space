@@ -25,15 +25,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = trim($_POST['email'] ?? '');
     $mensagem = trim($_POST['mensagem'] ?? '');
 
+    // Validação básica
     if (!empty($nome) && !empty($email) && !empty($mensagem) && filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $nome = htmlspecialchars($nome, ENT_QUOTES, 'UTF-8');
         $email = htmlspecialchars($email, ENT_QUOTES, 'UTF-8');
         $mensagem = htmlspecialchars($mensagem, ENT_QUOTES, 'UTF-8');
 
+        // Envia a mensagem e dá XP
         if (enviarMensagemSuporte($userId, $nome, $email, $mensagem)) {
             $mensagem_enviada = true;
-            // Limpa campos após envio
-            $nome = $email = $mensagem = '';
+            $nome = $email = $mensagem = ''; // Limpa os campos
         } else {
             $erro_formulario = "Erro ao enviar a mensagem. Tente novamente mais tarde.";
         }
@@ -53,8 +54,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 <body>
     <?php
-        $current_page = 'suporte'; 
-        include __DIR__ . '/navbar.php'; 
+        $current_page = 'suporte';
+        include __DIR__ . '/navbar.php';
     ?>
     <main class="page-content">
         <div class="suporte">
@@ -68,7 +69,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <?php endif; ?>
 
             <div class="form-suporte">
-                <form method="POST">
+                <form method="POST" novalidate>
                     <label for="nome">Seu nome:</label>
                     <input type="text" name="nome" id="nome" required value="<?= htmlspecialchars($nome) ?>">
 
@@ -83,12 +84,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
 
             <h2>Informações de Contato</h2>
-            <p>📧 E-mail: suporte@animespace.com</p>
-            <p>📱 WhatsApp: <a target="_blank" alt="Chat on WhatsApp" href="https://wa.me/5561991585929?text=Ola%20tenho%20interesse%20em%20falar%20sobre%20animes">Clique para enviar mensagem!</a></p>
+            <p>📧 E-mail: <a href="mailto:suporte@animespace.com">suporte@animespace.com</a></p>
+            <p>📱 WhatsApp: <a target="_blank" href="https://wa.me/5561991585929?text=Ola%20tenho%20interesse%20em%20falar%20sobre%20animes">Clique para enviar mensagem!</a></p>
             <p>📍 Endereço: Brasília - DF</p>
 
             <div class="faq">
                 <h2>FAQ - Perguntas Frequentes</h2>
+
                 <h3>1. Não consigo assistir aos episódios, o que fazer?</h3>
                 <p>Verifique sua conexão com a internet e tente novamente. Caso persista, entre em contato pelo formulário acima.</p>
 

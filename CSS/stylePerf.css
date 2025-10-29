@@ -821,6 +821,44 @@ body {
 }
 
 /* =========================
+       BOTÃO LOGOUT
+========================= */
+
+.logout-container {
+    width: 100%;
+    text-align: center;
+    margin: 30px 0 60px 0; 
+}
+
+.btn-logout {
+    background: #c62828;
+    color: #fff;
+    padding: 12px 30px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 18px;
+    letter-spacing: 1px;
+    display: inline-block;
+    transition: 0.3s ease;
+    box-shadow: 0 0 12px rgba(0,0,0,0.3);
+}
+
+.btn-logout:hover {
+    background: #ff4d4d;
+    transform: scale(1.05);
+}
+
+.btn-logout.boss {
+    background: linear-gradient(45deg, #780000, #ff0000);
+    text-shadow: 0 0 10px #ff0000;
+}
+.btn-logout.boss:hover {
+    transform: scale(1.1) rotate(-1deg);
+    box-shadow: 0 0 15px #ff1e1e;
+}
+
+/* =========================
     UPGRADE RPG
 ========================= */
     .upgrade-container {

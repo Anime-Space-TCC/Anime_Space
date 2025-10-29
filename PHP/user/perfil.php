@@ -182,6 +182,9 @@ $atributos = [
             </div>
         </div>
     </div>
+    <div class="logout-container">
+        <a href="../../PHP/shared/logout.php" class="btn-logout boss">💀 Encerrar Jornada</a>
+    </div>
 </main>
 <script src="../../JS/perfil.js"></script>
 </body>

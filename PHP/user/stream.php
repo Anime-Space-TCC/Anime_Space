@@ -19,6 +19,14 @@ $linguagens = getLinguagens();
 // Resultado da busca
 $busca = $_GET['busca'] ?? '';
 $animes = getAnimesFiltrados($filtroGenero, $filtroAno, $filtroLinguagem, $busca);
+
+// Paginação
+$porPagina = 18;
+$pagina = isset($_GET['pagina']) ? (int) $_GET['pagina'] : 1;
+if ($pagina < 1) $pagina = 1;
+$offset = ($pagina - 1) * $porPagina;
+$totalAnimes = $pdo->query("SELECT COUNT(*) FROM animes")->fetchColumn();
+$totalPaginas = ceil($totalAnimes / $porPagina);
 ?>
 
 <!DOCTYPE html>
@@ -105,6 +113,20 @@ $animes = getAnimesFiltrados($filtroGenero, $filtroAno, $filtroLinguagem, $busca
         <p">Nenhum anime cadastrado ainda.</p>
       <?php endif; ?>
     </section>
+    <!-- Paginação -->
+      <div class="paginacao">
+        <?php if ($pagina > 1): ?>
+          <a href="?pagina=<?= $pagina - 1 ?>">&laquo; Anterior</a>
+        <?php endif; ?>
+
+        <?php for ($i = 1; $i <= $totalPaginas; $i++): ?>
+          <a href="?pagina=<?= $i ?>" class="<?= $i === $pagina ? 'ativo' : '' ?>"><?= $i ?></a>
+        <?php endfor; ?>
+
+        <?php if ($pagina < $totalPaginas): ?>
+          <a href="?pagina=<?= $pagina + 1 ?>">Próxima &raquo;</a>
+        <?php endif; ?>
+      </div>
   </main>
   <?php include __DIR__ . '/rodape.php'; ?>
 </body>

@@ -25,6 +25,7 @@ $offset = ($pagina - 1) * $porPagina;
 $totalNoticias = $pdo->query("SELECT COUNT(*) FROM noticias")->fetchColumn();
 $totalPaginas = ceil($totalNoticias / $porPagina);
 
+// Buscar noticias para a pagina atual
 $stmt = $pdo->prepare("SELECT * FROM noticias ORDER BY data_publicacao DESC LIMIT :limit OFFSET :offset");
 $stmt->bindValue(':limit', $porPagina, PDO::PARAM_INT);
 $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);

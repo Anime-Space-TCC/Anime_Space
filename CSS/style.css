@@ -360,28 +360,29 @@ body {
 .letreiro-container {
   position: relative;
   width: 100%;
-  height: 100px;
+  height: 120px; 
   background: rgba(0, 0, 0, 0.8);
   overflow: hidden;
   display: flex;
   align-items: center;
-  border-top: 2px solid #ff9f00;
-  border-bottom: 2px solid #ff9f00;
+  border-top: 1px solid #ff9f00;
+  border-bottom: 4px solid #ff9f00;
 }
 
 .letreiro {
   display: flex;
   align-items: center;
-  gap: 50px;
+  gap: 80px; 
   animation: rolar 25s linear infinite;
 }
 
 .letreiro-container:hover .letreiro {
-  animation-play-state: paused; /* pausa ao passar o mouse */
+  animation-play-state: paused; 
 }
 
 .propaganda img {
-  height: 80px;
+  height: 100px; 
+  width: auto;
   border-radius: 10px;
   transition: transform 0.3s ease;
 }
@@ -392,11 +393,11 @@ body {
 
 /* Animação do letreiro */
 @keyframes rolar {
-  from {
-    transform: translateX(100%);
+  0% {
+    transform: translateX(0);
   }
-  to {
-    transform: translateX(-100%);
+  100% {
+    transform: translateX(-50%);
   }
 }
 
@@ -986,15 +987,16 @@ body {
     flex: 1;                      
 }
 
-.ads-lateral {
+.ads-lateral-esquerda {
     display: flex;
     flex-direction: column;
     gap: 20px;
-    width: 120px;                  
+    width: 150px;
+    height: 720px;
     flex-shrink: 0;               
 }
 
-.ads-lateral .ad-item {
+.ads-lateral-esquerda .ad-item {
     width: 100%;
     height: 450px;
     overflow: hidden;
@@ -1004,11 +1006,11 @@ body {
     padding-top: 20px;
 }
 
-.ads-lateral .ad-item:hover {
+.ads-lateral-esquerda .ad-item:hover {
     transform: scale(1.05);
 }
 
-.ads-lateral .ad-item img {
+.ads-lateral-esquerda .ad-item img {
     width: 100%;
     height: 100%;
     object-fit: contain;          
@@ -1016,7 +1018,42 @@ body {
     transition: transform 0.4s ease;
 }
 
-.ads-lateral .ad-item:hover img {
+.ads-lateral-esquerda .ad-item:hover img {
+    transform: scale(1.03);
+}
+
+.ads-lateral-direita {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 150px; 
+    height: 720px;                  
+    flex-shrink: 0;               
+}
+
+.ads-lateral-direita .ad-item {
+    width: 100%;
+    height: 450px;
+    overflow: hidden;
+    border-radius: 8px;
+    transition: transform 0.3s ease;
+    background-color: #000;
+    padding-top: 20px;
+}
+
+.ads-lateral-direita .ad-item:hover {
+    transform: scale(1.05);
+}
+
+.ads-lateral-direita .ad-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;          
+    border-radius: 8px;
+    transition: transform 0.4s ease;
+}
+
+.ads-lateral-direita .ad-item:hover img {
     transform: scale(1.03);
 }
 
@@ -1148,60 +1185,6 @@ body {
   }
 }
 
-/* =========================================
-   ANÚNCIOS LATERAIS
-========================================= */
-
-.layout-anuncios {
-    display: flex;
-    justify-content: center;       
-    align-items: flex-start;
-    gap: 40px;                     
-    padding: 20px;
-    max-width: 1500px;            
-    max-height: 1000px;
-    margin: 20px auto 0 auto;
-    box-sizing: border-box;
-}
-
-.temporada {
-    flex: 1;                     
-}
-
-.ads-lateral {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    width: 120px;                  
-    flex-shrink: 0;               
-}
-
-.ads-lateral .ad-item {
-    width: 100%;
-    height: 450px;
-    overflow: hidden;
-    border-radius: 8px;
-    transition: transform 0.3s ease;
-    background-color: #000;
-    padding-top: 20px;
-}
-
-.ads-lateral .ad-item:hover {
-    transform: scale(1.05);
-}
-
-.ads-lateral .ad-item img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;           
-    border-radius: 8px;
-    transition: transform 0.4s ease;
-}
-
-.ads-lateral .ad-item:hover img {
-    transform: scale(1.03);
-}
-
 /* =======================
    LOJA 
 ======================= */
@@ -1284,11 +1267,11 @@ body {
 
 .produtos-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); 
-    gap: 20px;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 30px;
 }
 
-.produto-card {
+.produto-card { 
     background: #fff;
     border-radius: 12px;
     overflow: hidden;
@@ -1298,18 +1281,17 @@ body {
     flex-direction: column;
     justify-content: flex-start; 
     position: relative; 
-    padding-bottom: 60px; 
-}
-
-.produto-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+    padding-bottom: 50px;
+    max-height: 250px; 
+    width: 150px;
 }
 
 .produto-imagem-box {
     width: 100%;
-    height: 180px; /* diminuiu de 220px para 180px */
+    height: 100%;
     overflow: hidden;
+    border-radius: 12px 12px 0 0; 
+    margin: 0; 
 }
 
 .produto-imagem {
@@ -1319,46 +1301,68 @@ body {
 }
 
 .produto-info {
-    padding: 15px;
+    padding: 0;
     text-align: center;
     flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .produto-nome {
-    font-size: 1.2rem;
-    margin: 10px 0;
+    font-size: 1rem; 
+    margin: 5px 0;
     color: #222;
+    white-space: nowrap; 
+    overflow: hidden;
+    text-overflow: ellipsis; 
 }
 
 .produto-descricao {
-    font-size: 0.9rem;
+    font-size: 0.8rem;
     color: #555;
-    margin: 10px 0;
-    min-height: 40px;
+    margin: 5px 0;
+    min-height: 30px;
+    white-space: nowrap; 
+    overflow: hidden;
+    text-overflow: ellipsis; 
 }
 
 .produto-preco {
-    font-size: 1.2rem;
+    font-size: 1rem;
     font-weight: bold;
     color: #ff9f00;
-    margin: 15px 0;
+    margin: 5px 0;
+}
+
+.produto-estoque {
+    font-size: 0.8rem;
+    color: #333;
+    margin: 5px 0;
+    position: absolute; 
+    bottom: 45px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    text-align: center;
+    padding-bottom: 28px;
 }
 
 .btn-adicionar {
     background: #ff9f00;
     color: #fff;
     border: none;
-    padding: 10px 18px;
+    padding: 5px 5px;
     border-radius: 8px;
     cursor: pointer;
     transition: 0.3s;
     font-weight: bold;
     box-shadow: 0 2px 6px rgba(0,0,0,0.1);
     position: absolute;
-    bottom: 15px;
+    bottom: 10px;
     left: 50%;
     transform: translateX(-50%);
-    width: calc(100% - 30px); 
+    width: calc(100% - 20px); 
     text-align: center;
 }
 
@@ -1368,11 +1372,6 @@ body {
     box-shadow: 0 4px 12px rgba(0,0,0,0.15);
 }
 
-.produto-estoque {
-    font-size: 0.85rem;
-    color: #333;
-    margin-top: 5px;
-}
 
 .promocoes-slideshow {
     position: relative;
@@ -1386,46 +1385,16 @@ body {
     display: none;
     position: relative;
     text-align: center;
-    color: #fff;
 }
 
 .slide img {
     width: 100%;
-    height: 350px; /* aumentou altura de 300px para 350px */
-    object-fit: cover;
+    height: 400px; 
+    object-fit: contain; 
     border-radius: 15px;
-    filter: brightness(0.7);
-}
-
-.slide-info {
-    position: absolute;
-    bottom: 20px;
-    left: 20px;
-    text-align: left;
-}
-
-.slide-info h3 {
-    font-size: 1.8rem;
-    margin: 0 0 5px;
-}
-
-.slide-info p {
-    font-size: 1.2rem;
-    margin: 0 0 10px;
-}
-
-.btn-adicionar-slide {
-    background: #ff9f00;
-    color: #fff;
-    border: none;
-    padding: 8px 16px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: bold;
-}
-
-.btn-adicionar-slide:hover {
-    background: #e68a00;
+    filter: brightness(1.1); 
+    background-color: #000;
+    transform: scale(1.0); 
 }
 
 /* Botões de navegação */
@@ -1501,7 +1470,7 @@ body {
 
 /* Caixa da lista de itens */
 .carrinho-lista {
-    width: 100%;
+    width: 61%;
     max-height: 250px; 
     overflow-y: auto;
     display: flex;
@@ -1518,7 +1487,7 @@ body {
     align-items: center;
     justify-content: space-between;
     background: #000;
-    padding: 8px 12px;
+    padding: 25px 12px;
     border-radius: 8px;
     font-size: 0.9rem;
     transition: background 0.2s;
@@ -1610,14 +1579,16 @@ body {
 
 .pagamento-container {
     margin-top: 20px;
-    width: 100%;
+    max-width: 800px;
     background: #1a1a1a;
     border-radius: 8px;
     padding: 15px;
     display: flex;
-    flex-direction: column;
+    flex-direction: row; 
+    flex-wrap: wrap; 
+    justify-content: center; 
     align-items: center;
-    gap: 10px;
+    gap: 15px;
 }
 
 .pagamento-container h2 {
@@ -1691,7 +1662,7 @@ body {
 
 .pagamento-confirmacao {
     max-width: 700px;
-    margin: 40px auto;
+    margin: 30px auto;
     padding: 25px 30px;
     background: #000;
     color: #ff9f00;
@@ -1819,7 +1790,7 @@ body {
     align-items: center;
     gap: 20px;
     width: 100%;
-    margin: 30px auto 20px;
+    margin: 5px auto 20px;
     flex-wrap: wrap;  
 }
 
@@ -2547,7 +2518,7 @@ body {
   position: relative;
   overflow: hidden;
   border-radius: 20px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 0 8px rgba(255, 159, 0, 0.7);
 }
 
 .carrossel-slides {
@@ -2596,11 +2567,11 @@ body {
   padding: 30px;
   line-height: 1.8;
   max-width: 1200px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0 8px rgba(255, 159, 0, 0.7);
 }
 
 .historia-section h2 {
-  color: #ffbf00;
+  color: #ff9f00;
   margin-bottom: 15px;
   text-align: center;
   font-size: 1.8rem;
@@ -2620,7 +2591,7 @@ body {
 }
 
 .noticias-section h2 {
-  color: #ffbf00;
+  color: #ff9f00;
   text-align: center;
   margin-bottom: 20px;
   font-size: 1.6rem;
@@ -2662,7 +2633,7 @@ body {
 
 .noticia-info h3 {
   font-size: 1.1rem;
-  color: #ffbf00;
+  color: #ff9f00;
   margin-bottom: 8px;
 }
 
@@ -2674,7 +2645,7 @@ body {
 
 .btn-leia {
   display: inline-block;
-  background: #ffbf00;
+  background: #ff9f00;
   color: #111;
   padding: 8px 14px;
   border-radius: 8px;
@@ -2701,19 +2672,19 @@ body {
   margin: 0 5px;
   padding: 8px 14px;
   background: #1a1a1a;
-  color: #ffbf00;
+  color: #ff9f00;
   border-radius: 8px;
   text-decoration: none;
   transition: background 0.2s, color 0.2s;
 }
 
 .paginacao a:hover {
-  background: #ffbf00;
+  background: #ff9f00;
   color: #111;
 }
 
 .paginacao a.ativo {
-  background: #ffbf00;
+  background: #ff9f00;
   color: #111;
   font-weight: bold;
   cursor: default;
@@ -2781,7 +2752,7 @@ body {
   padding: 25px;
   width: 100%;
   max-width: 700px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0 8px rgba(255, 159, 0, 0.7);
 }
 
 .populares-section h2 {
@@ -2824,7 +2795,7 @@ body {
   border-radius: 12px;
   box-shadow: 0 0 12px rgba(255, 159, 0, 0.6);
   text-align: center;
-  margin-top: 30px;
+  margin-top: 15px;
 }
 
 .contato-section h2 {
@@ -2842,9 +2813,10 @@ body {
 /* Container dos botões */
 .contato-links {
   display: flex;
-  flex-direction: column;
-  gap: 12px;
+  flex-direction: line;
+  gap: 15px;
   align-items: center;
+  margin-left: 35px;
 }
 
 /* Botões */
@@ -3008,58 +2980,69 @@ body {
 .suporte {
     max-width: 900px;
     margin: 30px auto;
-    padding: 20px;
+    padding: 25px 30px;
     background: #121212;
-    border-radius: 10px;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.6);
+    border-radius: 12px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.7);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .suporte h1 {
     color: #ff9900;
     text-align: center;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
+    font-size: 2rem;
+    letter-spacing: 1px;
 }
 
 .suporte h2 {
     color: #ff9900;
-    margin-top: 25px;
-    margin-bottom: 10px;
+    margin-top: 30px;
+    margin-bottom: 12px;
     border-left: 4px solid #ff9900;
-    padding-left: 8px;
+    padding-left: 10px;
+    font-size: 1.3rem;
 }
 
 .suporte p {
     color: #ddd;
-    line-height: 1.6;
+    line-height: 1.7;
     margin-bottom: 15px;
+    font-size: 0.95rem;
 }
 
 .suporte .form-suporte {
     background-color: #1a1a1a;
-    padding: 20px;
-    border-radius: 8px;
-    margin-top: 15px;
+    padding: 25px;
+    border-radius: 10px;
+    margin-top: 20px;
     border: 1px solid #333;
+    transition: all 0.3s ease;
+}
+
+.suporte .form-suporte:hover {
+    border-color: #ff9900;
 }
 
 .suporte label {
     display: block;
-    margin-top: 12px;
-    font-weight: bold;
+    margin-top: 15px;
+    font-weight: 600;
     color: #ff9900;
+    font-size: 0.95rem;
 }
 
 .suporte input,
 .suporte textarea {
     width: 100%;
-    padding: 12px;
+    padding: 14px;
     margin-top: 6px;
     background: #222;
     border: 1px solid #444;
     color: #fff;
-    border-radius: 6px;
-    font-size: 15px;
-    transition: border 0.3s;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    transition: border 0.3s, background 0.3s;
 }
 
 .suporte input:focus,
@@ -3072,74 +3055,124 @@ body {
 .suporte button {
     background: #ff9900;
     border: none;
-    padding: 12px 20px;
+    padding: 14px 20px;
     color: #000;
     font-weight: bold;
     cursor: pointer;
-    border-radius: 6px;
-    margin-top: 15px;
-    font-size: 16px;
+    border-radius: 8px;
+    margin-top: 20px;
+    font-size: 1rem;
     width: 100%;
-    transition: background 0.3s;
+    transition: background 0.3s, transform 0.2s;
 }
 
 .suporte button:hover {
     background: #e68a00;
+    transform: translateY(-2px);
+}
+
+.suporte .msg-sucesso,
+.suporte .msg-erro {
+    padding: 14px;
+    border-radius: 8px;
+    margin: 20px 0;
+    text-align: center;
+    font-weight: 600;
+    font-size: 0.95rem;
 }
 
 .suporte .msg-sucesso {
     background: #2e7d32;
-    padding: 12px;
-    border-radius: 6px;
     color: #fff;
-    margin: 15px 0;
-    text-align: center;
-    font-weight: bold;
+}
+
+.suporte .msg-erro {
+    background: #c62828;
+    color: #fff;
 }
 
 .suporte .faq {
     background-color: #1a1a1a;
-    padding: 20px;
-    border-radius: 8px;
-    margin-top: 25px;
+    padding: 25px;
+    border-radius: 10px;
+    margin-top: 30px;
     border: 1px solid #333;
+    transition: border 0.3s;
+}
+
+.suporte .faq:hover {
+    border-color: #ff9900;
 }
 
 .suporte .faq h3 {
-    margin-bottom: 8px;
+    margin-bottom: 10px;
     color: #ff9900;
+    font-size: 1.05rem;
 }
 
 .suporte .faq p {
     color: #bbb;
     margin-bottom: 15px;
+    font-size: 0.92rem;
 }
 
+.suporte a {
+    color: #ff9900;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.suporte a:hover {
+    color: #e68a00;
+    text-decoration: underline;
+}
+
+/* Botão de suporte flutuante */
 .suporte .nav-suporte {
     position: fixed;
-    top: 15px;
-    right: 15px;
+    top: 20px;
+    right: 20px;
     z-index: 1000;
-    /* fica por cima */
 }
 
 .suporte .nav-suporte .suporte-btn {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 42px;
-    height: 42px;
+    width: 48px;
+    height: 48px;
     background: #ff9900;
     border-radius: 50%;
     color: #000;
+    font-size: 1.2rem;
     text-decoration: none;
-    transition: background 0.3s ease;
-    box-shadow: 0 0 6px rgba(0, 0, 0, 0.5);
+    transition: background 0.3s, transform 0.2s;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.6);
 }
 
 .suporte .nav-suporte .suporte-btn:hover {
-    transform: scale(1.1);
-    background: rgba(114, 114, 114, 0.9);
+    transform: scale(1.15);
+    background: #e68a00;
+}
+
+/* Responsividade */
+@media (max-width: 600px) {
+    .suporte {
+        padding: 20px 15px;
+    }
+
+    .suporte h1 {
+        font-size: 1.7rem;
+    }
+
+    .suporte h2 {
+        font-size: 1.1rem;
+    }
+
+    .suporte button {
+        font-size: 0.95rem;
+        padding: 12px 16px;
+    }
 }
 
 /* =========================================
@@ -4276,7 +4309,7 @@ body {
     font-family: Inter, system-ui, Segoe UI, Roboto, Arial;
 }
 
-/* =========================
+/* ========================= 
    ADMIN LINKS E NAVBAR
 ========================= */
 
@@ -4287,31 +4320,74 @@ body {
     padding: 16px 24px;
     background-color: #1c1c1c;
     flex-wrap: wrap;
-    border-bottom: 2px solid #ff9f00; 
+    border-bottom: 2px solid #ff9f00;
+    gap: 15px;
 }
 
 .admin-cruds .admin-links h1 {
     margin: 0;
     font-size: 1.8rem;
-    color: #ff9f00; 
+    color: #ff9f00;
 }
 
 .admin-cruds .admin-links nav a {
-    color: #cfe3ff; 
-    margin-left: 12px;
-    text-decoration: none;
-    font-weight: bold;
-    transition: color 0.3s ease;
+  padding: 8px 15px;
+  border-radius: 6px;
+  background: #ff9f00;
+  color: #fff;
+  font-size: 1rem;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: 0.3s;
+  min-width: 20px;
+  text-align: center;
 }
 
 .admin-cruds .admin-links nav a:hover {
-    color: #ff9f00; 
+  background: #e68a00;
 }
 
-.admin-cruds .admin-links nav a + a {
-    border-left: 1px solid #444; 
-    padding-left: 10px;
+/* ÁREA DE BUSCA */
+.admin-cruds .admin-busca {
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
+
+.admin-cruds .admin-busca input {
+  padding: 8px 14px;
+  border: 2px solid #555;
+  border-radius: 6px;
+  background: #111;
+  color: #fff;
+  font-size: 1rem;
+  min-width: 400px; 
+}
+
+.admin-cruds .admin-busca button,
+.admin-cruds .admin-busca a.limpar-btn {
+  padding: 8px 15px;
+  border-radius: 6px;
+  background: #ff9f00;
+  color: #fff;
+  text-decoration: none;
+  font-size: 1rem;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 20px;
+  transition: 0.3s;
+  border: none;
+}
+
+.admin-cruds .admin-busca button:hover,
+.admin-cruds .admin-busca a.limpar-btn:hover {
+  background: #e68a00;
+}
+
 
 /* =========================
    DASHBOARD E CARDS
@@ -4371,21 +4447,22 @@ body {
 }
 
 .admin-btn {
-    display: inline-block;
-    margin-top: 10px;
-    padding: 8px 12px;
-    background-color: #ff9f00; 
-    color: #000;
+    padding: 8px 15px;
     border-radius: 6px;
+    background: #ff9f00;
+    color: #fff;
+    font-size: 1rem;
     text-decoration: none;
-    font-weight: 700;
-    box-shadow: 0 0 6px #ff9f00;
-    transition: background-color 0.3s, box-shadow 0.3s;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.3s;
+    min-width: 20px;
+    text-align: center;
 }
 
 .admin-btn:hover {
     background-color: #e68a00; 
-    box-shadow: 0 0 10px #e68a00;
 }
 
 .admin-card + .admin-card {
