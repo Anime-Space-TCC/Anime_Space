@@ -14,11 +14,28 @@ verificarLogin();
 $id = $_GET['id'] ?? null;
 $episode_id = $_GET['episode_id'] ?? null;
 
-if (!$id) die("Anime não encontrado.");
+if (!$id)
+  die("Anime não encontrado.");
 
 // Busca anime
 $animeInfo = buscarAnimePorId($pdo, $id);
-if (!$animeInfo) die("Anime não encontrado.");
+if (!$animeInfo)
+  die("Anime não encontrado.");
+
+// Buscar generos 
+$generoFiltro = $_GET['generos'] ?? null;
+
+if ($generoFiltro) {
+  $stmt = $pdo->prepare("
+      SELECT * FROM animes 
+      WHERE generos LIKE ?
+  ");
+  $stmt->execute(["%$generoFiltro%"]);
+} else {
+  $stmt = $pdo->query("SELECT * FROM animes");
+}
+
+$animes = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 // Busca episódios
 $lista = buscarEpisodiosComReacoes($pdo, $id);
@@ -82,9 +99,9 @@ if (!empty($temporadas)) {
 
 // Registra historico de visualizacao
 if (isset($_GET['id']) && isset($_SESSION['user_id'])) {
-    $animeId = intval($_GET['id']);
-    $userId = $_SESSION['user_id'];
-    registrarHistoricoAnime($pdo, $userId, $animeId);
+  $animeId = intval($_GET['id']);
+  $userId = $_SESSION['user_id'];
+  registrarHistoricoAnime($pdo, $userId, $animeId);
 }
 ?>
 
@@ -128,10 +145,11 @@ if (isset($_GET['id']) && isset($_SESSION['user_id'])) {
             <?php if (!empty($animeInfo['generos'])): ?>
               <div class="generos-linha">
                 <?php foreach ($animeInfo['generos'] as $genero): ?>
-                  <a href="../user/stream.php?id=<?= $genero['id'] ?>" class="meta-btn">
+                  <a href="../user/stream.php?generos=<?= urlencode($genero['nome']) ?>" class="meta-btn">
                     <?= htmlspecialchars($genero['nome']) ?>
                   </a>
                 <?php endforeach; ?>
+
               </div>
             <?php endif; ?>
           </div>
@@ -150,10 +168,11 @@ if (isset($_GET['id']) && isset($_SESSION['user_id'])) {
             $youtubeId = extrairIdYoutube($videoUrl);
             ?>
 
-            <h2><?= htmlspecialchars($episodioSelecionado['titulo']) ?> (Temporada <?= $episodioSelecionado['temporada'] ?>, Episódio <?= $episodioSelecionado['numero'] ?>)</h2>
+            <h2><?= htmlspecialchars($episodioSelecionado['titulo']) ?> (Temporada
+              <?= $episodioSelecionado['temporada'] ?>, Episódio <?= $episodioSelecionado['numero'] ?>)
+            </h2>
             <?php if ($youtubeId): ?>
-              <iframe width="800" height="450"
-                src="https://www.youtube.com/embed/<?= htmlspecialchars($youtubeId) ?>"
+              <iframe width="800" height="450" src="https://www.youtube.com/embed/<?= htmlspecialchars($youtubeId) ?>"
                 frameborder="0" allowfullscreen allow="autoplay"></iframe>
             <?php else: ?>
               <video width="800" height="450" controls>
@@ -184,11 +203,14 @@ if (isset($_GET['id']) && isset($_SESSION['user_id'])) {
           </div>
 
           <?php foreach ($temporadas as $numTemp => $episodios): ?>
-            <div class="temporada-bloco" data-temporada="<?= $numTemp ?>" style="<?= ($temporadaInicial == $numTemp) ? '' : 'display:none;' ?>">
+            <div class="temporada-bloco" data-temporada="<?= $numTemp ?>"
+              style="<?= ($temporadaInicial == $numTemp) ? '' : 'display:none;' ?>">
 
               <div class="filtro-linguagem">
-                <a href="?id=<?= $id ?>&linguagem=dublado" class="btn-ling <?= $filtroLinguagemSelecionada === 'dublado' ? 'ativo' : '' ?>">Dublado</a>
-                <a href="?id=<?= $id ?>&linguagem=legendado" class="btn-ling <?= $filtroLinguagemSelecionada === 'legendado' ? 'ativo' : '' ?>">Legendado</a>
+                <a href="?id=<?= $id ?>&linguagem=dublado"
+                  class="btn-ling <?= $filtroLinguagemSelecionada === 'dublado' ? 'ativo' : '' ?>">Dublado</a>
+                <a href="?id=<?= $id ?>&linguagem=legendado"
+                  class="btn-ling <?= $filtroLinguagemSelecionada === 'legendado' ? 'ativo' : '' ?>">Legendado</a>
                 <a href="?id=<?= $id ?>" class="btn-ling <?= $filtroLinguagemSelecionada === '' ? 'ativo' : '' ?>">Todos</a>
               </div>
 
@@ -254,19 +276,20 @@ if (isset($_GET['id']) && isset($_SESSION['user_id'])) {
           <p>Nenhum episódio disponível para este anime.</p>
         <?php endif; ?>
 
-          <?php if (isset($_SESSION['user_id'])): ?>
-            <section class="avaliacao-final">
-              <h3>Sua Avaliação</h3>
-              <div class="avaliacao-estrelas" data-anime-id="<?= $id ?>">
-                <div class="estrela-container">
-                  <?php for ($i = 1; $i <= 5; $i++): ?>
-                    <button type="button" class="estrela <?= $i <= $avaliacaoUsuario ? 'ativa' : '' ?>" data-valor="<?= $i ?>">☆</button>
-                  <?php endfor; ?>
-                </div>
-                <div class="nota-display"><?= $avaliacaoUsuario ? $avaliacaoUsuario . '/10' : '' ?></div>
+        <?php if (isset($_SESSION['user_id'])): ?>
+          <section class="avaliacao-final">
+            <h3>Sua Avaliação</h3>
+            <div class="avaliacao-estrelas" data-anime-id="<?= $id ?>">
+              <div class="estrela-container">
+                <?php for ($i = 1; $i <= 5; $i++): ?>
+                  <button type="button" class="estrela <?= $i <= $avaliacaoUsuario ? 'ativa' : '' ?>"
+                    data-valor="<?= $i ?>">☆</button>
+                <?php endfor; ?>
               </div>
-            </section>
-          <?php endif; ?>
+              <div class="nota-display"><?= $avaliacaoUsuario ? $avaliacaoUsuario . '/10' : '' ?></div>
+            </div>
+          </section>
+        <?php endif; ?>
 
         <?php if ($episodioSelecionado && isset($_SESSION['user_id'])): ?>
           <section class="comentarios">
@@ -302,4 +325,5 @@ if (isset($_GET['id']) && isset($_SESSION['user_id'])) {
   <script src="../../JS/favoritar.js"></script>
   <script src="../../JS/avaliar.js"></script>
 </body>
+
 </html>

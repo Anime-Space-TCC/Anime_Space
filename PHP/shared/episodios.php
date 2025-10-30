@@ -89,3 +89,4 @@ function extrairIdYoutube($url) {
     preg_match('/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|embed)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/ ]{11})/', $url, $matches);
     return $matches[1] ?? null;
 }
+

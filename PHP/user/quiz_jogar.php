@@ -11,7 +11,7 @@ if (!isset($_GET['id'])) {
     header('Location: quizzes.php');
     exit;
 }
-$quizId = (int)$_GET['id'];
+$quizId = (int) $_GET['id'];
 
 // Busca informações do quiz
 $stmt = $pdo->prepare("SELECT q.*, a.nome AS anime_nome 
@@ -49,52 +49,59 @@ if (!$perguntas) {
 
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
-<meta charset="UTF-8">
-<title><?= htmlspecialchars($quiz['titulo']) ?> - Quiz</title>
-<link rel="stylesheet" href="../../CSS/style.css">
-<link rel="icon" href="../../img/slogan3.png" type="image/png">
+    <meta charset="UTF-8">
+    <title><?= htmlspecialchars($quiz['titulo']) ?> - Quiz</title>
+    <link rel="stylesheet" href="../../CSS/style.css">
+    <link rel="icon" href="../../img/slogan3.png" type="image/png">
 </head>
+
 <body>
-<?php
-$current_page = 'quizzes';
-include __DIR__ . '/navbar.php';
-?>
+    <?php
+    $current_page = 'quizzes';
+    include __DIR__ . '/navbar.php';
+    ?>
 
-<main class="page-content">
-<div class="quiz-wrapper">
-    <div class="quiz-header">
-        <h1><?= htmlspecialchars($quiz['titulo']) ?></h1>
-        <p class="sub"><?= htmlspecialchars($quiz['anime_nome']) ?> • Nível mínimo <?= $quiz['nivel_minimo'] ?></p>
-        <div class="progress-bar">
-            <div id="progress-fill"></div>
+    <main class="page-content">
+        <div class="quiz-wrapper">
+            <div class="quiz-header">
+                <?php if (!empty($animeInfo['capa'])): ?>
+                    <img src="../../img/<?= htmlspecialchars($animeInfo['capa']) ?>" alt="Capa do Anime">
+                <?php endif; ?>
+                <h1><?= htmlspecialchars($quiz['titulo']) ?></h1>
+                <p class="sub"><?= htmlspecialchars($quiz['anime_nome']) ?> • Nível mínimo <?= $quiz['nivel_minimo'] ?>
+                </p>
+                <div class="progress-bar">
+                    <div id="progress-fill"></div>
+                </div>
+            </div>
+
+            <div class="quiz-conteudo">
+                <div id="quiz-box"></div>
+            </div>
+
+            <div class="quiz-footer">
+                <button id="btn-proximo" disabled>Próxima</button>
+            </div>
         </div>
-    </div>
+    </main>
 
-    <div class="quiz-conteudo">
-        <div id="quiz-box"></div>
-    </div>
+    <script>
+        const perguntas = <?= json_encode($perguntas) ?>;
+        const quizId = <?= $quizId ?>; // Declarado para usar no link
 
-    <div class="quiz-footer">
-        <button id="btn-proximo" disabled>Próxima</button>
-    </div>
-</div>
-</main>
+        let indice = 0;
+        let pontuacao = 0;
 
-<script>
-const perguntas = <?= json_encode($perguntas) ?>;
-const quizId = <?= $quizId ?>; // Declarado para usar no link
+        const box = document.getElementById("quiz-box");
+        const btnProximo = document.getElementById("btn-proximo");
+        const progressFill = document.getElementById("progress-fill");
 
-let indice = 0;
-let pontuacao = 0;
+    </script>
+    <script src="../../JS/quizzes.js"></script>
 
-const box = document.getElementById("quiz-box");
-const btnProximo = document.getElementById("btn-proximo");
-const progressFill = document.getElementById("progress-fill");
-
-</script>
-<script src="../../JS/quizzes.js"></script>
-
-<?php include __DIR__ . '/rodape.php'; ?>
+    <?php include __DIR__ . '/rodape.php'; ?>
 </body>
+
 </html>
