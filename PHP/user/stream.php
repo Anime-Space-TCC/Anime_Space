@@ -22,9 +22,13 @@ $animes = getAnimesFiltrados($filtroGenero, $filtroAno, $filtroLinguagem, $busca
 
 // Paginação
 $porPagina = 18;
-$pagina = isset($_GET['pagina']) ? (int) $_GET['pagina'] : 1;
+$pagina = isset($_GET['pagina']) ? (int)$_GET['pagina'] : 1;
 if ($pagina < 1) $pagina = 1;
+
 $offset = ($pagina - 1) * $porPagina;
+
+$animes = getAnimesPaginados($porPagina, $offset);
+
 $totalAnimes = $pdo->query("SELECT COUNT(*) FROM animes")->fetchColumn();
 $totalPaginas = ceil($totalAnimes / $porPagina);
 ?>

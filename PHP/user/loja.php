@@ -2,6 +2,7 @@
 require_once __DIR__ . '/../shared/conexao.php';
 require_once __DIR__ . '/../shared/auth.php';
 require __DIR__ . '/../shared/acessos.php';
+require __DIR__ . '/../shared/loja.php';
 verificarLogin();
 
 // Início da sessão (apenas se não existir)
@@ -23,10 +24,14 @@ $totalCarrinho = array_sum($_SESSION['carrinho']);
 
 // Paginação
 $porPagina = 14;
-$pagina = isset($_GET['pagina']) ? (int) $_GET['pagina'] : 1;
+$pagina = isset($_GET['pagina']) ? (int)$_GET['pagina'] : 1;
 if ($pagina < 1) $pagina = 1;
+
 $offset = ($pagina - 1) * $porPagina;
-$totalProdutos = $pdo->query("SELECT COUNT(*) FROM produtos WHERE ativo = 1")->fetchColumn();
+
+$produtos = getProdutosPaginados($porPagina, $offset);
+
+$totalProdutos = $pdo->query("SELECT COUNT(*) FROM produtos")->fetchColumn();
 $totalPaginas = ceil($totalProdutos / $porPagina);
 ?>
 

@@ -87,4 +87,3 @@ function buscarAnimePorNome(PDO $pdo, string $nome): array {
     $stmt->execute(['nome' => "%$nome%"]);
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
-

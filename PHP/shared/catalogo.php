@@ -84,3 +84,19 @@ function getAnimesFiltrados($filtroGenero = '', $filtroAno = '', $filtroLinguage
 
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
+
+// Retorna os últimos episódios lançados com paginação
+function getAnimesPaginados(int $porPagina = 18, int $offset = 0): array {
+    global $pdo;
+
+    $stmt = $pdo->prepare("
+        SELECT * FROM animes
+        ORDER BY nome ASC
+        LIMIT :offset, :porPagina
+    ");
+    $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
+    $stmt->bindValue(':porPagina', $porPagina, PDO::PARAM_INT);
+    $stmt->execute();
+
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}

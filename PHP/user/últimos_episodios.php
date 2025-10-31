@@ -6,15 +6,16 @@ require __DIR__ . '/../shared/acessos.php';
 // Bloqueia acesso se não estiver logado
 verificarLogin();
 
-// Busca os 20 episódios mais recentes
-$episodios = getUltimosEpisodios(20);
-
-// Paginação
 $porPagina = 10;
 $pagina = isset($_GET['pagina']) ? (int) $_GET['pagina'] : 1;
 if ($pagina < 1) $pagina = 1;
+
 $offset = ($pagina - 1) * $porPagina;
-$totalEpisodios = $pdo->query("SELECT COUNT(*) FROM episodios")->fetchColumn();
+
+$episodios = getUltimosEpisodiosPaginados($porPagina, $offset);
+
+// Como queremos apenas os 20 últimos no total:
+$totalEpisodios = 20;
 $totalPaginas = ceil($totalEpisodios / $porPagina);
 ?>
 

@@ -49,8 +49,8 @@ function filtrarPorLinguagem(array $episodios, string $linguagem): array {
     return array_filter($episodios, fn($ep) => strtolower($ep['linguagem']) === strtolower($linguagem));
 }
 
-// Retorna os últimos episódios lançados
-function getUltimosEpisodios(int $limite = 20): array {
+// Retorna os últimos episódios lançados com paginação
+function getUltimosEpisodiosPaginados(int $porPagina = 10, int $offset = 0): array {
     global $pdo;
 
     $sql = "
@@ -58,11 +58,12 @@ function getUltimosEpisodios(int $limite = 20): array {
         FROM episodios e
         JOIN animes a ON e.anime_id = a.id
         ORDER BY e.data_lancamento DESC
-        LIMIT :limite
+        LIMIT :offset, :porPagina
     ";
 
     $stmt = $pdo->prepare($sql);
-    $stmt->bindValue(':limite', $limite, PDO::PARAM_INT);
+    $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
+    $stmt->bindValue(':porPagina', $porPagina, PDO::PARAM_INT);
     $stmt->execute();
 
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
