@@ -2333,35 +2333,44 @@ body {
 }
 
 /* =========================
-          QUIZ 
+   QUIZZES & LAYOUT
 ========================= */
 
-.quiz-container {
-  background: rgba(0, 0, 0, 0.7);
-  padding: 40px 30px;
-  border-radius: 20px;
-  width: 100%;
-  max-width: 900px;
-  margin: 60px auto 0 auto;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.8);
-}
-
-.quiz-container {
-  max-width: 900px;
+.quizzes-layout {
+  display: flex;
+  gap: 20px;
+  width: 95%;
   margin: 50px auto;
 }
 
+.col-esquerda {
+  width: 65%;
+}
+
+.col-direita {
+  width: 35%;
+  background: rgba(0,0,0,0.35);
+  padding: 15px;
+  border-radius: 12px;
+}
+
+/* =========================
+   QUIZ CONTAINER
+========================= */
+
+.quiz-container,
 .quiz-bloco {
   background: #1a1a1d;
-  padding: 20px;
   border-radius: 15px;
+  padding: 20px;
   margin-bottom: 30px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.8);
 }
 
 .quiz-header {
   display: flex;
   align-items: center;
-  gap: 150px;
+  gap: 20px;
 }
 
 .quiz-header img {
@@ -2375,35 +2384,106 @@ body {
   margin-top: 15px;
 }
 
+/* =========================
+   QUIZ CARDS
+========================= */
+
 .quiz-card {
-  width: 80px;
-  height: 80px;
-  border-radius: 10px;
+  padding: 12px;
+  width: 140px;
   text-align: center;
+  border-radius: 10px;
+  margin: 6px;
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
 
 .quiz-card.liberado {
-  background: #2e8b57;
+  background: #2ecc71;
   cursor: pointer;
 }
 
 .quiz-card.bloqueado {
-  background: #444;
-  opacity: 0.5;
+  background: #555;
+  opacity: 0.6;
 }
 
-.quiz-card .numero {
-  font-size: 22px;
+.quiz-card img {
+  width: 100%;
+  border-radius: 8px;
+}
+
+.numero {
   font-weight: bold;
+  background: #00000055;
+  padding: 4px 8px;
+  border-radius: 6px;
+  position: absolute;
+  top: 5px;
+  right: 5px;
 }
 
 .quiz-card a {
   text-decoration: none;
   color: #fff;
 }
+
+/* =========================
+   RANKING
+========================= */
+
+.ranking-lista {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.ranking-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #1a1a1a;
+  margin-bottom: 8px;
+  padding: 8px;
+  border-radius: 8px;
+  transition: transform .2s;
+}
+
+.ranking-item:hover {
+  transform: scale(1.03);
+}
+
+.ranking-item .avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.posicao {
+  font-weight: bold;
+  width: 35px;
+}
+
+/* Destaque TOP 3 */
+.pos1 {
+  background: linear-gradient(90deg, #ffd700, #ff8c00);
+  box-shadow: 0 0 12px #ffd700;
+}
+
+.pos2 {
+  background: linear-gradient(90deg, #c0c0c0, #a9a9a9);
+}
+
+.pos3 {
+  background: linear-gradient(90deg, #cd7f32, #8b4513);
+}
+
+/* =========================
+   QUIZ INTERATIVO (PERGUNTAS)
+========================= */
 
 .quiz-wrapper {
   max-width: 800px;
@@ -2420,6 +2500,7 @@ body {
   border-radius: 5px;
   margin: 15px 0;
 }
+
 #progress-fill {
   width: 0%;
   height: 100%;
@@ -2455,6 +2536,7 @@ body {
 .quiz-footer {
   margin-top: 20px;
 }
+
 #btn-proximo {
   background: #2980b9;
   border: none;
@@ -2464,6 +2546,7 @@ body {
   cursor: pointer;
   transition: 0.2s;
 }
+
 #btn-proximo:disabled {
   background: #555;
   cursor: not-allowed;
@@ -2472,6 +2555,7 @@ body {
 .resultado {
   padding: 30px;
 }
+
 .btn-final {
   background: #27ae60;
   color: #fff;
@@ -2481,6 +2565,7 @@ body {
   display: inline-block;
   margin-top: 10px;
 }
+
 
 /* =========================
           NOTÍCIAS 

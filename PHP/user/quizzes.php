@@ -12,26 +12,55 @@ $stmt = $pdo->prepare("SELECT nivel FROM users WHERE id = ?");
 $stmt->execute([$userId]);
 $nivelUsuario = (int) $stmt->fetchColumn();
 
-// Busca os animes favoritados do usuário
-$sqlFavoritos = "SELECT a.id, a.nome, a.capa 
-                 FROM favoritos f 
-                 JOIN animes a ON a.id = f.anime_id
-                 WHERE f.user_id = ?";
-$stmt = $pdo->prepare($sqlFavoritos);
+// Busca animes favoritados + quizzes de uma vez (sem N+1 queries)
+$sql = "
+SELECT 
+    a.id AS anime_id, a.nome AS anime_nome, a.capa AS anime_capa,
+    q.id AS quiz_id, q.titulo, q.nivel_minimo, q.capa AS quiz_capa, q.total_perguntas
+FROM favoritos f
+JOIN animes a ON a.id = f.anime_id
+LEFT JOIN quizzes q ON q.anime_id = a.id AND q.ativo = 1
+WHERE f.user_id = ?
+ORDER BY a.nome ASC, q.nivel_minimo ASC
+";
+$stmt = $pdo->prepare($sql);
 $stmt->execute([$userId]);
-$favoritos = $stmt->fetchAll(PDO::FETCH_ASSOC);
+$linhas = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-// Monta lista de quizzes
-$animesComQuizzes = [];
-foreach ($favoritos as $anime) {
-  $sql = "SELECT * FROM quizzes WHERE anime_id = ? AND ativo = 1 ORDER BY nivel_minimo ASC";
-  $stmt = $pdo->prepare($sql);
-  $stmt->execute([$anime['id']]);
-  $quizzes = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-  $anime['quizzes'] = $quizzes;
-  $animesComQuizzes[] = $anime;
+// Reorganiza por anime
+$animes = [];
+foreach ($linhas as $linha) {
+    $id = $linha['anime_id'];
+    if (!isset($animes[$id])) {
+        $animes[$id] = [
+            'nome' => $linha['anime_nome'],
+            'capa' => $linha['anime_capa'],
+            'quizzes' => []
+        ];
+    }
+    if ($linha['quiz_id']) { // Só adiciona se existir quiz
+        $animes[$id]['quizzes'][] = [
+            'id' => $linha['quiz_id'],
+            'titulo' => $linha['titulo'],
+            'nivel_minimo' => $linha['nivel_minimo'],
+            'capa' => $linha['quiz_capa'],
+            'qtd' => $linha['total_perguntas']
+        ];
+    }
 }
+
+// Ranking dos melhores jogadores (top 20)
+$sqlRanking = "
+  SELECT u.id, u.username, u.foto_perfil, SUM(qr.pontuacao) AS total_pontos
+  FROM quiz_resultados qr
+  JOIN users u ON qr.user_id = u.id
+  GROUP BY u.id
+  ORDER BY total_pontos DESC
+  LIMIT 20
+";
+$stmt = $pdo->prepare($sqlRanking);
+$stmt->execute();
+$ranking = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <!DOCTYPE html>
@@ -49,43 +78,65 @@ foreach ($favoritos as $anime) {
   $current_page = 'quizzes';
   include __DIR__ . '/navbar.php';
   ?>
+
   <main class="page-content">
-    <div class="quiz-container">
-      <h1>Missões de Conhecimento 🎯</h1>
+    <div class="quizzes-layout">
 
-      <?php if (empty($animesComQuizzes)): ?>
-        <p>Você precisa favoritar algum anime para desbloquear quizzes!</p>
-      <?php else: ?>
-        <?php foreach ($animesComQuizzes as $anime): ?>
-          <div class="quiz-bloco">
-            <div class="quiz-header">
-              <img src="../../img/<?= htmlspecialchars($anime['capa']) ?>" alt="<?= htmlspecialchars($anime['nome']) ?>">
-              <h2><?= htmlspecialchars($anime['nome']) ?></h2>
-            </div>
+      <!-- COLUNA ESQUERDA - QUIZZES -->
+      <div class="col-esquerda">
+        <h1>Missões de Conhecimento 🎯</h1>
 
-            <div class="quiz-linha">
-              <?php if ($anime['quizzes']): ?>
-                <?php foreach ($anime['quizzes'] as $quiz): ?>
-                  <?php $liberado = $nivelUsuario >= $quiz['nivel_minimo']; ?>
-                  <div class="quiz-card <?= $liberado ? 'liberado' : 'bloqueado' ?>">
-                    <?php if ($liberado): ?>
-                      <a href="quiz_jogar.php?id=<?= $quiz['id'] ?>">
-                        <div class="numero"><?= $quiz['nivel_minimo'] ?></div>
-                        <p><?= htmlspecialchars($quiz['titulo']) ?></p>
-                      </a>
-                    <?php else: ?>
-                      <div class="cadeado">🔒</div>
-                      <p>Nível <?= $quiz['nivel_minimo'] ?></p>
-                    <?php endif; ?>
-                  </div>
-                <?php endforeach; ?>
-              <?php else: ?>
-                <p class="sem-quiz">Nenhum quiz criado para este anime.</p>
-              <?php endif; ?>
+        <?php if (empty($animes)): ?>
+          <p>Você precisa favoritar um anime para desbloquear quizzes!</p>
+        <?php else: ?>
+          <?php foreach ($animes as $anime): ?>
+            <div class="quiz-bloco">
+              <div class="quiz-header">
+                <h2><?= htmlspecialchars($anime['nome']) ?></h2>
+              </div>
+
+              <div class="quiz-linha">
+                <?php if (!empty($anime['quizzes'])): ?>
+                  <?php foreach ($anime['quizzes'] as $quiz): ?>
+                    <?php $liberado = $nivelUsuario >= $quiz['nivel_minimo']; ?>
+                    <div class="quiz-card <?= $liberado ? 'liberado' : 'bloqueado' ?>">
+                      <?php if ($liberado): ?>
+                        <a href="quiz_jogar.php?id=<?= $quiz['id'] ?>">
+                          <img src="../../img/<?= htmlspecialchars($quiz['capa'] ?? 'padrao_quiz.jpg') ?>">
+                          <div class="numero">Nv <?= $quiz['nivel_minimo'] ?></div>
+                          <p><?= htmlspecialchars($quiz['titulo']) ?></p>
+                        </a>
+                      <?php else: ?>
+                        <img src="../../img/<?= htmlspecialchars($quiz['capa'] ?? 'padrao_quiz.jpg') ?>">
+                        <div class="numero">🔒</div>
+                        <p>Requer nível <?= $quiz['nivel_minimo'] ?></p>
+                      <?php endif; ?>
+                    </div>
+                  <?php endforeach; ?>
+                <?php else: ?>
+                  <p class="sem-quiz">Nenhum quiz criado para este anime.</p>
+                <?php endif; ?>
+              </div>
             </div>
-          </div>
-        <?php endforeach; ?>
-      <?php endif; ?>
+          <?php endforeach; ?>
+        <?php endif; ?>
+      </div>
+
+      <!-- COLUNA DIREITA - RANKING -->
+      <div class="col-direita">
+        <h2>Ranking dos Sábios 🏆</h2>
+        <ul class="ranking-lista">
+          <?php foreach ($ranking as $i => $player): ?>
+            <li class="ranking-item pos<?= $i+1 ?>">
+              <span class="posicao"><?= $i+1 ?>°</span>
+              <img class="avatar" src="../uploads/<?= htmlspecialchars($player['foto_perfil'] ?? 'default.jpg') ?>">
+              <span class="nome"><?= htmlspecialchars($player['username']) ?></span>
+              <span class="pontos"><?= $player['total_pontos'] ?> pts</span>
+            </li>
+          <?php endforeach; ?>
+        </ul>
+      </div>
+
     </div>
   </main>
 
@@ -93,3 +144,4 @@ foreach ($favoritos as $anime) {
 </body>
 
 </html>
+

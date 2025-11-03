@@ -3,7 +3,7 @@
  */
 function carregarPergunta() {
     const p = perguntas[indice];
-    
+
     // Atualiza barra de progresso
     progressFill.style.width = ((indice) / perguntas.length * 100) + "%";
     btnProximo.disabled = true;
@@ -14,7 +14,7 @@ function carregarPergunta() {
             <h2>${p.pergunta}</h2>
             <div class="alternativas">
                 ${["a", "b", "c", "d"].map(letra => `
-                    <button class="opcao" data-resp="${p["alternativa_" + letra]}">
+                    <button type="button" class="opcao" data-resp="${p["alternativa_" + letra]}">
                         ${p["alternativa_" + letra]}
                     </button>
                 `).join("")}
@@ -64,30 +64,38 @@ btnProximo.addEventListener("click", () => {
 });
 
 /**
- * Mostra o resultado final e permite salvar progresso
+ * Mostra o resultado final e permite finalizar
  */
 function mostrarResultado() {
     progressFill.style.width = "100%";
 
     const total = perguntas.length;
     const acertos = pontuacao;
-    const xpGanho = Math.round((acertos / total) * 50);
 
     box.innerHTML = `
-        <form action="../shared/quiz_resultado.php" method="post">
-            <input type="hidden" name="quiz_id" value="${quizId}">
-            <input type="hidden" name="xp" value="${xpGanho}">
-            <div class="resultado">
-                <h2>Resultado Final</h2>
-                <p>Você acertou <strong>${acertos}</strong> de <strong>${total}</strong> perguntas!</p>
-                <p>Ganhou <strong>${xpGanho} XP</strong> 🎖️</p>
-                <button type="submit" class="btn-final">Salvar Progresso</button>
-            </div>
-        </form>
+        <div class="resultado">
+            <h2>Resultado Final</h2>
+            <p>Você acertou <strong>${acertos}</strong> de <strong>${total}</strong> perguntas!</p>
+            <button id="btn-finalizar" class="btn-final">Finalizar</button>
+        </div>
     `;
 
     btnProximo.style.display = "none";
+
+    document.getElementById("btn-finalizar").addEventListener("click", () => {
+        // envia apenas quiz_id e acertos, PHP calcula XP e se é primeira tentativa
+        fetch('../shared/quiz_resultado.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: `quiz_id=${quizId}&acertos=${acertos}`
+        })
+        .finally(() => {
+            window.location.href = 'quizzes.php';
+        });
+    });
 }
+
+
 
 // Inicializa o quiz
 carregarPergunta();
