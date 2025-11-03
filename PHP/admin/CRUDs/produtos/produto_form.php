@@ -43,9 +43,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $preco = $_POST['preco'] ?? 0;
     $estoque = $_POST['estoque'] ?? 0;
     $quantidade_vendida = $_POST['quantidade_vendida'] ?? 0;
-    $imagem = trim($_POST['imagem'] ?? '');
     $categoria = trim($_POST['categoria'] ?? '');
     $ativo = isset($_POST['ativo']) ? 1 : 0;
+
+    // Upload da imagem (se enviada)
+    $imagem = null;
+    if (!empty($_FILES['imagem']['name'])) {
+        $imagem = time() . "_" . basename($_FILES['imagem']['name']);
+        $uploadPath = "../../../../img/" . $imagem;
+
+        if (!move_uploaded_file($_FILES['imagem']['tmp_name'], $uploadPath)) {
+            die("Erro ao fazer upload da imagem.");
+        }
+    }
 
     if ($id) {
         // Atualiza o produto
@@ -83,7 +93,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
 
     <main class="admin-form">
-        <form method="post">
+        <form method="POST" enctype="multipart/form-data">
             <label>SKU (Código do Produto):</label>
             <input type="text" name="sku" maxlength="50" value="<?= htmlspecialchars($produto['sku']) ?>" required><br><br>
 
@@ -107,8 +117,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             <label>Imagem:</label><br>
             <input type="file" name="imagem"><br>
-            <?php if (!empty($produto['imagem'])): ?>
-                 <img src="../../../../img/<?= htmlspecialchars($produto['imagem']) ?>" alt="Imagem do Produto" width="150"><br>
+            <?php if (!empty($episodio['imagem'])): ?>
+                <img src="../../../../img/<?= htmlspecialchars($episodio['imagem']) ?>" 
+                    alt="Imagem do Produto" width="150" 
+                    style="margin-top:10px;"><br>
             <?php endif; ?>
             <br>
             

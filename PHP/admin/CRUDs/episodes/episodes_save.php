@@ -23,46 +23,52 @@ $titulo         = trim($_POST['titulo'] ?? '');
 $descricao      = trim($_POST['descricao'] ?? '');
 $duracao        = trim($_POST['duracao'] ?? '');
 $data_lanc      = trim($_POST['data_lancamento'] ?? '');
-$miniatura      = trim($_POST['miniatura'] ?? '');
 $video_url      = trim($_POST['video_url'] ?? '');
 $linguagem      = trim($_POST['linguagem'] ?? '');
 
+// Upload da miniatura (se enviada)
+$miniatura = null;
+if (!empty($_FILES['miniatura']['name'])) {
+    $miniatura = time() . "_" . basename($_FILES['miniatura']['name']);
+    $uploadPath = "../../../../img/" . $miniatura;
+    if (!move_uploaded_file($_FILES['miniatura']['tmp_name'], $uploadPath)) {
+        die("Erro ao fazer upload da miniatura.");
+    }
+}
+
 // Valida obrigatórios
-// validaCamposObrigatorios
 if ($anime_id <= 0 || $temporada <= 0 || $numero <= 0 || $titulo === '' || $video_url === '') {
     die("Campos obrigatórios ausentes. <a href='../../../PHP/admin/CRUDs/episodes/admin_episodes.php'>Voltar</a>");
 }
 
 // Normaliza opcionais para NULL quando vazios
-// normalizaCamposOpcionais
-$descricao     = ($descricao === '') ? null : $descricao;
-$duracao       = ($duracao === '' ? null : (int)$duracao);
-$data_lanc     = ($data_lanc === '' ? null : $data_lanc);
-$miniatura     = ($miniatura === '' ? null : $miniatura);
-$linguagem     = ($linguagem === '' ? null : $linguagem);
+$descricao = $descricao ?: null;
+$duracao   = $duracao ? (int)$duracao : null;
+$data_lanc = $data_lanc ?: null;
+$linguagem = $linguagem ?: null;
 
 try {
-    // salvaEpisodio
     if ($id) {
-        // UPDATE
+        // UPDATE — mantém miniatura antiga se não houver nova
         $sql = "UPDATE episodios
                    SET anime_id = ?, temporada = ?, numero = ?, titulo = ?, descricao = ?, 
-                       duracao = ?, data_lancamento = ?, miniatura = ?, video_url = ?, linguagem = ?
+                       duracao = ?, data_lancamento = ?, miniatura = IF(?, ?, miniatura), 
+                       video_url = ?, linguagem = ?
                  WHERE id = ?";
         $stmt = $pdo->prepare($sql);
         $stmt->execute([
             $anime_id, $temporada, $numero, $titulo, $descricao,
-            $duracao, $data_lanc, $miniatura, $video_url, $linguagem, $id
+            $duracao, $data_lanc, $miniatura, $miniatura, $video_url, $linguagem, $id
         ]);
     } else {
         // INSERT
-        $sql = "INSERT INTO episodios
+        $sql = "INSERT INTO episodios 
                     (anime_id, temporada, numero, titulo, descricao, duracao, data_lancamento, miniatura, video_url, linguagem)
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         $stmt = $pdo->prepare($sql);
         $stmt->execute([
             $anime_id, $temporada, $numero, $titulo, $descricao,
-            $duracao, $data_lanc, $miniatura, $video_url, $linguagem
+            $duracao, $data_lanc, $miniatura ?? 'default.jpg', $video_url, $linguagem
         ]);
     }
 
@@ -70,7 +76,6 @@ try {
     exit();
 
 } catch (PDOException $e) {
-    // trataErroBanco
     if ($e->getCode() === '23000') {
         echo "Já existe um episódio com esse número para este anime e temporada. ";
         echo "<a href='../../../PHP/admin/CRUDs/episodes/admin_episodes.php'>Voltar</a>";

@@ -47,19 +47,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nome = $_POST['nome'] ?? '';
     $generos = $_POST['generos'] ?? []; // array de IDs
     $nota = $_POST['nota'] ?? 0;
-    $capa = $_POST['capa'] ?? '';
     $sinopse = $_POST['sinopse'] ?? '';
     $ano = $_POST['ano'] ?? '';
 
+    // Upload da capa (se enviada)
+    $capa = null;
+    if (!empty($_FILES['capa']['name'])) {
+        $capa = time() . "_" . basename($_FILES['capa']['name']);
+        move_uploaded_file($_FILES['capa']['tmp_name'], "../../../../img/" . $capa);
+    }
+
     if ($id) {
-        // Atualiza o anime
-        $sql = "UPDATE animes SET nome=?, nota=?, capa=?, sinopse=? , ano=? WHERE id=?";
-        $pdo->prepare($sql)->execute([$nome, $nota, $capa, $sinopse, $ano, $id]);
+        // Atualiza o anime (mantém a capa antiga se não for enviada nova)
+        $sql = "UPDATE animes SET nome=?, nota=?, capa=IF(?, ?, capa), sinopse=?, ano=? WHERE id=?";
+        $pdo->prepare($sql)->execute([$nome, $nota, $capa, $capa, $sinopse, $ano, $id]);
     } else {
         // Insere novo anime
-        $sql = "INSERT INTO animes (nome, nota, capa,sinopse, ano) VALUES (?, ?, ?, ?, ?)";
-        $pdo->prepare($sql)->execute([$nome, $nota, $capa, $sinopse, $ano]);
-        $id = $pdo->lastInsertId(); // pega o ID do anime recém-criado
+        $sql = "INSERT INTO animes (nome, nota, capa, sinopse, ano) VALUES (?, ?, ?, ?, ?)";
+        $pdo->prepare($sql)->execute([$nome, $nota, $capa ?? 'default.jpg', $sinopse, $ano]);
+        $id = $pdo->lastInsertId();
     }
 
     // Atualiza os gêneros
@@ -94,7 +100,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
 
     <main class="admin-form">
-        <form method="post">
+        <form method="POST" enctype="multipart/form-data">
             <label>Nome:</label><br>
             <input type="text" name="nome" value="<?= htmlspecialchars($anime['nome']) ?>" required><br><br>
 
@@ -102,9 +108,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div class="generos-container">
               <?php foreach($todosGeneros as $g): ?>
                 <label class="genero-chip">
-                <input type="checkbox" name="generos[]" value="<?= $g['id'] ?>"
-                <?= in_array($g['id'], $generosSelecionados) ? 'checked' : '' ?>>
-                <span><?= htmlspecialchars($g['nome']) ?></span>
+                    <input type="checkbox" name="generos[]" value="<?= $g['id'] ?>"
+                        <?= in_array($g['id'], $generosSelecionados) ? 'checked' : '' ?>>
+                    <span><?= htmlspecialchars($g['nome']) ?></span>
                 </label>
               <?php endforeach; ?>
             </div><br>
@@ -118,12 +124,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <label>Nota:</label><br>
             <input type="number" name="nota" step="0.1" min="0" max="10" value="<?= htmlspecialchars($anime['nota']) ?>" required><br><br>
 
-            <label>Imagem:</label><br>
+            <label>Imagem (capa):</label><br>
             <input type="file" name="capa"><br>
+
             <?php if (!empty($anime['capa'])): ?>
-                <img src="../../../../img/<?= htmlspecialchars($anime['capa']) ?>" alt="Capa do Anime" width="150">
+                <img src="../../../../img/<?= htmlspecialchars($anime['capa']) ?>" alt="Capa do anime" width="150" style="margin-top:10px;">
             <?php endif; ?>
-            <br>
+            <br><br>
 
             <input type="submit" value="Salvar" class="admin-btn"> 
         </form>

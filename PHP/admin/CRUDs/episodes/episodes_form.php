@@ -60,20 +60,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $descricao = $_POST['descricao'] ?? '';
     $duracao = $_POST['duracao'] ?? null;
     $data_lancamento = $_POST['data_lancamento'] ?? null;
-    $miniatura = $_POST['miniatura'] ?? '';
     $video_url = $_POST['video_url'] ?? '';
     $linguagem = $_POST['linguagem'] ?? '';
+
+    // Upload da miniatura (se enviada)
+    $miniatura = null;
+    if (!empty($_FILES['miniatura']['name'])) {
+        $miniatura = time() . "_" . basename($_FILES['miniatura']['name']);
+        $uploadPath = "../../../../img/" . $miniatura;
+
+        if (!move_uploaded_file($_FILES['miniatura']['tmp_name'], $uploadPath)) {
+            die("Erro ao fazer upload da miniatura.");
+        }
+    }
 
     if ($id) {
         // ==========================
         // Atualiza episódio existente
         // ==========================
         $sql = "UPDATE episodios 
-                SET anime_id=?, temporada=?, numero=?, titulo=?, descricao=?, duracao=?, data_lancamento=?, miniatura=?, video_url=?, linguagem=? 
+                SET anime_id=?, temporada=?, numero=?, titulo=?, descricao=?, duracao=?, 
+                    data_lancamento=?, miniatura=IF(?, ?, miniatura), video_url=?, linguagem=? 
                 WHERE id=?";
         $pdo->prepare($sql)->execute([
-            $anime_id, $temporada, $numero, $titulo, $descricao, 
-            $duracao, $data_lancamento, $miniatura, $video_url, $linguagem, $id
+            $anime_id, $temporada, $numero, $titulo, $descricao,
+            $duracao, $data_lancamento, $miniatura, $miniatura, $video_url, $linguagem, $id
         ]);
     } else {
         // ==========================
@@ -101,7 +112,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         $pdo->prepare($sql)->execute([
             $anime_id, $temporada, $numero, $titulo, $descricao,
-            $duracao, $data_lancamento, $miniatura, $video_url, $linguagem
+            $duracao, $data_lancamento, $miniatura ?? 'default.jpg', $video_url, $linguagem
         ]);
     }
 
@@ -128,52 +139,54 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
 
     <main class="admin-form">
-        <form method="post">
+        <form method="POST" enctype="multipart/form-data">
           <?php if (!empty($id)): ?>
             <input type="hidden" name="id" value="<?= (int)$id ?>">
           <?php endif; ?>
-            <label>Anime:</label><br>
-            <select name="anime_id" required>
-                <option value="">-- Selecione --</option>
-                <?php foreach($animes as $a): ?>
-                    <option value="<?= $a['id'] ?>" <?= $episodio['anime_id'] == $a['id'] ? 'selected' : '' ?>>
-                        <?= htmlspecialchars($a['nome']) ?>
-                    </option>
-                <?php endforeach; ?>
-            </select><br><br>
+          
+          <label>Anime:</label><br>
+          <select name="anime_id" required>
+              <option value="">-- Selecione --</option>
+              <?php foreach($animes as $a): ?>
+                  <option value="<?= $a['id'] ?>" <?= $episodio['anime_id'] == $a['id'] ? 'selected' : '' ?>>
+                      <?= htmlspecialchars($a['nome']) ?>
+                  </option>
+              <?php endforeach; ?>
+          </select><br><br>
 
-            <label>Temporada:</label><br>
-            <input type="number" name="temporada" value="<?= htmlspecialchars($episodio['temporada']) ?>" required><br><br>
+          <label>Temporada:</label><br>
+          <input type="number" name="temporada" value="<?= htmlspecialchars($episodio['temporada']) ?>" required><br><br>
 
-            <label>Número do Episódio:</label><br>
-            <input type="number" name="numero" value="<?= htmlspecialchars($episodio['numero']) ?>" required><br><br>
+          <label>Número do Episódio:</label><br>
+          <input type="number" name="numero" value="<?= htmlspecialchars($episodio['numero']) ?>" required><br><br>
 
-            <label>Título:</label><br>
-            <input type="text" name="titulo" value="<?= htmlspecialchars($episodio['titulo']) ?>" required><br><br>
+          <label>Título:</label><br>
+          <input type="text" name="titulo" value="<?= htmlspecialchars($episodio['titulo']) ?>" required><br><br>
 
-            <label>Descrição:</label><br>
-            <textarea name="descricao" rows="4"><?= htmlspecialchars($episodio['descricao']) ?></textarea><br><br>
+          <label>Descrição:</label><br>
+          <textarea name="descricao" rows="4"><?= htmlspecialchars($episodio['descricao']) ?></textarea><br><br>
 
-            <label>Duração (minutos):</label><br>
-            <input type="number" name="duracao" value="<?= htmlspecialchars($episodio['duracao']) ?>"><br><br>
+          <label>Duração (minutos):</label><br>
+          <input type="number" name="duracao" value="<?= htmlspecialchars($episodio['duracao']) ?>"><br><br>
 
-            <label>Data de Lançamento:</label><br>
-            <input type="date" name="data_lancamento" value="<?= htmlspecialchars($episodio['data_lancamento']) ?>"><br><br>
+          <label>Data de Lançamento:</label><br>
+          <input type="date" name="data_lancamento" value="<?= htmlspecialchars($episodio['data_lancamento']) ?>"><br><br>
 
-            <label>URL do Vídeo:</label><br>
-            <input type="text" name="video_url" value="<?= htmlspecialchars($episodio['video_url']) ?>" required><br><br>
+          <label>URL do Vídeo:</label><br>
+          <input type="text" name="video_url" value="<?= htmlspecialchars($episodio['video_url']) ?>" required><br><br>
 
-            <label>Linguagem:</label><br>
-            <input type="text" name="linguagem" value="<?= htmlspecialchars($episodio['linguagem']) ?>"><br><br>
+          <label>Linguagem:</label><br>
+          <input type="text" name="linguagem" value="<?= htmlspecialchars($episodio['linguagem']) ?>"><br><br>
 
-            <label>Mini-imagem:</label><br>
-            <input type="file" name="miniatura"><br>
-            <?php if (!empty($episodio['miniatura'])): ?>
-                 <img src="../../../../img/<?= htmlspecialchars($episodio['miniatura']) ?>" alt="Mini-imagem do Episódio" width="150"><br>
-            <?php endif; ?>
-            <br>
+          <label>Mini-imagem:</label><br>
+          <input type="file" name="miniatura"><br>
+          <?php if (!empty($episodio['miniatura'])): ?>
+              <img src="../../../../img/<?= htmlspecialchars($episodio['miniatura']) ?>" 
+                   alt="Miniatura do Episódio" width="150" style="margin-top:10px;"><br>
+          <?php endif; ?>
+          <br>
 
-            <input type="submit" value="Salvar" class="admin-btn"> 
+          <input type="submit" value="Salvar" class="admin-btn"> 
         </form>
     </main>
 </body>

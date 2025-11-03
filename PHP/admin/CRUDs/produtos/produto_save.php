@@ -18,8 +18,17 @@ $preco = floatval($_POST['preco'] ?? 0);
 $estoque = intval($_POST['estoque'] ?? 0);
 $quantidade_vendida = intval($_POST['quantidade_vendida'] ?? 0);
 $descricao = trim($_POST['descricao'] ?? '');
-$imagem = trim($_POST['imagem'] ?? '');
 $ativo = isset($_POST['ativo']) ? 1 : 0;
+
+// Upload da imagem (se enviada)
+$imagem = null;
+if (!empty($_FILES['imagem']['name'])) {
+    $imagem = time() . "_" . basename($_FILES['imagem']['name']);
+    $uploadPath = "../../../../img/" . $imagem;
+    if (!move_uploaded_file($_FILES['imagem']['tmp_name'], $uploadPath)) {
+        die("Erro ao fazer upload da imagem.");
+    }
+}
 
 // Validação básica
 if ($sku === '') die("O campo SKU é obrigatório.");

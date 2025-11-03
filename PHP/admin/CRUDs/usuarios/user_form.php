@@ -31,7 +31,7 @@ if ($id) {
     <div class="admin-links">
         <h1><?= $id ? "Editar Usuário" : "Novo Usuário" ?></h1>
         <nav>
-            <a href="users_list.php" class="admin-btn">Voltar</a>
+            <a href="admin_user.php" class="admin-btn">Voltar</a>
         </nav>
     </div>
 
