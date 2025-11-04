@@ -1,17 +1,18 @@
-/**
- * Carrega a pergunta atual e renderiza as alternativas
- */
+/******************************
+ *         QUIZ LOGIC
+ ******************************/
+
+/** Carrega a pergunta atual */
 function carregarPergunta() {
     const p = perguntas[indice];
 
-    // Atualiza barra de progresso
     progressFill.style.width = ((indice) / perguntas.length * 100) + "%";
     btnProximo.disabled = true;
 
-    // Renderiza pergunta e alternativas
     box.innerHTML = `
         <div class="pergunta">
             <h2>${p.pergunta}</h2>
+            <br>
             <div class="alternativas">
                 ${["a", "b", "c", "d"].map(letra => `
                     <button type="button" class="opcao" data-resp="${p["alternativa_" + letra]}">
@@ -22,19 +23,15 @@ function carregarPergunta() {
         </div>
     `;
 
-    // Adiciona evento de clique para cada alternativa
     document.querySelectorAll(".opcao").forEach(btn => {
         btn.addEventListener("click", e => selecionarResposta(e, p.resposta_correta));
     });
 }
 
-/**
- * Trata a seleção de uma alternativa
- */
+/** Lida com a escolha da resposta */
 function selecionarResposta(e, correta) {
     const escolhido = e.target.dataset.resp;
 
-    // Desabilita todas as opções
     document.querySelectorAll(".opcao").forEach(btn => btn.disabled = true);
 
     if (escolhido === correta) {
@@ -42,7 +39,6 @@ function selecionarResposta(e, correta) {
         pontuacao++;
     } else {
         e.target.classList.add("errado");
-        // Marca a resposta correta
         document.querySelectorAll(".opcao").forEach(btn => {
             if (btn.dataset.resp === correta) btn.classList.add("correto");
         });
@@ -51,21 +47,13 @@ function selecionarResposta(e, correta) {
     btnProximo.disabled = false;
 }
 
-/**
- * Passa para a próxima pergunta ou mostra o resultado final
- */
+/** Avança ou finaliza */
 btnProximo.addEventListener("click", () => {
     indice++;
-    if (indice < perguntas.length) {
-        carregarPergunta();
-    } else {
-        mostrarResultado();
-    }
+    indice < perguntas.length ? carregarPergunta() : mostrarResultado();
 });
 
-/**
- * Mostra o resultado final e permite finalizar
- */
+/** Exibe o resultado */
 function mostrarResultado() {
     progressFill.style.width = "100%";
 
@@ -75,7 +63,9 @@ function mostrarResultado() {
     box.innerHTML = `
         <div class="resultado">
             <h2>Resultado Final</h2>
+            <br>
             <p>Você acertou <strong>${acertos}</strong> de <strong>${total}</strong> perguntas!</p>
+            <br>
             <button id="btn-finalizar" class="btn-final">Finalizar</button>
         </div>
     `;
@@ -83,19 +73,16 @@ function mostrarResultado() {
     btnProximo.style.display = "none";
 
     document.getElementById("btn-finalizar").addEventListener("click", () => {
-        // envia apenas quiz_id e acertos, PHP calcula XP e se é primeira tentativa
         fetch('../shared/quiz_resultado.php', {
             method: 'POST',
             headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
             body: `quiz_id=${quizId}&acertos=${acertos}`
-        })
-        .finally(() => {
+        }).finally(() => {
             window.location.href = 'quizzes.php';
         });
     });
 }
 
-
-
 // Inicializa o quiz
 carregarPergunta();
+

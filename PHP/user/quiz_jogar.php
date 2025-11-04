@@ -45,8 +45,21 @@ if (!$perguntas) {
     echo "<p>Este quiz ainda não possui perguntas.</p>";
     exit;
 }
-?>
 
+// Ranking dos melhores jogadores
+$sqlRanking = "
+SELECT u.id, u.username, u.foto_perfil, SUM(qr.pontuacao) AS total_pontos
+FROM quiz_resultados qr
+JOIN users u ON qr.user_id = u.id
+GROUP BY u.id
+ORDER BY total_pontos DESC
+LIMIT 20
+";
+$stmt = $pdo->prepare($sqlRanking);
+$stmt->execute();
+$ranking = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+?>
 <!DOCTYPE html>
 <html lang="pt-BR">
 
@@ -64,32 +77,53 @@ if (!$perguntas) {
     ?>
 
     <main class="page-content">
-        <div class="quiz-wrapper">
-            <div class="quiz-header">
 
-                <?php if (!empty($quiz['anime_capa'])): ?>
-                    <img src="../../img/<?= htmlspecialchars($quiz['anime_capa']) ?>" alt="Capa do Anime" class="quiz-capa">
-                <?php endif; ?>
+        <div class="quizzes-layout">
 
-                <h1><?= htmlspecialchars($quiz['titulo']) ?></h1>
-                <p class="sub">
-                    <?= htmlspecialchars($quiz['anime_nome']) ?> • 
-                    <strong>Nível mínimo:</strong> <?= $quiz['nivel_minimo'] ?>
-                </p>
+            <!-- COLUNA ESQUERDA (QUIZ) -->
+            <div class="col-esquerda">
+                <div class="quiz-wrapper">
+                    <div class="quiz-header">
 
-                <div class="progress-bar">
-                    <div id="progress-fill"></div>
+                        <?php if (!empty($quiz['anime_capa'])): ?>
+                            <img src="../../img/<?= htmlspecialchars($quiz['anime_capa']) ?>" alt="Capa do Anime"
+                                class="quiz-capa">
+                        <?php endif; ?>
+
+                        <div class="progress-bar">
+                            <div id="progress-fill"></div>
+                        </div>
+                    </div>
+
+                    <div class="quiz-conteudo">
+                        <div id="quiz-box"></div>
+                    </div>
+
+                    <div class="quiz-footer">
+                        <button id="btn-proximo" disabled>Próxima</button>
+                    </div>
+
                 </div>
             </div>
 
-            <div class="quiz-conteudo">
-                <div id="quiz-box"></div>
+            <!-- COLUNA DIREITA (RANKING) -->
+            <div class="col-direita">
+                <h2>Ranking dos Sábios 🏆</h2>
+                <ul class="ranking-lista">
+                    <?php foreach ($ranking as $i => $player): ?>
+                        <li class="ranking-item pos<?= $i + 1 ?>">
+                            <span class="posicao"><?= $i + 1 ?>°</span>
+                            <img class="avatar"
+                                src="../uploads/<?= htmlspecialchars($player['foto_perfil'] ?? 'default.jpg') ?>">
+                            <span class="nome"><?= htmlspecialchars($player['username']) ?></span>
+                            <span class="pontos"><?= $player['total_pontos'] ?> pts</span>
+                        </li>
+                    <?php endforeach; ?>
+                </ul>
             </div>
 
-            <div class="quiz-footer">
-                <button id="btn-proximo" disabled>Próxima</button>
-            </div>
         </div>
+
     </main>
 
     <script>
@@ -103,6 +137,7 @@ if (!$perguntas) {
         const btnProximo = document.getElementById("btn-proximo");
         const progressFill = document.getElementById("progress-fill");
     </script>
+
     <script src="../../JS/quizzes.js"></script>
 
     <?php include __DIR__ . '/rodape.php'; ?>
