@@ -2,6 +2,7 @@
 require_once '../shared/auth.php';
 require_once '../shared/conexao.php';
 require_once '../shared/gamificacao.php';
+require_once '../shared/usuarios.php';
 require_once '../shared/quizzes.php';
 
 // Garante login
@@ -66,6 +67,11 @@ $sqlRanking = "
 $stmt = $pdo->prepare($sqlRanking);
 $stmt->execute();
 $ranking = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+$fotoPerfil = buscarFotoPerfil($pdo, $id);
+if (!$fotoPerfil) {
+    $fotoPerfil = '/PHP/uploads/default.jpg';
+}
 
 // Paginação
 $porPagina = 10;
@@ -153,13 +159,14 @@ $totalPaginas = ceil($totalQuizzes / $porPagina);
           <?php foreach ($ranking as $i => $player): ?>
             <li class="ranking-item pos<?= $i + 1 ?>">
               <span class="posicao"><?= $i + 1 ?>°</span>
-              <img class="avatar" src="../uploads/<?= htmlspecialchars($player['foto_perfil'] ?? 'default.jpg') ?>">
+              <img class="avatar" 
+                  src="../uploads/<?= htmlspecialchars($fotoPerfil['foto_perfil'] ?? 'default.jpg') ?>?v=<?= time() ?>" 
+                  alt="Avatar">
               <span class="nome"><?= htmlspecialchars($player['username']) ?></span>
               <span class="pontos"><?= $player['total_pontos'] ?> pts</span>
             </li>
           <?php endforeach; ?>
         </ul>
-
       </div>
 
     </div>

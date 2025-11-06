@@ -18,7 +18,7 @@
         <li><a href="../../PHP/user/index.php">Início</a></li>
         <li><a href="../../PHP/user/noticias.php">Notícias</a></li>
         <li><a href="../../PHP/user/loja.php">Loja</a></li>
-        <li><a href="../../PHP/user/sobre.html">Sobre o site</a></li>
+        <li><a href="../../HTML/sobre.html">Sobre o site</a></li>
       </ul>
     </div>
 
