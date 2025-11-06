@@ -48,7 +48,7 @@ $quizzesPerfeitos = $stmt->fetchColumn() ?? 0;
 $atributos = [
     'Dedicação'    => count($historicoAnimes),
     'Fama'         => count($favoritos),
-    'Conhecimento' => $quizzesPerfeitos * 5,
+    'Conhecimento' => $quizzesPerfeitos * 1,
 ];
 ?>
 

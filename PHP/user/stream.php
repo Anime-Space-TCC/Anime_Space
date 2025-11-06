@@ -20,7 +20,7 @@ $linguagens = getLinguagens();
 $busca = $_GET['busca'] ?? '';
 
 // Paginação
-$porPagina = 18;
+$porPagina = 20;
 $pagina = isset($_GET['pagina']) ? (int)$_GET['pagina'] : 1;
 if ($pagina < 1) $pagina = 1;
 

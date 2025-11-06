@@ -13,7 +13,7 @@ $stmt = $pdo->prepare("SELECT nivel FROM users WHERE id = ?");
 $stmt->execute([$userId]);
 $nivelUsuario = (int) $stmt->fetchColumn();
 
-// Busca animes favoritados + quizzes de uma vez (sem N+1 queries)
+// Busca animes favoritados + quizzes de uma vez 
 $sql = "
 SELECT 
     a.id AS anime_id, a.nome AS anime_nome, a.capa AS anime_capa,
@@ -39,7 +39,7 @@ foreach ($linhas as $linha) {
       'quizzes' => []
     ];
   }
-  if ($linha['quiz_id']) { // Só adiciona se existir quiz
+  if ($linha['quiz_id']) { 
     $animes[$id]['quizzes'][] = [
       'id' => $linha['quiz_id'],
       'titulo' => $linha['titulo'],
@@ -52,9 +52,15 @@ foreach ($linhas as $linha) {
 
 // Ranking dos melhores jogadores (top 20)
 $sqlRanking = "
-  SELECT id, username, foto_perfil, xp AS total_pontos
-  FROM users
-  ORDER BY xp DESC
+  SELECT 
+      u.id, 
+      u.username, 
+      u.foto_perfil, 
+      COALESCE(SUM(qr.pontuacao), 0) AS total_pontos
+  FROM users u
+  LEFT JOIN quiz_resultados qr ON qr.user_id = u.id
+  GROUP BY u.id
+  ORDER BY total_pontos DESC
   LIMIT 20
 ";
 $stmt = $pdo->prepare($sqlRanking);

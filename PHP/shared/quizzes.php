@@ -1,6 +1,6 @@
 <?php
 
-// Retorna os últimos episódios lançados com paginação
+// Retorna os últimos quizzs com paginação
 function getQuizzesPaginados(int $porPagina = 10, int $offset = 0): array {
     global $pdo;
 

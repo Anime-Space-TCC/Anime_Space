@@ -15,33 +15,45 @@ if (!$quizId || $pontuacao < 0 || $xpGanho < 0) {
     exit;
 }
 
-// Verifica quiz válido
+// Verifica se o quiz existe e está ativo
 $stmt = $pdo->prepare("SELECT nivel_minimo FROM quizzes WHERE id = ? AND ativo = 1");
 $stmt->execute([$quizId]);
 $quiz = $stmt->fetch(PDO::FETCH_ASSOC);
-if (!$quiz) exit;
+if (!$quiz) {
+    // Caso não exista um quiz válido
+    header("Location: ../user/quizzes.php?erro=quiz_inexistente");
+    exit;
+}
 
-// Verifica nível
+// Verifica o nível do usuário
 $stmt = $pdo->prepare("SELECT nivel FROM users WHERE id = ?");
 $stmt->execute([$userId]);
 $user = $stmt->fetch(PDO::FETCH_ASSOC);
-if ($user['nivel'] < $quiz['nivel_minimo']) exit;
+if ($user['nivel'] < $quiz['nivel_minimo']) {
+    // Se o nível do usuário for abaixo do mínimo para o quiz
+    header("Location: ../user/quizzes.php?erro=nivel_insuficiente");
+    exit;
+}
 
-// Verifica tentativa anterior
+// Verifica se já existe um registro da tentativa deste quiz
 $stmt = $pdo->prepare("SELECT id FROM quiz_resultados WHERE quiz_id = ? AND user_id = ?");
 $stmt->execute([$quizId, $userId]);
 $existente = $stmt->fetch(PDO::FETCH_ASSOC);
 
 if (!$existente) {
-    // Primeira vez → registra e dá XP
+    // Primeira tentativa → registra a pontuação e dá XP
     $stmt = $pdo->prepare("INSERT INTO quiz_resultados (quiz_id, user_id, pontuacao) VALUES (?, ?, ?)");
     $stmt->execute([$quizId, $userId, $pontuacao]);
+
+    // Adiciona XP ao usuário
     adicionarXP($pdo, $userId, $xpGanho);
 } else {
-    // Apenas atualiza pontos
+    // Atualiza a pontuação se o usuário já tentou o quiz anteriormente
     $stmt = $pdo->prepare("UPDATE quiz_resultados SET pontuacao = ?, data_tentativa = NOW() WHERE id = ?");
     $stmt->execute([$pontuacao, $existente['id']]);
 }
 
+// Redireciona o usuário de volta para a página de quizzes
 header("Location: ../user/quizzes.php");
 exit;
+?>

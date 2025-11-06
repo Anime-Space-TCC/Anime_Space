@@ -48,15 +48,20 @@ if (!$perguntas) {
 
 // Ranking dos melhores jogadores
 $sqlRanking = "
-  SELECT id, username, foto_perfil, xp AS total_pontos
-  FROM users
-  ORDER BY xp DESC
+  SELECT 
+      u.id, 
+      u.username, 
+      u.foto_perfil, 
+      COALESCE(SUM(qr.pontuacao), 0) AS total_pontos
+  FROM users u
+  LEFT JOIN quiz_resultados qr ON qr.user_id = u.id
+  GROUP BY u.id
+  ORDER BY total_pontos DESC
   LIMIT 20
 ";
 $stmt = $pdo->prepare($sqlRanking);
 $stmt->execute();
 $ranking = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
