@@ -7,7 +7,8 @@ require_once __DIR__ . '/conexao.php';
 
 
 // Retorna todos os gêneros cadastrados
-function getGeneros() {
+function getGeneros()
+{
     global $pdo;
     return $pdo->query("
         SELECT nome 
@@ -17,7 +18,8 @@ function getGeneros() {
 }
 
 // Retorna todos os anos disponíveis
-function getAnos() {
+function getAnos()
+{
     global $pdo;
     return $pdo->query("
         SELECT valor 
@@ -27,7 +29,8 @@ function getAnos() {
 }
 
 // Retorna todas as linguagens disponíveis nos episódios
-function getLinguagens() {
+function getLinguagens()
+{
     global $pdo;
     return $pdo->query("
         SELECT DISTINCT linguagem 
@@ -37,11 +40,55 @@ function getLinguagens() {
 }
 
 // =========================
-// FUNÇÃO DE FILTRAGEM DE ANIMES
+// FUNÇÕES DE FILTRAGEM E PAGINAÇÃO
 // =========================
 
-// Busca os animes aplicando filtros de gênero, ano, linguagem e busca
-function getAnimesFiltrados($filtroGenero = '', $filtroAno = '', $filtroLinguagem = '', $busca = '') {
+// Conta quantidade total de animes filtrados (para paginação)
+function getTotalAnimesFiltrados($filtroGenero = '', $filtroAno = '', $filtroLinguagem = '', $busca = '')
+{
+    global $pdo;
+
+    $sql = "
+        SELECT COUNT(DISTINCT a.id)
+        FROM animes a
+        LEFT JOIN anime_generos ag ON a.id = ag.anime_id
+        LEFT JOIN generos g ON ag.genero_id = g.id
+        LEFT JOIN episodios e ON e.anime_id = a.id
+        WHERE 1 = 1
+    ";
+
+    $params = [];
+
+    if (!empty($filtroGenero)) {
+        $sql .= " AND g.nome = :genero";
+        $params[':genero'] = $filtroGenero;
+    }
+
+    if (!empty($filtroAno)) {
+        $sql .= " AND a.ano = :ano";
+        $params[':ano'] = $filtroAno;
+    }
+
+    if (!empty($filtroLinguagem)) {
+        $sql .= " AND e.linguagem = :linguagem";
+        $params[':linguagem'] = $filtroLinguagem;
+    }
+
+    if (!empty($busca)) {
+        $sql .= " AND (a.nome LIKE :busca1 OR g.nome LIKE :busca2)";
+        $params[':busca1'] = '%' . $busca . '%';
+        $params[':busca2'] = '%' . $busca . '%';
+    }
+
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute($params);
+    return $stmt->fetchColumn();
+}
+
+
+// Retorna os animes filtrados com paginação
+function getAnimesFiltradosPaginados($filtroGenero = '', $filtroAno = '', $filtroLinguagem = '', $busca = '', $porPagina = 18, $offset = 0)
+{
     global $pdo;
 
     $sql = "
@@ -77,26 +124,21 @@ function getAnimesFiltrados($filtroGenero = '', $filtroAno = '', $filtroLinguage
         $params[':busca2'] = '%' . $busca . '%';
     }
 
-    $sql .= " GROUP BY a.id ORDER BY a.nome ASC";
+    $sql .= "
+        GROUP BY a.id
+        ORDER BY a.nome ASC
+        LIMIT :offset, :limite
+    ";
 
     $stmt = $pdo->prepare($sql);
-    $stmt->execute($params);
 
-    return $stmt->fetchAll(PDO::FETCH_ASSOC);
-}
+    foreach ($params as $key => $value) {
+        $stmt->bindValue($key, $value);
+    }
 
-// Retorna os últimos episódios lançados com paginação
-function getAnimesPaginados(int $porPagina = 18, int $offset = 0): array {
-    global $pdo;
-
-    $stmt = $pdo->prepare("
-        SELECT * FROM animes
-        ORDER BY nome ASC
-        LIMIT :offset, :porPagina
-    ");
     $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
-    $stmt->bindValue(':porPagina', $porPagina, PDO::PARAM_INT);
-    $stmt->execute();
+    $stmt->bindValue(':limite', $porPagina, PDO::PARAM_INT);
 
+    $stmt->execute();
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }

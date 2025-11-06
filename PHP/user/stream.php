@@ -18,7 +18,6 @@ $linguagens = getLinguagens();
 
 // Resultado da busca
 $busca = $_GET['busca'] ?? '';
-$animes = getAnimesFiltrados($filtroGenero, $filtroAno, $filtroLinguagem, $busca);
 
 // Paginação
 $porPagina = 18;
@@ -27,10 +26,12 @@ if ($pagina < 1) $pagina = 1;
 
 $offset = ($pagina - 1) * $porPagina;
 
-$animes = getAnimesPaginados($porPagina, $offset);
-
 $totalAnimes = $pdo->query("SELECT COUNT(*) FROM animes")->fetchColumn();
 $totalPaginas = ceil($totalAnimes / $porPagina);
+
+$totalAnimes = getTotalAnimesFiltrados($filtroGenero, $filtroAno, $filtroLinguagem, $busca);
+$animes = getAnimesFiltradosPaginados($filtroGenero, $filtroAno, $filtroLinguagem, $busca, $porPagina, $offset);
+
 ?>
 
 <!DOCTYPE html>
@@ -91,7 +92,7 @@ $totalPaginas = ceil($totalAnimes / $porPagina);
             <?php endforeach; ?>
           </select>
 
-          <button type="submit">Filtrar</button> <!-- Botão para aplicar filtros -->
+          <button type="submit">Buscar</button> <!-- Botão para aplicar filtros -->
           <a href="stream.php" style="text-decoration: none;" type="button">
             <button type="button">Limpar</button> <!-- Botão para limpar filtros -->
           </a>

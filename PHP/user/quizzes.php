@@ -52,11 +52,9 @@ foreach ($linhas as $linha) {
 
 // Ranking dos melhores jogadores (top 20)
 $sqlRanking = "
-  SELECT u.id, u.username, u.foto_perfil, SUM(qr.pontuacao) AS total_pontos
-  FROM quiz_resultados qr
-  JOIN users u ON qr.user_id = u.id
-  GROUP BY u.id
-  ORDER BY total_pontos DESC
+  SELECT id, username, foto_perfil, xp AS total_pontos
+  FROM users
+  ORDER BY xp DESC
   LIMIT 20
 ";
 $stmt = $pdo->prepare($sqlRanking);

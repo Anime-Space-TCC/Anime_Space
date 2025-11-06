@@ -15,7 +15,7 @@ function carregarPergunta() {
             <br>
             <div class="alternativas">
                 ${["a", "b", "c", "d"].map(letra => `
-                    <button type="button" class="opcao" data-resp="${p["alternativa_" + letra]}">
+                    <button type="button" class="opcao" data-resp="${letra}">
                         ${p["alternativa_" + letra]}
                     </button>
                 `).join("")}
@@ -28,7 +28,6 @@ function carregarPergunta() {
     });
 }
 
-/** Lida com a escolha da resposta */
 function selecionarResposta(e, correta) {
     const escolhido = e.target.dataset.resp;
 
@@ -73,10 +72,16 @@ function mostrarResultado() {
     btnProximo.style.display = "none";
 
     document.getElementById("btn-finalizar").addEventListener("click", () => {
+        const total = perguntas.length;
+        const acertos = pontuacao;
+
+        let xp = 50; // primeira conclusão
+        if (acertos === total) xp += 50; // bônus perfeição
+
         fetch('../shared/quiz_resultado.php', {
             method: 'POST',
             headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-            body: `quiz_id=${quizId}&acertos=${acertos}`
+            body: `quiz_id=${quizId}&xp=${xp}&pontuacao=${acertos}`
         }).finally(() => {
             window.location.href = 'quizzes.php';
         });
