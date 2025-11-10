@@ -68,7 +68,7 @@ $stmt = $pdo->prepare($sqlRanking);
 $stmt->execute();
 $ranking = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-$fotoPerfil = buscarFotoPerfil($pdo, $id);
+$fotoPerfil = buscarFotoPerfil($pdo, $userId);
 if (!$fotoPerfil) {
     $fotoPerfil = '/PHP/uploads/default.jpg';
 }

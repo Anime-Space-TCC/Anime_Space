@@ -196,7 +196,7 @@ body {
   flex-direction: column;
   align-items: center;
   width: 250px;
-  position: relative; /
+  position: relative; 
 }
 
 /* CARD */
@@ -706,7 +706,8 @@ body {
     box-shadow: 0 4px 12px rgb(175, 134, 0);
     color: #f0f0f0;
     max-width: 100%; 
-    margin: 40px auto 10px auto; 
+    margin: 40px auto 10px auto;
+    margin-top: 70px; 
 }
 
 .home .cabeca .slogan {
@@ -2556,7 +2557,7 @@ body {
   display: flex;
   width: 100%;
   gap: 15px;
-  padding: 20px;
+  padding: 60px 30px;
 }
 
 .col-esquerda {
