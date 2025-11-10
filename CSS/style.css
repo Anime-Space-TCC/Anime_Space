@@ -147,133 +147,6 @@ body {
 
 
 /* =========================================
-   PERFIL (LOGADO E NÃO LOGADO) 
-========================================= */
-
-.perfil-card {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  padding: 20px 15px 15px;
-  background: rgba(0, 0, 0, 1);
-  border: 2px solid #ff9f00;
-  border-radius: 16px;
-  box-shadow: 0 0 20px rgba(255, 159, 0, 0.3);
-  position: relative;
-  width: 250px;
-  height: 150px;
-  transition: all 0.3s ease-in-out;
-}
-
-.perfil-card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 0 25px rgba(255, 159, 0, 0.6);
-}
-
-.perfil-card::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: 16px;
-  border: 1px solid rgba(255, 159, 0, 0.2);
-  background: radial-gradient(circle at top left, rgba(255, 159, 0, 0.15), transparent 10%);
-  pointer-events: none;
-}
-
-.perfil-area {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  color: #ffcf6b;
-  width: 100%;
-}
-
-.perfil-foto {
-  width: 70px;
-  height: 80px;
-  margin-top: 20px;
-  border-radius: 16%;
-  border: 2px solid #ff9f00;
-  object-fit: cover;
-  box-shadow: 0 0 12px rgba(255, 159, 0, 0.6);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.perfil-foto:hover {
-  transform: scale(1.08);
-  box-shadow: 0 0 16px rgba(255, 190, 70, 0.8);
-}
-
-
-.perfil-info {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  flex: 1;
-  min-width: 0;
-  background: rgba(0, 0, 0, 0.55);
-  padding: 5px 5px 5px;
-  border-radius: 12px;
-  box-shadow: inset 0 0 6px rgba(255, 200, 80, 0.25);
-}
-
-.perfil-nome {
-  font-size: 1.2rem;
-  font-weight: 700;
-  color: #ffd86b;
-  text-shadow: 0 0 10px rgba(255, 200, 80, 0.8), 0 0 20px rgba(255, 160, 0, 0.6);
-  letter-spacing: 0.5px;
-  margin-bottom: 6px;
-  margin-top: 20px;
-  text-align: center;
-}
-
-.perfil-nivel {
-  font-size: 0.9rem;
-  color: #ffe7b3;
-  text-align: center;
-  text-shadow: 0 0 6px rgba(255, 200, 80, 0.4);
-  margin-bottom: 6px;
-}
-
-.exp-bar {
-  width: 100px;
-  height: 12px;
-  background: #333;
-  border-radius: 10px;
-  margin: 6px auto;
-  overflow: hidden;
-  box-shadow: 0 0 5px rgba(0,0,0,0.5) inset, 0 0 6px rgba(255, 200, 50, 0.2);
-}
-
-.exp-fill {
-  height: 100%;
-  width: 45%; 
-  background: linear-gradient(90deg, #ffce00, #ff4e50, #ffce00);
-  background-size: 200% 100%;
-  border-radius: 10px;
-  transition: width 0.4s ease-in-out, background-position 1.5s linear;
-  animation: xpFlow 2.5s linear infinite;
-}
-
-.xp-text {
-  font-size: 0.85rem;
-  color: #ccc;
-  text-align: center;
-  margin-top: 4px;
-  text-shadow: 0 0 5px rgba(255, 255, 255, 0.15);
-}
-
-@keyframes xpFlow {
-  0% {
-    background-position: 0% 0%;
-  }
-  100% {
-    background-position: 200% 0%;
-  }
-}
-
-/* =========================================
    MENU LATERAL
 ========================================= */
 
@@ -312,6 +185,232 @@ body {
     background-color: #ff9f00;
     color: #000;
     border-left-color: #000;
+}
+
+/* =========================================
+   PERFIL (LOGADO E NÃO LOGADO) 
+========================================= */
+
+.perfil-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 250px;
+  position: relative; /
+}
+
+/* CARD */
+.perfil-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 30px 15px 20px; 
+  margin-top: 10px;
+  background: rgba(0, 0, 0, 1);
+  border: 2px solid #ff9f00;
+  border-radius: 16px;
+  box-shadow: 0 0 20px rgba(255, 159, 0, 0.3);
+  position: relative;
+  width: 100%;
+  transition: all 0.3s ease-in-out;
+}
+
+.perfil-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 0 25px rgba(255, 159, 0, 0.6);
+}
+
+.perfil-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 159, 0, 0.2);
+  background: radial-gradient(circle at top left, rgba(255, 159, 0, 0.15), transparent 10%);
+  pointer-events: none;
+}
+
+/* FOTO + INFO lado a lado */
+.perfil-area {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  width: 100%;
+  color: #ffcf6b;
+}
+
+.perfil-foto {
+  width: 70px;
+  height: 80px;
+  margin-top: 10px;
+  border-radius: 16%;
+  border: 2px solid #ff9f00;
+  object-fit: cover;
+  box-shadow: 0 0 12px rgba(255, 159, 0, 0.6);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.perfil-foto:hover {
+  transform: scale(1.08);
+  box-shadow: 0 0 16px rgba(255, 190, 70, 0.8);
+}
+
+.perfil-info {
+  flex: 1;
+  background: rgba(0, 0, 0, 0.55);
+  padding: 6px;
+  border-radius: 12px;
+  box-shadow: inset 0 0 6px rgba(255, 200, 80, 0.25);
+}
+
+.perfil-nome {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #ffd86b;
+  text-align: center;
+  margin-top: 10px;
+  margin-bottom: 6px;
+}
+
+.perfil-nivel {
+  color: #ffe7b3;
+  text-align: center;
+  margin-bottom: 6px;
+}
+
+.exp-bar {
+  width: 100px;
+  height: 12px;
+  background: #333;
+  border-radius: 10px;
+  margin: 6px auto;
+  overflow: hidden;
+  box-shadow: 0 0 5px rgba(0,0,0,0.5) inset, 0 0 6px rgba(255, 200, 50, 0.2);
+}
+
+.exp-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #ffce00, #ff4e50, #ffce00);
+  background-size: 200% 100%;
+  border-radius: 10px;
+  animation: xpFlow 2.5s linear infinite;
+}
+
+.xp-text {
+  color: #ccc;
+  font-size: 0.85rem;
+  text-align: center;
+}
+
+@keyframes xpFlow {
+  0% { background-position: 0% 0%; }
+  100% { background-position: 200% 0%; }
+}
+
+.toggle-notificacoes {
+  position: absolute;
+  top: 135px;      
+  right: 180px;     
+  cursor: pointer;
+  z-index: 50;
+  width: 30px;
+  height: 30px;
+  background: linear-gradient(135deg, #ffce00, #ff4e50);
+  border: 2px solid #ffd654;
+  border-radius: 20%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 12px rgba(255, 159, 0, 0.6), 0 0 20px rgba(255, 206, 0, 0.3) inset;
+  transition: all 0.3s ease;
+}
+
+.toggle-notificacoes:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 16px rgba(255, 190, 70, 0.9), 0 0 24px rgba(255, 220, 50, 0.5) inset;
+}
+
+/* Ícone da seta */
+.toggle-notificacoes .seta {
+  border: solid #1a1a1a; 
+  border-width: 0 3px 3px 0;
+  display: inline-block;
+  padding: 6px;
+  transform: rotate(45deg); 
+  transition: transform 0.25s ease, border-color 0.3s ease;
+}
+
+/* Ao ativar */
+.toggle-notificacoes.ativo .seta {
+  transform: rotate(-135deg);
+  border-color: #ffffff; 
+}
+
+/* NOTIFICAÇÕES EMBAIXO */
+.notificacoes-wrapper {
+  background: rgba(0, 0, 0, 1);
+  border: 2px solid #ff9f00;
+  border-radius: 12px;
+  margin-top: 8px;
+  padding: 10px;
+  animation: fadeDown 0.3s ease forwards;
+  position: absolute;
+  top: 100%;         
+  left: 0;
+  width: 100%;
+  z-index: 40;       
+  margin-top: 8px;    
+  display: none;     
+}
+
+/* Quando ativa, exibe */
+.notificacoes-wrapper.ativo {
+  display: block;
+}
+
+@keyframes fadeDown {
+  from { opacity: 0; transform: translateY(-6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.notificacoes-tabs {
+  display: flex;
+  margin-bottom: 8px;
+}
+
+.tab-btn {
+  flex: 1;
+  background: none;
+  border: none;
+  color: #f1f1f1;
+  padding: 6px;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+}
+
+.tab-btn.active {
+  color: #ffd654;
+  border-bottom: 2px solid #ffd654;
+}
+
+.notificacoes-conteudo {
+  max-height: 160px;
+  overflow-y: auto;
+}
+
+.tab-conteudo { display: none; }
+.tab-conteudo.active { display: block; }
+
+.notif-item {
+  background: rgba(255,255,255,0.05);
+  border-left: 3px solid #ffd654;
+  padding: 8px;
+  margin-bottom: 6px;
+  border-radius: 6px;
+}
+
+.notif-item.promo {
+  border-left-color: #ff4df0;
 }
 
 /* =========================================
@@ -2022,6 +2121,123 @@ body {
     background: #d8890f;
     color: #ffffffff;
   }
+
+/* =========================
+   RECUPERAR SENHA 
+   ========================= */
+
+.recupera .recupera-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.recupera .recupera-box {
+    background-color: rgba(0, 0, 0, 0.6);
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgb(175, 134, 0);
+    width: 320px; 
+    text-align: center; 
+}
+
+.recupera h2 {
+    color: #ffffff;
+    margin-bottom: 20px;
+    font-size: 24px;
+}
+
+/* Campos de entrada */
+.recupera .campo-input {
+    margin-bottom: 20px;
+}
+
+.recupera .campo-input input {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+    border: 1px solid #ffffff;
+    border-radius: 4px;
+    font-size: 16px;
+    background-color: transparent;
+    color: #fff;
+}
+
+.recupera .campo-input input:focus {
+    border-color: #ff9f00;
+    outline: none;
+}
+
+/* Botões */
+.recupera .botao-recuperar {
+    width: 100%;
+    padding: 10px;
+    background-color: #ff9f00;
+    color: rgb(0, 0, 0);
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.recupera .botao-recuperar:hover {
+    background-color: #e68a00;
+}
+
+/* Links e mensagens */
+.recupera .links {
+    text-align: center;
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    font-size: 14px;
+}
+
+.recupera .links a {
+    color: #ff9f00;
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+.recupera .links a:hover {
+    color: #fff;
+}
+
+.recupera .mensagem {
+    text-align: center;
+    color: #ff9f00;
+    margin-bottom: 10px;
+    font-weight: 500;
+}
+
+/* Token destacado */
+.recupera .token {
+    display: inline-block;
+    background-color: rgba(255, 159, 0, 0.2);
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-weight: 700;
+    color: #ff9f00;
+    word-break: break-all; 
+    margin-bottom: 10px;
+}
+
+/* Link de redefinir senha */
+.recupera .link-nova-senha a {
+    display: inline-block;
+    margin-top: 10px;
+    color: #ff9f00;
+    font-weight: 600;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.recupera .link-nova-senha a:hover {
+    color: #fff;
+}
 
 /* =========================
         Autenticação 2FA 

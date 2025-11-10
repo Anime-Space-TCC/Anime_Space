@@ -73,6 +73,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </form>
 
     <div class="links">
+      <p>Esqueceu a senha? <a href="recupera_senha.php">Criar nova</a></p>
       <p>Não tem conta? <a href="register.php">Cadastre-se</a></p>
       <a href="../../PHP/user/index.php">Voltar</a>
     </div>
