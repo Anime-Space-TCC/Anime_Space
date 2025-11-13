@@ -35,7 +35,18 @@ function adicionarXP($pdo, $user_id, $xpGanhos) {
     $stmt->execute([$user_id, $xpGanhos]);
 
     // -------------------------
-    // 🔥 SE SUBIU DE NIVEL, REGISTRA TAMBÉM
+    // 🔔 CRIA NOTIFICAÇÃO DE XP
+    // -------------------------
+    criarNotificacao(
+        $pdo,
+        $user_id,
+        "Ganhou XP!",
+        "Você ganhou $xpGanhos XP por uma atividade!",
+        "xp"
+    );
+
+    // -------------------------
+    // 🔥 SE SUBIU DE NÍVEL, REGISTRA E NOTIFICA
     // -------------------------
     if ($nivelAtual > $nivelAntes) {
         $stmt = $pdo->prepare("
@@ -43,6 +54,14 @@ function adicionarXP($pdo, $user_id, $xpGanhos) {
             VALUES (?, 'subiu_nivel', ?)
         ");
         $stmt->execute([$user_id, $nivelAtual]);
+
+        criarNotificacao(
+            $pdo,
+            $user_id,
+            "Subiu de Nível!",
+            "Parabéns! Você alcançou o nível $nivelAtual!",
+            "xp"
+        );
     }
 }
 

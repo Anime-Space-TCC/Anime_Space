@@ -1943,17 +1943,29 @@ body {
             text-align:center;
         }
         .comprovante th { background:#111; }
-        .btn-voltar-comprovante {
+
+        .botoes-comprovante {
+            text-align:center;
+            margin-top:25px;
+        }
+        .btn-voltar-comprovante,
+        .btn-imprimir-comprovante {
             display:inline-block;
-            margin-top:20px;
+            margin:10px;
             padding:12px 25px;
             background:#28a745;
             color:#fff;
             border-radius:8px;
             text-decoration:none;
+            font-weight:bold;
+            transition:0.2s;
         }
-
-
+        .btn-imprimir-comprovante {
+            background:#ff9f00;
+            color:#000;
+        }
+        .btn-voltar-comprovante:hover { background:#218838; }
+        .btn-imprimir-comprovante:hover { background:#ffaa33; }
 /* ======================
    NAV CARRINHO
 ====================== */

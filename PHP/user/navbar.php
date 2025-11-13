@@ -113,7 +113,7 @@ endif;
                             <h2 class="perfil-nome"><?= htmlspecialchars($_SESSION['username'] ?? 'Usuário') ?></h2>
                             <div class="perfil-nivel">Nível: <?= $nivel ?></div>
                             <div class="exp-bar">
-                                <div class="exp-fill" style="width: <?= $porcentagem ?>%;"></div>
+                                <div class="exp-fill" style="width: <?= $porcentagemXP ?>%;"></div>
                             </div>
                             <p class="xp-text"><?= $xp ?> / <?= $xpNecessario ?> XP</p>
                         </div>
@@ -146,7 +146,6 @@ endif;
                                     <div class="notif-item xp">
                                         <strong><?= htmlspecialchars($xp['titulo']) ?></strong>
                                         <p><?= htmlspecialchars($xp['mensagem']) ?></p>
-                                        <small><?= date("d/m H:i", strtotime($xp['data_criacao'])) ?></small>
                                     </div>
                                 <?php endforeach; ?>
                             <?php endif; ?>
@@ -177,7 +176,6 @@ endif;
                                     <div class="notif-item historico">
                                         <strong><?= htmlspecialchars($h['nome']) ?></strong>
                                         <p>Total: R$ <?= number_format($h['preco'], 2, ',', '.') ?></p>
-                                        <small><?= date("d/m H:i", strtotime($h['data_pagamento'])) ?></small>
                                     </div>
                                 <?php endforeach; ?>
                             <?php endif; ?>

@@ -7,6 +7,9 @@ if (empty($pagamentos)) {
     die("Nenhum pagamento encontrado.");
 }
 
+// Usuário logado
+$usuario = $_SESSION['username'] ?? 'Cliente';
+
 // Calcula o total geral
 $totalGeral = 0;
 foreach ($pagamentos as $p) {
@@ -24,7 +27,6 @@ foreach ($pagamentos as $p) {
 </head>
 <body>
 <?php
-// Navbar
 $current_page = 'loja'; 
 include __DIR__ . '/navbar.php';
 ?>
@@ -32,7 +34,7 @@ include __DIR__ . '/navbar.php';
 <main class="loja-content">
     <div class="comprovante">
         <h1>Pagamento Confirmado!</h1>
-        <p>Seu pagamento foi processado com sucesso. Seguem os detalhes da compra:</p>
+        <p style="text-align:center;">Seu pagamento foi processado com sucesso. Seguem os detalhes da compra:</p>
 
         <table>
             <tr>
@@ -55,11 +57,20 @@ include __DIR__ . '/navbar.php';
             </tr>
         </table>
 
-        <a href="../../PHP/user/loja.php" class="btn-voltar-comprovante">Voltar para Loja</a>
+        <div class="botoes-comprovante">
+            <a href="../../PHP/user/loja.php" class="btn-voltar-comprovante">Voltar para Loja</a>
+            <a href="#" class="btn-imprimir-comprovante" id="btnImprimir">Imprimir Comprovante</a>
+        </div>
     </div>
 </main>
 
 <?php include __DIR__ . '/rodape.php'; ?>
+
+<script>
+    const usuarioNome = <?= json_encode($usuario) ?>;
+</script>
+
 <script src="../../JS/carrinho.js"></script>
+<script src="../../JS/comprovante.js"></script>
 </body>
 </html>
