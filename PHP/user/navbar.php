@@ -1,7 +1,9 @@
 <?php
-// ===== INÍCIO NAVBAR =====
+// ============================
+// NAVBAR - Autenticado
+// ============================
 
-// Páginas que não possuem busca
+// Páginas que não exibem a barra de busca
 $paginasSemBusca = [
     'loja',
     'meu-carrinho',
@@ -16,32 +18,40 @@ $paginasSemBusca = [
     'perfil'
 ];
 
-// Verifica se o usuário está logado
+// Se o usuário estiver logado
 if (isset($_SESSION['user_id'])):
 
-    // Inclui dependências
+    // ==== DEPENDÊNCIAS ====
     require_once __DIR__ . '/../shared/conexao.php';
     require_once __DIR__ . '/../shared/usuarios.php';
     require_once __DIR__ . '/../shared/gamificacao.php';
     require_once __DIR__ . '/../shared/animes.php';
+    require_once __DIR__ . '/../shared/notificacoes.php';
 
-    // Dados do usuário
+    // ==== DADOS DO USUÁRIO ====
     $userId = $_SESSION['user_id'];
     $caminhoFoto = buscarFotoPerfil($pdo, $userId);
 
-    // Dados do carrinho
+    // XP e nível
     $dadosXP = getXP($pdo, $userId);
     $nivel = $dadosXP['nivel'] ?? 1;
     $xp = $dadosXP['xp'] ?? 0;
     $xpNecessario = $nivel * 100;
-    $porcentagem = min(100, ($xp / $xpNecessario) * 100);
+    $porcentagemXP = min(100, ($xp / $xpNecessario) * 100);
 
-    // Busca de animes
-    $busca = $_GET['busca'] ?? '';
-    $lancamentos = $busca !== '' ? buscarAnimePorNome($pdo, $busca) : buscarLancamentos($pdo, 9);
+    // ==== BUSCA DE ANIMES ====
+    $termoBusca = $_GET['busca'] ?? '';
+    $lancamentos = $termoBusca !== ''
+        ? buscarAnimePorNome($pdo, $termoBusca)
+        : buscarLancamentos($pdo, 9);
 
+    // ==== NOTIFICAÇÕES ====
+    $notificacoes = getNotificacoes($userId);
+    $xpNotifs = $notificacoes['xp'];
+    $promoNotifs = $notificacoes['promocoes'];
+    $histNotifs = $notificacoes['historico'];
 
-endif;
+endif;    
 ?>
 
 <!-- ===== NAVBAR HTML ===== -->
@@ -111,6 +121,9 @@ endif;
 
                     <!-- Botão da seta -->
                     <button class="toggle-notificacoes" id="btnToggle" aria-label="Mostrar notificações">
+                        <span class="badge" id="notifBadge" <?= $notificacoes['naoLidas'] == 0 ? 'style="display:none;"' : '' ?>>
+                            <?= $notificacoes['naoLidas'] ?>
+                        </span>
                         <i class="seta"></i>
                     </button>
                 </div>
@@ -124,23 +137,52 @@ endif;
                     </div>
 
                     <div class="notificacoes-conteudo">
+
                         <div class="tab-conteudo active" id="geral">
-                            <div class="notif-item"><strong>Nova mensagem</strong>
-                                <p>Você recebeu uma nova mensagem.</p>
-                            </div>
+                            <?php if (empty($xpNotifs)): ?>
+                                <p class="notif-empty">Nenhuma notificação de XP ainda.</p>
+                            <?php else: ?>
+                                <?php foreach ($xpNotifs as $xp): ?>
+                                    <div class="notif-item xp">
+                                        <strong><?= htmlspecialchars($xp['titulo']) ?></strong>
+                                        <p><?= htmlspecialchars($xp['mensagem']) ?></p>
+                                        <small><?= date("d/m H:i", strtotime($xp['data_criacao'])) ?></small>
+                                    </div>
+                                <?php endforeach; ?>
+                            <?php endif; ?>
                         </div>
 
                         <div class="tab-conteudo" id="promo">
-                            <div class="notif-item promo"><strong>Promoção especial!</strong>
-                                <p>Ganhe XP em dobro hoje.</p>
-                            </div>
+                            <?php if (empty($promoNotifs)): ?>
+                                <p class="notif-empty">Nenhuma promoção ativa no momento.</p>
+                            <?php else: ?>
+                                <?php foreach ($promoNotifs as $p): ?>
+                                    <a href="<?= htmlspecialchars($p['url']) ?>" class="notif-item promo" target="_blank">
+                                        <img src="../../<?= htmlspecialchars($p['imagem'] ?? 'img/default_promo.jpg') ?>"
+                                            class="promo-img">
+                                        <div>
+                                            <strong><?= htmlspecialchars($p['titulo']) ?></strong>
+                                        </div>
+                                    </a>
+                                <?php endforeach; ?>
+                            <?php endif; ?>
                         </div>
 
+
                         <div class="tab-conteudo" id="historico">
-                            <div class="notif-item historico"><strong>Últimas compras</strong>
-                                <p>Seu histórico de compras aparece aqui.</p>
-                            </div>
+                            <?php if (empty($histNotifs)): ?>
+                                <p class="notif-empty">Nenhuma compra registrada.</p>
+                            <?php else: ?>
+                                <?php foreach ($histNotifs as $h): ?>
+                                    <div class="notif-item historico">
+                                        <strong><?= htmlspecialchars($h['nome']) ?></strong>
+                                        <p>Total: R$ <?= number_format($h['preco'], 2, ',', '.') ?></p>
+                                        <small><?= date("d/m H:i", strtotime($h['data_pagamento'])) ?></small>
+                                    </div>
+                                <?php endforeach; ?>
+                            <?php endif; ?>
                         </div>
+
                     </div>
                 </div>
             </div>

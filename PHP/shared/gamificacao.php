@@ -1,8 +1,4 @@
-<?php
-
-// ==============================
-// Funções de Gamificação
-// ==============================
+<?php 
 function adicionarXP($pdo, $user_id, $xpGanhos) {
     // Busca XP e nível atuais
     $stmt = $pdo->prepare("SELECT xp, nivel FROM users WHERE id = ?");
@@ -11,8 +7,11 @@ function adicionarXP($pdo, $user_id, $xpGanhos) {
 
     if (!$user) return;
 
-    $xpAtual = $user['xp'] + $xpGanhos;
-    $nivelAtual = $user['nivel'];
+    $xpAntes = $user['xp'];
+    $nivelAntes = $user['nivel'];
+
+    $xpAtual = $xpAntes + $xpGanhos;
+    $nivelAtual = $nivelAntes;
     $xpNecessario = $nivelAtual * 100;
 
     // Verifica se subiu de nível
@@ -25,7 +24,28 @@ function adicionarXP($pdo, $user_id, $xpGanhos) {
     // Atualiza no banco
     $stmt = $pdo->prepare("UPDATE users SET xp = ?, nivel = ? WHERE id = ?");
     $stmt->execute([$xpAtual, $nivelAtual, $user_id]);
+
+    // -------------------------
+    // 🔥 REGISTRA O GANHO DE XP
+    // -------------------------
+    $stmt = $pdo->prepare("
+        INSERT INTO xp_logs (user_id, tipo_acao, xp_ganho)
+        VALUES (?, 'ganho_xp', ?)
+    ");
+    $stmt->execute([$user_id, $xpGanhos]);
+
+    // -------------------------
+    // 🔥 SE SUBIU DE NIVEL, REGISTRA TAMBÉM
+    // -------------------------
+    if ($nivelAtual > $nivelAntes) {
+        $stmt = $pdo->prepare("
+            INSERT INTO xp_logs (user_id, tipo_acao, xp_ganho)
+            VALUES (?, 'subiu_nivel', ?)
+        ");
+        $stmt->execute([$user_id, $nivelAtual]);
+    }
 }
+
 // Retorna XP e nivel do usuario
 function getXP($pdo, $user_id) {
     $stmt = $pdo->prepare("SELECT xp, nivel FROM users WHERE id = ?");

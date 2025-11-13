@@ -811,18 +811,27 @@ html, body {
    PERFIL (LOGADO E NÃO LOGADO) 
 ========================================= */
 
+.perfil-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 250px;
+  position: relative; 
+}
+
+/* CARD */
 .perfil-card {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: flex-start;
-  padding: 20px 15px 15px;
+  padding: 30px 15px 20px; 
+  margin-top: 10px;
   background: rgba(0, 0, 0, 1);
   border: 2px solid #ff9f00;
   border-radius: 16px;
   box-shadow: 0 0 20px rgba(255, 159, 0, 0.3);
   position: relative;
-  width: 250px;
-  height: 150px;
+  width: 100%;
   transition: all 0.3s ease-in-out;
 }
 
@@ -841,18 +850,19 @@ html, body {
   pointer-events: none;
 }
 
+/* FOTO + INFO lado a lado */
 .perfil-area {
   display: flex;
   align-items: center;
   gap: 15px;
-  color: #ffcf6b;
   width: 100%;
+  color: #ffcf6b;
 }
 
 .perfil-foto {
   width: 70px;
   height: 80px;
-  margin-top: 20px;
+  margin-top: 10px;
   border-radius: 16%;
   border: 2px solid #ff9f00;
   object-fit: cover;
@@ -865,41 +875,29 @@ html, body {
   box-shadow: 0 0 16px rgba(255, 190, 70, 0.8);
 }
 
-
 .perfil-info {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
   flex: 1;
-  min-width: 0;
   background: rgba(0, 0, 0, 0.55);
-  padding: 5px 5px 5px;
+  padding: 6px;
   border-radius: 12px;
   box-shadow: inset 0 0 6px rgba(255, 200, 80, 0.25);
 }
 
-/* Nome destacado */
 .perfil-nome {
   font-size: 1.2rem;
   font-weight: 700;
   color: #ffd86b;
-  text-shadow: 0 0 10px rgba(255, 200, 80, 0.8), 0 0 20px rgba(255, 160, 0, 0.6);
-  letter-spacing: 0.5px;
-  margin-bottom: 6px;
-  margin-top: 20px;
   text-align: center;
+  margin-top: 10px;
+  margin-bottom: 6px;
 }
 
-/* Nível */
 .perfil-nivel {
-  font-size: 0.9rem;
   color: #ffe7b3;
   text-align: center;
-  text-shadow: 0 0 6px rgba(255, 200, 80, 0.4);
   margin-bottom: 6px;
 }
 
-/* Barra de experiência (XP) */
 .exp-bar {
   width: 100px;
   height: 12px;
@@ -912,32 +910,142 @@ html, body {
 
 .exp-fill {
   height: 100%;
-  width: 45%; /* substituído dinamicamente pelo PHP */
   background: linear-gradient(90deg, #ffce00, #ff4e50, #ffce00);
   background-size: 200% 100%;
   border-radius: 10px;
-  transition: width 0.4s ease-in-out, background-position 1.5s linear;
   animation: xpFlow 2.5s linear infinite;
 }
 
-/* Animação leve de brilho na barra */
-@keyframes xpFlow {
-  0% {
-    background-position: 0% 0%;
-  }
-  100% {
-    background-position: 200% 0%;
-  }
+.xp-text {
+  color: #ccc;
+  font-size: 0.85rem;
+  text-align: center;
 }
 
-/* Texto do XP */
-.xp-text {
-  font-size: 0.85rem;
-  color: #ccc;
-  text-align: center;
-  margin-top: 4px;
-  text-shadow: 0 0 5px rgba(255, 255, 255, 0.15);
+@keyframes xpFlow {
+  0% { background-position: 0% 0%; }
+  100% { background-position: 200% 0%; }
 }
+
+.toggle-notificacoes {
+  position: absolute;
+  top: 135px;      
+  right: 180px;     
+  cursor: pointer;
+  z-index: 50;
+  width: 30px;
+  height: 30px;
+  background: linear-gradient(135deg, #ffce00, #ff4e50);
+  border: 2px solid #ffd654;
+  border-radius: 20%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 12px rgba(255, 159, 0, 0.6), 0 0 20px rgba(255, 206, 0, 0.3) inset;
+  transition: all 0.3s ease;
+}
+
+/* Bolinha de notificações */
+.toggle-notificacoes .badge {
+  position: absolute;
+  top: -7px;       /* Ajuste fino vertical */
+  right: -10px;     /* Ajuste fino horizontal */
+  background: red;
+  color: #fff;
+  font-size: 11px;
+  padding: 2px 6px;
+  border-radius: 50%;
+  pointer-events: none; /* evita clicar na bolinha */
+}
+
+.toggle-notificacoes:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 16px rgba(255, 190, 70, 0.9), 0 0 24px rgba(255, 220, 50, 0.5) inset;
+}
+
+/* Ícone da seta */
+.toggle-notificacoes .seta {
+  border: solid #1a1a1a; 
+  border-width: 0 3px 3px 0;
+  display: inline-block;
+  padding: 6px;
+  transform: rotate(45deg); 
+  transition: transform 0.25s ease, border-color 0.3s ease;
+}
+
+/* Ao ativar */
+.toggle-notificacoes.ativo .seta {
+  transform: rotate(-135deg);
+  border-color: #ffffff; 
+}
+
+/* NOTIFICAÇÕES EMBAIXO */
+.notificacoes-wrapper {
+  background: rgba(0, 0, 0, 1);
+  border: 2px solid #ff9f00;
+  border-radius: 12px;
+  margin-top: 8px;
+  padding: 10px;
+  animation: fadeDown 0.3s ease forwards;
+  position: absolute;
+  top: 100%;         
+  left: 0;
+  width: 100%;
+  z-index: 40;       
+  margin-top: 8px;    
+  display: none;     
+}
+
+/* Quando ativa, exibe */
+.notificacoes-wrapper.ativo {
+  display: block;
+}
+
+@keyframes fadeDown {
+  from { opacity: 0; transform: translateY(-6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.notificacoes-tabs {
+  display: flex;
+  margin-bottom: 8px;
+}
+
+.tab-btn {
+  flex: 1;
+  background: none;
+  border: none;
+  color: #f1f1f1;
+  padding: 6px;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+}
+
+.tab-btn.active {
+  color: #ffd654;
+  border-bottom: 2px solid #ffd654;
+}
+
+.notificacoes-conteudo {
+  max-height: 160px;
+  overflow-y: auto;
+}
+
+.tab-conteudo { display: none; }
+.tab-conteudo.active { display: block; }
+
+.notif-item {
+  background: rgba(255,255,255,0.05);
+  border-left: 3px solid #ffd654;
+  padding: 8px;
+  margin-bottom: 6px;
+  border-radius: 6px;
+}
+
+.notif-item.promo {
+  border-left-color: #ff4df0;
+}
+
 
 /* =========================================
    MENU LATERAL
