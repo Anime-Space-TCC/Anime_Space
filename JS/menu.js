@@ -62,7 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('click', (e) => {
       if (!btnToggle.contains(e.target) && !caixa.contains(e.target)) {
         btnToggle.classList.remove('ativo');
-        caixa.classList.remove('ativo'); // <- aqui
+        caixa.classList.remove('ativo'); 
       }
     });
   }

@@ -25,6 +25,7 @@ if (isset($_SESSION['user_id'])):
     require_once __DIR__ . '/../shared/conexao.php';
     require_once __DIR__ . '/../shared/usuarios.php';
     require_once __DIR__ . '/../shared/gamificacao.php';
+    require_once __DIR__ . '/../shared/promocoes.php';
     require_once __DIR__ . '/../shared/animes.php';
     require_once __DIR__ . '/../shared/notificacoes.php';
 
@@ -156,11 +157,10 @@ endif;
                                 <p class="notif-empty">Nenhuma promoção ativa no momento.</p>
                             <?php else: ?>
                                 <?php foreach ($promoNotifs as $p): ?>
-                                    <a href="<?= htmlspecialchars($p['url']) ?>" class="notif-item promo" target="_blank">
-                                        <img src="../../<?= htmlspecialchars($p['imagem'] ?? 'img/default_promo.jpg') ?>"
-                                            class="promo-img">
+                                    <a href="<?= htmlspecialchars($p['url']) ?>" class="notif-item promo">
+                                        <img src="../../img/<?= htmlspecialchars($p['imagem'] ?? 'default.jpg') ?>" class="promo-img">
                                         <div>
-                                            <strong><?= htmlspecialchars($p['titulo']) ?></strong>
+                                            <strong><?= htmlspecialchars($p['nome']) ?></strong>
                                         </div>
                                     </a>
                                 <?php endforeach; ?>

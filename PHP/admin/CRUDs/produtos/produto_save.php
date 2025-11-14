@@ -15,6 +15,8 @@ $sku = trim($_POST['sku'] ?? '');
 $nome = trim($_POST['nome'] ?? '');
 $categoria = trim($_POST['categoria'] ?? '');
 $preco = floatval($_POST['preco'] ?? 0);
+$promocao = isset($_POST['promocao']) ? 1 : 0;
+$preco_promocional = floatval($_POST['preco_promocional'] ?? 0);
 $estoque = intval($_POST['estoque'] ?? 0);
 $quantidade_vendida = intval($_POST['quantidade_vendida'] ?? 0);
 $descricao = trim($_POST['descricao'] ?? '');
@@ -34,6 +36,8 @@ if (!empty($_FILES['imagem']['name'])) {
 if ($sku === '') die("O campo SKU é obrigatório.");
 if ($nome === '') die("O campo Nome é obrigatório.");
 if ($preco < 0) die("O preço deve ser maior ou igual a 0.");
+if($promocao && $preco_promocional <= 0) die("O preço promocional deve ser maior que 0 quando o produto está em promoção.");
+if ($preco_promocional < 0) die("O preço promocional deve ser maior ou igual a 0.");
 if ($estoque < 0) die("O estoque deve ser maior ou igual a 0.");
 if ($quantidade_vendida < 0) die("A quantidade vendida deve ser maior ou igual a 0.");
 
@@ -41,17 +45,17 @@ if ($quantidade_vendida < 0) die("A quantidade vendida deve ser maior ou igual a
 if ($id) {
     // Atualiza o produto
     $sql = "UPDATE produtos 
-            SET sku=?, nome=?, descricao=?, preco=?, estoque=?, quantidade_vendida=?, imagem=?, categoria=?, ativo=? 
+            SET sku=?, nome=?, descricao=?, preco=?, promocao=?, preco_promocional=?, estoque=?, quantidade_vendida=?, imagem=?, categoria=?, ativo=? 
             WHERE id=?";
     $pdo->prepare($sql)->execute([
-        $sku, $nome, $descricao, $preco, $estoque, $quantidade_vendida, $imagem, $categoria, $ativo, $id
+        $sku, $nome, $descricao, $preco, $promocao, $preco_promocional, $estoque, $quantidade_vendida, $imagem, $categoria, $ativo, $id
     ]);
 } else {
     // Insere novo produto
-    $sql = "INSERT INTO produtos (sku, nome, descricao, preco, estoque, quantidade_vendida, imagem, categoria, ativo) 
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    $sql = "INSERT INTO produtos (sku, nome, descricao, preco, promocao, preco_promocional, estoque, quantidade_vendida, imagem, categoria, ativo) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     $pdo->prepare($sql)->execute([
-        $sku, $nome, $descricao, $preco, $estoque, $quantidade_vendida, $imagem, $categoria, $ativo
+        $sku, $nome, $descricao, $preco, $promocao, $preco_promocional, $estoque, $quantidade_vendida, $imagem, $categoria, $ativo
     ]);
 }
 

@@ -2,7 +2,8 @@
 require_once __DIR__ . '/../shared/conexao.php';
 require_once __DIR__ . '/../shared/auth.php';
 require __DIR__ . '/../shared/acessos.php';
-require __DIR__ . '/../shared/loja.php';
+require __DIR__ . '/../shared/produtos.php';
+require_once __DIR__ . '/../shared/promocoes.php';
 verificarLogin();
 
 // Início da sessão (apenas se não existir)
@@ -24,12 +25,14 @@ $totalCarrinho = array_sum($_SESSION['carrinho']);
 
 // Paginação
 $porPagina = 14;
-$pagina = isset($_GET['pagina']) ? (int)$_GET['pagina'] : 1;
-if ($pagina < 1) $pagina = 1;
+$pagina = isset($_GET['pagina']) ? (int) $_GET['pagina'] : 1;
+if ($pagina < 1)
+    $pagina = 1;
 
 $offset = ($pagina - 1) * $porPagina;
 
 $produtos = getProdutosPaginados($porPagina, $offset);
+$promocoes = buscarProdutosPromocao();
 
 $totalProdutos = $pdo->query("SELECT COUNT(*) FROM produtos")->fetchColumn();
 $totalPaginas = ceil($totalProdutos / $porPagina);
@@ -37,80 +40,92 @@ $totalPaginas = ceil($totalProdutos / $porPagina);
 
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
-<meta charset="UTF-8">
-<title>Loja - Anime Space</title>
-<link rel="stylesheet" href="../../CSS/style.css" /> 
-<link rel="icon" href="../../img/slogan3.png" type="image/png" /> 
+    <meta charset="UTF-8">
+    <title>Loja - Anime Space</title>
+    <link rel="stylesheet" href="../../CSS/style.css" />
+    <link rel="icon" href="../../img/slogan3.png" type="image/png" />
 </head>
+
 <body class="loja">
 
-<?php
-// Para a loja
-$current_page = 'loja'; 
-include __DIR__ . '/navbar.php';
-?>
+    <?php
+    // Para a loja
+    $current_page = 'loja';
+    include __DIR__ . '/navbar.php';
+    ?>
 
-<main class="page-content">
-    <header class="loja-header">
-        <div class="titulo-pagina">
-            <h1>Loja Anime Space</h1>
-        </div>
-    </header>
+    <main class="page-content">
+        <header class="loja-header">
+            <div class="titulo-pagina">
+                <h1>Loja Anime Space</h1>
+            </div>
+        </header>
 
-    <!-- Banner de destaque -->
-    <section class="loja-banner">
-        <?php include __DIR__ . '/promocoes.php'; ?>
-    </section>
+        <!-- Banner de destaque -->
+        <section class="loja-banner">
+            <?php include __DIR__ . '/promocoes.php'; ?>
+        </section>
 
 
-    <!-- Grid de produtos -->
-    <section class="loja-conteudo" id="produtos">
-        <h2 class="secao-titulo">Novidades da Loja</h2>
-        <div class="produtos-grid">
-            <?php foreach ($produtos as $produto): ?>
-                <div class="produto-card">
-                    <div class="produto-imagem-box">
-                        <img src="../../img/<?= htmlspecialchars($produto['imagem']) ?>" 
-                             alt="<?= htmlspecialchars($produto['nome']) ?>" 
-                             class="produto-imagem">
+        <!-- Grid de produtos -->
+        <section class="loja-conteudo" id="produtos">
+            <h2 class="secao-titulo">Novidades da Loja</h2>
+            <div class="produtos-grid">
+                <?php foreach ($produtos as $produto): ?>
+                    <div class="produto-card">
+                        <div class="produto-imagem-box">
+                            <img src="../../img/<?= htmlspecialchars($produto['imagem']) ?>"
+                                alt="<?= htmlspecialchars($produto['nome']) ?>" class="produto-imagem">
+                        </div>
+                        <div class="produto-info">
+                            <h3 class="produto-nome"><?= htmlspecialchars($produto['nome']) ?></h3>
+                            <p class="produto-descricao"><?= htmlspecialchars($produto['descricao']) ?></p>
+                            <?php if (!empty($produto['preco_promocional']) && $produto['preco_promocional'] > 0): ?>
+                                <p class="produto-preco promo">
+                                    <span class="preco-antigo">R$ <?= number_format($produto['preco'], 2, ',', '.') ?></span>
+                                    <span class="preco-novo">R$
+                                        <?= number_format($produto['preco_promocional'], 2, ',', '.') ?></span>
+                                </p>
+                            <?php else: ?>
+                                <p class="produto-preco">
+                                    R$ <?= number_format($produto['preco'], 2, ',', '.') ?>
+                                </p>
+                            <?php endif; ?>
+                            <?php if (isset($_SESSION['tipo']) && $_SESSION['tipo'] === 'admin'): ?>
+                                <p class="produto-estoque">Estoque: <?= $produto['estoque'] ?></p>
+                            <?php endif; ?>
+                            <?php if ($produto['estoque'] > 0): ?>
+                                <button class="btn-adicionar" data-id="<?= $produto['id'] ?>">Adicionar</button>
+                            <?php else: ?>
+                                <button class="btn-adicionar" disabled>Indisponível</button>
+                            <?php endif; ?>
+                        </div>
                     </div>
-                    <div class="produto-info">
-                        <h3 class="produto-nome"><?= htmlspecialchars($produto['nome']) ?></h3>
-                        <p class="produto-descricao"><?= htmlspecialchars($produto['descricao']) ?></p>
-                        <p class="produto-preco">R$ <?= number_format($produto['preco'], 2, ',', '.') ?></p>
-                        <?php if (isset($_SESSION['tipo']) && $_SESSION['tipo'] === 'admin'): ?>
-                            <p class="produto-estoque">Estoque: <?= $produto['estoque'] ?></p>
-                        <?php endif; ?>
-                        <?php if($produto['estoque'] > 0): ?>
-                            <button class="btn-adicionar" data-id="<?= $produto['id'] ?>">Adicionar</button>
-                        <?php else: ?>
-                            <button class="btn-adicionar" disabled>Indisponível</button>
-                        <?php endif; ?>
-                    </div>
-                </div>
-            <?php endforeach; ?>
+                <?php endforeach; ?>
+            </div>
+        </section>
+        <!-- Paginação -->
+        <div class="paginacao">
+            <?php if ($pagina > 1): ?>
+                <a href="?pagina=<?= $pagina - 1 ?>">&laquo; Anterior</a>
+            <?php endif; ?>
+
+            <?php for ($i = 1; $i <= $totalPaginas; $i++): ?>
+                <a href="?pagina=<?= $i ?>" class="<?= $i === $pagina ? 'ativo' : '' ?>"><?= $i ?></a>
+            <?php endfor; ?>
+
+            <?php if ($pagina < $totalPaginas): ?>
+                <a href="?pagina=<?= $pagina + 1 ?>">Próxima &raquo;</a>
+            <?php endif; ?>
         </div>
-    </section>
-    <!-- Paginação -->
-      <div class="paginacao">
-        <?php if ($pagina > 1): ?>
-          <a href="?pagina=<?= $pagina - 1 ?>">&laquo; Anterior</a>
-        <?php endif; ?>
+    </main>
 
-        <?php for ($i = 1; $i <= $totalPaginas; $i++): ?>
-          <a href="?pagina=<?= $i ?>" class="<?= $i === $pagina ? 'ativo' : '' ?>"><?= $i ?></a>
-        <?php endfor; ?>
+    <?php include __DIR__ . '/rodape.php'; ?>
 
-        <?php if ($pagina < $totalPaginas): ?>
-          <a href="?pagina=<?= $pagina + 1 ?>">Próxima &raquo;</a>
-        <?php endif; ?>
-      </div>
-</main>
-
-<?php include __DIR__ . '/rodape.php'; ?>
-
-<script src="../../JS/carrinho.js"></script>
+    <script src="../../JS/carrinho.js"></script>
 
 </body>
+
 </html>

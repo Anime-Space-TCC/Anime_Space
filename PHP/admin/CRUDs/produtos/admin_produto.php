@@ -13,7 +13,7 @@ $busca = $_GET['buscarProdutos'] ?? '';
 
 if (!empty($busca)) {
     $stmt = $pdo->prepare("
-        SELECT id, sku, nome, descricao, preco, estoque, quantidade_vendida, imagem, categoria, ativo, data_criacao, data_atualizacao
+        SELECT id, sku, nome, descricao, preco, promocao, preco_promocional, estoque, quantidade_vendida, imagem, categoria, ativo, data_criacao, data_atualizacao
         FROM produtos
         WHERE nome LIKE :busca1 OR categoria LIKE :busca2 OR sku LIKE :busca3
         ORDER BY data_criacao DESC
@@ -27,7 +27,7 @@ if (!empty($busca)) {
 
 } else {
     $stmt = $pdo->prepare("
-        SELECT id, sku, nome, descricao, preco, estoque, quantidade_vendida, imagem, categoria, ativo, data_criacao, data_atualizacao
+        SELECT id, sku, nome, descricao, preco, promocao, preco_promocional, estoque, quantidade_vendida, imagem, categoria, ativo, data_criacao, data_atualizacao
         FROM produtos
         ORDER BY data_criacao DESC
     ");

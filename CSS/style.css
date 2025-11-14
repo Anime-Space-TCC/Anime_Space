@@ -328,14 +328,14 @@ body {
 /* Bolinha de notificações */
 .toggle-notificacoes .badge {
   position: absolute;
-  top: -7px;       /* Ajuste fino vertical */
-  right: -10px;     /* Ajuste fino horizontal */
+  top: -7px;      
+  right: -10px; 
   background: red;
   color: #fff;
   font-size: 11px;
   padding: 2px 6px;
   border-radius: 50%;
-  pointer-events: none; /* evita clicar na bolinha */
+  pointer-events: none; 
 }
 
 .toggle-notificacoes:hover {
@@ -422,8 +422,44 @@ body {
   border-radius: 6px;
 }
 
+/* NOTIFICAÇÃO PROMOCIONAL */
 .notif-item.promo {
-  border-left-color: #ff4df0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.05);
+  border-left: 3px solid #ff4df0;
+  padding: 8px;
+  margin-bottom: 6px;
+  border-radius: 6px;
+  text-decoration: none;
+  color: #fff;
+}
+
+/* IMAGEM DA PROMOÇÃO — reduzida e cortada corretamente */
+.notif-item.promo .promo-img {
+  width: 48px;          /* tamanho reduzido */
+  height: 48px;
+  object-fit: cover;    /* evita deformação */
+  border-radius: 6px;   /* cantos arredondados */
+  flex-shrink: 0;       /* impede esticar o layout */
+}
+
+/* TEXTO AO LADO */
+.notif-item.promo div {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+}
+
+.notif-item.promo strong {
+  font-size: 13px;
+  color: #ffd1f9;
+}
+
+.notif-item.promo p {
+  font-size: 12px;
+  opacity: 0.8;
 }
 
 /* =========================================
@@ -1445,7 +1481,7 @@ body {
     color: #333;
     margin: 5px 0;
     position: absolute; 
-    bottom: 45px;
+    bottom: 5px;
     left: 50%;
     transform: translateX(-50%);
     width: 100%;
@@ -1480,7 +1516,7 @@ body {
 
 .promocoes-slideshow {
     position: relative;
-    max-width: 1400px; /* aumentou de 1200px para 1400px */
+    max-width: 1400px; 
     margin: 0 auto;
     overflow: hidden;
     border-radius: 15px;
@@ -1524,6 +1560,34 @@ body {
 
 .prev { left: 20px; } 
 .next { right: 20px; } 
+
+
+.produto-preco.promo {
+    display: flex;
+    flex-direction: column; 
+    align-items: flex-center; 
+    gap: 5px; 
+}
+
+.preco-antigo {
+    text-decoration: line-through;
+    color: #777;
+    font-size: 0.8rem; 
+    margin: 0; 
+}
+
+.preco-novo {
+    color: #e63946;
+    font-weight: bold;
+    font-size: 1.1rem;
+    margin: 0;
+}
+
+.preco-container {
+    display: flex;
+    flex-direction: column;
+    margin-top: 5px;
+}
 
 
 /* ======================
@@ -1922,50 +1986,64 @@ body {
 }
 
 .comprovante {
-            max-width: 800px;
-            margin: 50px auto;
-            padding: 30px;
-            background:#000;
-            color:#ff9f00;
-            border-radius:15px;
-            box-shadow:0 0 15px #ff9f00;
-            font-family: Arial, sans-serif;
-        }
-        .comprovante h1 { text-align:center; margin-bottom:20px; }
-        .comprovante table {
-            width:100%;
-            border-collapse: collapse;
-            margin-top:20px;
-        }
-        .comprovante th, .comprovante td {
-            border:1px solid #ff9f00;
-            padding:10px;
-            text-align:center;
-        }
-        .comprovante th { background:#111; }
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 30px;
+    background:#000;
+    color:#ff9f00;
+    border-radius:15px;
+    box-shadow:0 0 15px #ff9f00;
+    font-family: Arial, sans-serif;
+}
+.comprovante h1 { 
+    text-align:center; 
+    margin-bottom:20px; 
+}
+.comprovante table {
+    width:100%;
+    border-collapse: collapse;
+    margin-top:20px;
+}
 
-        .botoes-comprovante {
-            text-align:center;
-            margin-top:25px;
-        }
-        .btn-voltar-comprovante,
-        .btn-imprimir-comprovante {
-            display:inline-block;
-            margin:10px;
-            padding:12px 25px;
-            background:#28a745;
-            color:#fff;
-            border-radius:8px;
-            text-decoration:none;
-            font-weight:bold;
-            transition:0.2s;
-        }
-        .btn-imprimir-comprovante {
-            background:#ff9f00;
-            color:#000;
-        }
-        .btn-voltar-comprovante:hover { background:#218838; }
-        .btn-imprimir-comprovante:hover { background:#ffaa33; }
+.comprovante th, .comprovante td {
+    border:1px solid #ff9f00;
+    padding:10px;
+    text-align:center;
+}
+
+.comprovante th { 
+    background:#111; 
+}
+
+.botoes-comprovante {
+    text-align:center;
+    margin-top:25px;
+}
+.btn-voltar-comprovante,
+.btn-imprimir-comprovante {
+    display:inline-block;
+    margin:10px;
+    padding:12px 25px;
+    background:#28a745;
+    color:#fff;
+    border-radius:8px;
+    text-decoration:none;
+    font-weight:bold;
+    transition:0.2s;
+}
+
+.btn-imprimir-comprovante {
+    background:#ff9f00;
+    color:#000;
+}
+
+.btn-voltar-comprovante:hover { 
+    background:#218838; 
+}
+
+.btn-imprimir-comprovante:hover { 
+    background:#ffaa33; 
+}
 /* ======================
    NAV CARRINHO
 ====================== */

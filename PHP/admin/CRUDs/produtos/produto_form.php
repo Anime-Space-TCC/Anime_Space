@@ -17,6 +17,8 @@ $produto = [
     'nome' => '',
     'descricao' => '',
     'preco' => '',
+    'promocao' => '',
+    'preco_promocional' => '',
     'estoque' => '',
     'quantidade_vendida' => 0,
     'imagem' => '',
@@ -41,6 +43,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nome = trim($_POST['nome'] ?? '');
     $descricao = trim($_POST['descricao'] ?? '');
     $preco = $_POST['preco'] ?? 0;
+    $promocao = isset($_POST['promocao']) ? 1 : 0;
+    $preco_promocional = $_POST['preco_promocional'] ?? 0;
     $estoque = $_POST['estoque'] ?? 0;
     $quantidade_vendida = $_POST['quantidade_vendida'] ?? 0;
     $categoria = trim($_POST['categoria'] ?? '');
@@ -60,14 +64,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($id) {
         // Atualiza o produto
         $sql = "UPDATE produtos 
-                SET sku=?, nome=?, descricao=?, preco=?, estoque=?, quantidade_vendida=?, imagem=?, categoria=?, ativo=? 
+                SET sku=?, nome=?, descricao=?, preco=?, promocao=?, preco_promocional=?, estoque=?, quantidade_vendida=?, imagem=?, categoria=?, ativo=? 
                 WHERE id=?";
-        $pdo->prepare($sql)->execute([$sku, $nome, $descricao, $preco, $estoque, $quantidade_vendida, $imagem, $categoria, $ativo, $id]);
+        $pdo->prepare($sql)->execute([$sku, $nome, $descricao, $preco, $promocao, $preco_promocional, $estoque, $quantidade_vendida, $imagem, $categoria, $ativo, $id]);
     } else {
         // Insere novo produto
-        $sql = "INSERT INTO produtos (sku, nome, descricao, preco, estoque, quantidade_vendida, imagem, categoria, ativo)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        $pdo->prepare($sql)->execute([$sku, $nome, $descricao, $preco, $estoque, $quantidade_vendida, $imagem, $categoria, $ativo]);
+        $sql = "INSERT INTO produtos (sku, nome, descricao, preco, promocao, preco_promocional, estoque, quantidade_vendida, imagem, categoria, ativo)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        $pdo->prepare($sql)->execute([$sku, $nome, $descricao, $preco, $promocao, $preco_promocional, $estoque, $quantidade_vendida, $imagem, $categoria, $ativo]);
     }
 
     header('Location: admin_produto.php');
@@ -105,6 +109,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             <label>Preço (R$):</label>
             <input type="number" name="preco" step="0.01" min="0" value="<?= htmlspecialchars($produto['preco']) ?>" required><br><br>
+
+            <label>Promoção:</label>
+            <input type="checkbox" name="promocao" class="checkbox" <?= $produto['promocao'] ? 'checked' : '' ?>> Produto em promoção<br><br>
+
+            <label>Preço Promocional (R$):</label>
+            <input type="number" name="preco_promocional" step="0.01" min="0" value="<?= htmlspecialchars($produto['preco_promocional']) ?>"><br><br>
 
             <label>Estoque:</label>
             <input type="number" name="estoque" min="0" value="<?= htmlspecialchars($produto['estoque']) ?>" required><br><br>

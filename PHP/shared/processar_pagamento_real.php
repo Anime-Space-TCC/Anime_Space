@@ -44,11 +44,10 @@ foreach ($pagamentos as $p) {
     $stmt->execute([$produto_id]);
 }
 
-// ✅ Criar uma única notificação geral
+// ✅ Criar uma única notificação geral 
 $nomesLista = implode(', ', $nomesProdutos);
 criarNotificacao(
-    $pdo,
-    $userId,
+    $userId, 
     "Compra concluída!",
     "Seu pagamento foi aprovado com sucesso! Você comprou: " . htmlspecialchars($nomesLista) .
     ". Total: R$ " . number_format($total, 2, ',', '.') . ".",
