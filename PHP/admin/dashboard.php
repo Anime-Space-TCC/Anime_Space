@@ -12,22 +12,22 @@
   <div class="charts">
     <div class="chart-card">
       <h3>Idade dos Usuários</h3>
-      <canvas id="chartIdade" width="400" height="300"></canvas>
+      <canvas id="chartIdade" width="100%" height="100%"></canvas>
     </div>
 
     <div class="chart-card">
       <h3>Nacionalidade dos Usuários</h3>
-      <canvas id="chartNacionalidade" width="400" height="300"></canvas>
+      <canvas id="chartNacionalidade" width="100%" height="100%"></canvas>
     </div>
 
     <div class="chart-card">
       <h3>Acessos por Dia (últimos 7 dias)</h3>
-      <canvas id="chartAcessos" width="400" height="300"></canvas>
+      <canvas id="chartAcessos" width="100%" height="100%"></canvas>
     </div>
 
     <div class="chart-card">
       <h3>Top Animes Mais Assistidos</h3>
-      <canvas id="chartTopAnimes" width="400" height="300"></canvas>
+      <canvas id="chartTopAnimes" width="100%" height="100%"></canvas>
     </div>
   </div>
 </section>

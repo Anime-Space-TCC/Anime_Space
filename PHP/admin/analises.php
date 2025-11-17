@@ -1,9 +1,6 @@
-<section class="admin-dashboard acessos">
+<section class="admin-acessos">
   <h3>Últimos Acessos</h3>
-  <div class="small">
-    Os 10 acessos mais recentes registrados na tabela <code>acessos</code>.
-  </div>
-
+  
   <table class="admin-table-acesso" id="tabela-acessos">
     <thead>
       <tr>
