@@ -4769,6 +4769,26 @@ body {
     font-family: Inter, system-ui, Segoe UI, Roboto, Arial;
 }
 
+.admin-geren{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 100px;
+    padding-top: 20px;
+    max-width: 100%;
+    margin: 50px auto;
+    flex-wrap: wrap;
+    background-color: #000;
+    border-radius: 10px;
+}
+
+.admin-geren h2 {
+    margin: 15px 0;
+    color: #ff9f00; 
+    font-size: 1.4rem;
+    text-shadow: 0 0 3px rgba(255, 159, 0, 0.5);
+}
+
 /* ========================= 
    ADMIN LINKS E NAVBAR
 ========================= */
@@ -4945,8 +4965,8 @@ body {
     justify-content: center;
     align-items: stretch;
     padding: 25px;
-    max-width: 1300px;
-    margin: 0 auto;
+    max-width: 100%;
+    margin: 50px auto;
     flex-wrap: wrap;
     background-color: #000;
     border-radius: 10px;
@@ -4961,8 +4981,8 @@ body {
 
 .admin-table-acesso {
     width: 100%;               
-    max-width: 910px;         
-    margin: 12px auto;        
+    max-width: 950px;       
+    margin: 20px auto;        
     border-collapse: collapse;
     background-color: #111; 
     border-radius: 10px;
@@ -5002,7 +5022,7 @@ body {
     width: 100%;
     border-collapse: collapse;
     margin: 20px auto;
-    background-color: rgba(26, 26, 26, 0.95);
+    background-color: #000;
     border-radius: 10px;
     overflow: hidden;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
@@ -5015,7 +5035,7 @@ body {
 }
 
 .admin-cruds .admin-table thead {
-    background-color: #ff9900;
+    background-color: #ff9f00;
     color: #111;
     font-weight: bold;
     text-transform: uppercase;
@@ -5031,8 +5051,9 @@ body {
 }
 
 .admin-cruds .admin-table tfoot {
-    background-color: rgba(26, 26, 26, 0.9);
+    background-color: #ff9f00;
     font-weight: bold;
+    color: #000;
 }
 
 .admin-cruds .admin-table img {
@@ -5063,7 +5084,7 @@ body {
 }
 
 .admin-cruds .admin-btn {
-    background-color: #ff9900;
+    background-color: #ff9f00;
     border: none;
 }
 
@@ -5077,7 +5098,7 @@ body {
 }
 
 .admin-cruds .admin-anime-table a:hover {
-    background-color: #ff9900;
+    background-color: #ff9f00;
     color: #0f0f0f;
 }
 
@@ -5112,7 +5133,7 @@ body {
 
 .admin-cruds .admin-form input[type="submit"],
 .admin-cruds .admin-form button {
-    background-color: #ff9900;
+    background-color: #ff9f00;
     color: #0f0f0f;
     border: none;
     cursor: pointer;
@@ -5158,13 +5179,13 @@ body {
 
 /* Hover */
 .admin-cruds .generos-container label:hover {
-    background-color: #ff9900;
+    background-color: #ff9f00;
     color: #0f0f0f;
 }
 
 /* Quando selecionado → pinta o label inteiro */
 .admin-cruds .generos-container label:has(input[type="checkbox"]:checked) {
-    background-color: #ff9900;
+    background-color: #ff9f00;
     color: #0f0f0f;
     font-weight: bold;
     box-shadow: 0 0 6px rgba(255, 153, 0, 0.6);
@@ -5218,7 +5239,6 @@ body {
    RESPONSIVO ADMIN
 ========================= */
 
-/* Menor que 1200px → reduz sidebar e main */
 @media (max-width: 1200px) {
     .admin-sidebar {
         width: 200px;

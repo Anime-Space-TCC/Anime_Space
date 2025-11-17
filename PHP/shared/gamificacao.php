@@ -1,4 +1,6 @@
 <?php 
+require_once __DIR__ . '/notificacoes.php';
+
 function adicionarXP($pdo, $user_id, $xpGanhos) {
     // Busca XP e nível atuais
     $stmt = $pdo->prepare("SELECT xp, nivel FROM users WHERE id = ?");

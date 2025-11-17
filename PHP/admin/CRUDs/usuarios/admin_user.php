@@ -88,7 +88,7 @@ if (!empty($busca)) {
         <?php endforeach; ?>
       </tbody>
       <tfoot>
-        <tr><td colspan="6">Total: <?= count($usuarios) ?> usuários cadastrados</td></tr>
+        <tr><td colspan="6">TOTAL: <?= count($usuarios) ?> usuários cadastrados</td></tr>
       </tfoot>
     </table>
   </main>

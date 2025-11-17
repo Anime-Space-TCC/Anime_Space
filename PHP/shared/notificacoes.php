@@ -82,10 +82,8 @@ function getNotificacoes($userId)
     ];
 }
 
-function criarNotificacao($userId, $titulo, $mensagem, $tipo = 'geral', $referenciaId = null)
+function criarNotificacao(PDO $pdo, $userId, $titulo, $mensagem, $tipo = 'geral', $referenciaId = null)
 {
-    global $pdo;
-
     $stmt = $pdo->prepare("
         INSERT INTO notificacoes 
         (user_id, titulo, mensagem, tipo, referencia_id, lida, data_criacao) 

@@ -97,7 +97,7 @@ if (!empty($busca)) {
       </tbody>
       <tfoot>
         <tr>
-          <td colspan="7">Total: <?= count($episodios) ?> episódios cadastrados</td>
+          <td colspan="7">TOTAL: <?= count($episodios) ?> episódios cadastrados</td>
         </tr>
       </tfoot>
     </table>

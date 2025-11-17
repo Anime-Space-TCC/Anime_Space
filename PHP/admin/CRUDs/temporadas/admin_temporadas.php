@@ -97,7 +97,7 @@ if (!empty($busca)) {
       </tbody>
       <tfoot>
         <tr>
-          <td colspan="8">Total: <?= count($temporadas) ?> temporadas cadastradas</td>
+          <td colspan="8">TOTAL: <?= count($temporadas) ?> temporadas cadastradas</td>
         </tr>
       </tfoot>
     </table>

@@ -90,7 +90,7 @@ unset($anime);
       </tbody>
       <tfoot>
         <tr>
-          <td colspan="5">Total: <?= count($animes) ?> animes cadastrados</td>
+          <td colspan="5">TOTAL: <?= count($animes) ?> animes cadastrados</td>
         </tr>
       </tfoot>
     </table>

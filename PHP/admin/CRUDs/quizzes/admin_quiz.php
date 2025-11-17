@@ -100,7 +100,7 @@ if (!empty($busca)) {
       </tbody>
       <tfoot>
         <tr>
-          <td colspan="7">Total: <?= count($quizzes) ?> quizzes cadastrados</td>
+          <td colspan="7">TOTAL: <?= count($quizzes) ?> quizzes cadastrados</td>
         </tr>
       </tfoot>
     </table>

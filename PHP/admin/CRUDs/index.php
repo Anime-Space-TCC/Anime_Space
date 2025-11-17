@@ -1,6 +1,5 @@
-<section class="painel-conteudo">
-  <h2 class="painel-titulo">Gerenciar CRUDs</h2>
-
+<section class="admin-geren">
+  <h2>Gerenciar CRUDs</h2>
   <div class="admin-cards">
 
     <div class="admin-card">

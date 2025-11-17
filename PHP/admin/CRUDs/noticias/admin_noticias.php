@@ -89,6 +89,11 @@ if (!empty($busca)) {
         </tr>
         <?php endforeach; ?>
     </tbody>
+    <tfoot>
+        <tr>
+          <td colspan="7">TOTAL: <?= count($noticias) ?> noticias cadastrados</td>
+        </tr>
+      </tfoot>
 </table>
 </body>
 </html>

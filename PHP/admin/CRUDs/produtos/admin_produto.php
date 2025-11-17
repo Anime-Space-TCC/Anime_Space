@@ -106,7 +106,7 @@ if (!empty($busca)) {
       </tbody>
       <tfoot>
         <tr>
-          <td colspan="11">Total: <?= count($produtos) ?> produto(s) cadastrado(s)</td>
+          <td colspan="11">TOTAL: <?= count($produtos) ?> produto(s) cadastrado(s)</td>
         </tr>
       </tfoot>
     </table>
