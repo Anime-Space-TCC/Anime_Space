@@ -12,7 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (verificarCodigo2FA($codigo)) {
         // Sucesso → redireciona para página inicial
-        header("Location: ../../PHP/user/profile.php");
+        header("Location: ../../PHP/user/perfil.php");
         exit;
     } else {
         $erro = "Código inválido ou expirado. Tente novamente.";

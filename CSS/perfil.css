@@ -1,0 +1,910 @@
+/* ========================= 
+          GLOBAIS
+   ========================= */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  background-color: rgb(0, 0, 0);
+  font-family: Arial, sans-serif;
+  background-image: url("../img/earth-1756274.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  min-height: 100vh;
+  color: #eee;
+  overflow-x: hidden;
+}
+
+/* =========================================
+   NAVBAR SUPERIOR 
+========================================= */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 22px;
+  background-color: rgba(0, 0, 0, 0);
+  border-bottom: 3px solid #ff9f00;
+  box-shadow: 0 0 16px #ff9f00;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1400;
+  backdrop-filter: blur(5px);
+  height: 80px;
+}
+
+/* =========================================
+   Espaço para o conteúdo 
+========================================= */
+.page-content {
+  padding-top: 60px;
+}
+
+/* ================= ÍCONES ================= */
+.menu-toggle,
+.perfil-btn,
+.busca-btn,
+.sinopse-btn {
+  background-color: rgba(0, 0, 0, 0.7);
+  border: none;
+  color: #ff9f00;
+  cursor: pointer;
+  border-radius: 10px;
+  padding: 6px 10px;
+  box-shadow: 0 0 8px rgba(255, 159, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.menu-toggle svg,
+.perfil-btn svg,
+.busca-btn svg,
+.sinopse-btn svg {
+  width: 30px;
+  height: 30px;
+  vertical-align: middle;
+  fill: currentColor;
+}
+
+.menu-toggle {
+  font-size: 1.8rem;
+  line-height: 1;
+  width: 50px;
+  height: 44px;
+}
+
+.menu-toggle:hover,
+.perfil-btn:hover,
+.busca-btn:hover,
+.sinopse-btn:hover {
+  background-color: #ff9f00;
+  color: #000;
+  transform: scale(1.1);
+}
+
+.nav-left,
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.nav-right {
+  gap: 10px;
+}
+
+.busca-container {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.busca-container input {
+  background: #1a1a1a;
+  border: 1px solid #ff9f00;
+  color: #ff9f00;
+  border-radius: 6px;
+  padding: 5px 8px;
+  outline: none;
+  width: 250px;
+  height: 40px;
+}
+
+.busca-container button[type="submit"] {
+  background-color: #ff9f00;
+  color: #000;
+  border: none;
+  border-radius: 6px;
+  padding: 12px 12px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.busca-container button[type="submit"]:hover {
+  background-color: #ffa733;
+}
+
+.busca-container input,
+.busca-container .busca-label,
+.busca-container button[type="submit"] {
+  display: none;
+}
+
+.busca-container.active input,
+.busca-container.active .busca-label,
+.busca-container.active button[type="submit"] {
+  display: inline-flex;
+}
+
+/* =========================================
+   PERFIL (LOGADO E NÃO LOGADO) 
+========================================= */
+
+.perfil-card {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 20px 15px 15px;
+  background: rgba(0, 0, 0, 1);
+  border: 2px solid #ff9f00;
+  border-radius: 16px;
+  box-shadow: 0 0 20px rgba(255, 159, 0, 0.3);
+  position: relative;
+  width: 250px;
+  height: 150px;
+  transition: all 0.3s ease-in-out;
+}
+
+.perfil-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 0 25px rgba(255, 159, 0, 0.6);
+}
+
+.perfil-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 159, 0, 0.2);
+  background: radial-gradient(
+    circle at top left,
+    rgba(255, 159, 0, 0.15),
+    transparent 10%
+  );
+  pointer-events: none;
+}
+
+.perfil-area {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  color: #ffcf6b;
+  width: 100%;
+}
+
+.perfil-foto {
+  width: 70px;
+  height: 80px;
+  margin-top: 20px;
+  border-radius: 16%;
+  border: 2px solid #ff9f00;
+  object-fit: cover;
+  box-shadow: 0 0 12px rgba(255, 159, 0, 0.6);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.perfil-foto:hover {
+  transform: scale(1.08);
+  box-shadow: 0 0 16px rgba(255, 190, 70, 0.8);
+}
+
+.perfil-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex: 1;
+  min-width: 0;
+  background: rgba(0, 0, 0, 0.55);
+  padding: 5px 5px 5px;
+  border-radius: 12px;
+  box-shadow: inset 0 0 6px rgba(255, 200, 80, 0.25);
+}
+
+.perfil-nome {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #ffd86b;
+  text-shadow: 0 0 10px rgba(255, 200, 80, 0.8), 0 0 20px rgba(255, 160, 0, 0.6);
+  letter-spacing: 0.5px;
+  margin-bottom: 6px;
+  margin-top: 20px;
+  text-align: center;
+}
+
+.perfil-nivel {
+  font-size: 0.9rem;
+  color: #ffe7b3;
+  text-align: center;
+  text-shadow: 0 0 6px rgba(255, 200, 80, 0.4);
+  margin-bottom: 6px;
+}
+
+.exp-bar {
+  width: 100px;
+  height: 12px;
+  background: #333;
+  border-radius: 10px;
+  margin: 6px auto;
+  overflow: hidden;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.5) inset, 0 0 6px rgba(255, 200, 50, 0.2);
+}
+
+.exp-fill {
+  height: 100%;
+  width: 45%;
+  background: linear-gradient(90deg, #ffce00, #ff4e50, #ffce00);
+  background-size: 200% 100%;
+  border-radius: 10px;
+  transition: width 0.4s ease-in-out, background-position 1.5s linear;
+  animation: xpFlow 2.5s linear infinite;
+}
+
+.xp-text {
+  font-size: 0.85rem;
+  color: #ccc;
+  text-align: center;
+  margin-top: 4px;
+  text-shadow: 0 0 5px rgba(255, 255, 255, 0.15);
+}
+
+@keyframes xpFlow {
+  0% {
+    background-position: 0% 0%;
+  }
+  100% {
+    background-position: 200% 0%;
+  }
+}
+
+/* =========================================
+   MENU LATERAL
+========================================= */
+
+.menu-lateral {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 260px;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.9);
+  overflow-y: auto;
+  transform: translateX(-100%);
+  transition: transform 0.3s ease;
+  padding-top: 90px;
+  z-index: 1300;
+  box-shadow: 2px 0 10px rgba(255, 159, 0, 0.6);
+  border-top-right-radius: 12px;
+  border-bottom-right-radius: 12px;
+}
+
+.menu-lateral.open {
+  transform: translateX(0);
+}
+
+.menu-lateral a {
+  display: block;
+  padding: 1rem 2rem;
+  color: #ff9f00;
+  text-decoration: none;
+  font-weight: 600;
+  border-left: 4px solid transparent;
+  transition: background-color 0.25s, border-color 0.25s, color 0.25s;
+}
+
+.menu-lateral a:hover {
+  background-color: #ff9f00;
+  color: #000;
+  border-left-color: #000;
+}
+
+/* =========================
+       PERFIL RPG CENTRALIZADO
+========================= */
+
+.perfil-rpg {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 80px 20px 80px 30px;
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.perfil-rpg::before {
+  content: "";
+  position: absolute;
+  top: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 1000px;
+  bottom: 40px;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(6px);
+  z-index: -1;
+  border-radius: 20px;
+}
+
+/* =========================
+       GRID DE BLOCOS
+========================= */
+
+.blocos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(50px, 2fr));
+  gap: 40px; 
+  width: 100%;
+  max-width: 1000px;
+  margin-bottom: 50px;
+}
+
+.bloco {
+  background-color: rgba(0, 0, 0, 0.55);
+  border: 2px solid #ff9f00;
+  border-radius: 12px;
+  padding: 50px;
+  display: flex;
+  flex-direction: column;
+}
+
+.avatar-section {
+  background-color: rgba(0, 0, 0, 0.65);
+  border: 2px solid #ff9f00;
+  border-radius: 15px;
+  padding: 20px;
+  text-align: center;
+  width: 100%;
+  align-items: center;
+}
+
+.avatar {
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 4px solid #ff9f00;
+  margin: 0 auto 15px auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  background: #222;
+}
+
+.info-player h2 {
+  font-size: 26px;
+  color: #ff9f00;
+  text-shadow: 1px 1px 5px #000;
+  margin-bottom: 5px;
+}
+
+.info-player .level {
+  font-weight: bold;
+  color: #fff;
+  margin-bottom: 10px;
+}
+
+.exp-bar {
+  width: 200px;
+  height: 12px;
+  background: #333;
+  border-radius: 10px;
+  margin: 6px auto;
+  overflow: hidden;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.5) inset;
+}
+
+.exp-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #ffce00, #ff4e50);
+  transition: width 0.4s ease-in-out;
+  border-radius: 10px;
+}
+
+.xp-text {
+  font-size: 0.9em;
+  color: #ccc;
+  margin-top: 4px;
+}
+
+.favoritos-section,
+.recomendacoes-section {
+  width: 95%;
+  margin: 0px auto;
+}
+
+.favoritos-section h3,
+.recomendacoes-section h3,
+.historico-animes-section h3 {
+  color: #ff9f00;
+  margin-bottom: 10px;
+  text-shadow: 1px 1px 3px #000;
+}
+
+.historico-animes-section {
+  width: 98%;
+  margin: 0 auto;
+}
+
+.historico-animes-section .cards-container .card {
+  flex: 1 1 calc(20% - 8px);
+  max-width: 100px;
+  max-height: 250px;
+  text-align: center;
+  margin: 0 auto;
+  background-color: rgba(0, 0, 0, 0.6);
+  border: 2px solid #ff9f00;
+  border-radius: 10px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.historico-animes-section .cards-container .card img {
+  width: 100%;
+  height: 120px;
+  object-fit: cover;
+  border-bottom: 2px solid #ff9f00;
+}
+
+.historico-animes-section .cards-container .card p {
+  font-size: 0.8rem;
+  color: #ff9f00;
+  margin: 4px 6px;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* =========================
+       CARDS 
+========================= */
+
+.cards-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  max-height: 300px;
+  overflow-y: auto;
+  padding: 5px;
+}
+
+.cards-container .card {
+  flex: 1 1 calc(25% - 10px);
+  max-width: 100px;
+  max-height: 150px;
+  margin: 0 auto;
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  background-color: rgba(0, 0, 0, 0.6);
+  border: 2px solid #ff9f00;
+  border-radius: 10px;
+  overflow: hidden;
+  text-align: center;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.cards-container .card img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  border-bottom: 2px solid #ff9f00;
+}
+
+.cards-container .card p {
+  margin: 5px auto;
+  color: #ff9f00;
+  font-weight: bold;
+  font-size: 0.9rem;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.5em;
+  width: 100%;
+}
+
+.cards-container .card small {
+  display: block;
+  color: #ccc;
+  font-size: 0.8rem;
+}
+
+.cards-container .card:hover {
+  transform: translateY(-5px) scale(1.05);
+  box-shadow: 0 0 15px #ff9f00;
+}
+
+/* =========================
+     FORMULÁRIO AVATAR
+========================= */
+
+.upload-avatar-form {
+  margin: 10px auto;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  max-width: 400px;
+  width: 90%;
+}
+
+.upload-avatar-form input[type="file"] {
+  display: block;
+  margin: 0 0 10px 0;
+  width: 100%;
+  border-radius: 6px;
+}
+
+.btn-upload {
+  display: inline-block;
+  background-color: #ff9f00;
+  color: #000;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  text-shadow: 1px 1px 2px #000;
+  transition: all 0.3s ease;
+  text-decoration: none;
+}
+
+.upload-avatar-form .btn-upload:hover {
+  background-color: #fff;
+  color: #ff9f00;
+  box-shadow: 0 0 8px #ff9f00;
+}
+
+/* =========================
+         EDITAR PERFIL
+========================= */
+
+.perfil {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+.perfil-container {
+  width: 100%;
+  max-width: 650px;
+  padding: 30px 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.perfil-editar-card {
+  background-color: rgba(0, 0, 0, 0.6);
+  padding: 30px 40px;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(255, 159, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.perfil-titulo {
+  text-align: center;
+  font-size: 1.8rem;
+  color: #ff9f00;
+  margin-bottom: 10px;
+}
+
+.perfil-mensagem {
+  text-align: center;
+  color: #2e7d32;
+  font-weight: 500;
+}
+
+.perfil-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.perfil-label {
+  display: block;
+  margin: 0;
+  padding-left: 5px;
+  font-weight: bold;
+  font-size: 1rem;
+  color: #ff9f00;
+}
+
+.perfil-input {
+  width: calc(100% - 20px);
+  margin: 5px 10px 10px 10px;
+  padding: 12px 15px;
+  border-radius: 8px;
+  border: 2px solid #ff9f00;
+  background-color: #222;
+  color: #fff;
+  outline: none;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.perfil-input:focus {
+  border-color: #ffb733;
+  box-shadow: 0 0 5px rgba(255, 159, 0, 0.6);
+}
+
+.perfil-btn {
+  padding: 10px;
+  background-color: #ff9f00;
+  color: #222;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.perfil-btn:hover {
+  background-color: #ffb733;
+  color: #111;
+}
+
+.perfil-link-voltar {
+  text-align: center;
+  display: block;
+  margin-top: 10px;
+  color: #ff9f00;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.perfil-link-voltar:hover {
+  color: #ffb733;
+}
+
+/* =========================
+     FICHA RPG INTEGRADA
+============================ */
+
+.ficha-rpg-section {
+  text-align: center;
+  background: rgba(0, 0, 0, 0.65);
+  border-radius: 20px;
+  padding: 35px 25px;
+  margin: 0px auto;
+  width: 95%;
+  max-width: 900px;
+  border: 2px solid #ff9f00;
+  backdrop-filter: blur(6px);
+}
+
+.ficha-rpg-section h3 {
+  font-size: 1.8em;
+  color: #ff9f00;
+  margin-bottom: 25px;
+  text-shadow: 1px 1px 3px #000;
+  border-bottom: 1px solid rgba(255, 159, 0, 0.3);
+  display: inline-block;
+  padding-bottom: 5px;
+}
+
+.atributos {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 35px;
+  flex-wrap: wrap;
+}
+
+.atributo {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.atributo:hover {
+  transform: scale(1.05);
+}
+
+.nome-atributo {
+  font-size: 1em;
+  color: #eee;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.circulo {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  background: radial-gradient(circle at top, #222 10%, #333);
+  border: 3px solid #ff9f00;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 15px rgba(255, 159, 0, 0.3);
+  transition: transform 0.25s, box-shadow 0.3s;
+}
+
+.circulo span {
+  font-size: 1.6em;
+  font-weight: bold;
+  color: #ff9f00;
+  text-shadow: 1px 1px 2px #000;
+}
+
+.circulo:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 25px rgba(255, 159, 0, 0.7);
+}
+
+.medalhas-section {
+  margin-top: 20px;
+}
+
+.medalhas-section h4 {
+  color: #ff9f00;
+  font-size: 1.3em;
+  margin-bottom: 15px;
+  text-shadow: 1px 1px 2px #000;
+}
+
+.medalhas {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.medalha {
+  font-size: 2.3em;
+  cursor: pointer;
+  transition: transform 0.25s, filter 0.25s;
+  filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.2));
+}
+
+.medalha:hover {
+  transform: scale(1.2) rotate(5deg);
+  filter: drop-shadow(0 0 10px rgba(255, 159, 0, 0.6));
+}
+
+.ficha-rpg-section h3,
+.stats-section h3,
+.favoritos-section h3,
+.recomendacoes-section h3 {
+  text-align: center;
+}
+
+/* =========================
+       BOTÃO LOGOUT
+========================= */
+
+.logout-container {
+  width: 100%;
+  text-align: center;
+  margin: 30px 0 60px 0;
+}
+
+.btn-logout {
+  background: #c62828;
+  color: #fff;
+  padding: 12px 30px;
+  border-radius: 10px;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 18px;
+  letter-spacing: 1px;
+  display: inline-block;
+  transition: 0.3s ease;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.3);
+}
+
+.btn-logout:hover {
+  background: #ff4d4d;
+  transform: scale(1.05);
+}
+
+.btn-logout.boss {
+  background: linear-gradient(45deg, #780000, #ff0000);
+  text-shadow: 0 0 10px #ff0000;
+}
+.btn-logout.boss:hover {
+  transform: scale(1.1) rotate(-1deg);
+  box-shadow: 0 0 15px #ff1e1e;
+}
+
+/* =========================
+    UPGRADE RPG
+========================= */
+.upgrade-container {
+  max-width: 500px;
+  margin: 50px auto;
+  background-color: rgba(0, 0, 0, 0.7);
+  padding: 30px;
+  border-radius: 10px;
+  color: #fff;
+}
+
+.upgrade-container h1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.upgrade-container label {
+  display: block;
+  margin: 15px 0 5px;
+}
+
+.upgrade-container input {
+  width: 100%;
+  padding: 8px;
+  border-radius: 5px;
+  border: none;
+}
+
+.upgrade-container button {
+  margin-top: 20px;
+  width: 100%;
+  padding: 10px;
+  background-color: #ff9800;
+  color: #000;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.upgrade-container button:hover {
+  background-color: #ffa733;
+}
+
+.btn-upgrade {
+  display: inline-block;
+  margin-top: 10px;
+  background: linear-gradient(90deg, #ff6a00, #ee0979);
+  color: #fff;
+  font-weight: bold;
+  padding: 10px 16px;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.btn-upgrade:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 10px #ee0979;
+}

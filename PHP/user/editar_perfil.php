@@ -75,7 +75,7 @@ if (!$fotoPerfil) {
 <head>
     <meta charset="UTF-8">
     <title>Editar Perfil</title>
-    <link rel="stylesheet" href="../../CSS/stylePerf.css">
+    <link rel="stylesheet" href="../../CSS/perfil.css">
     <link rel="icon" href="../../img/slogan3.png" type="image/png">
 </head>
 <body class="perfil">

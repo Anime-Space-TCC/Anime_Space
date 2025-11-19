@@ -57,7 +57,7 @@ $atributos = [
 <head>
     <meta charset="UTF-8">
     <title>Perfil - Anime Space</title>
-    <link rel="stylesheet" href="../../CSS/stylePerf.css">
+    <link rel="stylesheet" href="../../CSS/perfil.css">
     <link rel="icon" href="../../img/slogan3.png" type="image/png">
 </head>
 
