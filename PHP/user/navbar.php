@@ -15,7 +15,8 @@ $paginasSemBusca = [
     'semanal',
     'confirmar_pagamento',
     'quizzes',
-    'perfil'
+    'perfil',
+    'sobre'
 ];
 
 // Se o usuário estiver logado

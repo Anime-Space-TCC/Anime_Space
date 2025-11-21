@@ -455,10 +455,10 @@ body {
 }
 
 .notif-item.promo .promo-img {
-  width: 48px; 
+  width: 48px;
   height: 48px;
-  object-fit: cover; 
-  border-radius: 6px; 
+  object-fit: cover;
+  border-radius: 6px;
   flex-shrink: 0;
 }
 
@@ -3211,116 +3211,123 @@ body {
 }
 
 /* =========================
-        SOBRE 
+        SOBRE - NOVO DESIGN
 ========================= */
 
-.sobre .links {
-  padding: 30px;
-  background-color: #1a1a1a;
+.sobre .page-content {
+  margin-top: 110px;
+}
+
+.page-title {
   text-align: center;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.8);
-}
-
-.sobre .links h1 {
-  font-size: 36px;
-  color: #ff9f00;
-  margin-bottom: 10px;
-}
-
-.sobre .links nav {
-  margin-top: 15px;
-  background-color: #111;
-  padding: 10px 0;
-  border-radius: 10px;
+  font-size: 34px;
+  color: #000000;
+  margin-bottom: 30px;
+  margin-top: 30px;
   display: flex;
-  justify-content: center;
-  gap: 20px;
+  flex-direction: column; 
+  align-items: center;
+  gap: 10px; 
+  background-color: #ff9f00;
+  border-radius: 12px;
+  padding-top: 20px;
 }
 
-.sobre .links a {
-  color: #fff;
-  font-size: 16px;
-  text-decoration: none;
-  padding: 5px 15px;
-  border-right: 1px solid #555;
-}
-
-.sobre .links a:last-child {
-  border-right: none;
-}
-
-.sobre .links a:hover {
-  color: #ff9f00;
+.page-title img {
+  width: 200px;      
+  height: auto;
+  display: block;
+  opacity: 0.9;    
+  filter: drop-shadow(0 0 5px rgba(0,0,0,0.5));
+  background-color: #000000;
+  border-radius: 12px;
 }
 
 .sobre main {
   max-width: 900px;
-  margin: 50px auto;
-  padding: 0 20px;
+  margin: 60px auto 40px auto;
+  padding: 40px 30px;
+  background: rgba(20, 20, 20, 0.85);
+  backdrop-filter: blur(8px);
+  border-radius: 14px;
+  box-shadow: 0 0 25px rgba(0, 0, 0, 0.7);
 }
 
 .sobre .texto {
-  text-align: center;
-  line-height: 1.8;
-  margin-bottom: 30px;
+  text-align: justify;
+  line-height: 1.9;
+  margin-bottom: 35px;
 }
 
 .sobre .texto p {
-  color: #ddd;
-  margin-bottom: 15px;
-  font-size: 16px;
+  color: #eee;
+  margin-bottom: 18px;
+  font-size: 17px;
 }
 
 .sobre .texto ul {
   list-style: none;
   padding: 0;
-  margin-top: 15px;
+  margin-top: 20px;
 }
 
 .sobre .texto ul li {
-  background-color: #1a1a1a;
-  margin: 8px auto;
-  padding: 10px 15px;
-  border-radius: 8px;
-  max-width: 600px;
-  color: #ff9f00;
-  font-size: 15px;
+  margin: 10px auto;
+  padding: 12px 20px;
+  border-radius: 10px;
+  max-width: 550px;
+  color: #000000;
+  font-size: 15.5px;
+  text-align: left;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+  background-color: #ff9f00;
+  font-weight: 700;
+}
+
+.sobre .texto ul li:hover {
+  transform: translateX(5px);
+  background-color: #505050;
 }
 
 .sobre h2 {
   text-align: center;
-  font-size: 26px;
+  font-size: 28px;
   color: #ff9f00;
-  margin-bottom: 20px;
+  margin-bottom: 25px;
 }
 
 .sobre .equipe {
   display: flex;
   justify-content: center;
-  gap: 20px;
+  gap: 25px;
   flex-wrap: wrap;
-  margin-bottom: 30px;
+  margin-bottom: 35px;
 }
 
 .sobre .equipe img {
-  width: 140px;
-  height: 140px;
+  width: 150px;
+  height: 150px;
   object-fit: cover;
-  border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-  transition: transform 0.3s;
+  border-radius: 12px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.6);
+  border: 2px solid #ff9f00;
+  transition: transform 0.3s, box-shadow 0.3s;
 }
 
 .sobre .equipe img:hover {
-  transform: scale(1.05);
+  transform: scale(1.07);
+  box-shadow: 0 8px 20px rgba(255, 159, 0, 0.4);
 }
 
-.sobre footer {
+.sobre .equipe-desc {
+  margin-top: 10px;
   text-align: center;
-  background-color: #1a1a1a;
-  padding: 20px;
-  font-size: 14px;
-  color: #aaa;
+}
+
+.sobre .equipe-desc p {
+  color: #ddd;
+  font-size: 16px;
+  margin-bottom: 10px;
 }
 
 /* =========================

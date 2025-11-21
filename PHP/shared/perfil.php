@@ -51,48 +51,67 @@ function buscarRecomendacoes(int $userId): array
 {
     global $pdo;
 
-    $stmt = $pdo->prepare("
-        SELECT a.id, a.nome, a.capa, r.motivo
+    $sql = "
+        SELECT 
+            a.id,
+            a.nome,
+            a.capa
         FROM animes a
         JOIN anime_generos ag ON a.id = ag.anime_id
-        LEFT JOIN recomendacoes r ON a.id = r.anime_id AND r.user_id = :userId1
+
+        LEFT JOIN recomendacoes r 
+            ON r.anime_id = a.id 
+            AND r.user_id = :u1
+
         WHERE ag.genero_id IN (
+
             SELECT ag2.genero_id
             FROM anime_generos ag2
+
             JOIN (
-                SELECT anime_id FROM favoritos WHERE user_id = :userId2
+                SELECT anime_id FROM favoritos WHERE user_id = :u2
                 UNION
-                SELECT anime_id FROM avaliacoes WHERE user_id = :userId3
+                SELECT anime_id FROM historico WHERE user_id = :u3
+                UNION
+                SELECT anime_id FROM avaliacoes WHERE user_id = :u4
                 UNION
                 SELECT e.anime_id
                 FROM episodios e
                 JOIN episodio_reacoes er ON e.id = er.episodio_id
-                WHERE er.user_id = :userId4 AND er.reacao = 'like'
+                WHERE er.user_id = :u5 AND er.reacao = 'like'
                 UNION
                 SELECT e.anime_id
                 FROM episodios e
                 JOIN comentarios c ON e.id = c.episodio_id
-                WHERE c.user_id = :userId5
-            ) AS interacoes ON ag2.anime_id = interacoes.anime_id
+                WHERE c.user_id = :u6
+            ) AS inter ON ag2.anime_id = inter.anime_id
         )
-        AND a.id NOT IN (
-            SELECT anime_id FROM favoritos WHERE user_id = :userId6
-        )
-        GROUP BY a.id
-        ORDER BY COUNT(*) DESC
-        LIMIT 3
-    ");
 
-    // Execute passando todos os parâmetros
+        AND a.id NOT IN (
+            SELECT anime_id FROM favoritos WHERE user_id = :u7
+        )
+
+        AND a.id NOT IN (
+            SELECT anime_id FROM historico WHERE user_id = :u8
+        )
+
+        GROUP BY a.id
+        ORDER BY RAND()
+        LIMIT 3
+    ";
+
+    $stmt = $pdo->prepare($sql);
+
     $stmt->execute([
-        'userId1' => $userId,
-        'userId2' => $userId,
-        'userId3' => $userId,
-        'userId4' => $userId,
-        'userId5' => $userId,
-        'userId6' => $userId
+        'u1' => $userId,
+        'u2' => $userId,
+        'u3' => $userId,
+        'u4' => $userId,
+        'u5' => $userId,
+        'u6' => $userId,
+        'u7' => $userId,
+        'u8' => $userId
     ]);
 
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
-

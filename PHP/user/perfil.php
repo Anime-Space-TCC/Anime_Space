@@ -156,20 +156,23 @@ $atributos = [
                     <div class="bloco recomendacoes-section">
                         <h3>Recomendações</h3>
                         <div class="cards-container">
+
                             <?php if (!empty($recomendacoes)): ?>
                                 <?php foreach ($recomendacoes as $r): ?>
-                                    <div class="card">
+                                    <a href="../../PHP/user/episodes.php?id=<?= $r['id'] ?>" class="card">
                                         <img src="../../img/<?= htmlspecialchars($r['capa']) ?>"
                                             alt="<?= htmlspecialchars($r['nome']) ?>">
                                         <p><?= htmlspecialchars($r['nome']) ?></p>
-                                        <?php if (!empty($r['motivo'])): ?><small><?= htmlspecialchars($r['motivo']) ?></small><?php endif; ?>
-                                    </div>
+                                    </a>
                                 <?php endforeach; ?>
+
                             <?php else: ?>
                                 <p>Sem recomendações no momento.</p>
                             <?php endif; ?>
+
                         </div>
                     </div>
+
                 </div>
 
                 <!-- Histórico -->
@@ -182,7 +185,7 @@ $atributos = [
                                     <img src="../../img/<?= htmlspecialchars($h['capa']) ?>"
                                         alt="<?= htmlspecialchars($h['nome']) ?>">
                                     <p><?= htmlspecialchars($h['nome']) ?></p>
-                                    <small><?= date('d/m/Y H:i', strtotime($h['data_acesso'])) ?></small>
+                                   <small><?= date('d/m/Y', strtotime($h['data_acesso'])) ?><br><?= date('H:i', strtotime($h['data_acesso'])) ?></small>
                                 </a>
                             <?php endforeach; ?>
                         <?php else: ?>
