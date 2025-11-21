@@ -23,11 +23,12 @@ if (!empty($_FILES['imagem']['name'])) {
 
 if ($id) {
     // Atualizar
-    $sql = "UPDATE noticias SET titulo = ?, resumo = ?, url_externa = ?, tags = ?" . 
-           ($imagem_nome ? ", imagem = ?" : "") . 
-           " WHERE id = ?";
+    $sql = "UPDATE noticias SET titulo = ?, resumo = ?, url_externa = ?, tags = ?" .
+        ($imagem_nome ? ", imagem = ?" : "") .
+        " WHERE id = ?";
     $params = [$titulo, $resumo, $url_externa, $tags];
-    if ($imagem_nome) $params[] = $imagem_nome;
+    if ($imagem_nome)
+        $params[] = $imagem_nome;
     $params[] = $id;
     $stmt = $pdo->prepare($sql);
     $stmt->execute($params);

@@ -33,13 +33,20 @@ if (!empty($_FILES['imagem']['name'])) {
 }
 
 // Validação básica
-if ($sku === '') die("O campo SKU é obrigatório.");
-if ($nome === '') die("O campo Nome é obrigatório.");
-if ($preco < 0) die("O preço deve ser maior ou igual a 0.");
-if($promocao && $preco_promocional <= 0) die("O preço promocional deve ser maior que 0 quando o produto está em promoção.");
-if ($preco_promocional < 0) die("O preço promocional deve ser maior ou igual a 0.");
-if ($estoque < 0) die("O estoque deve ser maior ou igual a 0.");
-if ($quantidade_vendida < 0) die("A quantidade vendida deve ser maior ou igual a 0.");
+if ($sku === '')
+    die("O campo SKU é obrigatório.");
+if ($nome === '')
+    die("O campo Nome é obrigatório.");
+if ($preco < 0)
+    die("O preço deve ser maior ou igual a 0.");
+if ($promocao && $preco_promocional <= 0)
+    die("O preço promocional deve ser maior que 0 quando o produto está em promoção.");
+if ($preco_promocional < 0)
+    die("O preço promocional deve ser maior ou igual a 0.");
+if ($estoque < 0)
+    die("O estoque deve ser maior ou igual a 0.");
+if ($quantidade_vendida < 0)
+    die("A quantidade vendida deve ser maior ou igual a 0.");
 
 // Atualiza ou insere o produto
 if ($id) {
@@ -48,14 +55,35 @@ if ($id) {
             SET sku=?, nome=?, descricao=?, preco=?, promocao=?, preco_promocional=?, estoque=?, quantidade_vendida=?, imagem=?, categoria=?, ativo=? 
             WHERE id=?";
     $pdo->prepare($sql)->execute([
-        $sku, $nome, $descricao, $preco, $promocao, $preco_promocional, $estoque, $quantidade_vendida, $imagem, $categoria, $ativo, $id
+        $sku,
+        $nome,
+        $descricao,
+        $preco,
+        $promocao,
+        $preco_promocional,
+        $estoque,
+        $quantidade_vendida,
+        $imagem,
+        $categoria,
+        $ativo,
+        $id
     ]);
 } else {
     // Insere novo produto
     $sql = "INSERT INTO produtos (sku, nome, descricao, preco, promocao, preco_promocional, estoque, quantidade_vendida, imagem, categoria, ativo) 
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     $pdo->prepare($sql)->execute([
-        $sku, $nome, $descricao, $preco, $promocao, $preco_promocional, $estoque, $quantidade_vendida, $imagem, $categoria, $ativo
+        $sku,
+        $nome,
+        $descricao,
+        $preco,
+        $promocao,
+        $preco_promocional,
+        $estoque,
+        $quantidade_vendida,
+        $imagem,
+        $categoria,
+        $ativo
     ]);
 }
 

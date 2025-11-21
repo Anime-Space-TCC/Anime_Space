@@ -13,7 +13,8 @@ if (session_status() === PHP_SESSION_NONE) {
 // ==============================
 
 // Busca todos os generos disponiveis
-function buscarAnimePorId(PDO $pdo, int $id): ?array {
+function buscarAnimePorId(PDO $pdo, int $id): ?array
+{
     // Busca os dados básicos do anime
     $stmt = $pdo->prepare("
         SELECT 
@@ -30,7 +31,8 @@ function buscarAnimePorId(PDO $pdo, int $id): ?array {
     $stmt->execute([$id]);
     $anime = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    if (!$anime) return null;
+    if (!$anime)
+        return null;
 
     // Busca os gêneros como array
     $stmt2 = $pdo->prepare("
@@ -46,29 +48,32 @@ function buscarAnimePorId(PDO $pdo, int $id): ?array {
 }
 
 // Buscar a grade semanal de animes
-function buscarGradeSemanal($pdo) {
-  $sql = "SELECT * FROM animes WHERE dia_exibicao IS NOT NULL ORDER BY FIELD(dia_exibicao, 'segunda','terça','quarta','quinta','sexta','sábado','domingo'), hora_exibicao";
-  $stmt = $pdo->query($sql);
-  $animes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+function buscarGradeSemanal($pdo)
+{
+    $sql = "SELECT * FROM animes WHERE dia_exibicao IS NOT NULL ORDER BY FIELD(dia_exibicao, 'segunda','terça','quarta','quinta','sexta','sábado','domingo'), hora_exibicao";
+    $stmt = $pdo->query($sql);
+    $animes = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-  // Agrupar por dia
-  $grade = [];
-  foreach ($animes as $anime) {
-    $dia = ucfirst($anime['dia_exibicao']);
-    $grade[$dia][] = $anime;
-  }
-  return $grade;
+    // Agrupar por dia
+    $grade = [];
+    foreach ($animes as $anime) {
+        $dia = ucfirst($anime['dia_exibicao']);
+        $grade[$dia][] = $anime;
+    }
+    return $grade;
 }
 
 // Busca os animes com maior nota
-function buscarTopAnimes(PDO $pdo, int $limite = 5): array {
+function buscarTopAnimes(PDO $pdo, int $limite = 5): array
+{
     $stmt = $pdo->prepare("SELECT id, nome, capa, nota, sinopse FROM animes ORDER BY nota DESC LIMIT :limite");
     $stmt->bindValue(':limite', $limite, PDO::PARAM_INT);
     $stmt->execute();
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
-function buscarLancamentos(PDO $pdo, int $limite = 9): array {
+function buscarLancamentos(PDO $pdo, int $limite = 9): array
+{
     $stmt = $pdo->prepare("
         SELECT id, nome, capa, nota 
         FROM animes 
@@ -82,7 +87,8 @@ function buscarLancamentos(PDO $pdo, int $limite = 9): array {
 
 
 // Busca animes pelo nome (termo de pesquisa)
-function buscarAnimePorNome(PDO $pdo, string $nome): array {
+function buscarAnimePorNome(PDO $pdo, string $nome): array
+{
     $stmt = $pdo->prepare("SELECT id, nome, capa, sinopse FROM animes WHERE nome LIKE :nome");
     $stmt->execute(['nome' => "%$nome%"]);
     return $stmt->fetchAll(PDO::FETCH_ASSOC);

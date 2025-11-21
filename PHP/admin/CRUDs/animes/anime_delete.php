@@ -1,6 +1,6 @@
 <?php
-require __DIR__ . '/../../../shared/conexao.php'; 
-session_start(); 
+require __DIR__ . '/../../../shared/conexao.php';
+session_start();
 
 // Verifica se o usuário está logado como admin
 if (!isset($_SESSION['tipo']) || $_SESSION['tipo'] !== 'admin') {

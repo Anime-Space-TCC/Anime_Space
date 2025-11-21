@@ -7,8 +7,9 @@ verificarLogin();
 $grade = buscarGradeSemanal($pdo);
 
 //Função para limitar o número de animes exibidos por dia
-function limitarAnimesPorDia(array $lista, int $limite = 3): array {
-    return array_slice($lista, 0, $limite);
+function limitarAnimesPorDia(array $lista, int $limite = 3): array
+{
+  return array_slice($lista, 0, $limite);
 }
 ?>
 
@@ -32,24 +33,24 @@ function limitarAnimesPorDia(array $lista, int $limite = 3): array {
       <?php
       $diasSemana = ['Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado', 'Domingo'];
       foreach ($diasSemana as $dia):
-      ?>
-        <div class="dia">
-          <h2><?= $dia ?></h2>
-          <?php if (!empty($grade[$dia])): ?>
-            <?php foreach (limitarAnimesPorDia($grade[$dia]) as $anime): ?>
-              <div class="anime-item">
-                <img src="../../img/<?= htmlspecialchars($anime['capa']) ?>" alt="<?= htmlspecialchars($anime['nome']) ?>">
-                <div class="anime-info">
-                  <strong><?= htmlspecialchars($anime['nome']) ?></strong>
-                  <span>🕒 <?= date('H:i', strtotime($anime['hora_exibicao'])) ?></span>
-                  <a href="../../PHP/user/episodes.php?id=<?= $anime['id'] ?>">Ver episódios</a>
-                </div>
-              </div>
-            <?php endforeach; ?>
-          <?php else: ?>
-            <p>Nenhum anime neste dia.</p>
-          <?php endif; ?>
-        </div>
+        ?>
+          <div class="dia">
+            <h2><?= $dia ?></h2>
+            <?php if (!empty($grade[$dia])): ?>
+                <?php foreach (limitarAnimesPorDia($grade[$dia]) as $anime): ?>
+                    <div class="anime-item">
+                      <img src="../../img/<?= htmlspecialchars($anime['capa']) ?>" alt="<?= htmlspecialchars($anime['nome']) ?>">
+                      <div class="anime-info">
+                        <strong><?= htmlspecialchars($anime['nome']) ?></strong>
+                        <span>🕒 <?= date('H:i', strtotime($anime['hora_exibicao'])) ?></span>
+                        <a href="../../PHP/user/episodes.php?id=<?= $anime['id'] ?>">Ver episódios</a>
+                      </div>
+                    </div>
+                <?php endforeach; ?>
+            <?php else: ?>
+                <p>Nenhum anime neste dia.</p>
+            <?php endif; ?>
+          </div>
       <?php endforeach; ?>
     </div>
   </main>

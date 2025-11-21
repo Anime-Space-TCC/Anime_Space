@@ -8,7 +8,8 @@ verificarLogin();
 
 $porPagina = 10;
 $pagina = isset($_GET['pagina']) ? (int) $_GET['pagina'] : 1;
-if ($pagina < 1) $pagina = 1;
+if ($pagina < 1)
+  $pagina = 1;
 
 $offset = ($pagina - 1) * $porPagina;
 
@@ -76,7 +77,7 @@ $totalPaginas = ceil($totalEpisodios / $porPagina);
             <a href="?pagina=<?= $pagina + 1 ?>">Próxima &raquo;</a>
           <?php endif; ?>
         </div>
-    </section>
+      </section>
       </section>
       <!-- Coluna da direita (anúncios) -->
       <aside class="ads-lateral-direita">

@@ -28,6 +28,7 @@
         <li><a href="../../PHP/user/suporte.php">Central de Ajuda</a></li>
         <li><a href="../../PHP/user/suporte.php">Contato</a></li>
         <li><a href="../../PHP/user/termos_uso.php">Termos de Uso</a></li>
+        <li><a href="../../PHP/user/termos_privacidade.php">Política de Privacidade</a></li>
       </ul>
     </div>
 

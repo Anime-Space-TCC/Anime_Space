@@ -11,13 +11,13 @@ if (!isset($_SESSION['tipo']) || $_SESSION['tipo'] !== 'admin') {
 $id = $_GET['id'] ?? null;
 
 $temporada = [
-  'anime_id'      => '',
-  'numero'        => '',
-  'nome'          => '',
-  'ano_inicio'    => '',
-  'ano_fim'       => '',
+  'anime_id' => '',
+  'numero' => '',
+  'nome' => '',
+  'ano_inicio' => '',
+  'ano_fim' => '',
   'qtd_episodios' => '',
-  'capa'          => ''
+  'capa' => ''
 ];
 
 // Busca todos os animes
@@ -52,7 +52,7 @@ if ($id) {
   <main class="admin-form">
     <form method="post">>
       <?php if ($id): ?>
-        <input type="hidden" name="id" value="<?= (int)$id ?>">
+        <input type="hidden" name="id" value="<?= (int) $id ?>">
       <?php endif; ?>
 
       <label>Anime:</label><br>
@@ -72,10 +72,12 @@ if ($id) {
       <input type="text" name="nome" value="<?= htmlspecialchars($temporada['nome']) ?>"><br><br>
 
       <label>Ano de Início:</label><br>
-      <input type="number" name="ano_inicio" value="<?= htmlspecialchars($temporada['ano_inicio']) ?>" min="1900" max="2100"><br><br>
+      <input type="number" name="ano_inicio" value="<?= htmlspecialchars($temporada['ano_inicio']) ?>" min="1900"
+        max="2100"><br><br>
 
       <label>Ano de Fim:</label><br>
-      <input type="number" name="ano_fim" value="<?= htmlspecialchars($temporada['ano_fim']) ?>" min="1900" max="2100"><br><br>
+      <input type="number" name="ano_fim" value="<?= htmlspecialchars($temporada['ano_fim']) ?>" min="1900"
+        max="2100"><br><br>
 
       <label>Quantidade de Episódios:</label><br>
       <input type="number" name="qtd_episodios" value="<?= htmlspecialchars($temporada['qtd_episodios']) ?>"><br><br>

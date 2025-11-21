@@ -1,11 +1,11 @@
 <?php
 session_start(); // Inicia a sessão para gerenciar autenticação
-require __DIR__ . '/../../../shared/conexao.php'; 
+require __DIR__ . '/../../../shared/conexao.php';
 
 // Verifica se o usuário é admin, se não for redireciona para login
 if (!isset($_SESSION['tipo']) || $_SESSION['tipo'] !== 'admin') {
-    header('Location: ../../../PHP/user/login.php');
-    exit();
+  header('Location: ../../../PHP/user/login.php');
+  exit();
 }
 
 // Verifica se há pesquisa
@@ -13,26 +13,26 @@ $busca = $_GET['buscarAnime'] ?? '';
 
 // Se tiver busca, filtra pelo nome
 if (!empty($busca)) {
-    $stmt = $pdo->prepare("SELECT * FROM animes WHERE nome LIKE ? ORDER BY nota DESC");
-    $stmt->execute(["%$busca%"]);
-    $animes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+  $stmt = $pdo->prepare("SELECT * FROM animes WHERE nome LIKE ? ORDER BY nota DESC");
+  $stmt->execute(["%$busca%"]);
+  $animes = $stmt->fetchAll(PDO::FETCH_ASSOC);
 } else {
-    // Senão, lista todos
-    $animes = $pdo->query("SELECT * FROM animes ORDER BY nota DESC")->fetchAll(PDO::FETCH_ASSOC);
+  // Senão, lista todos
+  $animes = $pdo->query("SELECT * FROM animes ORDER BY nota DESC")->fetchAll(PDO::FETCH_ASSOC);
 }
 
 // Para cada anime, busca os gêneros relacionados
 foreach ($animes as &$anime) {
-    $stmt = $pdo->prepare("
+  $stmt = $pdo->prepare("
         SELECT g.nome 
         FROM generos g
         INNER JOIN anime_generos ag ON g.id = ag.genero_id
         WHERE ag.anime_id = ?
         ORDER BY g.nome
     ");
-    $stmt->execute([$anime['id']]);
-    $generos = $stmt->fetchAll(PDO::FETCH_COLUMN);
-    $anime['generos'] = implode(', ', $generos);
+  $stmt->execute([$anime['id']]);
+  $generos = $stmt->fetchAll(PDO::FETCH_COLUMN);
+  $anime['generos'] = implode(', ', $generos);
 }
 unset($anime);
 ?>
@@ -40,26 +40,29 @@ unset($anime);
 
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
-  <meta charset="UTF-8" /> 
+  <meta charset="UTF-8" />
   <title>Admin - Animes</title>
   <link rel="stylesheet" href="../../../../CSS/style.css?v=2" />
-  <link rel="icon" href="../../../../img/slogan3.png" type="image/png"> 
+  <link rel="icon" href="../../../../img/slogan3.png" type="image/png">
 </head>
+
 <body class="admin-cruds">
   <div class="admin-links">
     <h1>Gerenciar Animes</h1>
     <form method="GET" class="admin-busca">
-      <input type="text" name="buscarAnime" placeholder="Buscar anime..." value="<?= htmlspecialchars($_GET['buscarAnime'] ?? '') ?>">
+      <input type="text" name="buscarAnime" placeholder="Buscar anime..."
+        value="<?= htmlspecialchars($_GET['buscarAnime'] ?? '') ?>">
       <button type="submit">Buscar</button>
       <?php if (!empty($_GET['buscarAnime'])): ?>
         <a href="admin_animes.php" class="limpar-btn">Limpar</a>
       <?php endif; ?>
     </form>
     <nav>
-      <a href="../../../../PHP/user/index.php" class="admin-btn">Home</a> 
-      <a href="../../../../PHP/admin/CRUDs/animes/anime_form.php" class="admin-btn">Novo Anime</a> 
-      <a href="../../../../PHP/admin/index.php" class="admin-btn">Voltar</a> 
+      <a href="../../../../PHP/user/index.php" class="admin-btn">Home</a>
+      <a href="../../../../PHP/admin/CRUDs/animes/anime_form.php" class="admin-btn">Novo Anime</a>
+      <a href="../../../../PHP/admin/index.php" class="admin-btn">Voltar</a>
     </nav>
   </div>
 
@@ -77,13 +80,15 @@ unset($anime);
       <tbody>
         <?php foreach ($animes as $a): ?>
           <tr>
-            <td><img src="../../../../img/<?= htmlspecialchars($a['capa']) ?>" alt="<?= htmlspecialchars($a['nome']) ?>" width="100"></td>
+            <td><img src="../../../../img/<?= htmlspecialchars($a['capa']) ?>" alt="<?= htmlspecialchars($a['nome']) ?>"
+                width="100"></td>
             <td><?= htmlspecialchars($a['nome']) ?></td>
             <td><?= htmlspecialchars($a['generos']) ?></td>
             <td class="destaque"><?= number_format($a['nota'], 1) ?></td>
             <td>
               <a href="../../../../PHP/admin/CRUDs/animes/anime_form.php?id=<?= $a['id'] ?>" class="admin-btn">Editar</a>
-              <a href="../../../../PHP/admin/CRUDs/animes/anime_delete.php?id=<?= $a['id'] ?>" class="admin-btn" onclick="return confirm('Excluir este anime?')">Excluir</a>
+              <a href="../../../../PHP/admin/CRUDs/animes/anime_delete.php?id=<?= $a['id'] ?>" class="admin-btn"
+                onclick="return confirm('Excluir este anime?')">Excluir</a>
             </td>
           </tr>
         <?php endforeach; ?>
@@ -96,4 +101,5 @@ unset($anime);
     </table>
   </main>
 </body>
+
 </html>

@@ -15,14 +15,14 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 }
 
 // Recebe os dados do formulário
-$id            = $_POST['id'] ?? null;
-$anime_id      = $_POST['anime_id'] ?? null;
-$numero        = $_POST['numero'] ?? null;
-$nome          = trim($_POST['nome'] ?? '');
-$ano_inicio    = $_POST['ano_inicio'] ?? null;
-$ano_fim       = $_POST['ano_fim'] ?? null;
+$id = $_POST['id'] ?? null;
+$anime_id = $_POST['anime_id'] ?? null;
+$numero = $_POST['numero'] ?? null;
+$nome = trim($_POST['nome'] ?? '');
+$ano_inicio = $_POST['ano_inicio'] ?? null;
+$ano_fim = $_POST['ano_fim'] ?? null;
 $qtd_episodios = $_POST['qtd_episodios'] ?? null;
-$capa          = trim($_POST['capa'] ?? ''); 
+$capa = trim($_POST['capa'] ?? '');
 
 // Valida campos obrigatórios
 if (!$anime_id || !$numero) {
@@ -37,14 +37,27 @@ try {
                    SET anime_id=?, numero=?, nome=?, ano_inicio=?, ano_fim=?, qtd_episodios=?, capa=? 
                  WHERE id=?";
         $pdo->prepare($sql)->execute([
-            $anime_id, $numero, $nome, $ano_inicio, $ano_fim, $qtd_episodios, $capa, $id
+            $anime_id,
+            $numero,
+            $nome,
+            $ano_inicio,
+            $ano_fim,
+            $qtd_episodios,
+            $capa,
+            $id
         ]);
     } else {
         // Insere nova temporada
         $sql = "INSERT INTO temporadas (anime_id, numero, nome, ano_inicio, ano_fim, qtd_episodios, capa) 
                 VALUES (?, ?, ?, ?, ?, ?, ?)";
         $pdo->prepare($sql)->execute([
-            $anime_id, $numero, $nome, $ano_inicio, $ano_fim, $qtd_episodios, $capa
+            $anime_id,
+            $numero,
+            $nome,
+            $ano_inicio,
+            $ano_fim,
+            $qtd_episodios,
+            $capa
         ]);
     }
 

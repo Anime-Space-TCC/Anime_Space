@@ -2,7 +2,7 @@
 session_start();
 require_once __DIR__ . '/../shared/conexao.php';
 require_once __DIR__ . '/../shared/reacoes.php';
-require_once __DIR__ . '/../shared/gamificacao.php'; 
+require_once __DIR__ . '/../shared/gamificacao.php';
 
 header('Content-Type: application/json');
 
@@ -37,7 +37,7 @@ $reacaoAtual = salvarOuAtualizarReacao($pdo, $user_id, $episodio_id, $reacao);
 
 // Se for a primeira vez reagindo, dá XP
 if (!$reacaoAnterior) {
-    adicionarXP($pdo, $user_id, 10); 
+    adicionarXP($pdo, $user_id, 10);
 }
 
 // Conta as reações do episódio

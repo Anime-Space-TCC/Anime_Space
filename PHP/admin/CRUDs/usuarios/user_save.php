@@ -29,7 +29,7 @@ if ($id) {
         $sql = "UPDATE users SET username=?, email=?, tipo=?, foto_perfil=IF(?, ?, foto_perfil) WHERE id=?";
         $pdo->prepare($sql)->execute([$username, $email, $tipo, $foto, $foto, $id]);
     }
-} 
+}
 // Novo
 else {
     $hash = password_hash($password, PASSWORD_DEFAULT);

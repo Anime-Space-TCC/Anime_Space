@@ -19,15 +19,17 @@ if ($id) {
 
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
-    <meta charset="UTF-8"> 
-    <title><?= $id ? "Editar Produto" : "Novo Produto" ?></title> 
+    <meta charset="UTF-8">
+    <title><?= $id ? "Editar Produto" : "Novo Produto" ?></title>
     <link rel="stylesheet" href="../../../../CSS/style.css?v=3" />
     <link rel="icon" href="../../../../img/slogan3.png" type="image/png">
 </head>
+
 <body class="admin-cruds">
     <div class="admin-links">
-        <h1><?= $id ? "Editar Notícia" : "Cadastrar Nova Notícia" ?></h1> 
+        <h1><?= $id ? "Editar Notícia" : "Cadastrar Nova Notícia" ?></h1>
         <nav>
             <a href="admin_noticias.php" class="admin-btn">Voltar</a>
             <a href="../../../../PHP/shared/logout.php" class="admin-btn">Sair</a>
@@ -51,7 +53,7 @@ if ($id) {
             <label>Imagem:</label><br>
             <input type="file" name="imagem"><br>
             <?php if (!empty($noticia['imagem'])): ?>
-                 <img src="../../../../img/<?= htmlspecialchars($noticia['imagem']) ?>" alt="Capa do Anime" width="150"><br>
+                <img src="../../../../img/<?= htmlspecialchars($noticia['imagem']) ?>" alt="Capa do Anime" width="150"><br>
             <?php endif; ?>
             <br>
 
@@ -59,4 +61,5 @@ if ($id) {
         </form>
     </main>
 </body>
+
 </html>

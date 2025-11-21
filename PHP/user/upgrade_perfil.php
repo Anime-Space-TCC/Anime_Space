@@ -43,25 +43,30 @@ $stmt->execute([$user_id]);
 
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <title>Upgrade de Perfil</title>
     <link rel="stylesheet" href="../../CSS/perfil.css">
-    <link rel="icon" href="../../../img/slogan3.png" type="image/png"> 
+    <link rel="icon" href="../../../img/slogan3.png" type="image/png">
 </head>
+
 <body class="perfil">
     <div class="upgrade-container">
         <h1>🚀 Upgrade de Perfil</h1>
         <p>Complete seu perfil para ganhar <strong>100 XP</strong> e aumentar sua experiência no site!</p>
         <form method="POST">
             <label for="idade">Idade:</label>
-            <input type="number" id="idade" name="idade" min="10" max="120" value="<?= htmlspecialchars($dados['idade'] ?? '') ?>" required>
+            <input type="number" id="idade" name="idade" min="10" max="120"
+                value="<?= htmlspecialchars($dados['idade'] ?? '') ?>" required>
 
             <label for="nacionalidade">Nacionalidade:</label>
-            <input type="text" id="nacionalidade" name="nacionalidade" value="<?= htmlspecialchars($dados['nacionalidade'] ?? '') ?>" required>
+            <input type="text" id="nacionalidade" name="nacionalidade"
+                value="<?= htmlspecialchars($dados['nacionalidade'] ?? '') ?>" required>
 
             <button type="submit">Atualizar Perfil</button>
         </form>
     </div>
 </body>
+
 </html>

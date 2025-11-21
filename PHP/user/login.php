@@ -8,34 +8,34 @@ $errors = [];
 // Processa submissão do formulário
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    $username = trim($_POST['username'] ?? '');
-    $password = $_POST['password'] ?? '';
+  $username = trim($_POST['username'] ?? '');
+  $password = $_POST['password'] ?? '';
 
-    if (!$username) {
-        $errors[] = "Informe o nome de usuário.";
-    }
+  if (!$username) {
+    $errors[] = "Informe o nome de usuário.";
+  }
 
-    if (!$password) {
-        $errors[] = "Informe a senha.";
-    }
+  if (!$password) {
+    $errors[] = "Informe a senha.";
+  }
 
-    // Tenta realizar login
-    if (empty($errors)) {
-        $resultado = login($pdo, $username, $password);
+  // Tenta realizar login
+  if (empty($errors)) {
+    $resultado = login($pdo, $username, $password);
 
-        if ($resultado['success']) {
-            if ($resultado['2fa']) {
-                header('Location: ../../PHP/shared/verificar_2fa.php');
-                exit;
-            } else {
-                header('Location: ../../PHP/user/perfil.php');
-                exit;
-            }
-        } else {
-            $errors[] = $resultado['error'];
-        }
+    if ($resultado['success']) {
+      if ($resultado['2fa']) {
+        header('Location: ../../PHP/shared/verificar_2fa.php');
+        exit;
+      } else {
+        header('Location: ../../PHP/user/perfil.php');
+        exit;
+      }
+    } else {
+      $errors[] = $resultado['error'];
     }
   }
+}
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -52,11 +52,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <h2>Login</h2> 
 
     <?php if ($errors): ?>
-      <ul style="color: #f00; margin-bottom: 15px;">
-        <?php foreach ($errors as $error): ?>
-          <li><?= htmlspecialchars($error) ?></li>
-        <?php endforeach; ?>
-      </ul>
+        <ul style="color: #f00; margin-bottom: 15px;">
+          <?php foreach ($errors as $error): ?>
+              <li><?= htmlspecialchars($error) ?></li>
+          <?php endforeach; ?>
+        </ul>
     <?php endif; ?>
 
     <form action="login.php" method="post">

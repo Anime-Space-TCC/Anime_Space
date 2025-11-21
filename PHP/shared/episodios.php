@@ -8,7 +8,8 @@ require_once __DIR__ . '/conexao.php';
 
 
 // Retorna todos os episódios de um anime com contagem de likes e dislikes
-function buscarEpisodiosComReacoes(PDO $pdo, int $animeId): array {
+function buscarEpisodiosComReacoes(PDO $pdo, int $animeId): array
+{
     $stmt = $pdo->prepare("
         SELECT e.*, date_format(e.data_lancamento, '%d/%m/%Y') as data_lancamento,
             COALESCE(SUM(CASE WHEN r.reacao = 'like' THEN 1 ELSE 0 END), 0) AS likes,
@@ -24,7 +25,8 @@ function buscarEpisodiosComReacoes(PDO $pdo, int $animeId): array {
 }
 
 // Busca um episódio específico de um anime (com temporada garantida)
-function buscarEpisodioSelecionado(PDO $pdo, int $episodioId, int $animeId): ?array {
+function buscarEpisodioSelecionado(PDO $pdo, int $episodioId, int $animeId): ?array
+{
     $stmt = $pdo->prepare("
         SELECT id, anime_id, temporada, numero, titulo, descricao, duracao, data_lancamento, miniatura, video_url, linguagem
         FROM episodios 
@@ -36,7 +38,8 @@ function buscarEpisodioSelecionado(PDO $pdo, int $episodioId, int $animeId): ?ar
 }
 
 // Organiza uma lista de episódios por temporada
-function organizarPorTemporada(array $episodios): array {
+function organizarPorTemporada(array $episodios): array
+{
     $temporadas = [];
     foreach ($episodios as $ep) {
         $temporadas[$ep['temporada']][] = $ep;
@@ -45,12 +48,14 @@ function organizarPorTemporada(array $episodios): array {
 }
 
 // Filtra episódios por linguagem
-function filtrarPorLinguagem(array $episodios, string $linguagem): array {
+function filtrarPorLinguagem(array $episodios, string $linguagem): array
+{
     return array_filter($episodios, fn($ep) => strtolower($ep['linguagem']) === strtolower($linguagem));
 }
 
 // Retorna os últimos episódios lançados com paginação
-function getUltimosEpisodiosPaginados(int $porPagina = 10, int $offset = 0): array {
+function getUltimosEpisodiosPaginados(int $porPagina = 10, int $offset = 0): array
+{
     global $pdo;
 
     $sql = "
@@ -70,7 +75,8 @@ function getUltimosEpisodiosPaginados(int $porPagina = 10, int $offset = 0): arr
 }
 
 // Busca um episódio com informações do anime
-function buscarEpisodioComAnime(int $episodioId): ?array {
+function buscarEpisodioComAnime(int $episodioId): ?array
+{
     global $pdo;
 
     $sql = "
@@ -86,7 +92,8 @@ function buscarEpisodioComAnime(int $episodioId): ?array {
 }
 
 // Extrai o ID do YouTube de uma URL
-function extrairIdYoutube($url) {
+function extrairIdYoutube($url)
+{
     preg_match('/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|embed)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/ ]{11})/', $url, $matches);
     return $matches[1] ?? null;
 }

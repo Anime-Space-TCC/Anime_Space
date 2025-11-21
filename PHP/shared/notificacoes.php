@@ -6,7 +6,7 @@ function getNotificacoes($userId)
     global $pdo;
 
     // =======================
-    // 🔹 NOTIFICAÇÕES DE XP
+    //  NOTIFICAÇÕES DE XP
     // =======================
     $xp = $pdo->prepare("
         SELECT titulo, mensagem 
@@ -19,9 +19,9 @@ function getNotificacoes($userId)
     $xp = $xp->fetchAll(PDO::FETCH_ASSOC);
 
     // =======================
-    // 🔹 PROMOÇÕES (TABELA PRODUTOS)
+    // PROMOÇÕES (TABELA PRODUTOS)
     // =======================
-        $promo = $pdo->prepare("
+    $promo = $pdo->prepare("
         SELECT 
             id,
             nome,
@@ -44,13 +44,13 @@ function getNotificacoes($userId)
             "preco" => $p['preco'],
             "preco_promocional" => $p['preco_promocional'],
             "imagem" => $p['imagem'],
-            "url" => "../../PHP/user/loja.php?id=" . $p['nome']   
+            "url" => "../../PHP/user/loja.php?id=" . $p['nome']
         ];
     }, $promo);
 
 
     // =======================
-    // 🔹 HISTÓRICO DE COMPRAS
+    // HISTÓRICO DE COMPRAS
     // =======================
     $hist = $pdo->prepare("
         SELECT pr.nome, pr.preco
@@ -64,7 +64,7 @@ function getNotificacoes($userId)
     $hist = $hist->fetchAll(PDO::FETCH_ASSOC);
 
     // =======================
-    // 🔹 CONTADOR DE NÃO LIDAS
+    // CONTADOR DE NÃO LIDAS
     // =======================
     $count = $pdo->prepare("
         SELECT COUNT(*) 

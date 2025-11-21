@@ -6,7 +6,8 @@ require_once __DIR__ . '/conexao.php';
 // =========================
 
 // Busca um usuário pelo ID
-function buscarUsuarioPorId(PDO $pdo, int $id): ?array {
+function buscarUsuarioPorId(PDO $pdo, int $id): ?array
+{
     $stmt = $pdo->prepare("SELECT id, username, email, tipo, foto_perfil FROM users WHERE id = ?");
     $stmt->execute([$id]);
 
@@ -18,17 +19,18 @@ function buscarUsuarioPorId(PDO $pdo, int $id): ?array {
     }
 
     return [
-        'id'          => $usuario['id'],
-        'username'    => $usuario['username'] ?? '',
-        'email'       => $usuario['email'] ?? '',
-        'tipo'        => $usuario['tipo'] ?? 'user',
+        'id' => $usuario['id'],
+        'username' => $usuario['username'] ?? '',
+        'email' => $usuario['email'] ?? '',
+        'tipo' => $usuario['tipo'] ?? 'user',
         'foto_perfil' => $usuario['foto_perfil'] ?? null
     ];
 }
 
 
 // Atualiza username, email e senha de um usuário
-function atualizarUsuario(PDO $pdo, int $id, string $username, string $email, ?string $password = null): bool {
+function atualizarUsuario(PDO $pdo, int $id, string $username, string $email, ?string $password = null): bool
+{
     $username = normalizarTexto($username);
     $email = trim($email);
 
@@ -43,7 +45,8 @@ function atualizarUsuario(PDO $pdo, int $id, string $username, string $email, ?s
 }
 
 // Atualiza a foto de perfil do usuário via upload
-function atualizarFotoPerfil(PDO $pdo, int $userId, array $file): array {
+function atualizarFotoPerfil(PDO $pdo, int $userId, array $file): array
+{
     $diretorio_destino = __DIR__ . '/../uploads/';
     if (!is_dir($diretorio_destino)) {
         mkdir($diretorio_destino, 0777, true);
@@ -97,7 +100,8 @@ function atualizarFotoPerfil(PDO $pdo, int $userId, array $file): array {
 }
 
 
-function buscarFotoPerfil(PDO $pdo, int $userId): string {
+function buscarFotoPerfil(PDO $pdo, int $userId): string
+{
     $stmt = $pdo->prepare("SELECT foto_perfil FROM users WHERE id = ?");
     $stmt->execute([$userId]);
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -120,7 +124,8 @@ function buscarFotoPerfil(PDO $pdo, int $userId): string {
 
 
 // Verifica se já existe username ou email (para validação)
-function usuarioExiste(PDO $pdo, string $username, string $email, ?int $excludeId = null): bool {
+function usuarioExiste(PDO $pdo, string $username, string $email, ?int $excludeId = null): bool
+{
     $username = normalizarTexto($username);
     $email = trim($email);
 
@@ -139,7 +144,8 @@ function usuarioExiste(PDO $pdo, string $username, string $email, ?int $excludeI
 }
 
 // Cria um novo usuário
-function criarUsuario(PDO $pdo, string $username, string $email, string $password, string $tipo = 'user'): int|false {
+function criarUsuario(PDO $pdo, string $username, string $email, string $password, string $tipo = 'user'): int|false
+{
     $username = normalizarTexto($username);
     $email = trim($email);
     $hash = password_hash($password, PASSWORD_DEFAULT);

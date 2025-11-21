@@ -6,7 +6,8 @@ require_once __DIR__ . '/conexao.php';
 // =========================
 
 // Busca a reação atual de um usuário em um episódio
-function buscarReacaoUsuario(PDO $pdo, int $userId, int $episodioId): ?array {
+function buscarReacaoUsuario(PDO $pdo, int $userId, int $episodioId): ?array
+{
     $stmt = $pdo->prepare("
         SELECT * 
         FROM episodio_reacoes 
@@ -18,7 +19,8 @@ function buscarReacaoUsuario(PDO $pdo, int $userId, int $episodioId): ?array {
 }
 
 // Salva ou atualiza uma reação de usuário
-function salvarOuAtualizarReacao(PDO $pdo, int $userId, int $episodioId, string $reacao): ?array {
+function salvarOuAtualizarReacao(PDO $pdo, int $userId, int $episodioId, string $reacao): ?array
+{
     $existente = buscarReacaoUsuario($pdo, $userId, $episodioId);
 
     if ($existente) {
@@ -45,7 +47,8 @@ function salvarOuAtualizarReacao(PDO $pdo, int $userId, int $episodioId, string 
 }
 
 // Conta todas as reações de um episódio
-function contarReacoesEpisodio(PDO $pdo, int $episodioId): array {
+function contarReacoesEpisodio(PDO $pdo, int $episodioId): array
+{
     $stmt = $pdo->prepare("
         SELECT reacao, COUNT(*) as total
         FROM episodio_reacoes
@@ -57,7 +60,7 @@ function contarReacoesEpisodio(PDO $pdo, int $episodioId): array {
     $contagens = ['like' => 0, 'dislike' => 0];
     foreach ($stmt->fetchAll(PDO::FETCH_ASSOC) as $linha) {
         $tipo = $linha['reacao'];
-        $contagens[$tipo] = (int)$linha['total'];
+        $contagens[$tipo] = (int) $linha['total'];
     }
 
     return $contagens;

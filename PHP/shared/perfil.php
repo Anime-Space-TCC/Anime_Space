@@ -16,7 +16,8 @@ function buscarFavoritos(int $userId): array
 }
 
 // Registra histórico de visualização
-function registrarHistoricoAnime($pdo, $userId, $animeId) {
+function registrarHistoricoAnime($pdo, $userId, $animeId)
+{
     // Verifica se já existe
     $stmt = $pdo->prepare("SELECT id FROM historico WHERE user_id = ? AND anime_id = ?");
     $stmt->execute([$userId, $animeId]);
@@ -32,7 +33,8 @@ function registrarHistoricoAnime($pdo, $userId, $animeId) {
 }
 
 // Buscar historico detalhado do usuario
-function buscarHistoricoAnimes($pdo, $userId, $limite = 10) {
+function buscarHistoricoAnimes($pdo, $userId, $limite = 10)
+{
     $stmt = $pdo->prepare("
         SELECT a.id, a.nome, a.capa, ha.data_acesso
         FROM historico ha

@@ -15,16 +15,16 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 }
 
 // Coleta e valida os dados do formulário
-$id             = isset($_POST['id']) && $_POST['id'] !== '' ? (int)$_POST['id'] : null;
-$anime_id       = isset($_POST['anime_id']) ? (int)$_POST['anime_id'] : 0;
-$temporada      = isset($_POST['temporada']) ? (int)$_POST['temporada'] : 1;
-$numero         = isset($_POST['numero']) ? (int)$_POST['numero'] : 0;
-$titulo         = trim($_POST['titulo'] ?? '');
-$descricao      = trim($_POST['descricao'] ?? '');
-$duracao        = trim($_POST['duracao'] ?? '');
-$data_lanc      = trim($_POST['data_lancamento'] ?? '');
-$video_url      = trim($_POST['video_url'] ?? '');
-$linguagem      = trim($_POST['linguagem'] ?? '');
+$id = isset($_POST['id']) && $_POST['id'] !== '' ? (int) $_POST['id'] : null;
+$anime_id = isset($_POST['anime_id']) ? (int) $_POST['anime_id'] : 0;
+$temporada = isset($_POST['temporada']) ? (int) $_POST['temporada'] : 1;
+$numero = isset($_POST['numero']) ? (int) $_POST['numero'] : 0;
+$titulo = trim($_POST['titulo'] ?? '');
+$descricao = trim($_POST['descricao'] ?? '');
+$duracao = trim($_POST['duracao'] ?? '');
+$data_lanc = trim($_POST['data_lancamento'] ?? '');
+$video_url = trim($_POST['video_url'] ?? '');
+$linguagem = trim($_POST['linguagem'] ?? '');
 
 // Upload da miniatura (se enviada)
 $miniatura = null;
@@ -43,7 +43,7 @@ if ($anime_id <= 0 || $temporada <= 0 || $numero <= 0 || $titulo === '' || $vide
 
 // Normaliza opcionais para NULL quando vazios
 $descricao = $descricao ?: null;
-$duracao   = $duracao ? (int)$duracao : null;
+$duracao = $duracao ? (int) $duracao : null;
 $data_lanc = $data_lanc ?: null;
 $linguagem = $linguagem ?: null;
 
@@ -57,8 +57,18 @@ try {
                  WHERE id = ?";
         $stmt = $pdo->prepare($sql);
         $stmt->execute([
-            $anime_id, $temporada, $numero, $titulo, $descricao,
-            $duracao, $data_lanc, $miniatura, $miniatura, $video_url, $linguagem, $id
+            $anime_id,
+            $temporada,
+            $numero,
+            $titulo,
+            $descricao,
+            $duracao,
+            $data_lanc,
+            $miniatura,
+            $miniatura,
+            $video_url,
+            $linguagem,
+            $id
         ]);
     } else {
         // INSERT
@@ -67,8 +77,16 @@ try {
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         $stmt = $pdo->prepare($sql);
         $stmt->execute([
-            $anime_id, $temporada, $numero, $titulo, $descricao,
-            $duracao, $data_lanc, $miniatura ?? 'default.jpg', $video_url, $linguagem
+            $anime_id,
+            $temporada,
+            $numero,
+            $titulo,
+            $descricao,
+            $duracao,
+            $data_lanc,
+            $miniatura ?? 'default.jpg',
+            $video_url,
+            $linguagem
         ]);
     }
 

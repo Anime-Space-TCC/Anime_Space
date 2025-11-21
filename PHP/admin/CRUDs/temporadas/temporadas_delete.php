@@ -14,6 +14,21 @@ if (!$id) {
 }
 
 try {
+    // Verifica se a temporada existe antes de tentar excluir
+    $stmt = $pdo->prepare("SELECT COUNT(*) FROM temporadas WHERE id = ?");
+    $stmt->execute([$id]);
+    if ($stmt->fetchColumn() == 0) {
+        echo "Temporada não encontrada.";
+        echo "<a href='../../../../PHP/admin/CRUDs/temporadas/admin_temporadas.php'>Voltar</a>";
+        exit();
+    }
+} catch (PDOException $e) {
+    echo "Erro ao verificar temporada: " . htmlspecialchars($e->getMessage());
+    echo "<a href='../../../../PHP/admin/CRUDs/temporadas/admin_temporadas.php'>Voltar</a>";
+    exit();
+}
+
+try {
     $stmt = $pdo->prepare("DELETE FROM temporadas WHERE id = ?");
     $stmt->execute([$id]);
     // Episódios relacionados são removidos por ON DELETE CASCADE
@@ -21,14 +36,6 @@ try {
     exit();
 } catch (PDOException $e) {
     echo "Erro ao excluir temporada: " . htmlspecialchars($e->getMessage());
-    echo "<a href='../../../../PHP/admin/CRUDs/temporadas/admin_temporadas.php'>Voltar</a>";
-    exit();
-}
-
-$stmt = $pdo->prepare("SELECT COUNT(*) FROM temporadas WHERE id = ?");
-$stmt->execute([$id]);
-if ($stmt->fetchColumn() == 0) {
-    echo "Temporada não encontrada.";
     echo "<a href='../../../../PHP/admin/CRUDs/temporadas/admin_temporadas.php'>Voltar</a>";
     exit();
 }

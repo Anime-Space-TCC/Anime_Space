@@ -1,13 +1,15 @@
-<?php 
+<?php
 require_once __DIR__ . '/notificacoes.php';
 
-function adicionarXP($pdo, $user_id, $xpGanhos) {
+function adicionarXP($pdo, $user_id, $xpGanhos)
+{
     // Busca XP e nível atuais
     $stmt = $pdo->prepare("SELECT xp, nivel FROM users WHERE id = ?");
     $stmt->execute([$user_id]);
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    if (!$user) return;
+    if (!$user)
+        return;
 
     $xpAntes = $user['xp'];
     $nivelAntes = $user['nivel'];
@@ -68,26 +70,33 @@ function adicionarXP($pdo, $user_id, $xpGanhos) {
 }
 
 // Retorna XP e nivel do usuario
-function getXP($pdo, $user_id) {
+function getXP($pdo, $user_id)
+{
     $stmt = $pdo->prepare("SELECT xp, nivel FROM users WHERE id = ?");
     $stmt->execute([$user_id]);
     return $stmt->fetch(PDO::FETCH_ASSOC);
 }
 // Retorna o titulo baseado no nivel
-function tituloNivel($nivel) {
-    if ($nivel < 5) return "Iniciante Otaku";
-    if ($nivel < 10) return "Senpai";
-    if ($nivel < 20) return "Pro Otaku";
+function tituloNivel($nivel)
+{
+    if ($nivel < 5)
+        return "Iniciante Otaku";
+    if ($nivel < 10)
+        return "Senpai";
+    if ($nivel < 20)
+        return "Pro Otaku";
     return "Lendário dos Animes";
 }
 // Verifica e concede bonus de XP por completar perfil
-function verificarBonusCompletarPerfil($pdo, $user_id) {
+function verificarBonusCompletarPerfil($pdo, $user_id)
+{
     // Verifica se o usuário já tem idade e nacionalidade
     $stmt = $pdo->prepare("SELECT idade, nacionalidade, xp FROM users WHERE id = ?");
     $stmt->execute([$user_id]);
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    if (!$user) return;
+    if (!$user)
+        return;
 
     // Condição: perfil completo e ainda não ganhou o bônus
     $bonusJaDado = $pdo->prepare("SELECT COUNT(*) FROM xp_logs WHERE user_id = ? AND tipo_acao = 'completar_perfil'");

@@ -37,7 +37,7 @@
       <h4>Noticias</h4>
       <a href="../../PHP/admin/CRUDs/noticias/admin_noticias.php" class="admin-btn">📂 Acessar</a>
     </div>
-    
+
     <div class="admin-card">
       <img src="../../img/slogan3.png" alt="Noticias">
       <h4>Quizzes</h4>

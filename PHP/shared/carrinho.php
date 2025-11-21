@@ -34,7 +34,7 @@ if ($acao === 'remover' && $id) {
 
 // Atualizar quantidade
 if ($acao === 'atualizar' && $id && $quantidade > 0) {
-    $_SESSION['carrinho'][$id] = (int)$quantidade;
+    $_SESSION['carrinho'][$id] = (int) $quantidade;
     echo json_encode(['sucesso' => true, 'totalItens' => array_sum($_SESSION['carrinho'])]);
     exit;
 }

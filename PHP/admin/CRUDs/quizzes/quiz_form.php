@@ -74,15 +74,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
-    <meta charset="UTF-8"> 
-    <title><?= $id ? "Editar Quiz" : "Novo Quiz" ?></title> 
+    <meta charset="UTF-8">
+    <title><?= $id ? "Editar Quiz" : "Novo Quiz" ?></title>
     <link rel="stylesheet" href="../../../../CSS/style.css?v=2" />
-    <link rel="icon" href="../../../../img/slogan3.png" type="image/png"> 
+    <link rel="icon" href="../../../../img/slogan3.png" type="image/png">
 </head>
+
 <body class="admin-cruds">
     <div class="admin-links">
-        <h1><?= $id ? "Editar Quiz" : "Cadastrar Novo Quiz" ?></h1> 
+        <h1><?= $id ? "Editar Quiz" : "Cadastrar Novo Quiz" ?></h1>
         <nav>
             <a href="admin_quizzes.php" class="admin-btn">Voltar</a>
             <a href="../../../../PHP/shared/logout.php" class="admin-btn">Sair</a>
@@ -108,7 +110,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <textarea name="descricao" rows="5"><?= htmlspecialchars($quiz['descricao']) ?></textarea><br><br>
 
             <label>Nível mínimo (1 a 10):</label><br>
-            <input type="number" name="nivel_minimo" min="1" max="10" value="<?= (int)$quiz['nivel_minimo'] ?>" required><br><br>
+            <input type="number" name="nivel_minimo" min="1" max="10" value="<?= (int) $quiz['nivel_minimo'] ?>"
+                required><br><br>
 
             <label>Imagem de capa:</label><br>
             <input type="file" name="capa"><br>
@@ -122,8 +125,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <input type="checkbox" name="ativo" <?= $quiz['ativo'] ? 'checked' : '' ?>> Ativo
             </label><br><br>
 
-            <input type="submit" value="Salvar" class="admin-btn"> 
+            <input type="submit" value="Salvar" class="admin-btn">
         </form>
     </main>
 </body>
+
 </html>

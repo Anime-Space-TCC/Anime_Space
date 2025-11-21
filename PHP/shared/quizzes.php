@@ -1,7 +1,8 @@
 <?php
 
 // Retorna os últimos quizzs com paginação
-function getQuizzesPaginados(int $porPagina = 10, int $offset = 0): array {
+function getQuizzesPaginados(int $porPagina = 10, int $offset = 0): array
+{
     global $pdo;
 
     $stmt = $pdo->prepare("

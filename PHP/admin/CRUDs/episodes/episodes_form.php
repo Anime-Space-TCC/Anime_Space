@@ -83,8 +83,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     data_lancamento=?, miniatura=IF(?, ?, miniatura), video_url=?, linguagem=? 
                 WHERE id=?";
         $pdo->prepare($sql)->execute([
-            $anime_id, $temporada, $numero, $titulo, $descricao,
-            $duracao, $data_lancamento, $miniatura, $miniatura, $video_url, $linguagem, $id
+            $anime_id,
+            $temporada,
+            $numero,
+            $titulo,
+            $descricao,
+            $duracao,
+            $data_lancamento,
+            $miniatura,
+            $miniatura,
+            $video_url,
+            $linguagem,
+            $id
         ]);
     } else {
         // ==========================
@@ -111,8 +121,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 (anime_id, temporada, numero, titulo, descricao, duracao, data_lancamento, miniatura, video_url, linguagem) 
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         $pdo->prepare($sql)->execute([
-            $anime_id, $temporada, $numero, $titulo, $descricao,
-            $duracao, $data_lancamento, $miniatura ?? 'default.jpg', $video_url, $linguagem
+            $anime_id,
+            $temporada,
+            $numero,
+            $titulo,
+            $descricao,
+            $duracao,
+            $data_lancamento,
+            $miniatura ?? 'default.jpg',
+            $video_url,
+            $linguagem
         ]);
     }
 
@@ -123,15 +141,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
-    <meta charset="UTF-8"> 
-    <title><?= $id ? "Editar Episódio" : "Novo Episódio" ?></title> 
+    <meta charset="UTF-8">
+    <title><?= $id ? "Editar Episódio" : "Novo Episódio" ?></title>
     <link rel="stylesheet" href="../../../../CSS/style.css?v=2" />
     <link rel="icon" href="../../../../img/slogan3.png" type="image/png">
 </head>
+
 <body class="admin-cruds">
     <div class="admin-links">
-        <h1><?= $id ? "Editar Episódio" : "Cadastrar Novo Episódio" ?></h1> 
+        <h1><?= $id ? "Editar Episódio" : "Cadastrar Novo Episódio" ?></h1>
         <nav>
             <a href="../../../../PHP/admin/CRUDs/episodes/admin_episodes.php" class="admin-btn">Voltar</a>
             <a href="../../../../PHP/shared/logout.php" class="admin-btn">Sair</a>
@@ -140,54 +160,58 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <main class="admin-form">
         <form method="POST" enctype="multipart/form-data">
-          <?php if (!empty($id)): ?>
-            <input type="hidden" name="id" value="<?= (int)$id ?>">
-          <?php endif; ?>
-          
-          <label>Anime:</label><br>
-          <select name="anime_id" required>
-              <option value="">-- Selecione --</option>
-              <?php foreach($animes as $a): ?>
-                  <option value="<?= $a['id'] ?>" <?= $episodio['anime_id'] == $a['id'] ? 'selected' : '' ?>>
-                      <?= htmlspecialchars($a['nome']) ?>
-                  </option>
-              <?php endforeach; ?>
-          </select><br><br>
+            <?php if (!empty($id)): ?>
+                <input type="hidden" name="id" value="<?= (int) $id ?>">
+            <?php endif; ?>
 
-          <label>Temporada:</label><br>
-          <input type="number" name="temporada" value="<?= htmlspecialchars($episodio['temporada']) ?>" required><br><br>
+            <label>Anime:</label><br>
+            <select name="anime_id" required>
+                <option value="">-- Selecione --</option>
+                <?php foreach ($animes as $a): ?>
+                    <option value="<?= $a['id'] ?>" <?= $episodio['anime_id'] == $a['id'] ? 'selected' : '' ?>>
+                        <?= htmlspecialchars($a['nome']) ?>
+                    </option>
+                <?php endforeach; ?>
+            </select><br><br>
 
-          <label>Número do Episódio:</label><br>
-          <input type="number" name="numero" value="<?= htmlspecialchars($episodio['numero']) ?>" required><br><br>
+            <label>Temporada:</label><br>
+            <input type="number" name="temporada" value="<?= htmlspecialchars($episodio['temporada']) ?>"
+                required><br><br>
 
-          <label>Título:</label><br>
-          <input type="text" name="titulo" value="<?= htmlspecialchars($episodio['titulo']) ?>" required><br><br>
+            <label>Número do Episódio:</label><br>
+            <input type="number" name="numero" value="<?= htmlspecialchars($episodio['numero']) ?>" required><br><br>
 
-          <label>Descrição:</label><br>
-          <textarea name="descricao" rows="4"><?= htmlspecialchars($episodio['descricao']) ?></textarea><br><br>
+            <label>Título:</label><br>
+            <input type="text" name="titulo" value="<?= htmlspecialchars($episodio['titulo']) ?>" required><br><br>
 
-          <label>Duração (minutos):</label><br>
-          <input type="number" name="duracao" value="<?= htmlspecialchars($episodio['duracao']) ?>"><br><br>
+            <label>Descrição:</label><br>
+            <textarea name="descricao" rows="4"><?= htmlspecialchars($episodio['descricao']) ?></textarea><br><br>
 
-          <label>Data de Lançamento:</label><br>
-          <input type="date" name="data_lancamento" value="<?= htmlspecialchars($episodio['data_lancamento']) ?>"><br><br>
+            <label>Duração (minutos):</label><br>
+            <input type="number" name="duracao" value="<?= htmlspecialchars($episodio['duracao']) ?>"><br><br>
 
-          <label>URL do Vídeo:</label><br>
-          <input type="text" name="video_url" value="<?= htmlspecialchars($episodio['video_url']) ?>" required><br><br>
+            <label>Data de Lançamento:</label><br>
+            <input type="date" name="data_lancamento"
+                value="<?= htmlspecialchars($episodio['data_lancamento']) ?>"><br><br>
 
-          <label>Linguagem:</label><br>
-          <input type="text" name="linguagem" value="<?= htmlspecialchars($episodio['linguagem']) ?>"><br><br>
+            <label>URL do Vídeo:</label><br>
+            <input type="text" name="video_url" value="<?= htmlspecialchars($episodio['video_url']) ?>"
+                required><br><br>
 
-          <label>Mini-imagem:</label><br>
-          <input type="file" name="miniatura"><br>
-          <?php if (!empty($episodio['miniatura'])): ?>
-              <img src="../../../../img/<?= htmlspecialchars($episodio['miniatura']) ?>" 
-                   alt="Miniatura do Episódio" width="150" style="margin-top:10px;"><br>
-          <?php endif; ?>
-          <br>
+            <label>Linguagem:</label><br>
+            <input type="text" name="linguagem" value="<?= htmlspecialchars($episodio['linguagem']) ?>"><br><br>
 
-          <input type="submit" value="Salvar" class="admin-btn"> 
+            <label>Mini-imagem:</label><br>
+            <input type="file" name="miniatura"><br>
+            <?php if (!empty($episodio['miniatura'])): ?>
+                <img src="../../../../img/<?= htmlspecialchars($episodio['miniatura']) ?>" alt="Miniatura do Episódio"
+                    width="150" style="margin-top:10px;"><br>
+            <?php endif; ?>
+            <br>
+
+            <input type="submit" value="Salvar" class="admin-btn">
         </form>
     </main>
 </body>
+
 </html>

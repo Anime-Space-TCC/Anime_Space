@@ -1,6 +1,6 @@
 <?php
-require __DIR__ . '/../../../shared/conexao.php'; 
-session_start();  
+require __DIR__ . '/../../../shared/conexao.php';
+session_start();
 
 // Verifica se o usuário é admin
 if (!isset($_SESSION['tipo']) || $_SESSION['tipo'] !== 'admin') {
@@ -9,7 +9,7 @@ if (!isset($_SESSION['tipo']) || $_SESSION['tipo'] !== 'admin') {
 }
 
 // Obtém o ID do produto e garante que seja inteiro
-$id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
+$id = isset($_GET['id']) ? (int) $_GET['id'] : 0;
 
 if ($id <= 0) {
     die("ID inválido.");

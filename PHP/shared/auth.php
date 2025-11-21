@@ -15,20 +15,21 @@ if (session_status() === PHP_SESSION_NONE) {
 // Funções auxiliares
 // ==============================
 
-function enviarCodigo2FA(string $email, int $codigo): bool {
+function enviarCodigo2FA(string $email, int $codigo): bool
+{
     $config = require __DIR__ . '/config.php';
-    $smtp   = $config['smtp'];
+    $smtp = $config['smtp'];
 
     $mail = new PHPMailer(true);
 
     try {
         $mail->isSMTP();
-        $mail->Host       = $smtp['host'];
-        $mail->SMTPAuth   = true;
-        $mail->Username   = $smtp['username'];
-        $mail->Password   = $smtp['password'];
+        $mail->Host = $smtp['host'];
+        $mail->SMTPAuth = true;
+        $mail->Username = $smtp['username'];
+        $mail->Password = $smtp['password'];
         $mail->SMTPSecure = $smtp['secure'];
-        $mail->Port       = $smtp['port'];
+        $mail->Port = $smtp['port'];
 
         $mail->setFrom($smtp['from'], $smtp['fromName']);
         $mail->addAddress($email);
@@ -78,11 +79,13 @@ function enviarCodigo2FA(string $email, int $codigo): bool {
 // Funções de Autenticação
 // ==============================
 
-function usuarioLogado(): bool {
+function usuarioLogado(): bool
+{
     return isset($_SESSION['user_id']) && empty($_SESSION['aguardando_2fa']);
 }
 // Redireciona se não estiver logado
-function verificarLogin(): void {
+function verificarLogin(): void
+{
     $paginaAtual = basename($_SERVER['PHP_SELF']);
     $paginasPublicas = ['login.php', 'register.php', 'verificar-2fa.php'];
 
@@ -92,14 +95,16 @@ function verificarLogin(): void {
     }
 }
 // Retorna o ID do usuario logado
-function obterUsuarioAtualId(): ?int {
+function obterUsuarioAtualId(): ?int
+{
     return $_SESSION['user_id'] ?? null;
 }
 
 // ==============================
 // Função principal de login
 // ==============================
-function login(PDO $pdo, string $username, string $password): array {
+function login(PDO $pdo, string $username, string $password): array
+{
     $username = trim($username);
     $password = trim($password);
 
@@ -132,9 +137,9 @@ function login(PDO $pdo, string $username, string $password): array {
     }
 
     // Sucesso: inicializa sessão
-    $_SESSION['user_id']  = $user['id'];
+    $_SESSION['user_id'] = $user['id'];
     $_SESSION['username'] = $user['username'];
-    $_SESSION['tipo']     = $user['tipo'];
+    $_SESSION['tipo'] = $user['tipo'];
 
     return ['success' => true];
 }
@@ -195,7 +200,8 @@ function login(PDO $pdo, string $username, string $password): array {
 
 // Normaliza texto (username/email) 
 if (!function_exists('normalizarTexto')) {
-    function normalizarTexto(string $texto): string {
+    function normalizarTexto(string $texto): string
+    {
         $texto = trim($texto);
         $texto = mb_strtolower($texto, 'UTF-8');
         return $texto;
@@ -203,7 +209,8 @@ if (!function_exists('normalizarTexto')) {
 }
 
 // Inicia processo 2FA
-function verificarCodigo2FA(string $codigo): bool {
+function verificarCodigo2FA(string $codigo): bool
+{
     if (!isset($_SESSION['2fa_user'], $_SESSION['2fa_code'], $_SESSION['2fa_expires'])) {
         return false;
     }
@@ -215,9 +222,9 @@ function verificarCodigo2FA(string $codigo): bool {
 
     if ($codigo == $_SESSION['2fa_code']) {
         $user = $_SESSION['2fa_user'];
-        $_SESSION['user_id']  = $user['id'];
+        $_SESSION['user_id'] = $user['id'];
         $_SESSION['username'] = $user['username'];
-        $_SESSION['tipo']     = $user['tipo'];
+        $_SESSION['tipo'] = $user['tipo'];
 
         unset($_SESSION['2fa_user'], $_SESSION['2fa_code'], $_SESSION['2fa_expires'], $_SESSION['aguardando_2fa']);
         return true;
@@ -227,17 +234,24 @@ function verificarCodigo2FA(string $codigo): bool {
 }
 
 // Função de logout
-function logout(): void {
+function logout(): void
+{
     session_unset();
     session_destroy();
 }
 
 // Valida a força da senha
-function validarSenhaForte(string $pwd): ?string {
-    if (strlen($pwd) < 8) return "Senha deve ter ao menos 8 caracteres.";
-    if (!preg_match('/[A-Z]/', $pwd)) return "Inclua pelo menos 1 letra maiúscula.";
-    if (!preg_match('/[a-z]/', $pwd)) return "Inclua pelo menos 1 letra minúscula.";
-    if (!preg_match('/\d/', $pwd)) return "Inclua ao menos 1 número.";
-    if (!preg_match('/[\W]/', $pwd)) return "Inclua ao menos 1 símbolo (ex: !@#).";
+function validarSenhaForte(string $pwd): ?string
+{
+    if (strlen($pwd) < 8)
+        return "Senha deve ter ao menos 8 caracteres.";
+    if (!preg_match('/[A-Z]/', $pwd))
+        return "Inclua pelo menos 1 letra maiúscula.";
+    if (!preg_match('/[a-z]/', $pwd))
+        return "Inclua pelo menos 1 letra minúscula.";
+    if (!preg_match('/\d/', $pwd))
+        return "Inclua ao menos 1 número.";
+    if (!preg_match('/[\W]/', $pwd))
+        return "Inclua ao menos 1 símbolo (ex: !@#).";
     return null;
 }

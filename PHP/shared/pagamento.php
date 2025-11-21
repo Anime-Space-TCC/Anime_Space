@@ -4,13 +4,15 @@ require_once __DIR__ . '/conexao.php';
 //==============================
 // Registra um novo pagamento no sistema
 //==============================
-function registrarPagamento(PDO $pdo, int $user_id, int $produto_id, string $metodo): ?array {
+function registrarPagamento(PDO $pdo, int $user_id, int $produto_id, string $metodo): ?array
+{
     // Verifica se o produto existe e está ativo
     $stmt = $pdo->prepare("SELECT nome, preco, sku FROM produtos WHERE id = ? AND ativo = 1");
     $stmt->execute([$produto_id]);
     $produto = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    if (!$produto) return null;
+    if (!$produto)
+        return null;
 
     $valor = $produto['preco'];
     $codigo = strtoupper(uniqid("PGT-"));
@@ -34,9 +36,9 @@ function registrarPagamento(PDO $pdo, int $user_id, int $produto_id, string $met
         $pagamento['tipo'] = 'pix';
     } elseif ($metodo === 'boleto') {
         $pagamento['tipo'] = 'boleto';
-        $pagamento['linha_digitavel'] = rand(10000,99999) . '.' . rand(10000,99999) . ' ' .
-                                        rand(10000,99999) . '.' . rand(10000,99999) . ' ' .
-                                        rand(10000,99999) . ' 00000000000000';
+        $pagamento['linha_digitavel'] = rand(10000, 99999) . '.' . rand(10000, 99999) . ' ' .
+            rand(10000, 99999) . '.' . rand(10000, 99999) . ' ' .
+            rand(10000, 99999) . ' 00000000000000';
         $pagamento['vencimento'] = date('d/m/Y', strtotime('+3 days'));
     } elseif ($metodo === 'cartao') {
         $pagamento['tipo'] = 'cartao';
@@ -48,14 +50,17 @@ function registrarPagamento(PDO $pdo, int $user_id, int $produto_id, string $met
 // ==============================
 // Cancela um pagamento (simulado)
 // ==============================
-function cancelarPagamento(PDO $pdo, int $user_id, string $codigo_referencia): bool {
+function cancelarPagamento(PDO $pdo, int $user_id, string $codigo_referencia): bool
+{
     $stmt = $pdo->prepare("SELECT id, status FROM pagamentos WHERE codigo_referencia = ? AND user_id = ?");
     $stmt->execute([$codigo_referencia, $user_id]);
     $pagamento = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    if (!$pagamento) return false;
+    if (!$pagamento)
+        return false;
 
-    if ($pagamento['status'] !== 'pendente') return false;
+    if ($pagamento['status'] !== 'pendente')
+        return false;
 
     $stmt = $pdo->prepare("UPDATE pagamentos SET status = 'cancelado', data_cancelamento = NOW() WHERE id = ?");
     $stmt->execute([$pagamento['id']]);

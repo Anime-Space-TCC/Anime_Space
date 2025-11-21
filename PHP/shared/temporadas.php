@@ -1,5 +1,5 @@
 <?php
-require __DIR__ . '/conexao.php'; 
+require __DIR__ . '/conexao.php';
 
 // Obtém o ID do anime da requisição
 $anime_id = $_GET['anime_id'] ?? null;

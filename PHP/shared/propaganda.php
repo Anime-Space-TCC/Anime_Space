@@ -8,7 +8,7 @@
 </div>
 
 <script>
-const letreiro = document.getElementById('letreiro');
-// Duplica o conteúdo para loop contínuo
-letreiro.innerHTML += letreiro.innerHTML;
+  const letreiro = document.getElementById('letreiro');
+  // Duplica o conteúdo para loop contínuo
+  letreiro.innerHTML += letreiro.innerHTML;
 </script>

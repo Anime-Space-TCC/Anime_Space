@@ -81,15 +81,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
-    <meta charset="UTF-8"> 
-    <title><?= $id ? "Editar Produto" : "Novo Produto" ?></title> 
+    <meta charset="UTF-8">
+    <title><?= $id ? "Editar Produto" : "Novo Produto" ?></title>
     <link rel="stylesheet" href="../../../../CSS/style.css?v=3" />
     <link rel="icon" href="../../../../img/slogan3.png" type="image/png">
 </head>
+
 <body class="admin-cruds">
     <div class="admin-links">
-        <h1><?= $id ? "Editar Produto" : "Cadastrar Novo Produto" ?></h1> 
+        <h1><?= $id ? "Editar Produto" : "Cadastrar Novo Produto" ?></h1>
         <nav>
             <a href="admin_produto.php" class="admin-btn">Voltar</a>
             <a href="../../../../PHP/shared/logout.php" class="admin-btn">Sair</a>
@@ -99,28 +101,36 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <main class="admin-form">
         <form method="POST" enctype="multipart/form-data">
             <label>SKU (Código do Produto):</label>
-            <input type="text" name="sku" maxlength="50" value="<?= htmlspecialchars($produto['sku']) ?>" required><br><br>
+            <input type="text" name="sku" maxlength="50" value="<?= htmlspecialchars($produto['sku']) ?>"
+                required><br><br>
 
             <label>Nome:</label>
-            <input type="text" name="nome" maxlength="100" value="<?= htmlspecialchars($produto['nome']) ?>" required><br><br>
+            <input type="text" name="nome" maxlength="100" value="<?= htmlspecialchars($produto['nome']) ?>"
+                required><br><br>
 
             <label>Categoria:</label>
-            <input type="text" name="categoria" maxlength="50" value="<?= htmlspecialchars($produto['categoria']) ?>"><br><br>
+            <input type="text" name="categoria" maxlength="50"
+                value="<?= htmlspecialchars($produto['categoria']) ?>"><br><br>
 
             <label>Preço (R$):</label>
-            <input type="number" name="preco" step="0.01" min="0" value="<?= htmlspecialchars($produto['preco']) ?>" required><br><br>
+            <input type="number" name="preco" step="0.01" min="0" value="<?= htmlspecialchars($produto['preco']) ?>"
+                required><br><br>
 
             <label>Promoção:</label>
-            <input type="checkbox" name="promocao" class="checkbox" <?= $produto['promocao'] ? 'checked' : '' ?>> Produto em promoção<br><br>
+            <input type="checkbox" name="promocao" class="checkbox" <?= $produto['promocao'] ? 'checked' : '' ?>> Produto
+            em promoção<br><br>
 
             <label>Preço Promocional (R$):</label>
-            <input type="number" name="preco_promocional" step="0.01" min="0" value="<?= htmlspecialchars($produto['preco_promocional']) ?>"><br><br>
+            <input type="number" name="preco_promocional" step="0.01" min="0"
+                value="<?= htmlspecialchars($produto['preco_promocional']) ?>"><br><br>
 
             <label>Estoque:</label>
-            <input type="number" name="estoque" min="0" value="<?= htmlspecialchars($produto['estoque']) ?>" required><br><br>
+            <input type="number" name="estoque" min="0" value="<?= htmlspecialchars($produto['estoque']) ?>"
+                required><br><br>
 
             <label>Quantidade Vendida:</label>
-            <input type="number" name="quantidade_vendida" min="0" value="<?= htmlspecialchars($produto['quantidade_vendida']) ?>"><br><br>
+            <input type="number" name="quantidade_vendida" min="0"
+                value="<?= htmlspecialchars($produto['quantidade_vendida']) ?>"><br><br>
 
             <label>Descrição:</label>
             <textarea name="descricao" rows="5"><?= htmlspecialchars($produto['descricao']) ?></textarea><br><br>
@@ -128,17 +138,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <label>Imagem:</label><br>
             <input type="file" name="imagem"><br>
             <?php if (!empty($episodio['imagem'])): ?>
-                <img src="../../../../img/<?= htmlspecialchars($episodio['imagem']) ?>" 
-                    alt="Imagem do Produto" width="150" 
+                <img src="../../../../img/<?= htmlspecialchars($episodio['imagem']) ?>" alt="Imagem do Produto" width="150"
                     style="margin-top:10px;"><br>
             <?php endif; ?>
             <br>
-            
+
             <label>Status:</label><br>
-            <input type="checkbox" name="ativo" class="checkbox" <?= $produto['ativo'] ? 'checked' : '' ?>> Produto ativo<br><br>
+            <input type="checkbox" name="ativo" class="checkbox" <?= $produto['ativo'] ? 'checked' : '' ?>> Produto
+            ativo<br><br>
 
             <input type="submit" value="Salvar" class="admin-btn">
         </form>
     </main>
 </body>
+
 </html>

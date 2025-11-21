@@ -18,6 +18,7 @@ $mensagem = 'Use o token abaixo para redefinir a senha:';
     <meta charset="UTF-8">
     <title>Validar Token - Anime Space</title>
     <link rel="stylesheet" href="../../CSS/style.css">
+    <link rel="icon" href="../../img/slogan3.png" type="image/png">
 </head>
 
 <body>

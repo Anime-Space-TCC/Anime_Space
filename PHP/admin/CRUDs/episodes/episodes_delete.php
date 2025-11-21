@@ -8,7 +8,7 @@ if (!isset($_SESSION['tipo']) || $_SESSION['tipo'] !== 'admin') {
     exit();
 }
 // Verifica o ID do episódio
-$id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
+$id = isset($_GET['id']) ? (int) $_GET['id'] : 0;
 
 // Redireciona se o ID for inválido
 if ($id <= 0) {

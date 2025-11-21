@@ -1,11 +1,11 @@
 <?php
 
 // Configurações do banco de dados
-$host = 'localhost';        
-$db   = 'anime_space';     
-$user = 'root';             
-$pass = '';                 
-$charset = 'utf8mb4';       
+$host = 'localhost';
+$db = 'anime_space';
+$user = 'root';
+$pass = '';
+$charset = 'utf8mb4';
 
 // Data Source Name (DSN) - string de conexão usada pelo PDO
 $dsn = "mysql:host=$host;dbname=$db;charset=$charset";

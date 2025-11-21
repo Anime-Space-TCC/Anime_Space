@@ -1,10 +1,11 @@
 <?php
 session_start();
 require __DIR__ . '/conexao.php';
-require __DIR__ . '/notificacoes.php'; 
+require __DIR__ . '/notificacoes.php';
 
 $pagamentos = $_SESSION['pagamentos_confirmados'] ?? [];
-if (empty($pagamentos)) die("Nenhum pagamento encontrado.");
+if (empty($pagamentos))
+    die("Nenhum pagamento encontrado.");
 
 $userId = $_SESSION['user_id'] ?? null;
 if (!$userId) {
@@ -16,7 +17,8 @@ $nomesProdutos = [];
 
 foreach ($pagamentos as $p) {
     $sku = $p['sku'] ?? null;
-    if (!$sku) die("❌ SKU não informado - Valor: " . $p['valor']);
+    if (!$sku)
+        die("❌ SKU não informado - Valor: " . $p['valor']);
 
     $valor = floatval(str_replace(',', '.', str_replace('.', '', $p['valor'])));
     $metodo = $p['tipo'] ?? 'cartao';
@@ -27,7 +29,8 @@ foreach ($pagamentos as $p) {
     $stmt->execute([$sku]);
     $produto = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    if (!$produto) die("❌ Produto não encontrado para o SKU: " . htmlspecialchars($sku));
+    if (!$produto)
+        die("❌ Produto não encontrado para o SKU: " . htmlspecialchars($sku));
 
     $produto_id = $produto['id'];
     $nomesProdutos[] = $produto['nome'];
@@ -47,7 +50,7 @@ foreach ($pagamentos as $p) {
 // ✅ Criar uma única notificação geral 
 $nomesLista = implode(', ', $nomesProdutos);
 criarNotificacao(
-    $userId, 
+    $userId,
     "Compra concluída!",
     "Seu pagamento foi aprovado com sucesso! Você comprou: " . htmlspecialchars($nomesLista) .
     ". Total: R$ " . number_format($total, 2, ',', '.') . ".",

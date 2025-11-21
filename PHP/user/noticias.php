@@ -20,7 +20,8 @@ $slides = array_slice($noticias, 0, 3);
 // Paginação
 $porPagina = 6;
 $pagina = isset($_GET['pagina']) ? (int) $_GET['pagina'] : 1;
-if ($pagina < 1) $pagina = 1;
+if ($pagina < 1)
+  $pagina = 1;
 $offset = ($pagina - 1) * $porPagina;
 $totalNoticias = $pdo->query("SELECT COUNT(*) FROM noticias")->fetchColumn();
 $totalPaginas = ceil($totalNoticias / $porPagina);
@@ -35,6 +36,7 @@ $noticias = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -42,11 +44,12 @@ $noticias = $stmt->fetchAll(PDO::FETCH_ASSOC);
   <link rel="stylesheet" href="../../CSS/style.css" />
   <link rel="icon" href="../../img/slogan3.png" type="image/png" />
 </head>
+
 <body class="comunidade-page">
-  
+
   <?php
-    $current_page = 'noticias';
-    include __DIR__ . '/navbar.php';
+  $current_page = 'noticias';
+  include __DIR__ . '/navbar.php';
   ?>
 
   <main class="comunidade-container">
@@ -67,10 +70,10 @@ $noticias = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <!-- 📜 HISTÓRIA DOS ANIMES -->
     <section class="historia-section">
       <h2>História dos Animes</h2>
-      <p>Desde as primeiras animações japonesas no início do século XX, 
-        os animes evoluíram de curtas experimentais para obras mundialmente reconhecidas. 
-        Séries como *Astro Boy (1963)* marcaram o início da indústria moderna, e décadas 
-        seguintes trouxeram marcos como *Akira (1988)* e *Neon Genesis Evangelion (1995)*. 
+      <p>Desde as primeiras animações japonesas no início do século XX,
+        os animes evoluíram de curtas experimentais para obras mundialmente reconhecidas.
+        Séries como *Astro Boy (1963)* marcaram o início da indústria moderna, e décadas
+        seguintes trouxeram marcos como *Akira (1988)* e *Neon Genesis Evangelion (1995)*.
         Hoje, os animes transcendem fronteiras e inspiram comunidades vibrantes ao redor do mundo.</p>
     </section>
 
@@ -84,7 +87,8 @@ $noticias = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <div class="noticia-info">
               <h3><?= htmlspecialchars($n['titulo']) ?></h3>
               <p><?= htmlspecialchars($n['resumo']) ?></p>
-              <a href="../../PHP/shared/noticias_redirect.php?id=<?= $n['id'] ?>" target="_blank" class="btn-leia">Leia mais</a>
+              <a href="../../PHP/shared/noticias_redirect.php?id=<?= $n['id'] ?>" target="_blank" class="btn-leia">Leia
+                mais</a>
             </div>
           </article>
         <?php endforeach; ?>
@@ -107,7 +111,7 @@ $noticias = $stmt->fetchAll(PDO::FETCH_ASSOC);
     </section>
 
     <div class="layout-populares-anuncios">
-  
+
       <!-- Lateral esquerda: anúncios -->
       <div class="ads-lateral">
         <div class="ad-item">
@@ -154,12 +158,13 @@ $noticias = $stmt->fetchAll(PDO::FETCH_ASSOC);
         </div>
       </div>
 
-     </div>
+    </div>
   </main>
 
   <?php include __DIR__ . '/rodape.php'; ?>
 
   <script src="../../JS/noticias.js"></script>
-  
+
 </body>
+
 </html>

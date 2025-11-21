@@ -1,6 +1,6 @@
 <section class="admin-acessos">
   <h3>Últimos Acessos</h3>
-  
+
   <table class="admin-table-acesso" id="tabela-acessos">
     <thead>
       <tr>

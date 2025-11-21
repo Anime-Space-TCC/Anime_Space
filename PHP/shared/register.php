@@ -6,7 +6,8 @@ require_once __DIR__ . '/auth.php';
 // ===========================================================
 // Função responsável por registrar um novo usuário no sistema.
 // ===========================================================
-function registrarUsuario(PDO $pdo, string $username, string $email, string $password, string $password_confirm): array {
+function registrarUsuario(PDO $pdo, string $username, string $email, string $password, string $password_confirm): array
+{
     $errors = [];
 
     // Normalização dos dados
@@ -53,8 +54,8 @@ function registrarUsuario(PDO $pdo, string $username, string $email, string $pas
 
         if ($novoId) {
             return [
-                'success'  => true,
-                'user_id'  => $novoId,
+                'success' => true,
+                'user_id' => $novoId,
                 'username' => $username
             ];
         } else {
@@ -65,6 +66,6 @@ function registrarUsuario(PDO $pdo, string $username, string $email, string $pas
     // Retorno em caso de erro
     return [
         'success' => false,
-        'errors'  => $errors
+        'errors' => $errors
     ];
 }

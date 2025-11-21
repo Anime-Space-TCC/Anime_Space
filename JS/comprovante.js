@@ -1,26 +1,28 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const btnImprimir = document.getElementById("btnImprimir");
-    if (btnImprimir) {
-        btnImprimir.addEventListener("click", imprimirComprovantePersonalizado);
-    }
+  const btnImprimir = document.getElementById("btnImprimir");
+  if (btnImprimir) {
+    btnImprimir.addEventListener("click", imprimirComprovantePersonalizado);
+  }
 });
 
 function imprimirComprovantePersonalizado() {
-    // Clona a área do comprovante para poder manipular sem alterar o original
-    const comprovante = document.querySelector(".comprovante").cloneNode(true);
+  // Clona a área do comprovante para poder manipular sem alterar o original
+  const comprovante = document.querySelector(".comprovante").cloneNode(true);
 
-    // Remove o bloco dos botões (para não aparecer os links no comprovante)
-    const botoes = comprovante.querySelector(".botoes-comprovante");
-    if (botoes) botoes.remove();
+  // Remove o bloco dos botões (para não aparecer os links no comprovante)
+  const botoes = comprovante.querySelector(".botoes-comprovante");
+  if (botoes) botoes.remove();
 
-    // Pega apenas o conteúdo limpo 
-    const conteudo = comprovante.innerHTML;
+  // Pega apenas o conteúdo limpo
+  const conteudo = comprovante.innerHTML;
 
-    const data = new Date().toLocaleDateString("pt-BR", { timeZone: "America/Sao_Paulo" });
-    const nome = typeof usuarioNome !== "undefined" ? usuarioNome : "Cliente";
+  const data = new Date().toLocaleDateString("pt-BR", {
+    timeZone: "America/Sao_Paulo",
+  });
+  const nome = typeof usuarioNome !== "undefined" ? usuarioNome : "Cliente";
 
-    const janela = window.open("", "_blank");
-    janela.document.write(`
+  const janela = window.open("", "_blank");
+  janela.document.write(`
         <html>
         <head>
             <title>Comprovante de Pagamento</title>
@@ -83,6 +85,6 @@ function imprimirComprovantePersonalizado() {
         </body>
         </html>
     `);
-    janela.document.close();
-    janela.print();
+  janela.document.close();
+  janela.print();
 }

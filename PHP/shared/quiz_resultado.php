@@ -7,8 +7,8 @@ verificarLogin();
 $userId = $_SESSION['user_id'];
 
 $quizId = $_POST['quiz_id'] ?? null;
-$xpGanho = (int)($_POST['xp'] ?? 0);
-$pontuacao = (int)($_POST['pontuacao'] ?? 0);
+$xpGanho = (int) ($_POST['xp'] ?? 0);
+$pontuacao = (int) ($_POST['pontuacao'] ?? 0);
 
 if (!$quizId || $pontuacao < 0 || $xpGanho < 0) {
     header("Location: ../user/quizzes.php?erro=invalid");

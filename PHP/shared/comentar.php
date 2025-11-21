@@ -19,8 +19,8 @@ if (!existeUsuario($pdo, $user_id)) {
 
 // 3. Dados do formulário
 $episodio_id = $_POST['episodio_id'] ?? 0; // 0 = comentário geral do anime
-$id_anime    = $_POST['id'] ?? null;
-$comentario  = trim($_POST['comentario'] ?? '');
+$id_anime = $_POST['id'] ?? null;
+$comentario = trim($_POST['comentario'] ?? '');
 
 // 4. Valida comentário
 if (empty($comentario)) {
@@ -36,7 +36,7 @@ if ($episodio_id != 0 && !existeEpisodio($pdo, $episodio_id)) {
 inserirComentario($pdo, $user_id, $episodio_id, $comentario);
 
 // 7. Redireciona para a página de episódios
-$redirectUrl = "../../PHP/user/episodes.php"; 
+$redirectUrl = "../../PHP/user/episodes.php";
 
 if ($id_anime) {
     $redirectUrl .= "?id=" . urlencode($id_anime);

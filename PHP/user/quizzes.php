@@ -40,7 +40,7 @@ foreach ($linhas as $linha) {
       'quizzes' => []
     ];
   }
-  if ($linha['quiz_id']) { 
+  if ($linha['quiz_id']) {
     $animes[$id]['quizzes'][] = [
       'id' => $linha['quiz_id'],
       'titulo' => $linha['titulo'],
@@ -70,13 +70,14 @@ $ranking = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 $fotoPerfil = buscarFotoPerfil($pdo, $userId);
 if (!$fotoPerfil) {
-    $fotoPerfil = '/PHP/uploads/default.jpg';
+  $fotoPerfil = '/PHP/uploads/default.jpg';
 }
 
 // Paginação
 $porPagina = 10;
-$pagina = isset($_GET['pagina']) ? (int)$_GET['pagina'] : 1;
-if ($pagina < 1) $pagina = 1;
+$pagina = isset($_GET['pagina']) ? (int) $_GET['pagina'] : 1;
+if ($pagina < 1)
+  $pagina = 1;
 
 $offset = ($pagina - 1) * $porPagina;
 
@@ -159,9 +160,9 @@ $totalPaginas = ceil($totalQuizzes / $porPagina);
           <?php foreach ($ranking as $i => $player): ?>
             <li class="ranking-item pos<?= $i + 1 ?>">
               <span class="posicao"><?= $i + 1 ?>°</span>
-              <img class="avatar" 
-                  src="../uploads/<?= htmlspecialchars($fotoPerfil['foto_perfil'] ?? 'default.jpg') ?>?v=<?= time() ?>" 
-                  alt="Avatar">
+              <img class="avatar"
+                src="../uploads/<?= htmlspecialchars($fotoPerfil['foto_perfil'] ?? 'default.jpg') ?>?v=<?= time() ?>"
+                alt="Avatar">
               <span class="nome"><?= htmlspecialchars($player['username']) ?></span>
               <span class="pontos"><?= $player['total_pontos'] ?> pts</span>
             </li>
@@ -172,19 +173,19 @@ $totalPaginas = ceil($totalQuizzes / $porPagina);
     </div>
 
     <!-- Paginação -->
-      <div class="paginacao">
-        <?php if ($pagina > 1): ?>
-          <a href="?pagina=<?= $pagina - 1 ?>">&laquo; Anterior</a>
-        <?php endif; ?>
+    <div class="paginacao">
+      <?php if ($pagina > 1): ?>
+        <a href="?pagina=<?= $pagina - 1 ?>">&laquo; Anterior</a>
+      <?php endif; ?>
 
-        <?php for ($i = 1; $i <= $totalPaginas; $i++): ?>
-          <a href="?pagina=<?= $i ?>" class="<?= $i === $pagina ? 'ativo' : '' ?>"><?= $i ?></a>
-        <?php endfor; ?>
+      <?php for ($i = 1; $i <= $totalPaginas; $i++): ?>
+        <a href="?pagina=<?= $i ?>" class="<?= $i === $pagina ? 'ativo' : '' ?>"><?= $i ?></a>
+      <?php endfor; ?>
 
-        <?php if ($pagina < $totalPaginas): ?>
-          <a href="?pagina=<?= $pagina + 1 ?>">Próxima &raquo;</a>
-        <?php endif; ?>
-      </div>
+      <?php if ($pagina < $totalPaginas): ?>
+        <a href="?pagina=<?= $pagina + 1 ?>">Próxima &raquo;</a>
+      <?php endif; ?>
+    </div>
     </section>
   </main>
 

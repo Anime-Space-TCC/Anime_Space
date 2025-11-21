@@ -319,7 +319,7 @@ if (isset($_GET['id']) && isset($_SESSION['user_id'])) {
     </div>
   </main>
   <?php include __DIR__ . '/rodape.php'; ?>
-  <script src="../../JS/togge.js"></script>
+  <script src="../../JS/botoes.js"></script>
   <script src="../../JS/temporadas.js"></script>
   <script src="../../JS/reacao.js"></script>
   <script src="../../JS/favoritar.js"></script>

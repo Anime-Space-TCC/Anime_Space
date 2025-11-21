@@ -6,7 +6,7 @@ require __DIR__ . '/../shared/acessos.php';
 
 // Buscar dados
 $topAnimes = buscarTopAnimes($pdo, 5);
-$generos   = buscarGenerosLimit($pdo, 17);
+$generos = buscarGenerosLimit($pdo, 17);
 $lancamentos = buscarLancamentos($pdo, 9);
 ?>
 
@@ -22,8 +22,8 @@ $lancamentos = buscarLancamentos($pdo, 9);
 <body class="home">
 
 <?php
-  $current_page = 'home'; 
-  include __DIR__ . '/navbar.php'; 
+$current_page = 'home';
+include __DIR__ . '/navbar.php';
 ?>
   <main class="page-content">
       <header class="cabeca" role="banner">
@@ -33,13 +33,13 @@ $lancamentos = buscarLancamentos($pdo, 9);
 
       <div class="slideshow-container">
         <?php foreach ($topAnimes as $index => $anime): ?>
-          <div class="slide">
-            <a href="../../PHP/user/episodes.php?id=<?= $anime['id'] ?>">
-              <img src="../../img/<?= htmlspecialchars($anime['capa']) ?>" 
-                  alt="<?= htmlspecialchars($anime['nome']) ?>" class="slide-img" />
-            </a>
-            <h4 class="destaque"><?= ($index + 1) ?> . <?= htmlspecialchars($anime['nome']) ?></h4>
-          </div>
+            <div class="slide">
+              <a href="../../PHP/user/episodes.php?id=<?= $anime['id'] ?>">
+                <img src="../../img/<?= htmlspecialchars($anime['capa']) ?>" 
+                    alt="<?= htmlspecialchars($anime['nome']) ?>" class="slide-img" />
+              </a>
+              <h4 class="destaque"><?= ($index + 1) ?> . <?= htmlspecialchars($anime['nome']) ?></h4>
+            </div>
         <?php endforeach; ?>
         <!-- botões -->
         <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
@@ -52,19 +52,19 @@ $lancamentos = buscarLancamentos($pdo, 9);
             <h3 id="lancamentos-title">Lançamentos</h3>
             <div class="grid-lancamentos">
                 <?php foreach ($lancamentos as $anime): ?>
-                    <div class="card-anime">
-                        <a href="episodes.php?id=<?= $anime['id'] ?>" class="anime-item">
-                            <img src="../../img/<?= htmlspecialchars($anime['capa']) ?>" alt="<?= htmlspecialchars($anime['nome']) ?>" class="capa-anime">
+                      <div class="card-anime">
+                          <a href="episodes.php?id=<?= $anime['id'] ?>" class="anime-item">
+                              <img src="../../img/<?= htmlspecialchars($anime['capa']) ?>" alt="<?= htmlspecialchars($anime['nome']) ?>" class="capa-anime">
                             
-                            <?php if (!empty($anime['nota'])): ?>
-                                <span class="anime-nota">⭐ <?= htmlspecialchars($anime['nota']) ?></span>
-                            <?php endif; ?>
+                              <?php if (!empty($anime['nota'])): ?>
+                                    <span class="anime-nota">⭐ <?= htmlspecialchars($anime['nota']) ?></span>
+                              <?php endif; ?>
 
-                            <div class="info">
-                                <h3 class="nome-anime"><?= htmlspecialchars($anime['nome']) ?></h3>
-                            </div>
-                        </a>
-                    </div>
+                              <div class="info">
+                                  <h3 class="nome-anime"><?= htmlspecialchars($anime['nome']) ?></h3>
+                              </div>
+                          </a>
+                      </div>
                 <?php endforeach; ?>
             </div>
         </section>
@@ -73,11 +73,11 @@ $lancamentos = buscarLancamentos($pdo, 9);
           <h3 id="genres-title">Gêneros Populares</h3>
             <ul>
               <?php foreach ($generos as $genero): ?>
-                <li class="<?= $genero['id_destaque'] == 1 ? 'destaque' : '' ?>">
-                  <a href="../../PHP/user/stream.php?generos=<?= urlencode($genero['nome']) ?>">
-                  <?= htmlspecialchars($genero['nome']) ?>
-                  </a>
-                </li>
+                  <li class="<?= $genero['id_destaque'] == 1 ? 'destaque' : '' ?>">
+                    <a href="../../PHP/user/stream.php?generos=<?= urlencode($genero['nome']) ?>">
+                    <?= htmlspecialchars($genero['nome']) ?>
+                    </a>
+                  </li>
               <?php endforeach; ?>
             </ul>
         </section>

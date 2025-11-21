@@ -1,17 +1,17 @@
 <?php
 // Defina a chave secreta usada para hash_hmac
-define('SECRET_KEY', 'sua_chave_secreta_aqui'); 
+define('SECRET_KEY', 'sua_chave_secreta_aqui');
 
 // Função: session_start
 session_start();
 
 // Função: require
 require __DIR__ . '/conexao.php';
-require __DIR__ . '/auth.php';      
+require __DIR__ . '/auth.php';
 
 // Função: filter_input
 $episodeId = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
-$expires   = filter_input(INPUT_GET, 'expires', FILTER_VALIDATE_INT);
+$expires = filter_input(INPUT_GET, 'expires', FILTER_VALIDATE_INT);
 
 // Função: hash_hmac
 $expected = hash_hmac('sha256', $episodeId . '|' . $userId . '|' . $expires, SECRET_KEY);

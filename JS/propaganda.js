@@ -6,25 +6,25 @@
 const currentPage = window.location.pathname;
 
 // Seleciona áreas de anúncios (se existirem)
-const lateralAds = document.querySelectorAll('.ads-lateral .ad-item img');
-const letreiro = document.getElementById('letreiro'); // usado no rodapé animado
+const lateralAds = document.querySelectorAll(".ads-lateral .ad-item img");
+const letreiro = document.getElementById("letreiro"); // usado no rodapé animado
 
 // ================================
 // Conjuntos de banners
 // ================================
 const banners = {
   rodape: [
-    '../../img/ads/propaganda1.jpg',
-    '../../img/ads/propaganda2.jpg',
-    '../../img/ads/propaganda3.jpg',
-    '../../img/ads/propaganda4.jpg',
-    '../../img/ads/propaganda5.jpg',
-    '../../img/ads/propaganda6.jpg'
+    "../../img/ads/propaganda1.jpg",
+    "../../img/ads/propaganda2.jpg",
+    "../../img/ads/propaganda3.jpg",
+    "../../img/ads/propaganda4.jpg",
+    "../../img/ads/propaganda5.jpg",
+    "../../img/ads/propaganda6.jpg",
   ],
   laterais: [
-    ['../../img/ads/propaganda7.jpg', '../../img/ads/propaganda8.jpg'],
-    ['../../img/ads/propaganda9.jpg', '../../img/ads/propaganda10.jpg']
-  ]
+    ["../../img/ads/propaganda7.jpg", "../../img/ads/propaganda8.jpg"],
+    ["../../img/ads/propaganda9.jpg", "../../img/ads/propaganda10.jpg"],
+  ],
 };
 
 // ================================
@@ -35,8 +35,10 @@ function carregarLetreiro(imagens) {
 
   // Gera dinamicamente os blocos de propaganda
   letreiro.innerHTML = imagens
-    .map(src => `<div class="propaganda"><img src="${src}" alt="Anúncio"></div>`)
-    .join('');
+    .map(
+      (src) => `<div class="propaganda"><img src="${src}" alt="Anúncio"></div>`
+    )
+    .join("");
 
   // Duplica o conteúdo para efeito de rolagem contínua
   letreiro.innerHTML += letreiro.innerHTML;
@@ -64,6 +66,6 @@ function rotateAds(adElements, adGroups, interval = 8000) {
 carregarLetreiro(banners.rodape);
 
 // Laterais: apenas em páginas específicas
-if (currentPage.includes('estreias') || currentPage.includes('lancamentos')) {
+if (currentPage.includes("estreias") || currentPage.includes("lancamentos")) {
   rotateAds(lateralAds, banners.laterais);
 }

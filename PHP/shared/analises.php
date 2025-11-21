@@ -84,17 +84,17 @@ try {
 
     // ===== Saída JSON otimizada =====
     echo json_encode([
-        'geral'                   => $totais,
-        'acessos_por_dia'         => $acessosPorDia,
-        'acessos_recentes'        => $acessosRecentes,
-        'usuarios_idade'          => $usuariosIdade,
-        'usuarios_nacionalidade'  => $usuariosNacionalidade,
-        'top_animes'              => $topAnimes
+        'geral' => $totais,
+        'acessos_por_dia' => $acessosPorDia,
+        'acessos_recentes' => $acessosRecentes,
+        'usuarios_idade' => $usuariosIdade,
+        'usuarios_nacionalidade' => $usuariosNacionalidade,
+        'top_animes' => $topAnimes
     ], JSON_UNESCAPED_UNICODE | JSON_NUMERIC_CHECK);
 } catch (PDOException $e) {
     http_response_code(500);
     echo json_encode([
-        'erro'      => 'Falha ao carregar dados',
-        'mensagem'  => $e->getMessage()
+        'erro' => 'Falha ao carregar dados',
+        'mensagem' => $e->getMessage()
     ], JSON_UNESCAPED_UNICODE);
 }

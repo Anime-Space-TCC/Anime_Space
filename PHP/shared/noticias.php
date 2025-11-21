@@ -24,7 +24,8 @@ if (isset($_GET['id'])) {
     $noticia = $stmt->fetch(PDO::FETCH_ASSOC);
 }
 
-function buscarNoticiasPopulares(PDO $pdo, int $limite = 5): array {
+function buscarNoticiasPopulares(PDO $pdo, int $limite = 5): array
+{
     $stmt = $pdo->prepare("
         SELECT id, titulo, imagem, visualizacoes
         FROM noticias

@@ -5,7 +5,8 @@ require_once __DIR__ . '/gamificacao.php'; // Função adicionarXP
 /**
  * Envia uma mensagem de suporte, opcionalmente envia e-mail e dá XP ao usuário
  */
-function enviarMensagemSuporte(int $userId, string $nome, string $email, string $mensagem, bool $enviarEmail = false): bool {
+function enviarMensagemSuporte(int $userId, string $nome, string $email, string $mensagem, bool $enviarEmail = false): bool
+{
     global $pdo;
 
     if (empty($nome) || empty($email) || empty($mensagem)) {
@@ -20,7 +21,8 @@ function enviarMensagemSuporte(int $userId, string $nome, string $email, string 
         ");
         $ok = $stmt->execute([$userId, $nome, $email, $mensagem]);
 
-        if (!$ok) return false;
+        if (!$ok)
+            return false;
 
         // Envia e-mail somente se ativado (para produção)
         if ($enviarEmail) {

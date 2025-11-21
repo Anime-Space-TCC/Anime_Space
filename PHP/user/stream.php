@@ -21,8 +21,9 @@ $busca = $_GET['busca'] ?? '';
 
 // Paginação
 $porPagina = 18;
-$pagina = isset($_GET['pagina']) ? (int)$_GET['pagina'] : 1;
-if ($pagina < 1) $pagina = 1;
+$pagina = isset($_GET['pagina']) ? (int) $_GET['pagina'] : 1;
+if ($pagina < 1)
+  $pagina = 1;
 
 $offset = ($pagina - 1) * $porPagina;
 
@@ -52,13 +53,14 @@ $animes = getAnimesFiltradosPaginados($filtroGenero, $filtroAno, $filtroLinguage
   ?>
   <main class="page-content">
     <header class="titulo-pagina">
-      <h1>Animes Disponíveis</h1> <!-- Título principal -->
+      <h1>Animes Disponíveis</h1> 
     </header>
     <section class="busca-filtros">
       <form method="GET" action="stream.php" class="busca-filtros-form">
         <div class="barra-pesquisa">
           <!-- Campo de busca por nome ou gênero -->
-          <input type="text" name="busca" placeholder="Buscar anime por nome ou gênero..." value="<?= htmlspecialchars($busca) ?>">
+          <input type="text" name="busca" placeholder="Buscar anime por nome ou gênero..."
+            value="<?= htmlspecialchars($busca) ?>">
         </div>
 
         <div class="filtros">
@@ -105,7 +107,8 @@ $animes = getAnimesFiltradosPaginados($filtroGenero, $filtroAno, $filtroLinguage
         <?php foreach ($animes as $anime): ?>
           <article class="anime-item">
             <a href="episodes.php?id=<?= $anime['id'] ?>" class="anime-item">
-              <img src="../../img/<?= htmlspecialchars($anime['capa']) ?>" alt="<?= htmlspecialchars($anime['nome']) ?>" class="mini-img">
+              <img src="../../img/<?= htmlspecialchars($anime['capa']) ?>" alt="<?= htmlspecialchars($anime['nome']) ?>"
+                class="mini-img">
               <span class="anime-nota">⭐ <?= htmlspecialchars($anime['nota']) ?></span>
               <div class="info">
                 <h3><?= htmlspecialchars($anime['nome']) ?></h3>
@@ -116,22 +119,22 @@ $animes = getAnimesFiltradosPaginados($filtroGenero, $filtroAno, $filtroLinguage
         <?php endforeach; ?>
       <?php else: ?>
         <p">Nenhum anime cadastrado ainda.</p>
-      <?php endif; ?>
+        <?php endif; ?>
     </section>
     <!-- Paginação -->
-      <div class="paginacao">
-        <?php if ($pagina > 1): ?>
-          <a href="?pagina=<?= $pagina - 1 ?>">&laquo; Anterior</a>
-        <?php endif; ?>
+    <div class="paginacao">
+      <?php if ($pagina > 1): ?>
+        <a href="?pagina=<?= $pagina - 1 ?>">&laquo; Anterior</a>
+      <?php endif; ?>
 
-        <?php for ($i = 1; $i <= $totalPaginas; $i++): ?>
-          <a href="?pagina=<?= $i ?>" class="<?= $i === $pagina ? 'ativo' : '' ?>"><?= $i ?></a>
-        <?php endfor; ?>
+      <?php for ($i = 1; $i <= $totalPaginas; $i++): ?>
+        <a href="?pagina=<?= $i ?>" class="<?= $i === $pagina ? 'ativo' : '' ?>"><?= $i ?></a>
+      <?php endfor; ?>
 
-        <?php if ($pagina < $totalPaginas): ?>
-          <a href="?pagina=<?= $pagina + 1 ?>">Próxima &raquo;</a>
-        <?php endif; ?>
-      </div>
+      <?php if ($pagina < $totalPaginas): ?>
+        <a href="?pagina=<?= $pagina + 1 ?>">Próxima &raquo;</a>
+      <?php endif; ?>
+    </div>
   </main>
   <?php include __DIR__ . '/rodape.php'; ?>
 </body>

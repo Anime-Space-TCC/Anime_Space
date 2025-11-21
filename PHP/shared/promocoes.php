@@ -1,15 +1,16 @@
-<?php 
+<?php
 
 if (!function_exists('criarNotificacao')) {
     require_once __DIR__ . '/notificacoes.php';
 }
 
 require_once __DIR__ . '/conexao.php';
-require_once __DIR__ . '/produtos.php'; 
+require_once __DIR__ . '/produtos.php';
 
 
 // Envia uma notificação única sobre promoções ativas por dia.
-function notificarPromocoesParaUsuario(int $userId): bool {
+function notificarPromocoesParaUsuario(int $userId): bool
+{
     global $pdo;
 
     // Verifica se já existe notificação de promoções HOJE

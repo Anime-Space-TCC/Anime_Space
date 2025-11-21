@@ -36,39 +36,44 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <title>Nova Senha - Anime Space</title>
     <link rel="stylesheet" href="../../CSS/style.css">
+    <link rel="icon" href="../../img/slogan3.png" type="image/png">
 </head>
+
 <body>
-<div class="recupera">
-    <div class="recupera-container">
-        <div class="recupera-box">
-            <h2>Nova Senha</h2>
+    <div class="recupera">
+        <div class="recupera-container">
+            <div class="recupera-box">
+                <h2>Nova Senha</h2>
 
-            <?php if (!empty($erro)) : ?>
-                <p class="mensagem"><?= htmlspecialchars($erro) ?></p>
-            <?php endif; ?>
+                <?php if (!empty($erro)): ?>
+                    <p class="mensagem"><?= htmlspecialchars($erro) ?>
+                    </p>
+                <?php endif; ?>
 
-            <form method="post">
-                <div class="campo-input">
-                    <input type="text" name="token" placeholder="Cole o token aqui" required>
-                </div>
-                <div class="campo-input">
-                    <input type="password" name="senha" placeholder="Digite sua nova senha" required>
-                </div>
-                <div class="campo-input">
-                    <input type="password" name="confirmar" placeholder="Confirme sua nova senha" required>
-                </div>
-                <button type="submit" class="botao-recuperar">Atualizar Senha</button>
-            </form>
+                <form method="post">
+                    <div class="campo-input">
+                        <input type="text" name="token" placeholder="Cole o token aqui" required>
+                    </div>
+                    <div class="campo-input">
+                        <input type="password" name="senha" placeholder="Digite sua nova senha" required>
+                    </div>
+                    <div class="campo-input">
+                        <input type="password" name="confirmar" placeholder="Confirme sua nova senha" required>
+                    </div>
+                    <button type="submit" class="botao-recuperar">Atualizar Senha</button>
+                </form>
 
-            <div class="links">
-                <a href="login.php">Voltar ao login</a>
+                <div class="links">
+                    <a href="login.php">Voltar ao login</a>
+                </div>
             </div>
         </div>
     </div>
-</div>
 </body>
+
 </html>

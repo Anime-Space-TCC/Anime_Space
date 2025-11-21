@@ -24,6 +24,7 @@ if ($id) {
     <meta charset="UTF-8">
     <title><?= $id ? "Editar Usuário" : "Novo Usuário" ?></title>
     <link rel="stylesheet" href="../../../../CSS/style.css?v=2">
+    <link rel="icon" href="../../img/slogan3.png" type="image/png">
 </head>
 
 <body class="admin-cruds">

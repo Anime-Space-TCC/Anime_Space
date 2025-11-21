@@ -7,16 +7,18 @@ require_once '../shared/usuarios.php';
 require_once '../shared/perfil.php';
 require_once '../shared/gamificacao.php';
 
-$response = ['sucesso' => false,
-             'erro' => '', 
-             'favoritos' => [], 
-             'historico' => [], 
-             'recomendacoes' => [], 
-             'nivel' => 0, 
-             'tituloNivel' => '', 
-             'xp' => 0, 
-             'xpNecessario' => 100, 
-             'porcentagem' => 0];
+$response = [
+    'sucesso' => false,
+    'erro' => '',
+    'favoritos' => [],
+    'historico' => [],
+    'recomendacoes' => [],
+    'nivel' => 0,
+    'tituloNivel' => '',
+    'xp' => 0,
+    'xpNecessario' => 100,
+    'porcentagem' => 0
+];
 
 try {
     verificarLogin();

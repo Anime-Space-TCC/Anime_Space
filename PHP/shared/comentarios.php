@@ -1,7 +1,8 @@
 <?php
 require_once __DIR__ . '/gamificacao.php'; // garante que a função adicionarXP está disponível
 
-function inserirComentario(PDO $pdo, int $userId, int $episodioId, string $comentario): bool {
+function inserirComentario(PDO $pdo, int $userId, int $episodioId, string $comentario): bool
+{
     try {
         // Insere o comentário normalmente
         $stmt = $pdo->prepare("
@@ -10,7 +11,8 @@ function inserirComentario(PDO $pdo, int $userId, int $episodioId, string $comen
         ");
         $ok = $stmt->execute([$userId, $episodioId, $comentario]);
 
-        if (!$ok) return false;
+        if (!$ok)
+            return false;
 
         // Verifica se o usuário já ganhou XP por comentar neste episódio
         $stmtLog = $pdo->prepare("

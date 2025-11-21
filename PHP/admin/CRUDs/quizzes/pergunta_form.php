@@ -9,13 +9,15 @@ if (!isset($_SESSION['tipo']) || $_SESSION['tipo'] !== 'admin') {
 }
 
 $quiz_id = $_GET['quiz_id'] ?? null;
-if (!$quiz_id) die("ID do quiz não informado.");
+if (!$quiz_id)
+    die("ID do quiz não informado.");
 
 // Busca o quiz
 $stmt = $pdo->prepare("SELECT * FROM quizzes WHERE id = ?");
 $stmt->execute([$quiz_id]);
 $quiz = $stmt->fetch(PDO::FETCH_ASSOC);
-if (!$quiz) die("Quiz não encontrado.");
+if (!$quiz)
+    die("Quiz não encontrado.");
 
 // Se for edição, recebe o id da pergunta
 $id = $_GET['id'] ?? null;
@@ -60,14 +62,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     alternativa_d=? 
                 WHERE id=? AND quiz_id=?";
         $pdo->prepare($sql)->execute([
-            $texto, $correta, $resposta_a, $resposta_b, $resposta_c, $resposta_d, $id, $quiz_id
+            $texto,
+            $correta,
+            $resposta_a,
+            $resposta_b,
+            $resposta_c,
+            $resposta_d,
+            $id,
+            $quiz_id
         ]);
     } else {
         // Insere nova pergunta
         $sql = "INSERT INTO quiz_perguntas (quiz_id, pergunta, resposta_correta, alternativa_a, alternativa_b, alternativa_c, alternativa_d)
                 VALUES (?, ?, ?, ?, ?, ?, ?)";
         $pdo->prepare($sql)->execute([
-            $quiz_id, $texto, $correta, $resposta_a, $resposta_b, $resposta_c, $resposta_d
+            $quiz_id,
+            $texto,
+            $correta,
+            $resposta_a,
+            $resposta_b,
+            $resposta_c,
+            $resposta_d
         ]);
     }
 
@@ -84,48 +99,56 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
-<meta charset="UTF-8">
-<title><?= $id ? "Editar Pergunta" : "Nova Pergunta" ?> - <?= htmlspecialchars($quiz['titulo']) ?></title>
-<link rel="stylesheet" href="../../../../CSS/style.css?v=2">
+    <meta charset="UTF-8">
+    <title><?= $id ? "Editar Pergunta" : "Nova Pergunta" ?> - <?= htmlspecialchars($quiz['titulo']) ?></title>
+    <link rel="stylesheet" href="../../../../CSS/style.css?v=2">
+    <link rel="icon" href="../../img/slogan3.png" type="image/png">
 </head>
+
 <body class="admin-cruds">
 
-<div class="admin-links">
-    <h1><?= $id ? "Editar Pergunta" : "Nova Pergunta" ?></h1>
-    <nav>
-        <a href="perguntas.php?quiz_id=<?= $quiz['id'] ?>" class="admin-btn">Voltar</a>
-        <a href="../../../../PHP/shared/logout.php" class="admin-btn">Sair</a>
-    </nav>
-</div>
+    <div class="admin-links">
+        <h1><?= $id ? "Editar Pergunta" : "Nova Pergunta" ?></h1>
+        <nav>
+            <a href="perguntas.php?quiz_id=<?= $quiz['id'] ?>" class="admin-btn">Voltar</a>
+            <a href="../../../../PHP/shared/logout.php" class="admin-btn">Sair</a>
+        </nav>
+    </div>
 
-<main class="admin-form">
-<form method="post">
-    <label>Pergunta:</label><br>
-    <textarea name="pergunta" required><?= htmlspecialchars($pergunta['pergunta'] ?? '') ?></textarea><br><br>
+    <main class="admin-form">
+        <form method="post">
+            <label>Pergunta:</label><br>
+            <textarea name="pergunta" required><?= htmlspecialchars($pergunta['pergunta'] ?? '') ?></textarea><br><br>
 
-    <label>Alternativa A:</label><br>
-    <input type="text" name="alternativa_a" value="<?= htmlspecialchars($pergunta['alternativa_a'] ?? '') ?>" required><br><br>
+            <label>Alternativa A:</label><br>
+            <input type="text" name="alternativa_a" value="<?= htmlspecialchars($pergunta['alternativa_a'] ?? '') ?>"
+                required><br><br>
 
-    <label>Alternativa B:</label><br>
-    <input type="text" name="alternativa_b" value="<?= htmlspecialchars($pergunta['alternativa_b'] ?? '') ?>" required><br><br>
+            <label>Alternativa B:</label><br>
+            <input type="text" name="alternativa_b" value="<?= htmlspecialchars($pergunta['alternativa_b'] ?? '') ?>"
+                required><br><br>
 
-    <label>Alternativa C:</label><br>
-    <input type="text" name="alternativa_c" value="<?= htmlspecialchars($pergunta['alternativa_c'] ?? '') ?>" required><br><br>
+            <label>Alternativa C:</label><br>
+            <input type="text" name="alternativa_c" value="<?= htmlspecialchars($pergunta['alternativa_c'] ?? '') ?>"
+                required><br><br>
 
-    <label>Alternativa D:</label><br>
-    <input type="text" name="alternativa_d" value="<?= htmlspecialchars($pergunta['alternativa_d'] ?? '') ?>" required><br><br>
+            <label>Alternativa D:</label><br>
+            <input type="text" name="alternativa_d" value="<?= htmlspecialchars($pergunta['alternativa_d'] ?? '') ?>"
+                required><br><br>
 
-    <label>Resposta Correta:</label><br>
-    <select name="correta" required>
-        <option value="a" <?= ($pergunta['resposta_correta'] ?? 'a') === 'a' ? 'selected' : '' ?>>A</option>
-        <option value="b" <?= ($pergunta['resposta_correta'] ?? 'a') === 'b' ? 'selected' : '' ?>>B</option>
-        <option value="c" <?= ($pergunta['resposta_correta'] ?? 'a') === 'c' ? 'selected' : '' ?>>C</option>
-        <option value="d" <?= ($pergunta['resposta_correta'] ?? 'a') === 'd' ? 'selected' : '' ?>>D</option>
-    </select><br><br>
+            <label>Resposta Correta:</label><br>
+            <select name="correta" required>
+                <option value="a" <?= ($pergunta['resposta_correta'] ?? 'a') === 'a' ? 'selected' : '' ?>>A</option>
+                <option value="b" <?= ($pergunta['resposta_correta'] ?? 'a') === 'b' ? 'selected' : '' ?>>B</option>
+                <option value="c" <?= ($pergunta['resposta_correta'] ?? 'a') === 'c' ? 'selected' : '' ?>>C</option>
+                <option value="d" <?= ($pergunta['resposta_correta'] ?? 'a') === 'd' ? 'selected' : '' ?>>D</option>
+            </select><br><br>
 
-    <input type="submit" value="Salvar" class="admin-btn">
-</form>
-</main>
+            <input type="submit" value="Salvar" class="admin-btn">
+        </form>
+    </main>
 </body>
+
 </html>

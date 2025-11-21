@@ -46,16 +46,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <title>Suporte - Anime Space</title>
     <link rel="stylesheet" href="../../CSS/style.css">
-    <link rel="icon" href="../../img/slogan3.png" type="image/png"> 
+    <link rel="icon" href="../../img/slogan3.png" type="image/png">
 </head>
+
 <body>
     <?php
-        $current_page = 'suporte';
-        include __DIR__ . '/navbar.php';
+    $current_page = 'suporte';
+    include __DIR__ . '/navbar.php';
     ?>
     <main class="page-content">
         <div class="suporte">
@@ -77,7 +79,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <input type="email" name="email" id="email" required value="<?= htmlspecialchars($email) ?>">
 
                     <label for="mensagem">Mensagem:</label>
-                    <textarea name="mensagem" id="mensagem" rows="5" required><?= htmlspecialchars($mensagem) ?></textarea>
+                    <textarea name="mensagem" id="mensagem" rows="5"
+                        required><?= htmlspecialchars($mensagem) ?></textarea>
 
                     <button type="submit">Enviar Mensagem</button>
                 </form>
@@ -85,17 +88,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             <h2>Informações de Contato</h2>
             <p>📧 E-mail: <a href="mailto:suporte@animespace.com">suporte@animespace.com</a></p>
-            <p>📱 WhatsApp: <a target="_blank" href="https://wa.me/5561991585929?text=Ola%20tenho%20interesse%20em%20falar%20sobre%20animes">Clique para enviar mensagem!</a></p>
+            <p>📱 WhatsApp: <a target="_blank"
+                    href="https://wa.me/5561991585929?text=Ola%20tenho%20interesse%20em%20falar%20sobre%20animes">Clique
+                    para enviar mensagem!</a></p>
             <p>📍 Endereço: Brasília - DF</p>
 
             <div class="faq">
                 <h2>FAQ - Perguntas Frequentes</h2>
 
                 <h3>1. Não consigo assistir aos episódios, o que fazer?</h3>
-                <p>Verifique sua conexão com a internet e tente novamente. Caso persista, entre em contato pelo formulário acima.</p>
+                <p>Verifique sua conexão com a internet e tente novamente. Caso persista, entre em contato pelo
+                    formulário acima.</p>
 
                 <h3>2. Como criar uma conta?</h3>
-                <p>Basta acessar a página de cadastro e preencher seus dados. Você poderá salvar episódios e fazer comentários.</p>
+                <p>Basta acessar a página de cadastro e preencher seus dados. Você poderá salvar episódios e fazer
+                    comentários.</p>
 
                 <h3>3. Como reportar um erro no site?</h3>
                 <p>Use o formulário de suporte, descrevendo o problema e enviando prints se possível.</p>
@@ -104,4 +111,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </main>
     <?php include __DIR__ . '/rodape.php'; ?>
 </body>
+
 </html>

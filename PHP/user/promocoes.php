@@ -1,6 +1,6 @@
 <div class="promocoes-slideshow">
     <div class="slide"">
-        <img src="../../img/promocao2.jpg" alt="Promoção 1">
+        <img src=" ../../img/promocao2.jpg" alt="Promoção 1">
     </div>
     <div class="slide">
         <img src="../../img/promocao3.jpg" alt="Promoção 2">

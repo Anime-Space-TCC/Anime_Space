@@ -43,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Atualizar dados do usuário
     if ($acao === 'dados') {
-        $novoNome  = trim($_POST['username'] ?? '');
+        $novoNome = trim($_POST['username'] ?? '');
         $novoEmail = trim($_POST['email'] ?? '');
         $novaSenha = trim($_POST['password'] ?? '');
 
@@ -72,56 +72,60 @@ if (!$fotoPerfil) {
 
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <title>Editar Perfil</title>
     <link rel="stylesheet" href="../../CSS/perfil.css">
     <link rel="icon" href="../../img/slogan3.png" type="image/png">
 </head>
+
 <body class="perfil">
 
-<main class="perfil-container">
-    <section class="perfil-editar-card">
-        <h1 class="perfil-titulo">Editar Perfil</h1>
+    <main class="perfil-container">
+        <section class="perfil-editar-card">
+            <h1 class="perfil-titulo">Editar Perfil</h1>
 
-        <?php if ($msg !== ''): ?>
-            <p class="perfil-mensagem"><?= htmlspecialchars($msg) ?></p>
-        <?php endif; ?>
+            <?php if ($msg !== ''): ?>
+                <p class="perfil-mensagem"><?= htmlspecialchars($msg) ?></p>
+            <?php endif; ?>
 
-        <!-- Card de imagem -->
-        <div class="perfil-foto-section">
-            <div class="avatar">
-                <img src="<?= '../uploads/' . basename($fotoPerfil) . '?t=' . time() ?>" alt="Foto de perfil">
+            <!-- Card de imagem -->
+            <div class="perfil-foto-section">
+                <div class="avatar">
+                    <img src="<?= '../uploads/' . basename($fotoPerfil) . '?t=' . time() ?>" alt="Foto de perfil">
+                </div>
+                <form action="" method="post" enctype="multipart/form-data" class="perfil-upload-form">
+                    <input type="hidden" name="acao" value="foto">
+                    <label for="foto" class="btn-upload">Alterar Foto</label>
+                    <input type="file" name="foto" id="foto" accept="image/*" style="display:none"
+                        onchange="this.form.submit()">
+                </form>
             </div>
-            <form action="" method="post" enctype="multipart/form-data" class="perfil-upload-form">
-                <input type="hidden" name="acao" value="foto">
-                <label for="foto" class="btn-upload">Alterar Foto</label>
-                <input type="file" name="foto" id="foto" accept="image/*" style="display:none" onchange="this.form.submit()">
+
+            <!-- Form principal -->
+            <form method="POST" class="perfil-form">
+                <input type="hidden" name="acao" value="dados">
+
+                <label for="username" class="perfil-label">Nome de usuário:</label>
+                <input type="text" name="username" id="username" class="perfil-input"
+                    value="<?= htmlspecialchars($user['username']) ?>" placeholder="Opcional">
+
+                <label for="email" class="perfil-label">Email:</label>
+                <input type="email" name="email" id="email" class="perfil-input"
+                    value="<?= htmlspecialchars($user['email']) ?>" placeholder="Opcional">
+
+                <label for="password" class="perfil-label">Nova Senha:</label>
+                <input type="password" name="password" id="password" class="perfil-input"
+                    placeholder="Deixe em branco para manter a senha atual">
+
+                <button type="submit" class="perfil-btn">Salvar Alterações</button>
             </form>
-        </div>
 
-        <!-- Form principal -->
-        <form method="POST" class="perfil-form">
-            <input type="hidden" name="acao" value="dados">
-
-            <label for="username" class="perfil-label">Nome de usuário:</label>
-            <input type="text" name="username" id="username" class="perfil-input"
-                value="<?= htmlspecialchars($user['username']) ?>" placeholder="Opcional">
-
-            <label for="email" class="perfil-label">Email:</label>
-            <input type="email" name="email" id="email" class="perfil-input"
-                value="<?= htmlspecialchars($user['email']) ?>" placeholder="Opcional">
-
-            <label for="password" class="perfil-label">Nova Senha:</label>
-            <input type="password" name="password" id="password" class="perfil-input"
-                placeholder="Deixe em branco para manter a senha atual">
-
-            <button type="submit" class="perfil-btn">Salvar Alterações</button>
-        </form>
-
-        <a href="../user/perfil.php" class="perfil-link-voltar">Voltar ao Perfil</a>
-    </section>
-</main>
+            <a href="../user/perfil.php" class="perfil-link-voltar">Voltar ao Perfil</a>
+        </section>
+    </main>
 
 </body>
+
 </html>

@@ -1,6 +1,7 @@
-<?php 
+<?php
 // Retorna os últimos episódios lançados com paginação
-function getProdutosPaginados(int $porPagina = 14, int $offset = 0): array {
+function getProdutosPaginados(int $porPagina = 14, int $offset = 0): array
+{
     global $pdo;
 
     $stmt = $pdo->prepare("
@@ -16,7 +17,8 @@ function getProdutosPaginados(int $porPagina = 14, int $offset = 0): array {
 }
 
 // Busca apenas produtos que têm promoção ativa
-function buscarProdutosPromocao() {
+function buscarProdutosPromocao()
+{
     global $pdo;
 
     $stmt = $pdo->query("
