@@ -1,27 +1,30 @@
 <?php
 require_once __DIR__ . '/conexao.php';
 
-function getNotificacoes($userId)
+/**
+ * Retorna todas as notificações e dados adicionais do usuário
+ */
+function getNotificacoes(int $userId): array
 {
     global $pdo;
 
     // =======================
-    //  NOTIFICAÇÕES DE XP
+    // NOTIFICAÇÕES DE XP
     // =======================
-    $xp = $pdo->prepare("
+    $xpQuery = $pdo->prepare("
         SELECT titulo, mensagem 
         FROM notificacoes 
         WHERE user_id = ? AND tipo = 'xp' 
         ORDER BY data_criacao DESC 
         LIMIT 10
     ");
-    $xp->execute([$userId]);
-    $xp = $xp->fetchAll(PDO::FETCH_ASSOC);
+    $xpQuery->execute([$userId]);
+    $xp = $xpQuery->fetchAll(PDO::FETCH_ASSOC);
 
     // =======================
-    // PROMOÇÕES (TABELA PRODUTOS)
+    // PROMOÇÕES
     // =======================
-    $promo = $pdo->prepare("
+    $promoQuery = $pdo->prepare("
         SELECT 
             id,
             nome,
@@ -33,26 +36,25 @@ function getNotificacoes($userId)
         ORDER BY data_atualizacao DESC
         LIMIT 6
     ");
-    $promo->execute();
-    $promo = $promo->fetchAll(PDO::FETCH_ASSOC);
+    $promoQuery->execute();
+    $promoList = $promoQuery->fetchAll(PDO::FETCH_ASSOC);
 
-    // Adiciona a URL correta para cada promoção
-    $promo = array_map(function ($p) {
+    // Ajusta URL corretamente usando ID (NÃO o nome)
+    $promocoes = array_map(function ($p) {
         return [
             "id" => $p['id'],
             "nome" => $p['nome'],
             "preco" => $p['preco'],
             "preco_promocional" => $p['preco_promocional'],
             "imagem" => $p['imagem'],
-            "url" => "../../PHP/user/loja.php?id=" . $p['nome']
+            "url" => "../../PHP/user/loja.php?id=" . $p['id']
         ];
-    }, $promo);
-
+    }, $promoList);
 
     // =======================
     // HISTÓRICO DE COMPRAS
     // =======================
-    $hist = $pdo->prepare("
+    $histQuery = $pdo->prepare("
         SELECT pr.nome, pr.preco
         FROM pagamentos p
         JOIN produtos pr ON p.produto_id = pr.id
@@ -60,29 +62,33 @@ function getNotificacoes($userId)
         ORDER BY p.data_pagamento DESC
         LIMIT 8
     ");
-    $hist->execute([$userId]);
-    $hist = $hist->fetchAll(PDO::FETCH_ASSOC);
+    $histQuery->execute([$userId]);
+    $hist = $histQuery->fetchAll(PDO::FETCH_ASSOC);
 
     // =======================
-    // CONTADOR DE NÃO LIDAS
+    // CONTADOR DE NOTIFICAÇÕES NÃO LIDAS
     // =======================
-    $count = $pdo->prepare("
+    $countQuery = $pdo->prepare("
         SELECT COUNT(*) 
         FROM notificacoes 
         WHERE user_id = ? AND lida = 0
     ");
-    $count->execute([$userId]);
-    $naoLidas = $count->fetchColumn();
+    $countQuery->execute([$userId]);
+    $naoLidas = $countQuery->fetchColumn();
 
     return [
         "xp" => $xp,
-        "promocoes" => $promo,
+        "promocoes" => $promocoes,
         "historico" => $hist,
         "naoLidas" => $naoLidas
     ];
 }
 
-function criarNotificacao(PDO $pdo, $userId, $titulo, $mensagem, $tipo = 'geral', $referenciaId = null)
+
+/**
+ * Cria uma notificação para um usuário
+ */
+function criarNotificacao(PDO $pdo, int $userId, string $titulo, string $mensagem, string $tipo = 'geral', ?int $referenciaId = null): void
 {
     $stmt = $pdo->prepare("
         INSERT INTO notificacoes 

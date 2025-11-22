@@ -47,9 +47,11 @@ foreach ($pagamentos as $p) {
     $stmt->execute([$produto_id]);
 }
 
-// ✅ Criar uma única notificação geral 
+// Passar o $pdo como primeiro parâmetro
 $nomesLista = implode(', ', $nomesProdutos);
+
 criarNotificacao(
+    $pdo,              
     $userId,
     "Compra concluída!",
     "Seu pagamento foi aprovado com sucesso! Você comprou: " . htmlspecialchars($nomesLista) .
@@ -61,9 +63,9 @@ criarNotificacao(
 // Salva os pagamentos em uma sessão temporária para mostrar no comprovante
 $_SESSION['pagamentos_sucesso'] = $_SESSION['pagamentos_confirmados'];
 
-// ✅ Limpa sessão dos pagamentos
+// Limpa sessão dos pagamentos
 unset($_SESSION['pagamentos_confirmados']);
 
-// Redireciona para a página de sucesso
+// Redireciona para página de sucesso
 header("Location: ../../PHP/user/pagamento_sucesso.php");
 exit;
