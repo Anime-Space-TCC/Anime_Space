@@ -13,32 +13,28 @@ if (!isset($_SESSION['carrinho'])) {
     $_SESSION['carrinho'] = [];
 }
 
-// Soma o total
+// Soma total de itens
 $totalCarrinho = array_sum($_SESSION['carrinho']);
 
-// Busca produtos
+// Busca produtos do carrinho
 $produtosCarrinho = [];
+$produtosCarrinhoById = [];
+
 if (!empty($_SESSION['carrinho'])) {
     $ids = array_keys($_SESSION['carrinho']);
     $placeholders = implode(',', array_fill(0, count($ids), '?'));
+
     $stmt = $pdo->prepare("SELECT * FROM produtos WHERE id IN ($placeholders)");
     $stmt->execute($ids);
     $produtosCarrinho = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    $produtosCarrinhoById = [];
     foreach ($produtosCarrinho as $produto) {
         $produtosCarrinhoById[$produto['id']] = $produto;
     }
 }
 
-// Verifica se tem promoção
-$preco = $produto['preco'];
-$precoPromo = $produto['preco_promocional'] ?? 0;
-$temPromocao = ($precoPromo > 0 && $precoPromo < $preco);
-
-// Preço final multiplicado pela quantidade
-$precoFinal = $temPromocao ? $precoPromo : $preco;
 ?>
+
 
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -66,56 +62,81 @@ $precoFinal = $temPromocao ? $precoPromo : $preco;
             <div class="carrinho-lista">
                 <?php foreach ($_SESSION['carrinho'] as $id => $quantidade): ?>
                     <?php
-                    if (!isset($produtosCarrinhoById[$id]))
+                    if (!isset($produtosCarrinhoById[$id])) {
                         continue;
+                    }
+
                     $produto = $produtosCarrinhoById[$id];
+
+                    // Cálculo de promoção por produto
+                    $preco = $produto['preco'];
+                    $precoPromo = $produto['preco_promocional'] ?? 0;
+                    $temPromocao = ($precoPromo > 0 && $precoPromo < $preco);
+                    $precoFinal = $temPromocao ? $precoPromo : $preco;
                     ?>
                     <div class="carrinho-item">
                         <img src="../../img/<?= htmlspecialchars($produto['imagem']) ?>"
                             alt="<?= htmlspecialchars($produto['nome']) ?>">
+
                         <div class="carrinho-info">
                             <span class="nome-produto"><?= htmlspecialchars($produto['nome']) ?></span>
-                            <span>Qtd: <input type="number" min="1" value="<?= $quantidade ?>" class="quantidade"
-                                    data-id="<?= $id ?>"></span>
+
+                            <span>Qtd: 
+                                <input type="number" min="1" value="<?= $quantidade ?>" 
+                                class="quantidade" data-id="<?= $id ?>">
+                            </span>
+
                             <div class="preco-container">
                                 <?php if ($temPromocao): ?>
-                                    <span class="preco-antigo">R$ <?= number_format($preco * $quantidade, 2, ',', '.') ?></span><br>
-                                    <span class="preco-novo">R$ <?= number_format($precoPromo * $quantidade, 2, ',', '.') ?></span>
+                                    <span class="preco-antigo">
+                                        R$ <?= number_format($preco * $quantidade, 2, ',', '.') ?>
+                                    </span><br>
+                                    <span class="preco-novo">
+                                        R$ <?= number_format($precoPromo * $quantidade, 2, ',', '.') ?>
+                                    </span>
                                 <?php else: ?>
-                                    <span class="preco-normal">R$ <?= number_format($preco * $quantidade, 2, ',', '.') ?></span>
+                                    <span class="preco-normal">
+                                        R$ <?= number_format($preco * $quantidade, 2, ',', '.') ?>
+                                    </span>
                                 <?php endif; ?>
                             </div>
                         </div>
+
                         <button class="btn-remover" data-id="<?= $id ?>">Remover</button>
                     </div>
                 <?php endforeach; ?>
             </div>
 
-            <p class="total-itens"><strong>Total de itens:</strong> <span id="totalCarrinho"><?= $totalCarrinho ?></span>
+            <p class="total-itens">
+                <strong>Total de itens:</strong> 
+                <span id="totalCarrinho"><?= $totalCarrinho ?></span>
             </p>
 
-            <!-- 🔽 MÉTODOS DE PAGAMENTO (fora da lista) -->
+            <!-- 🔽 MÉTODOS DE PAGAMENTO -->
             <form action="../../PHP/shared/processar_pagamento.php" method="POST" class="form-pagamento">
                 <input type="hidden" name="metodo" class="input-metodo" value="">
+
                 <div class="pagamento-container">
                     <h2>Escolha sua forma de pagamento</h2>
+
                     <div class="pagamento-opcao" data-metodo="cartao">
-                        <img src="../../img/cartao.jpg" alt="Cartão">
-                        Cartão de Crédito/Débito
+                        <img src="../../img/cartao.jpg" alt="Cartão"> Cartão de Crédito/Débito
                     </div>
+
                     <div class="pagamento-opcao" data-metodo="pix">
-                        <img src="../../img/pix.jpg" alt="PIX">
-                        PIX
+                        <img src="../../img/pix.jpg" alt="PIX"> PIX
                     </div>
+
                     <div class="pagamento-opcao" data-metodo="boleto">
-                        <img src="../../img/boleto.jpg" alt="Boleto">
-                        Boleto Bancário
+                        <img src="../../img/boleto.jpg" alt="Boleto"> Boleto Bancário
                     </div>
+
                     <button type="submit" class="btn-finalizar">Finalizar Compra</button>
                 </div>
             </form>
         <?php endif; ?>
     </main>
+
     <?php
     $carrinhoVazio = empty($_SESSION['carrinho']);
     ?>
