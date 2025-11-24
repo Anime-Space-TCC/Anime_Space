@@ -900,23 +900,39 @@ body {
 
 .atributos {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
-  gap: 35px;
-  flex-wrap: wrap;
+  gap: 20px; /* espaço vertical entre linhas */
+  margin-top: 20px;
 }
 
+/* Linha de cima: dois atributos */
+.atributos .linha-cima {
+  display: flex;
+  justify-content: center;
+  gap: 40px; /* espaço entre os dois atributos de cima */
+}
+
+/* Linha de baixo: um atributo */
+.atributos .linha-baixo {
+  display: flex;
+  justify-content: center;
+}
+
+/* Atributos individuais */
 .atributo {
   text-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  transition: transform 0.25s;
 }
 
 .atributo:hover {
   transform: scale(1.05);
 }
+
 
 .nome-atributo {
   font-size: 1em;
@@ -1086,4 +1102,310 @@ body {
 .btn-upgrade:hover {
   transform: scale(1.05);
   box-shadow: 0 0 10px #ee0979;
+}
+
+/* =========================
+    RESPONSIVIDADE GERAL
+========================= */
+
+/* Tablets (768px pra baixo) */
+@media (max-width: 768px) {
+  .navbar {
+    padding: 12px 16px;
+    height: 70px;
+  }
+  
+  .nav-left, .nav-right {
+    gap: 10px;
+  }
+  
+  .menu-toggle, .perfil-btn, .busca-btn, .sinopse-btn {
+    padding: 5px 8px;
+  }
+  
+  .menu-toggle svg, .perfil-btn svg, .busca-btn svg, .sinopse-btn svg {
+    width: 24px;
+    height: 24px;
+  }
+  
+  .busca-container.active input {
+    width: 180px;
+    height: 36px;
+  }
+  
+  .perfil-wrapper {
+    width: 200px;
+  }
+  
+  .perfil-rpg {
+    padding: 60px 15px 60px 15px;
+  }
+  
+  .blocos {
+    grid-template-columns: 1fr;
+    gap: 25px;
+  }
+  
+  .bloco {
+    padding: 25px;
+  }
+  
+  .avatar {
+    width: 200px;
+    height: 200px;
+  }
+  
+  .atributos {
+    gap: 20px;
+  }
+  
+  .circulo {
+    width: 70px;
+    height: 70px;
+  }
+  
+  .circulo span {
+    font-size: 1.3em;
+  }
+  
+  .cards-container .card {
+    flex: 1 1 calc(33.333% - 10px);
+    max-width: 110px;
+  }
+  
+  .historico-animes-section .cards-container .card {
+    flex: 1 1 calc(25% - 8px);
+  }
+  
+  .perfil-editar-card {
+    padding: 20px 25px;
+  }
+  
+  .ficha-rpg-section {
+    padding: 25px 15px;
+  }
+}
+
+/* Celulares (480px pra baixo) */
+@media (max-width: 480px) {
+  .navbar {
+    padding: 10px 12px;
+    height: 60px;
+  }
+  
+  .page-content {
+    padding-top: 50px;
+  }
+  
+  .nav-left, .nav-right {
+    gap: 6px;
+  }
+  
+  .menu-toggle {
+    width: 40px;
+    height: 36px;
+  }
+  
+  .busca-container.active input {
+    width: 140px;
+    height: 32px;
+    font-size: 0.9rem;
+  }
+  
+  .perfil-wrapper {
+    width: 180px;
+  }
+  
+  .perfil-foto {
+    width: 50px;
+    height: 60px;
+  }
+  
+  .perfil-nome {
+    font-size: 1rem;
+  }
+  
+  .toggle-notificacoes {
+    top: 120px;
+    right: 150px;
+    width: 25px;
+    height: 25px;
+  }
+  
+  .menu-lateral {
+    width: 220px;
+    padding-top: 70px;
+  }
+  
+  .perfil-rpg {
+    padding: 40px 10px 40px 10px;
+  }
+  
+  .blocos {
+    gap: 15px;
+  }
+  
+  .bloco {
+    padding: 15px;
+  }
+  
+  .avatar {
+    width: 150px;
+    height: 150px;
+  }
+  
+  .info-player h2 {
+    font-size: 20px;
+  }
+  
+  .exp-bar {
+    width: 150px;
+  }
+  
+  .atributos {
+    gap: 15px;
+  }
+  
+  .circulo {
+    width: 60px;
+    height: 60px;
+  }
+  
+  .circulo span {
+    font-size: 1.1em;
+  }
+  
+  .cards-container .card {
+    flex: 1 1 calc(50% - 10px);
+    max-width: 100px;
+    min-height: 150px;
+  }
+  
+  .cards-container .card img {
+    height: 120px;
+  }
+  
+  .historico-animes-section .cards-container .card {
+    flex: 1 1 calc(33.333% - 8px);
+  }
+  
+  .medalha {
+    font-size: 1.8em;
+  }
+  
+  .perfil-container {
+    padding: 20px 15px;
+  }
+  
+  .perfil-editar-card {
+    padding: 15px 20px;
+    gap: 12px;
+  }
+  
+  .perfil-titulo {
+    font-size: 1.5rem;
+  }
+  
+  .perfil-input {
+    padding: 10px 12px;
+  }
+  
+  .btn-logout {
+    padding: 10px 20px;
+    font-size: 16px;
+  }
+  
+  .upgrade-container {
+    margin: 30px auto;
+    padding: 20px;
+  }
+}
+
+/* Celulares muito pequenos (360px pra baixo) */
+@media (max-width: 360px) {
+  .navbar {
+    padding: 8px 10px;
+  }
+  
+  .busca-container.active input {
+    width: 120px;
+  }
+  
+  .perfil-wrapper {
+    width: 160px;
+  }
+  
+  .perfil-card {
+    padding: 20px 10px 15px;
+  }
+  
+  .perfil-area {
+    gap: 10px;
+  }
+  
+  .perfil-foto {
+    width: 45px;
+    height: 55px;
+  }
+  
+  .toggle-notificacoes {
+    right: 130px;
+  }
+  
+  .avatar {
+    width: 120px;
+    height: 120px;
+  }
+  
+  .cards-container .card {
+    flex: 1 1 100%;
+    max-width: 90px;
+  }
+  
+  .historico-animes-section .cards-container .card {
+    flex: 1 1 calc(50% - 8px);
+  }
+  
+  .atributos {
+    gap: 10px;
+  }
+  
+  .circulo {
+    width: 50px;
+    height: 50px;
+  }
+}
+
+/* Telas grandes (1200px pra cima) */
+@media (min-width: 1200px) {
+  .perfil-rpg {
+    max-width: 1100px;
+  }
+  
+  .blocos {
+    max-width: 1100px;
+  }
+  
+  .ficha-rpg-section {
+    max-width: 1000px;
+  }
+}
+
+/* Ajustes para altura da tela */
+@media (max-height: 600px) {
+  .menu-lateral {
+    padding-top: 70px;
+  }
+  
+  .perfil-rpg {
+    padding-top: 50px;
+    padding-bottom: 50px;
+  }
+}
+
+/* Impedir zoom em inputs em iOS */
+@media (max-width: 768px) {
+  input, select, textarea {
+    font-size: 16px;
+  }
 }

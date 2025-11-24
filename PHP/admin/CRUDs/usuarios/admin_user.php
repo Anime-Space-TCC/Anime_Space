@@ -78,7 +78,10 @@ if (!empty($busca)) {
       <tbody>
         <?php foreach ($usuarios as $u): ?>
           <tr>
-            <td><img src="../../../uploads/<?= htmlspecialchars($u['foto_perfil']) ?>" width="60"></td>
+            <td>
+              <img src="../../../uploads/<?= htmlspecialchars(basename($u['foto_perfil'] ?: 'default.jpg')) ?>" width="60"
+                alt="Foto de <?= htmlspecialchars($u['username']) ?>">
+            </td>
             <td><?= htmlspecialchars($u['username']) ?></td>
             <td><?= htmlspecialchars($u['email']) ?></td>
             <td><?= htmlspecialchars($u['tipo']) ?></td>

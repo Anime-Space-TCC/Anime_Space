@@ -1232,7 +1232,6 @@ body {
 .letreiro {
   display: flex;
   gap: 80px;
-  /* vamos setar a animação dinamicamente via JS */
 }
 
 .propaganda img {
@@ -1433,5 +1432,522 @@ body {
   100% {
     transform: scale(1) rotate(180deg);
     opacity: 1;
+  }
+}
+
+
+/* =========================
+   RESPONSIVIDADE GERAL 
+========================= */
+
+/* Tablets (1024px pra baixo) */
+@media (max-width: 1024px) {
+  .episodio {
+    padding: 30px 15px;
+  }
+  
+  .info-anime img {
+    width: 300px;
+    height: 100px;
+  }
+  
+  .titulo-linha h1 {
+    font-size: 1.5rem;
+  }
+  
+  .video-player iframe,
+  .video-player video {
+    height: 400px;
+  }
+  
+  .episodio-titulo {
+    max-width: 250px;
+  }
+  
+  .card {
+    padding: 8px 15px;
+  }
+  
+  .card-left img {
+    width: 60px;
+    height: 60px;
+  }
+  
+  .comentarios {
+    padding: 25px 30px;
+  }
+}
+
+/* Tablets menores (768px pra baixo) */
+@media (max-width: 768px) {
+  .episodio {
+    padding: 20px 10px;
+    gap: 20px;
+  }
+  
+  .episodio header {
+    flex-direction: column;
+    text-align: center;
+    gap: 15px;
+  }
+  
+  .info-anime {
+    flex-direction: column;
+    width: 100%;
+  }
+  
+  .info-anime img {
+    width: 100%;
+    max-width: 400px;
+    height: 100px;
+    mask-image: none;
+    -webkit-mask-image: none;
+    border-radius: 15px;
+  }
+  
+  .anime-titulo-meta {
+    padding: 0 15px;
+  }
+  
+  .titulo-linha {
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  
+  .titulo-linha h1 {
+    font-size: 1.3rem;
+    text-align: center;
+    white-space: normal;
+  }
+  
+  .btn-info {
+    position: static;
+    margin-top: 10px;
+    align-self: center;
+  }
+  
+  .generos-linha {
+    justify-content: center;
+  }
+  
+  .episodio section {
+    padding: 15px 20px 20px 20px;
+  }
+  
+  .video-player iframe,
+  .video-player video {
+    height: 300px;
+  }
+  
+  /* Cards de episódios */
+  .card {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 12px;
+  }
+  
+  .card-left {
+    width: 100%;
+    justify-content: flex-start;
+  }
+  
+  .info-container {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    width: 100%;
+  }
+  
+  .titulo-e-descricao {
+    width: 100%;
+    justify-content: space-between;
+  }
+  
+  .episodio-titulo {
+    max-width: 200px;
+    min-width: auto;
+  }
+  
+  .card-right {
+    width: 100%;
+    justify-content: space-between;
+    margin-top: 10px;
+  }
+  
+  .acoes {
+    margin-left: 0;
+  }
+  
+  /* Filtro linguagem */
+  .filtro-linguagem {
+    padding: 8px 0;
+  }
+  
+  .btn-ling {
+    padding: 6px 15px;
+    font-size: 0.9rem;
+    margin: 0 4px;
+  }
+  
+  /* Comentários */
+  .comentarios {
+    padding: 20px;
+  }
+  
+  .comentarios h3 {
+    font-size: 1.2rem;
+  }
+  
+  /* Header temporada */
+  .header-temporada {
+    text-align: center;
+  }
+  
+  .dropdown-list {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
+
+/* Celulares (480px pra baixo) */
+@media (max-width: 480px) {
+  .episodio {
+    padding: 15px 8px;
+    gap: 15px;
+  }
+  
+  .page-content {
+    padding-top: 70px;
+  }
+  
+  .navbar {
+    padding: 10px 12px;
+    height: 60px;
+  }
+  
+  .nav-left, .nav-right {
+    gap: 8px;
+  }
+  
+  .busca-container.active input {
+    width: 150px;
+  }
+  
+  .info-anime img {
+    height: 80px;
+  }
+  
+  .titulo-linha h1 {
+    font-size: 1.1rem;
+  }
+  
+  .meta-nota {
+    font-size: 0.8rem;
+    padding: 2px 6px;
+  }
+  
+  .generos-linha .meta-btn {
+    font-size: 0.8rem;
+    padding: 3px 8px;
+  }
+  
+  .episodio section {
+    padding: 12px 15px 15px 15px;
+    border-radius: 12px;
+  }
+  
+  .episodio section h2 {
+    font-size: 1.2rem;
+  }
+  
+  .video-player iframe,
+  .video-player video {
+    height: 200px;
+    border-radius: 8px;
+  }
+  
+  /* Cards de episódios - mobile */
+  .card {
+    padding: 10px;
+  }
+  
+  .card-left img {
+    width: 50px;
+    height: 50px;
+  }
+  
+  .episodio-numero {
+    font-size: 1rem;
+  }
+  
+  .episodio-titulo {
+    font-size: 0.9rem;
+    max-width: 150px;
+  }
+  
+  .info-adicional {
+    font-size: 0.8rem;
+  }
+  
+  .reacao-btn {
+    min-width: 70px;
+    padding: 3px 8px;
+    font-size: 0.75rem;
+    gap: 4px;
+  }
+  
+  .reacao-btn .contador {
+    font-size: 0.75rem;
+    min-width: 18px;
+  }
+  
+  .btn-assistir {
+    padding: 5px 12px;
+    font-size: 0.8rem;
+  }
+  
+  .btn-toggle-descricao {
+    padding: 6px 12px;
+    font-size: 0.8rem;
+  }
+  
+  /* Filtro linguagem mobile */
+  .filtro-linguagem {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 5px;
+    padding: 8px;
+  }
+  
+  .btn-ling {
+    margin: 0;
+    flex: 1;
+    min-width: 100px;
+    text-align: center;
+  }
+  
+  /* Comentários mobile */
+  .comentarios {
+    padding: 15px;
+    margin-top: 30px;
+  }
+  
+  .comentarios h3 {
+    font-size: 1.1rem;
+  }
+  
+  .comentarios textarea {
+    height: 60px;
+    font-size: 0.9rem;
+  }
+  
+  .comentarios button {
+    align-self: stretch;
+    padding: 8px;
+  }
+  
+  /* Sinopse mobile */
+  .sinopse-container.active {
+    padding: 15px;
+  }
+  
+  .sinopse-container h3 {
+    font-size: 1.1rem;
+  }
+  
+  .sinopse-container p {
+    font-size: 0.85rem;
+  }
+  
+  /* Avaliação estrelas mobile */
+  .avaliacao-final .estrela {
+    font-size: 2.2rem;
+  }
+  
+  /* Descrição mobile */
+  .descricao {
+    font-size: 0.8rem;
+    margin-left: 0;
+    width: 100%;
+  }
+  
+  /* Perfil mobile */
+  .perfil-wrapper {
+    width: 180px;
+  }
+  
+  .toggle-notificacoes {
+    top: 120px;
+    right: 150px;
+    width: 25px;
+    height: 25px;
+  }
+}
+
+/* Celulares muito pequenos (360px pra baixo) */
+@media (max-width: 360px) {
+  .episodio {
+    padding: 10px 5px;
+  }
+  
+  .info-anime img {
+    height: 60px;
+  }
+  
+  .titulo-linha h1 {
+    font-size: 1rem;
+  }
+  
+  .video-player iframe,
+  .video-player video {
+    height: 180px;
+  }
+  
+  .card {
+    padding: 8px;
+  }
+  
+  .card-left {
+    gap: 8px;
+  }
+  
+  .card-left img {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .episodio-titulo {
+    max-width: 120px;
+    font-size: 0.85rem;
+  }
+  
+  .card-right {
+    gap: 5px;
+  }
+  
+  .reacao-btn {
+    min-width: 60px;
+    padding: 2px 6px;
+    font-size: 0.7rem;
+  }
+  
+  .btn-assistir {
+    padding: 4px 10px;
+    font-size: 0.75rem;
+  }
+  
+  .filtro-linguagem {
+    gap: 3px;
+  }
+  
+  .btn-ling {
+    min-width: 80px;
+    padding: 5px 8px;
+    font-size: 0.75rem;
+  }
+}
+
+/* Ajustes para telas muito altas */
+@media (min-height: 1000px) {
+  .episodio {
+    min-height: calc(100vh - 80px);
+  }
+  
+  .video-player iframe,
+  .video-player video {
+    height: 500px;
+    max-width: 900px;
+  }
+}
+
+/* Ajustes para telas muito largas */
+@media (min-width: 1600px) {
+  .episodio {
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+  
+  .video-player iframe,
+  .video-player video {
+    max-width: 1000px;
+    height: 550px;
+  }
+}
+
+/* Orientação paisagem em celulares */
+@media (max-height: 500px) and (orientation: landscape) {
+  .episodio {
+    padding: 15px 10px;
+    gap: 15px;
+  }
+  
+  .video-player iframe,
+  .video-player video {
+    height: 250px;
+  }
+  
+  .card {
+    padding: 6px 10px;
+  }
+  
+  .comentarios {
+    margin-top: 20px;
+    padding: 15px;
+  }
+}
+
+/* Impedir zoom em inputs em iOS */
+@media (max-width: 768px) {
+  .comentarios textarea,
+  .busca-container input {
+    font-size: 16px;
+  }
+}
+
+/* Ajustes específicos para o rodapé responsivo */
+@media (max-width: 768px) {
+  .rodape-container {
+    grid-template-columns: 1fr;
+    gap: 25px;
+    padding: 30px 20px;
+    text-align: center;
+  }
+  
+  .rodape-redes {
+    justify-content: center;
+  }
+  
+  .ads-rodape {
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .ad-item {
+    width: 100%;
+    max-width: 320px;
+    height: 100px;
+  }
+  
+  .letreiro-container {
+    height: 80px;
+  }
+  
+  .propaganda img {
+    height: 60px;
+  }
+  
+  .letreiro {
+    gap: 40px;
+  }
+}
+
+/* Ajustes para modo retrato em tablets */
+@media (max-width: 1024px) and (orientation: portrait) {
+  .video-player iframe,
+  .video-player video {
+    height: 350px;
   }
 }

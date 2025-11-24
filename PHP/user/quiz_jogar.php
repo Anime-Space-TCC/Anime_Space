@@ -118,10 +118,13 @@ $ranking = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
                 <ul class="ranking-lista">
                     <?php foreach ($ranking as $i => $player): ?>
+                        <?php
+                        $fotoJogador = $player['foto_perfil'] ?? 'default.jpg';
+                        $fotoJogador = basename($fotoJogador);
+                        ?>
                         <li class="ranking-item pos<?= $i + 1 ?>">
                             <span class="posicao"><?= $i + 1 ?>°</span>
-                            <img class="avatar"
-                                src="../uploads/<?= htmlspecialchars($fotoPerfil['foto_perfil'] ?? 'default.jpg') ?>?v=<?= time() ?>"
+                            <img class="avatar" src="../uploads/<?= htmlspecialchars($fotoJogador) ?>?v=<?= time() ?>"
                                 alt="Avatar">
                             <span class="nome"><?= htmlspecialchars($player['username']) ?></span>
                             <span class="pontos"><?= $player['total_pontos'] ?> pts</span>

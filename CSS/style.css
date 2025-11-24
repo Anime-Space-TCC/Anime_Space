@@ -3600,9 +3600,10 @@ body {
 
 .logout {
   margin-top: auto;
-  background: #ff9f00;
-  color: #000;
+  background: #f90000;
+  color: #000000;
   text-align: center;
+  font-size: 1.1rem;
 }
 
 .admin-main {
@@ -3626,13 +3627,13 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 100px;
-  padding-top: 20px;
-  max-width: 100%;
-  margin: 50px auto;
   flex-wrap: wrap;
+  padding: 40px 53px;
+  margin: 30px auto;
+  max-width: 100%;
   background-color: #000;
   border-radius: 10px;
+  box-sizing: border-box; 
 }
 
 .admin-geren h2 {
@@ -4084,4 +4085,708 @@ body {
   max-width: 480px;
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.5);
   min-height: 300px;
+}
+
+/* =========================
+   RESPONSIVIDADE GERAL 
+========================= */
+
+/* Tablets (1024px pra baixo) */
+@media (max-width: 1024px) {
+  .home .cabeca {
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 60px;
+  }
+  
+  .home .cabeca .slogan {
+    max-width: 100%;
+    order: 2;
+  }
+  
+  .home .slideshow-container {
+    order: 1;
+    width: 100%;
+  }
+  
+  .layout-anuncios,
+  .layout-populares-anuncios {
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+  
+  .ads-lateral-esquerda,
+  .ads-lateral-direita,
+  .layout-populares-anuncios .ads-lateral {
+    width: 100%;
+    max-width: 300px;
+    flex-direction: row;
+    justify-content: center;
+  }
+  
+  .ads-lateral-esquerda .ad-item,
+  .ads-lateral-direita .ad-item,
+  .layout-populares-anuncios .ads-lateral .ad-item {
+    height: 300px;
+    width: 150px;
+  }
+  
+  .quizzes-layout {
+    flex-direction: column;
+    padding: 40px 20px;
+  }
+  
+  .col-direita {
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+  }
+  
+  .streaming .busca-filtros {
+    justify-content: center;
+  }
+  
+  .streaming .barra-pesquisa {
+    width: 350px;
+  }
+  
+  .admin-main {
+    margin-left: 0;
+    padding: 20px;
+  }
+  
+  .admin-sidebar {
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    z-index: 2000;
+  }
+  
+  .admin-sidebar.open {
+    transform: translateX(0);
+  }
+}
+
+/* Tablets menores (768px pra baixo) */
+@media (max-width: 768px) {
+  .navbar {
+    padding: 10px 15px;
+    height: 70px;
+  }
+  
+  .page-content {
+    padding-top: 70px;
+  }
+  
+  .home .cabeca {
+    margin-top: 50px;
+    padding: 10px;
+  }
+  
+  .home .cabeca .slogan .img-slogan {
+    max-width: 300px;
+  }
+  
+  .home .slide img {
+    max-height: 250px;
+  }
+  
+  .home .genres ul {
+    padding: 15px;
+    gap: 10px;
+  }
+  
+  .home .grid-lancamentos,
+  .streaming .anime-catalogo {
+    grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+    gap: 12px;
+  }
+  
+  .home .card-anime,
+  .streaming .anime-item {
+    width: 110px;
+    height: 170px;
+  }
+  
+  .home .card-anime img,
+  .streaming .anime-item img {
+    height: 170px;
+  }
+  
+  .ultimas .episodios-lista li {
+    flex-direction: column;
+    padding: 15px;
+    text-align: center;
+    gap: 10px;
+  }
+  
+  .ultimas .episodios-lista li img {
+    width: 100%;
+    max-width: 200px;
+    height: 120px;
+  }
+  
+  .grade-semanal {
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    padding: 0 10px;
+  }
+  
+  .streaming .busca-filtros {
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .streaming .barra-pesquisa {
+    width: 100%;
+    max-width: 400px;
+  }
+  
+  .streaming .filtros {
+    width: 100%;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  
+  .comunidade-container {
+    padding: 30px 15px;
+    margin-top: 70px;
+  }
+  
+  .carrossel-slides {
+    height: 300px;
+  }
+  
+  .carrossel-info {
+    bottom: 20px;
+    left: 15px;
+    font-size: 1rem;
+    padding: 12px 15px;
+  }
+  
+  .noticias-grid {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  }
+  
+  .populares-contato {
+    gap: 15px;
+  }
+  
+  .contato-links {
+    flex-direction: column;
+    margin-left: 0;
+    align-items: center;
+  }
+  
+  .contato-btn {
+    max-width: 100%;
+  }
+  
+  /* Loja responsiva */
+  .produtos-grid {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 15px;
+  }
+  
+  .produto-card {
+    width: 120px;
+    max-height: 220px;
+  }
+  
+  .carrinho-container,
+  .pagamento-container {
+    width: 95%;
+  }
+  
+  .carrinho-item {
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    text-align: center;
+  }
+  
+  .carrinho-info {
+    margin-left: 0;
+  }
+  
+  /* Quiz responsivo */
+  .quiz-linha {
+    gap: 8px;
+  }
+  
+  .quiz-card {
+    width: 120px;
+  }
+  
+  .ranking-item {
+    flex-direction: column;
+    text-align: center;
+    gap: 8px;
+  }
+  
+  /* Admin responsivo */
+  .admin-cards {
+    justify-content: center;
+  }
+  
+  .admin-card {
+    width: 180px;
+    min-height: 200px;
+  }
+  
+  .admin-cruds .admin-links {
+    flex-direction: column;
+    gap: 10px;
+    text-align: center;
+  }
+  
+  .admin-cruds .admin-busca input {
+    min-width: 250px;
+  }
+  
+  .admin-table-acesso,
+  .admin-cruds .admin-table {
+    font-size: 0.8rem;
+  }
+  
+  .admin-table-acesso th,
+  .admin-table-acesso td,
+  .admin-cruds .admin-table th,
+  .admin-cruds .admin-table td {
+    padding: 6px 8px;
+  }
+}
+
+/* Celulares (480px pra baixo) */
+@media (max-width: 480px) {
+  .navbar {
+    padding: 8px 10px;
+    height: 60px;
+  }
+  
+  .nav-left, .nav-right {
+    gap: 6px;
+  }
+  
+  .menu-toggle {
+    width: 40px;
+    height: 36px;
+  }
+  
+  .busca-container.active input {
+    width: 150px;
+    height: 35px;
+  }
+  
+  .perfil-wrapper {
+    width: 200px;
+  }
+  
+  .page-content {
+    padding-top: 60px;
+  }
+  
+  /* Home mobile */
+  .home .cabeca {
+    margin-top: 40px;
+    padding: 8px;
+  }
+  
+  .home .cabeca .slogan .img-slogan {
+    max-width: 250px;
+  }
+  
+  .home .cabeca .slogan p {
+    font-size: 1rem;
+  }
+  
+  .home .slide img {
+    max-height: 200px;
+  }
+  
+  .home .prev,
+  .home .next {
+    padding: 6px;
+    font-size: 16px;
+  }
+  
+  .home .genres h3,
+  .home .lancamentos h3 {
+    font-size: 1.1rem;
+  }
+  
+  .home .genres ul {
+    padding: 10px;
+    gap: 8px;
+  }
+  
+  .home .grid-lancamentos,
+  .streaming .anime-catalogo {
+    grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+    gap: 8px;
+    padding: 0 3px;
+  }
+  
+  .home .card-anime,
+  .streaming .anime-item {
+    width: 90px;
+    height: 140px;
+  }
+  
+  .home .card-anime img,
+  .streaming .anime-item img {
+    height: 140px;
+  }
+  
+  .home .anime-nota,
+  .streaming .anime-nota {
+    font-size: 0.8rem;
+    padding: 6px;
+    top: 4px;
+    right: 4px;
+  }
+  
+  .home .card-anime .info h3,
+  .streaming .anime-item .info h3 {
+    font-size: 0.85rem;
+    line-height: 1.1rem;
+  }
+  
+  /* Últimos lançamentos mobile */
+  .ultimas {
+    padding: 0 10px;
+  }
+  
+  .ultimas .episodios-lista li {
+    padding: 10px;
+  }
+  
+  .ultimas .episodios-lista li strong {
+    font-size: 1rem;
+  }
+  
+  /* Grade semanal mobile */
+  .grade-semanal {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    padding: 0 5px;
+  }
+  
+  .dia {
+    padding: 8px;
+  }
+  
+  /* Streaming mobile */
+  .streaming .barra-pesquisa input[type="text"] {
+    height: 40px;
+    font-size: 0.9rem;
+  }
+  
+  .streaming .filtros select,
+  .streaming .filtros button {
+    height: 40px;
+    font-size: 0.85rem;
+    padding: 0 12px;
+  }
+  
+  /* Comunidade mobile */
+  .comunidade-container {
+    padding: 20px 10px;
+    margin-top: 60px;
+    gap: 25px;
+  }
+  
+  .carrossel-slides {
+    height: 200px;
+  }
+  
+  .carrossel-info {
+    bottom: 10px;
+    left: 10px;
+    font-size: 0.9rem;
+    padding: 8px 12px;
+  }
+  
+  .historia-section {
+    padding: 20px;
+  }
+  
+  .historia-section h2 {
+    font-size: 1.4rem;
+  }
+  
+  .noticias-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .noticia-card img {
+    height: 150px;
+  }
+  
+  /* Loja mobile */
+  .loja-banner {
+    padding: 50px 15px;
+    min-height: 300px;
+  }
+  
+  .loja-banner h2 {
+    font-size: 1.5rem;
+  }
+  
+  .loja-banner p {
+    font-size: 1rem;
+  }
+  
+  .produtos-grid {
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 10px;
+  }
+  
+  .produto-card {
+    width: 100px;
+    max-height: 200px;
+    padding-bottom: 40px;
+  }
+  
+  .produto-nome {
+    font-size: 0.9rem;
+  }
+  
+  .produto-descricao {
+    font-size: 0.75rem;
+  }
+  
+  .produto-preco {
+    font-size: 0.9rem;
+  }
+  
+  .btn-adicionar {
+    padding: 4px;
+    font-size: 0.8rem;
+  }
+  
+  /* Carrinho mobile */
+  .carrinho-container,
+  .pagamento-container {
+    padding: 10px;
+  }
+  
+  .titulo-carrinho,
+  .total-itens {
+    font-size: 1.2rem;
+  }
+  
+  .pagamento-opcao {
+    width: 100%;
+  }
+  
+  /* Quiz mobile */
+  .quiz-wrapper {
+    margin: 20px auto;
+    padding: 15px;
+  }
+  
+  .quiz-header {
+    gap: 10px;
+  }
+  
+  .quiz-header h1,
+  .quiz-header .sub {
+    font-size: 1.1rem;
+  }
+  
+  .quiz-capa {
+    height: 80px;
+  }
+  
+  .alternativas {
+    gap: 6px;
+  }
+  
+  .opcao {
+    padding: 8px;
+    font-size: 0.9rem;
+  }
+  
+  /* Login/Recuperação mobile */
+  .login .login-box,
+  .recupera .recupera-box {
+    width: 90%;
+    max-width: 280px;
+    padding: 20px;
+  }
+  
+  .twofa-page .twofa-box {
+    padding: 20px 15px;
+  }
+  
+  /* Sobre mobile */
+  .sobre main {
+    margin: 40px auto;
+    padding: 20px 15px;
+  }
+  
+  .page-title {
+    font-size: 1.5rem;
+    padding: 15px;
+  }
+  
+  .page-title img {
+    width: 150px;
+  }
+  
+  .sobre .texto p {
+    font-size: 0.95rem;
+  }
+  
+  .sobre .equipe img {
+    width: 120px;
+    height: 120px;
+  }
+  
+  /* Suporte mobile */
+  .suporte {
+    padding: 20px 15px;
+    margin: 20px auto;
+  }
+  
+  .suporte h1 {
+    font-size: 1.5rem;
+  }
+  
+  .suporte .form-suporte {
+    padding: 15px;
+  }
+}
+
+/* Celulares muito pequenos (360px pra baixo) */
+@media (max-width: 360px) {
+  .home .grid-lancamentos,
+  .streaming .anime-catalogo {
+    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+  }
+  
+  .home .card-anime,
+  .streaming .anime-item {
+    width: 80px;
+    height: 130px;
+  }
+  
+  .home .card-anime img,
+  .streaming .anime-item img {
+    height: 130px;
+  }
+  
+  .home .card-anime .info h3,
+  .streaming .anime-item .info h3 {
+    font-size: 0.8rem;
+  }
+  
+  .produtos-grid {
+    grid-template-columns: repeat(auto-fill, minmax(85px, 1fr));
+  }
+  
+  .produto-card {
+    width: 85px;
+  }
+  
+  .quiz-card {
+    width: 100px;
+  }
+  
+  .admin-card {
+    width: 160px;
+    min-height: 180px;
+  }
+  
+  .admin-cruds .admin-busca input {
+    min-width: 200px;
+  }
+}
+
+/* Ajustes para telas muito altas */
+@media (min-height: 1000px) {
+  .home .slide img {
+    max-height: 400px;
+  }
+  
+  .carrossel-slides {
+    height: 500px;
+  }
+}
+
+/* Ajustes para telas muito largas */
+@media (min-width: 1600px) {
+  .home .cabeca,
+  .comunidade-container,
+  .sobre main {
+    max-width: 1400px;
+  }
+  
+  .streaming .anime-catalogo {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  }
+}
+
+/* Orientação paisagem em celulares */
+@media (max-height: 500px) and (orientation: landscape) {
+  .home .cabeca {
+    flex-direction: row;
+    gap: 10px;
+  }
+  
+  .home .cabeca .slogan {
+    max-width: 40%;
+  }
+  
+  .home .slideshow-container {
+    flex: 1;
+  }
+  
+  .home .slide img {
+    max-height: 180px;
+  }
+  
+  .login .login-container,
+  .recupera .recupera-container,
+  .twofa-page {
+    padding: 20px 0;
+  }
+}
+
+/* Impedir zoom em inputs em iOS */
+@media (max-width: 768px) {
+  .login .campo-input input,
+  .recupera .campo-input input,
+  .twofa-page .twofa-textbox input,
+  .streaming .barra-pesquisa input[type="text"],
+  .admin-cruds .admin-busca input,
+  .suporte input,
+  .suporte textarea {
+    font-size: 16px;
+  }
+}
+
+/* Ajustes específicos para modo retrato em tablets */
+@media (max-width: 1024px) and (orientation: portrait) {
+  .quizzes-layout {
+    padding: 30px 15px;
+  }
+  
+  .quiz-wrapper {
+    max-width: 100%;
+  }
+  
+  .admin-dashboard {
+    padding: 15px;
+  }
+}
+
+/* Ajustes para quando o teclado está aberto em mobile */
+@media (max-height: 500px) {
+  .login .login-container,
+  .recupera .recupera-container,
+  .twofa-page {
+    min-height: calc(100vh - 100px);
+    padding: 50px 0;
+  }
 }

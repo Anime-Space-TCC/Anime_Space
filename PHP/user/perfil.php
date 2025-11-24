@@ -109,13 +109,27 @@ $atributos = [
                     <div class="bloco ficha-rpg-section">
                         <h3>Ficha de Status</h3>
                         <div class="atributos">
-                            <?php foreach ($atributos as $nome => $valor): ?>
+                            <div class="linha-cima">
+                                <?php
+                                $keys = array_keys($atributos);
+                                ?>
                                 <div class="atributo">
-                                    <p class="nome-atributo"><?= htmlspecialchars($nome) ?></p>
-                                    <div class="circulo"><span><?= $valor ?></span></div>
+                                    <p class="nome-atributo"><?= htmlspecialchars($keys[0]) ?></p>
+                                    <div class="circulo"><span><?= $atributos[$keys[0]] ?></span></div>
                                 </div>
-                            <?php endforeach; ?>
+                                <div class="atributo">
+                                    <p class="nome-atributo"><?= htmlspecialchars($keys[1]) ?></p>
+                                    <div class="circulo"><span><?= $atributos[$keys[1]] ?></span></div>
+                                </div>
+                            </div>
+                            <div class="linha-baixo">
+                                <div class="atributo">
+                                    <p class="nome-atributo"><?= htmlspecialchars($keys[2]) ?></p>
+                                    <div class="circulo"><span><?= $atributos[$keys[2]] ?></span></div>
+                                </div>
+                            </div>
                         </div>
+
 
                         <!-- Medalhas -->
                         <div class="medalhas-section">
@@ -187,7 +201,7 @@ $atributos = [
                                     <img src="../../img/<?= htmlspecialchars($h['capa']) ?>"
                                         alt="<?= htmlspecialchars($h['nome']) ?>">
                                     <p><?= htmlspecialchars($h['nome']) ?></p>
-                                   <small><?= date('d/m/Y', strtotime($h['data_acesso'])) ?><br><?= date('H:i', strtotime($h['data_acesso'])) ?></small>
+                                    <small><?= date('d/m/Y', strtotime($h['data_acesso'])) ?><br><?= date('H:i', strtotime($h['data_acesso'])) ?></small>
                                 </a>
                             <?php endforeach; ?>
                         <?php else: ?>

@@ -35,33 +35,34 @@ $resultado = null;
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $acao = $_POST['acao'] ?? '';
 
-    // Atualizar foto
+    // ---------- Atualizar foto ----------
     if ($acao === 'foto' && isset($_FILES['foto'])) {
         $resultado = atualizarFotoPerfil($pdo, $id, $_FILES['foto']);
 
-        if (is_array($resultado) && isset($resultado['erro'])) {
+        if (isset($resultado['erro'])) {
             error_log("ERRO AO ATUALIZAR FOTO: " . $resultado['erro']);
             $msg = "Erro: " . htmlspecialchars($resultado['erro']);
-        } elseif (is_array($resultado) && !empty($resultado['sucesso'])) {
+        } elseif (!empty($resultado['sucesso'])) {
             error_log("FOTO ATUALIZADA COM SUCESSO: " . json_encode($resultado));
             $msg = "Foto de perfil atualizada com sucesso!";
+            // Atualiza a variável para exibir a nova foto imediatamente
+            $fotoPerfil = $resultado['novaFoto']; 
         } else {
             error_log("RESULTADO INESPERADO: " . print_r($resultado, true));
             $msg = "Ocorreu um erro inesperado ao atualizar a foto.";
         }
     }
 
-    // Atualizar dados do usuário
+    // ---------- Atualizar dados do usuário ----------
     if ($acao === 'dados') {
         $novoNome = trim($_POST['username'] ?? '');
         $novoEmail = trim($_POST['email'] ?? '');
         $novaSenha = trim($_POST['password'] ?? '');
 
-        // Apenas processa se pelo menos um campo tiver sido preenchido
+        // Apenas processa se houve alterações
         if ($novoNome === $user['username'] && $novoEmail === $user['email'] && $novaSenha === '') {
             $msg = "Nenhuma alteração detectada.";
         } else {
-            // Verifica duplicidade antes de atualizar
             if (usuarioExiste($pdo, $novoNome, $novoEmail, $id)) {
                 $msg = "O nome de usuário ou email já está em uso por outro usuário.";
             } else {
@@ -73,11 +74,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-// === Foto atual ===
-$fotoPerfil = buscarFotoPerfil($pdo, $id);
-if (!$fotoPerfil) {
+// ---------- Foto atual ----------
+if (empty($fotoPerfil) || $fotoPerfil === null) {
     $fotoPerfil = '/PHP/uploads/default.jpg';
 }
+
 ?>
 
 <!DOCTYPE html>
