@@ -902,24 +902,21 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 20px; /* espaço vertical entre linhas */
+  gap: 20px; 
   margin-top: 20px;
 }
 
-/* Linha de cima: dois atributos */
 .atributos .linha-cima {
   display: flex;
   justify-content: center;
-  gap: 40px; /* espaço entre os dois atributos de cima */
+  gap: 40px; 
 }
 
-/* Linha de baixo: um atributo */
 .atributos .linha-baixo {
   display: flex;
   justify-content: center;
 }
 
-/* Atributos individuais */
 .atributo {
   text-align: center;
   display: flex;
@@ -932,7 +929,6 @@ body {
 .atributo:hover {
   transform: scale(1.05);
 }
-
 
 .nome-atributo {
   font-size: 1em;

@@ -72,12 +72,13 @@ function buscarTopAnimes(PDO $pdo, int $limite = 5): array
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
+// Busca os lançamentos mais recentes
 function buscarLancamentos(PDO $pdo, int $limite = 9): array
 {
     $stmt = $pdo->prepare("
-        SELECT id, nome, capa, nota 
-        FROM animes 
-        ORDER BY id DESC 
+        SELECT id, nome, capa, nota
+        FROM animes
+        ORDER BY id DESC
         LIMIT :limite
     ");
     $stmt->bindValue(':limite', $limite, PDO::PARAM_INT);
@@ -86,7 +87,7 @@ function buscarLancamentos(PDO $pdo, int $limite = 9): array
 }
 
 
-// Busca animes pelo nome (termo de pesquisa)
+// Busca animes pelo nome 
 function buscarAnimePorNome(PDO $pdo, string $nome): array
 {
     $stmt = $pdo->prepare("SELECT id, nome, capa, sinopse FROM animes WHERE nome LIKE :nome");

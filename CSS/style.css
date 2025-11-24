@@ -719,9 +719,9 @@ body {
   background-color: rgba(0, 0, 0, 0.6);
   box-shadow: 0 4px 12px rgb(175, 134, 0);
   color: #f0f0f0;
-  max-width: 100%;
-  margin: 40px auto 10px auto;
-  margin-top: 70px;
+  width: 100%;      
+  margin: 70px 0 10px 0;  
+  box-sizing: border-box; 
 }
 
 .home .cabeca .slogan {
@@ -925,7 +925,7 @@ body {
 
 .home .grid-lancamentos {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
   gap: 15px;
   width: 100%;
   padding: 0 5px;
