@@ -1,4 +1,7 @@
 <?php
+// =======================
+// Inicialização de sessão
+// =======================
 session_start();
 
 require __DIR__ . '/../shared/conexao.php';
@@ -8,7 +11,9 @@ require __DIR__ . '/../shared/episodios.php';
 require __DIR__ . '/../shared/comentarios.php';
 require __DIR__ . '/../shared/perfil.php';
 
-// Bloqueia acesso se não estiver logado
+// ==============
+// Verifica login
+// ==============
 verificarLogin();
 
 $id = $_GET['id'] ?? null;
@@ -48,6 +53,10 @@ if ($filtroLinguagemSelecionada) {
 
 // Organiza por temporada
 $temporadas = organizarPorTemporada($lista);
+// Define temporada selecionada
+$temporadaSelecionada = isset($_GET['temp'])
+  ? (int) $_GET['temp']
+  : array_key_first($temporadas);
 
 // Episódio selecionado
 $episodioSelecionado = null;
@@ -187,18 +196,23 @@ if (isset($_GET['id']) && isset($_SESSION['user_id'])) {
           <div class="header-temporada">
             <?php if (count($temporadas) > 1): ?>
               <div class="dropdown-temporadas">
-                <button class="btn-dropdown" id="btnDropdown">
-                  Temporada <?= $temporadaInicial ?>
+                <button class="btn-temp" id="btnTemp">
+                  Temporada <?= $temporadaSelecionada ?>
                 </button>
                 <ul class="dropdown-list" id="dropdownList">
-                  <?php foreach (array_keys($temporadas) as $numTemp): ?>
-                    <li data-temporada="<?= $numTemp ?>">Temporada <?= $numTemp ?></li>
+                  <?php foreach ($temporadas as $numTemp => $eps): ?>
+                    <li data-temporada="<?= $numTemp ?>">
+                      Temporada <?= $numTemp ?>
+                    </li>
                   <?php endforeach; ?>
                 </ul>
               </div>
+              <hr class="linha">
             <?php else: ?>
-              <?php $unicaTemp = array_key_first($temporadas); ?>
-              <h2 class="titulo-temporada-unica">Temporada <?= $unicaTemp ?></h2>
+              <h3 class="titulo-temporada">
+                Temporada <?= array_key_first($temporadas) ?>
+              </h3>
+              <hr class="linha">
             <?php endif; ?>
           </div>
 

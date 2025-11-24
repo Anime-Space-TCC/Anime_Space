@@ -1,16 +1,22 @@
 <?php
 
-// Configurações do banco de dados
+// =======================
+// Configuração da conexão
+// =======================
 $host = 'localhost';
 $db = 'anime_space';
 $user = 'root';
 $pass = '';
 $charset = 'utf8mb4';
 
-// Data Source Name (DSN) - string de conexão usada pelo PDO
+// =======================
+// String de conexão (DSN)
+// =======================
 $dsn = "mysql:host=$host;dbname=$db;charset=$charset";
 
+// =========================
 // Opções para a conexão PDO
+// =========================
 $options = [
   PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,       // Lança exceções quando ocorrem erros
   PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,  // Retorna resultados como array associativo

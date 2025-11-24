@@ -1,8 +1,14 @@
 <?php
+// =======================
+// Inicialização de sessão
+// =======================
 session_start();
 require __DIR__ . '/conexao.php';
 require __DIR__ . '/notificacoes.php';
 
+// =========================
+// Processa pagamentos reais
+// =========================
 $pagamentos = $_SESSION['pagamentos_confirmados'] ?? [];
 if (empty($pagamentos))
     die("Nenhum pagamento encontrado.");
@@ -15,6 +21,9 @@ if (!$userId) {
 $total = 0;
 $nomesProdutos = [];
 
+// ============================
+// Processamento dos pagamentos
+// ============================
 foreach ($pagamentos as $p) {
     $sku = $p['sku'] ?? null;
     if (!$sku)
@@ -50,6 +59,9 @@ foreach ($pagamentos as $p) {
 // Passar o $pdo como primeiro parâmetro
 $nomesLista = implode(', ', $nomesProdutos);
 
+// ==========================
+// Cria notificação de compra
+// ==========================
 criarNotificacao(
     $pdo,              
     $userId,

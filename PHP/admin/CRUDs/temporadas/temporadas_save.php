@@ -22,7 +22,22 @@ $nome = trim($_POST['nome'] ?? '');
 $ano_inicio = $_POST['ano_inicio'] ?? null;
 $ano_fim = $_POST['ano_fim'] ?? null;
 $qtd_episodios = $_POST['qtd_episodios'] ?? null;
-$capa = trim($_POST['capa'] ?? '');
+// processa upload
+$nomeArquivo = null;
+
+if (!empty($_FILES['capa']['name'])) {
+    $ext = pathinfo($_FILES['capa']['name'], PATHINFO_EXTENSION);
+    $nomeArquivo = uniqid() . "." . $ext;
+
+    move_uploaded_file($_FILES['capa']['tmp_name'], __DIR__ . "/../../../../img/$nomeArquivo");
+} else {
+    // Mantém a capa atual se estiver editando
+    if ($id) {
+        $stmtOld = $pdo->prepare("SELECT capa FROM temporadas WHERE id=?");
+        $stmtOld->execute([$id]);
+        $nomeArquivo = $stmtOld->fetchColumn();
+    }
+}
 
 // Valida campos obrigatórios
 if (!$anime_id || !$numero) {
@@ -43,7 +58,7 @@ try {
             $ano_inicio,
             $ano_fim,
             $qtd_episodios,
-            $capa,
+            $nomeArquivo,
             $id
         ]);
     } else {
@@ -57,7 +72,7 @@ try {
             $ano_inicio,
             $ano_fim,
             $qtd_episodios,
-            $capa
+            $nomeArquivo,
         ]);
     }
 

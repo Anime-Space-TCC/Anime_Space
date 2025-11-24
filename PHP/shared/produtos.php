@@ -1,4 +1,7 @@
 <?php
+// ===================
+// Funções de produtos
+// ===================
 // Retorna os últimos episódios lançados com paginação
 function getProdutosPaginados(int $porPagina = 14, int $offset = 0): array
 {

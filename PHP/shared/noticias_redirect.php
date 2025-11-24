@@ -1,10 +1,14 @@
 <?php
-// Evita qualquer espaço ou caractere antes do PHP
 require __DIR__ . '/../shared/conexao.php';
 
+// =======================
+// Notícias Redirecionadas
+// =======================
 $id = isset($_GET['id']) ? (int) $_GET['id'] : 0;
 
+// =========================
 // Verifica se o ID é válido
+// =========================
 if ($id > 0) {
     // Busca a URL da notícia
     $stmt = $pdo->prepare("SELECT url_externa FROM noticias WHERE id = ?");

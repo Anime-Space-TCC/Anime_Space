@@ -1,4 +1,7 @@
 <?php
+// ======================
+// Inicialização da sessão
+// =======================
 session_start();
 $token = $_SESSION['recupera_senha_token'] ?? '';
 
@@ -7,7 +10,7 @@ if (!$token) {
     exit;
 }
 
-$link = "nova_senha.php"; // link para redefinir a senha
+$link = "nova_senha.php";
 $mensagem = 'Use o token abaixo para redefinir a senha:';
 ?>
 

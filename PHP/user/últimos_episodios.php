@@ -3,9 +3,12 @@ require __DIR__ . '/../shared/episodios.php';
 require_once __DIR__ . '/../shared/auth.php';
 require __DIR__ . '/../shared/acessos.php';
 
-// Bloqueia acesso se não estiver logado
+// ====================
+// Verificação de login
+// ====================
 verificarLogin();
 
+// Paginação
 $porPagina = 10;
 $pagina = isset($_GET['pagina']) ? (int) $_GET['pagina'] : 1;
 if ($pagina < 1)

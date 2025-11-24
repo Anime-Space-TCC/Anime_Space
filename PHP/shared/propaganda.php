@@ -1,3 +1,4 @@
+<!--Letreiro de propagandas -->
 <div class="letreiro-container">
   <div class="letreiro" id="letreiro">
     <div class="propaganda"><img src="../../img/ads/propaganda1.jpg" alt="Anúncio 1"></div>

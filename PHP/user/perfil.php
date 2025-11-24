@@ -5,7 +5,9 @@ require_once '../shared/perfil.php';
 require_once '../shared/gamificacao.php';
 require __DIR__ . '/../shared/acessos.php';
 
-// Garante login
+// ==================
+// Vericação de login
+// ==================
 verificarLogin();
 
 //Recupera informações do usuário da sessão atual.

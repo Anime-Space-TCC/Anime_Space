@@ -1,4 +1,7 @@
 <?php
+// =======================
+// Inicialização de sessão
+// =======================
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
@@ -7,47 +10,50 @@ require_once __DIR__ . '/conexao.php';
 require_once __DIR__ . '/auth.php';
 require_once __DIR__ . '/pagamento.php';
 
-// Verifica se o usuário está logado
+// ====================
+// Verificação de login
+// ====================
 verificarLogin();
-
 $user_id = $_SESSION['user_id'] ?? null;
 if (!$user_id) {
     header("Location: ../../PHP/user/login.php");
     exit;
 }
 
-// =====================================
-// CANCELAR PAGAMENTO
-// =====================================
+// ==================
+// Cancelar Pagamento
+// ==================
 if (isset($_POST['cancelar_pagamento'])) {
     // Limpa tudo relacionado à compra
     unset($_SESSION['pagamentos_confirmados']);
     $_SESSION['carrinho'] = [];
 
     // Redireciona de volta ao carrinho
-    header("Location: ../../PHP/user/meu-carrinho.php");
+    header("Location: ../../PHP/user/meu_carrinho.php");
     exit;
 }
 
-// =====================================
-// PROCESSAR PAGAMENTO NORMAL
-// =====================================
+// =========================
+// Processar Pagamento Normal
+// =========================
 if (empty($_SESSION['carrinho'])) {
     // Se o carrinho estiver vazio, vai direto para a loja
-    header("Location: ../../PHP/user/meu-carrinho.php");
+    header("Location: ../../PHP/user/meu_carrinho.php");
     exit;
 }
 
 // Verifica o método de pagamento
 $metodo = $_POST['metodo'] ?? '';
 if (!in_array($metodo, ['pix', 'boleto', 'cartao'])) {
-    header("Location: ../../PHP/user/meu-carrinho.php");
+    header("Location: ../../PHP/user/meu_carrinho.php");
     exit;
 }
 
 $pagamentosConfirmados = [];
 
-// Percorre o carrinho
+// ===============================
+// Processar cada item do carrinho
+// ===============================
 foreach ($_SESSION['carrinho'] as $produto_id => $quantidade) {
     for ($i = 0; $i < $quantidade; $i++) {
         // 1) Registrar pagamento

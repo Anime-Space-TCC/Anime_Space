@@ -1,14 +1,19 @@
 <?php
+// =======================
+// Inicialização de sessão
+// =======================
 session_start();
 require __DIR__ . '/../shared/conexao.php';
 require __DIR__ . '/../shared/usuarios.php';
 require __DIR__ . '/../shared/auth.php';
-require_once __DIR__ . '/../shared/register.php';
+require_once __DIR__ . '/../shared/cadastro.php';
 
 $errors = [];
 $result = null;
 
+// ===================
 // Cadastro de usuario
+// ===================
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   // Verifica se o usuário aceitou os termos
   if (empty($_POST['aceitar_termos'])) {
@@ -53,7 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </ul>
       <?php endif; ?>
 
-      <form action="register.php" method="post">
+      <form action="cadastro.php" method="post">
         <div class="campo-input">
           <input type="text" name="username" placeholder="Nome de usuário" required
             value="<?= htmlspecialchars($_POST['username'] ?? '') ?>" />
@@ -80,7 +85,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       </form>
 
       <div class="links">
-        <a href="../../PHP/user/login.php">Esqueceu a senha?</a>
+        <a href="../../PHP/user/recupera_senha.php">Esqueceu a senha?</a>
         <a href="../../PHP/user/login.php">Já tem conta? Faça login</a>
         <a href="../../PHP/user/index.php">Voltar</a>
       </div>

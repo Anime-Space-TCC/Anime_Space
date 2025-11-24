@@ -1,4 +1,7 @@
 <?php
+// =======================
+// Inicialização de sessão
+// =======================
 session_start();
 header('Content-Type: application/json; charset=utf-8');
 
@@ -7,6 +10,9 @@ require_once '../shared/usuarios.php';
 require_once '../shared/perfil.php';
 require_once '../shared/gamificacao.php';
 
+// =======================
+// Carrega dados do perfil
+// =======================
 $response = [
     'sucesso' => false,
     'erro' => '',
@@ -20,6 +26,9 @@ $response = [
     'porcentagem' => 0
 ];
 
+// =======================================
+// Verificação de login e Dados do Usuario
+// =======================================
 try {
     verificarLogin();
     $userId = $_SESSION['user_id'];

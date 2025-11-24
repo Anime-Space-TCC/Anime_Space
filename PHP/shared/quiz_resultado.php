@@ -3,9 +3,15 @@ require_once '../shared/auth.php';
 require_once '../shared/conexao.php';
 require_once '../shared/gamificacao.php';
 
+// ====================
+// Verificação de login
+// ====================
 verificarLogin();
 $userId = $_SESSION['user_id'];
 
+// ==============
+// Dados do quiz
+// ==============
 $quizId = $_POST['quiz_id'] ?? null;
 $xpGanho = (int) ($_POST['xp'] ?? 0);
 $pontuacao = (int) ($_POST['pontuacao'] ?? 0);

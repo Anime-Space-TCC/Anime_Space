@@ -50,7 +50,7 @@ if ($id) {
   </div>
 
   <main class="admin-form">
-    <form method="post">>
+    <form method="post" action="temporadas_save.php" enctype="multipart/form-data">
       <?php if ($id): ?>
         <input type="hidden" name="id" value="<?= (int) $id ?>">
       <?php endif; ?>

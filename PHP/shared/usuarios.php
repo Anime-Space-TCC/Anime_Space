@@ -1,9 +1,9 @@
 <?php
 require_once __DIR__ . '/conexao.php';
 
-// =========================
-// FUNÇÕES DE USUÁRIOS
-// =========================
+// ===============================
+// Funcões relacionadas a usuários
+// ===============================
 
 // Busca um usuário pelo ID
 function buscarUsuarioPorId(PDO $pdo, int $id): ?array
@@ -99,7 +99,7 @@ function atualizarFotoPerfil(PDO $pdo, int $userId, array $file): array
     ];
 }
 
-
+// Busca a URL da foto de perfil do usuário
 function buscarFotoPerfil(PDO $pdo, int $userId): string
 {
     $stmt = $pdo->prepare("SELECT foto_perfil FROM users WHERE id = ?");

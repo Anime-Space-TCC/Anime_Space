@@ -1,9 +1,9 @@
 <?php
 require_once __DIR__ . '/conexao.php';
 
-// =========================
-// FUNÇÕES DE REAÇÕES
-// =========================
+// ==================
+// Funções de Reações
+// ==================
 
 // Busca a reação atual de um usuário em um episódio
 function buscarReacaoUsuario(PDO $pdo, int $userId, int $episodioId): ?array

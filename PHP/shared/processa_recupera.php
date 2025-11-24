@@ -1,10 +1,18 @@
 <?php
 require_once __DIR__ . '/../shared/conexao.php';
+// =======================
+// Inicialização de sessão
+// =======================
 session_start();
 
+// =======================
 // Limpa tokens antigos
+// =======================
 unset($_SESSION['recupera_senha_token']);
 
+// ==================================
+// Processa formulário de recuperação
+// ==================================
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = trim($_POST['email']);
 

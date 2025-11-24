@@ -1,4 +1,7 @@
 <?php
+// =======================
+// Inicialização de sessão
+// =======================
 session_start();
 
 require __DIR__ . '/../shared/conexao.php';
@@ -6,12 +9,17 @@ require __DIR__ . '/../shared/auth.php';
 require __DIR__ . '/../shared/usuarios.php';
 require_once __DIR__ . '/../shared/perfil.php';
 
+// ==============
 // Verifica login
+// ==============
 if (!usuarioLogado()) {
     header("Location: login.php");
     exit();
 }
 
+// ===========================
+// Verifica e processa edições
+// ===========================
 $id = intval(obterUsuarioAtualId());
 $user = buscarUsuarioPorId($pdo, $id);
 if (!$user) {
@@ -21,7 +29,9 @@ if (!$user) {
 $msg = '';
 $resultado = null;
 
-// === Processa POST ===
+// =======================
+// Processa alterações
+// =======================
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $acao = $_POST['acao'] ?? '';
 

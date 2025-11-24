@@ -49,7 +49,6 @@ function registrarUsuario(PDO $pdo, string $username, string $email, string $pas
 
     // Criação do usuário se tudo estiver certo
     if (empty($errors)) {
-        // ⚡ IMPORTANTE: criarUsuario já aplica password_hash, não precisa fazer novamente
         $novoId = criarUsuario($pdo, $username, $email, $password);
 
         if ($novoId) {

@@ -1,10 +1,16 @@
 <?php
+// =======================
+// Inicialização de sessão
+// =======================
 session_start();
 require __DIR__ . '/../shared/conexao.php';
 require_once __DIR__ . '/../shared/auth.php';
 require __DIR__ . '/../shared/acessos.php';
 require __DIR__ . '/../shared/noticias.php';
 
+// ====================
+// Verificação de login
+// ====================
 verificarLogin();
 
 // Buscar Top 5 Populares

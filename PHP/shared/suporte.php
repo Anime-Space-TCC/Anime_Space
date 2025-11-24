@@ -1,10 +1,10 @@
 <?php
 require_once __DIR__ . '/conexao.php';
-require_once __DIR__ . '/gamificacao.php'; // Função adicionarXP
+require_once __DIR__ . '/gamificacao.php'; 
 
-/**
- * Envia uma mensagem de suporte, opcionalmente envia e-mail e dá XP ao usuário
- */
+// ======================================
+// Função para enviar mensagem ao suporte
+// ======================================
 function enviarMensagemSuporte(int $userId, string $nome, string $email, string $mensagem, bool $enviarEmail = false): bool
 {
     global $pdo;

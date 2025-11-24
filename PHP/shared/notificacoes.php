@@ -1,9 +1,9 @@
 <?php
 require_once __DIR__ . '/conexao.php';
 
-/**
- * Retorna todas as notificações e dados adicionais do usuário
- */
+// =======================
+// Funções de Notificações
+// =======================
 function getNotificacoes(int $userId): array
 {
     global $pdo;
@@ -38,8 +38,6 @@ function getNotificacoes(int $userId): array
     ");
     $promoQuery->execute();
     $promoList = $promoQuery->fetchAll(PDO::FETCH_ASSOC);
-
-    // Ajusta URL corretamente usando ID (NÃO o nome)
     $promocoes = array_map(function ($p) {
         return [
             "id" => $p['id'],
@@ -65,9 +63,9 @@ function getNotificacoes(int $userId): array
     $histQuery->execute([$userId]);
     $hist = $histQuery->fetchAll(PDO::FETCH_ASSOC);
 
-    // =======================
-    // CONTADOR DE NOTIFICAÇÕES NÃO LIDAS
-    // =======================
+    // ============================
+    // Conta notificações não lidas
+    // ============================
     $countQuery = $pdo->prepare("
         SELECT COUNT(*) 
         FROM notificacoes 
@@ -84,10 +82,9 @@ function getNotificacoes(int $userId): array
     ];
 }
 
-
-/**
- * Cria uma notificação para um usuário
- */
+// =====================
+// Criar uma notificação
+// =====================
 function criarNotificacao(PDO $pdo, int $userId, string $titulo, string $mensagem, string $tipo = 'geral', ?int $referenciaId = null): void
 {
     $stmt = $pdo->prepare("

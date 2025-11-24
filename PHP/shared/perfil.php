@@ -1,7 +1,9 @@
 <?php
 require_once 'conexao.php';
 
-// Busca favoritos do usuário
+// ==================
+// Funções de Perfil
+// ==================
 function buscarFavoritos(int $userId): array
 {
     global $pdo;

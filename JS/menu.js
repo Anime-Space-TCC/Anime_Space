@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (buscaBtn && buscaContainer && inputBusca) {
       buscaBtn.addEventListener("click", () => {
-        buscaContainer.classList.toggle("activo");
+        buscaContainer.classList.toggle("active");
 
         if (buscaContainer.classList.contains("active")) {
           inputBusca.focus();
@@ -33,7 +33,6 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     }
   }
-
   /* ===========================
      3. CAIXA DE NOTIFICAÇÕES
   ============================ */

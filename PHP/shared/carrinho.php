@@ -2,14 +2,23 @@
 require_once __DIR__ . '/auth.php';
 verificarLogin();
 
+// =======================
+// Inicialização de sessão
+// =======================
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
+// ==========================
+// Gerenciamento do carrinho
+// ==========================
 if (!isset($_SESSION['carrinho'])) {
     $_SESSION['carrinho'] = [];
 }
 
+// =======================
+// Dados da requisição
+// =======================
 $acao = $_POST['acao'] ?? '';
 $id = $_POST['id'] ?? '';
 $quantidade = $_POST['quantidade'] ?? 1;

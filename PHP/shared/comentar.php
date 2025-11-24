@@ -1,4 +1,7 @@
 <?php
+// =======================
+// Inicialização de sessão
+// =======================
 session_start();
 
 require __DIR__ . '/conexao.php';
@@ -6,36 +9,46 @@ require __DIR__ . '/auth.php';
 require __DIR__ . '/validators.php';
 require __DIR__ . '/comentarios.php';
 
-// 1. Verifica login
+// =====================
+// Validações e inserção
+// =====================
 if (!usuarioLogado()) {
     die("Você precisa estar logado para comentar.");
 }
 $user_id = obterUsuarioAtualId();
 
-// 2. Confirma se usuário existe
+// ================================
+// Validações de usuario existentes
+// ================================
 if (!existeUsuario($pdo, $user_id)) {
     die("Usuário inválido ou não encontrado.");
 }
 
-// 3. Dados do formulário
-$episodio_id = $_POST['episodio_id'] ?? 0; // 0 = comentário geral do anime
+// ====================
+// Dados do comentariio
+// ====================
+$episodio_id = $_POST['episodio_id'] ?? 0; 
 $id_anime = $_POST['id'] ?? null;
 $comentario = trim($_POST['comentario'] ?? '');
 
-// 4. Valida comentário
+// ==================
+// Valida comentário
+// ==================
 if (empty($comentario)) {
     exit("Comentário inválido.");
 }
 
-// 5. Se for comentário de episódio, verifica se existe
+// =================================================
+// Se for comentário de episódio, verifica se existe
+// =================================================
 if ($episodio_id != 0 && !existeEpisodio($pdo, $episodio_id)) {
     exit("Episódio não encontrado.");
 }
 
-// 6. Insere comentário
+// Insere comentário
 inserirComentario($pdo, $user_id, $episodio_id, $comentario);
 
-// 7. Redireciona para a página de episódios
+// Redireciona para a página de episódios
 $redirectUrl = "../../PHP/user/episodes.php";
 
 if ($id_anime) {

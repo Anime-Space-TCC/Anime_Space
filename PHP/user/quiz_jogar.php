@@ -3,6 +3,9 @@ require_once '../shared/auth.php';
 require_once '../shared/conexao.php';
 require_once '../shared/gamificacao.php';
 
+// ====================
+// Verificação de login
+// ====================
 verificarLogin();
 $userId = $_SESSION['user_id'];
 
@@ -112,12 +115,14 @@ $ranking = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <!-- COLUNA DIREITA (RANKING) -->
             <div class="col-direita">
                 <h2>Ranking dos Sábios 🏆</h2>
+
                 <ul class="ranking-lista">
                     <?php foreach ($ranking as $i => $player): ?>
                         <li class="ranking-item pos<?= $i + 1 ?>">
                             <span class="posicao"><?= $i + 1 ?>°</span>
                             <img class="avatar"
-                                src="../uploads/<?= htmlspecialchars($player['foto_perfil'] ?? 'default.jpg') ?>">
+                                src="../uploads/<?= htmlspecialchars($fotoPerfil['foto_perfil'] ?? 'default.jpg') ?>?v=<?= time() ?>"
+                                alt="Avatar">
                             <span class="nome"><?= htmlspecialchars($player['username']) ?></span>
                             <span class="pontos"><?= $player['total_pontos'] ?> pts</span>
                         </li>

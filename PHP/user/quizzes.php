@@ -5,7 +5,9 @@ require_once '../shared/gamificacao.php';
 require_once '../shared/usuarios.php';
 require_once '../shared/quizzes.php';
 
-// Garante login
+// ====================
+// Verificação de login
+// ====================
 verificarLogin();
 $userId = $_SESSION['user_id'];
 

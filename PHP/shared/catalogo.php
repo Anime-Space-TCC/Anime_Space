@@ -1,10 +1,9 @@
 <?php
 require_once __DIR__ . '/conexao.php';
 
-// =========================
-// FUNÇÕES DE RETORNO DE DADOS
-// =========================
-
+// ======================================
+// Funções de retorno de dados filtrados
+// ======================================
 
 // Retorna todos os gêneros cadastrados
 function getGeneros()
@@ -39,11 +38,11 @@ function getLinguagens()
     ")->fetchAll(PDO::FETCH_COLUMN);
 }
 
-// =========================
-// FUNÇÕES DE FILTRAGEM E PAGINAÇÃO
-// =========================
+// =======================================
+// Funções de retorno de animes paginados
+// =======================================
 
-// Conta quantidade total de animes filtrados (para paginação)
+// Conta quantidade total de animes filtrados
 function getTotalAnimesFiltrados($filtroGenero = '', $filtroAno = '', $filtroLinguagem = '', $busca = '')
 {
     global $pdo;

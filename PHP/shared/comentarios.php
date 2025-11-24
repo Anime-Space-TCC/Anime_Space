@@ -1,6 +1,9 @@
 <?php
-require_once __DIR__ . '/gamificacao.php'; // garante que a função adicionarXP está disponível
+require_once __DIR__ . '/gamificacao.php'; 
 
+// =======================
+// Funções de comentários
+// =======================
 function inserirComentario(PDO $pdo, int $userId, int $episodioId, string $comentario): bool
 {
     try {

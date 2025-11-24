@@ -1,5 +1,8 @@
 <?php
 
+// ===========================
+// Verificações de notificações
+// ============================
 if (!function_exists('criarNotificacao')) {
     require_once __DIR__ . '/notificacoes.php';
 }
@@ -7,8 +10,9 @@ if (!function_exists('criarNotificacao')) {
 require_once __DIR__ . '/conexao.php';
 require_once __DIR__ . '/produtos.php';
 
-
-// Envia uma notificação única sobre promoções ativas por dia.
+// ================================
+// Crie uma notificação de promoções
+// =================================
 function notificarPromocoesParaUsuario(int $userId): bool
 {
     global $pdo;
@@ -28,7 +32,7 @@ function notificarPromocoesParaUsuario(int $userId): bool
     }
 
     // Busca produtos em promoção (da tabela produtos)
-    $produtos = buscarProdutosPromocao(); // Deve retornar array de produtos
+    $produtos = buscarProdutosPromocao(); 
 
     if (empty($produtos)) {
         return false; // Nenhuma promoção ativa

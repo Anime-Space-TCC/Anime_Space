@@ -1,11 +1,16 @@
 <?php
+// =======================
+// Inicialização de sessão
+// =======================
 session_start();
 require_once __DIR__ . '/../shared/conexao.php';
 require_once __DIR__ . '/../shared/auth.php';
 
 $errors = [];
 
+// ===============================
 // Processa submissão do formulário
+// ================================
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
   $username = trim($_POST['username'] ?? '');
@@ -74,7 +79,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <div class="links">
       <p>Esqueceu a senha? <a href="recupera_senha.php">Criar nova</a></p>
-      <p>Não tem conta? <a href="register.php">Cadastre-se</a></p>
+      <p>Não tem conta? <a href="cadastro.php">Cadastre-se</a></p>
       <a href="../../PHP/user/index.php">Voltar</a>
     </div>
   </div>

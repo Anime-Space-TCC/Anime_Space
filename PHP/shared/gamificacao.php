@@ -1,6 +1,9 @@
 <?php
 require_once __DIR__ . '/notificacoes.php';
 
+// ======================
+// Funções de Gamificação
+// ======================
 function adicionarXP($pdo, $user_id, $xpGanhos)
 {
     // Busca XP e nível atuais
@@ -29,18 +32,18 @@ function adicionarXP($pdo, $user_id, $xpGanhos)
     $stmt = $pdo->prepare("UPDATE users SET xp = ?, nivel = ? WHERE id = ?");
     $stmt->execute([$xpAtual, $nivelAtual, $user_id]);
 
-    // -------------------------
-    // 🔥 REGISTRA O GANHO DE XP
-    // -------------------------
+    // =======================
+// Registra o ganho de XP
+// =======================
     $stmt = $pdo->prepare("
         INSERT INTO xp_logs (user_id, tipo_acao, xp_ganho)
         VALUES (?, 'ganho_xp', ?)
     ");
     $stmt->execute([$user_id, $xpGanhos]);
 
-    // -------------------------
-    // 🔔 CRIA NOTIFICAÇÃO DE XP
-    // -------------------------
+    // =======================
+// Cria notificação de XP
+// =======================
     criarNotificacao(
         $pdo,
         $user_id,
@@ -49,9 +52,9 @@ function adicionarXP($pdo, $user_id, $xpGanhos)
         "xp"
     );
 
-    // -------------------------
-    // 🔥 SE SUBIU DE NÍVEL, REGISTRA E NOTIFICA
-    // -------------------------
+    // ======================================
+// Se subiu de nível, registra e notifica
+// ======================================
     if ($nivelAtual > $nivelAntes) {
         $stmt = $pdo->prepare("
             INSERT INTO xp_logs (user_id, tipo_acao, xp_ganho)

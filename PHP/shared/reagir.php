@@ -1,21 +1,24 @@
 <?php
+// =======================
+// Inicialização de sessão
+// =======================
 session_start();
+header('Content-Type: application/json');
 require_once __DIR__ . '/../shared/conexao.php';
 require_once __DIR__ . '/../shared/reacoes.php';
 require_once __DIR__ . '/../shared/gamificacao.php';
 
-header('Content-Type: application/json');
-
-// ============================
-// Debug temporário (opcional)
-// ============================
-
-// Verifica se o usuário está logado
+// =======================
+// Verificação de login
+// =======================
 if (!isset($_SESSION['user_id'])) {
     echo json_encode(['erro' => 'Usuário não logado']);
     exit;
 }
 
+// =================
+// Processa a reação
+// =================
 $user_id = $_SESSION['user_id'];
 $episodio_id = $_POST['episodio_id'] ?? null;
 $reacao = $_POST['reacao'] ?? null;

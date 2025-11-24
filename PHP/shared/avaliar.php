@@ -1,13 +1,17 @@
 <?php
 require __DIR__ . '/../shared/conexao.php';
-require __DIR__ . '/../shared/gamificacao.php'; // Importa a função de XP
+require __DIR__ . '/../shared/gamificacao.php';
 
-// Inicia a sessão apenas se não houver sessão ativa
+// =======================
+// Inicialização de sessão
+// =======================
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
+// =================================
 // Verifica se o usuário está logado
+// =================================
 if (!isset($_SESSION['user_id'])) {
     echo json_encode(["sucesso" => false, "erro" => "Você precisa estar logado para avaliar"]);
     exit;
@@ -17,7 +21,11 @@ $userId = $_SESSION['user_id'];
 $animeId = $_POST['anime_id'] ?? null;
 $avaliacao = $_POST['avaliacao'] ?? null;
 
-// Validações
+// ======================
+// Validações de entrada
+// ======================
+
+// Avaliações válidas: 0 a 10
 if (!$animeId || !is_numeric($avaliacao) || $avaliacao < 0 || $avaliacao > 10) {
     echo json_encode(["sucesso" => false, "erro" => "Avaliação inválida"]);
     exit;
@@ -50,7 +58,7 @@ if (!$avaliacaoExistente) {
     $jaGanhouXP = $stmtLog->fetchColumn() > 0;
 
     if (!$jaGanhouXP) {
-        adicionarXP($pdo, $userId, 25); // 🔹 +25 XP por avaliar um anime
+        adicionarXP($pdo, $userId, 25);
 
         // Registra log
         $log = $pdo->prepare("

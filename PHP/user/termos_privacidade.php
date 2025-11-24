@@ -1,4 +1,7 @@
 <?php
+// =======================
+// Inicialização da sessão
+// =======================
 session_start();
 ?>
 <!DOCTYPE html>

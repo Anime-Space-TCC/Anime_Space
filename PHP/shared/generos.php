@@ -1,4 +1,7 @@
 <?php
+// ==================
+// Funções de gêneros
+// ==================
 
 // Busca todos os gêneros cadastrados no banco de dados.
 function buscarTodosGeneros(PDO $pdo): array

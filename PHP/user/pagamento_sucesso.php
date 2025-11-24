@@ -1,8 +1,10 @@
 <?php
+// =======================
+// Inicialização de sessão
+// =======================
 session_start();
 
 $pagamentos = $_SESSION['pagamentos_sucesso'] ?? [];
-
 if (empty($pagamentos)) {
     die("Nenhum pagamento encontrado.");
 }

@@ -2,17 +2,24 @@
 require __DIR__ . '/../shared/conexao.php';
 require __DIR__ . '/../shared/gamificacao.php';
 
-// Inicia sessão
+// =======================
+// Inicialização de sessão
+// =======================
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-// Verifica login
+// =======================
+// Verificação de login
+// =======================
 if (!isset($_SESSION['user_id'])) {
     echo json_encode(["sucesso" => false, "erro" => "Você precisa estar logado para favoritar"]);
     exit;
 }
 
+// ================================
+// Lógica de favoritar/desfavoritar
+// ================================
 $userId = $_SESSION['user_id'];
 $animeId = $_POST['anime_id'] ?? null;
 

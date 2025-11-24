@@ -3,7 +3,9 @@ require __DIR__ . '/../shared/catalogo.php';
 require_once __DIR__ . '/../shared/auth.php';
 require __DIR__ . '/../shared/acessos.php';
 
-// Bloqueia acesso se não estiver logado
+// ====================
+// Verificação de login
+// ====================
 verificarLogin();
 
 // Filtros recebidos

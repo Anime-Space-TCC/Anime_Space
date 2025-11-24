@@ -279,6 +279,81 @@ body {
 }
 
 /* =========================
+      HEADER DE TEMPORADA
+========================= */
+
+.header-temporada {
+    margin: 15px 0;
+    position: relative;
+}
+
+.btn-temp,
+.titulo-temporada {
+    color: #ff9f00;
+    font-size: 1.3rem;
+    font-weight: 700;
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+    cursor: pointer;
+    text-align: left;
+    position: relative;
+}
+
+.titulo-temporada {
+    cursor: default;  
+}
+
+.linha {
+    width: 100%;
+    height: 2px;
+    background-color: #ff9f00;
+    border: none;
+    border-radius: 10px;
+    margin-top: 10px;
+}
+
+/* =========================
+      DROPDOWN
+========================= */
+
+.dropdown-temporadas {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-list {
+    display: none;
+    position: absolute;
+    top: 120%;
+    left: 0;
+    background: rgba(0, 0, 0, 0.85);
+    border: 1px solid #ff9f00;
+    border-radius: 8px;
+    list-style: none;
+    padding: 8px 0;
+    width: 200px;
+    z-index: 9999;
+    backdrop-filter: blur(3px);
+}
+
+.dropdown-list.show {
+    display: block;
+}
+
+.dropdown-list li {
+    padding: 10px 15px;
+    color: #ff9f00;
+    cursor: pointer;
+}
+
+.dropdown-list li:hover {
+    background: #ff9f00;
+    color: #000;
+}
+
+/* =========================
     CARDS DE EPISÓDIOS
 ========================= */
 .grid {

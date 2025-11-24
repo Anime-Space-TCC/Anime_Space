@@ -3,9 +3,8 @@ require_once __DIR__ . '/conexao.php';
 
 
 //=========================
-//  FUNÇÕES DE EPISÓDIOS
+//  Funções de episódios
 //=========================
-
 
 // Retorna todos os episódios de um anime com contagem de likes e dislikes
 function buscarEpisodiosComReacoes(PDO $pdo, int $animeId): array
@@ -24,7 +23,7 @@ function buscarEpisodiosComReacoes(PDO $pdo, int $animeId): array
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
-// Busca um episódio específico de um anime (com temporada garantida)
+// Busca um episódio específico de um anime
 function buscarEpisodioSelecionado(PDO $pdo, int $episodioId, int $animeId): ?array
 {
     $stmt = $pdo->prepare("
@@ -41,9 +40,21 @@ function buscarEpisodioSelecionado(PDO $pdo, int $episodioId, int $animeId): ?ar
 function organizarPorTemporada(array $episodios): array
 {
     $temporadas = [];
+
     foreach ($episodios as $ep) {
-        $temporadas[$ep['temporada']][] = $ep;
+
+        // Garante que a temporada seja um inteiro válido
+        $temp = isset($ep['temporada']) ? intval($ep['temporada']) : 1;
+
+        if ($temp < 1) {
+            $temp = 1; // fallback
+        }
+
+        $temporadas[$temp][] = $ep;
     }
+
+    ksort($temporadas);
+
     return $temporadas;
 }
 
@@ -91,7 +102,9 @@ function buscarEpisodioComAnime(int $episodioId): ?array
     return $stmt->fetch(PDO::FETCH_ASSOC) ?: null;
 }
 
+// =================================
 // Extrai o ID do YouTube de uma URL
+// =================================
 function extrairIdYoutube($url)
 {
     preg_match('/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|embed)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/ ]{11})/', $url, $matches);

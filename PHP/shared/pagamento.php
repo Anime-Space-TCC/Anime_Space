@@ -1,9 +1,9 @@
 <?php
 require_once __DIR__ . '/conexao.php';
 
-//==============================
+//======================================
 // Registra um novo pagamento no sistema
-//==============================
+//======================================
 function registrarPagamento(PDO $pdo, int $user_id, int $produto_id, string $metodo): ?array
 {
     // Verifica se o produto existe e está ativo
@@ -28,10 +28,12 @@ function registrarPagamento(PDO $pdo, int $user_id, int $produto_id, string $met
         'codigo' => $codigo,
         'status' => $status,
         'valor' => number_format($valor, 2, ',', '.'),
-        'sku' => $produto['sku'], // ✅ adiciona SKU
+        'sku' => $produto['sku'],
     ];
 
-    // Simulações de acordo com o método
+    // ==============================================
+   // Escolha do método de pagamento (simulado)
+   // ==============================================
     if ($metodo === 'pix') {
         $pagamento['tipo'] = 'pix';
     } elseif ($metodo === 'boleto') {

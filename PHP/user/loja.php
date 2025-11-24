@@ -4,14 +4,22 @@ require_once __DIR__ . '/../shared/auth.php';
 require __DIR__ . '/../shared/acessos.php';
 require __DIR__ . '/../shared/produtos.php';
 require_once __DIR__ . '/../shared/promocoes.php';
+
+// ====================
+// Verificação de login
+// ====================
 verificarLogin();
 
-// Início da sessão (apenas se não existir)
+// =======================
+// Inicialização de sessão
+// =======================
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-// Inicializa carrinho se necessário
+// ===================
+// Inicializa carrinho
+// ===================
 if (!isset($_SESSION['carrinho'])) {
     $_SESSION['carrinho'] = [];
 }

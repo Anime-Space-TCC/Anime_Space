@@ -1,5 +1,8 @@
 <?php
 
+// ==========================
+// Verficadores de existência
+// ==========================
 // Verifica se um usuário com o ID fornecido existe na tabela 'users'.
 function existeUsuario(PDO $pdo, int $id): bool
 {

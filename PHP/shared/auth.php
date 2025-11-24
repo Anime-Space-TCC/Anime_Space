@@ -100,9 +100,9 @@ function obterUsuarioAtualId(): ?int
     return $_SESSION['user_id'] ?? null;
 }
 
-// ==============================
+// ==========================
 // Função principal de login
-// ==============================
+// ==========================
 function login(PDO $pdo, string $username, string $password): array
 {
     $username = trim($username);
@@ -144,6 +144,48 @@ function login(PDO $pdo, string $username, string $password): array
     return ['success' => true];
 }
 
+// ================================
+// Normaliza texto (username/email) 
+// ================================
+if (!function_exists('normalizarTexto')) {
+    function normalizarTexto(string $texto): string
+    {
+        $texto = trim($texto);
+        $texto = mb_strtolower($texto, 'UTF-8');
+        return $texto;
+    }
+}
+
+// ================
+// Função de logout
+// ================
+function logout(): void
+{
+    session_unset();
+    session_destroy();
+}
+
+// =======================
+// Valida a força da senha
+// =======================
+function validarSenhaForte(string $pwd): ?string
+{
+    if (strlen($pwd) < 8)
+        return "Senha deve ter ao menos 8 caracteres.";
+    if (!preg_match('/[A-Z]/', $pwd))
+        return "Inclua pelo menos 1 letra maiúscula.";
+    if (!preg_match('/[a-z]/', $pwd))
+        return "Inclua pelo menos 1 letra minúscula.";
+    if (!preg_match('/\d/', $pwd))
+        return "Inclua ao menos 1 número.";
+    if (!preg_match('/[\W]/', $pwd))
+        return "Inclua ao menos 1 símbolo (ex: !@#).";
+    return null;
+}
+
+// ==============================
+// Função de login com 2FA
+// ==============================
 /*
 function login(PDO $pdo, string $username, string $password): array {
     $username = trim($username);
@@ -198,60 +240,28 @@ function login(PDO $pdo, string $username, string $password): array {
 }
 */
 
-// Normaliza texto (username/email) 
-if (!function_exists('normalizarTexto')) {
-    function normalizarTexto(string $texto): string
-    {
-        $texto = trim($texto);
-        $texto = mb_strtolower($texto, 'UTF-8');
-        return $texto;
-    }
-}
-
 // Inicia processo 2FA
-function verificarCodigo2FA(string $codigo): bool
-{
-    if (!isset($_SESSION['2fa_user'], $_SESSION['2fa_code'], $_SESSION['2fa_expires'])) {
-        return false;
-    }
+// function verificarCodigo2FA(string $codigo): bool
+// {
+//     if (!isset($_SESSION['2fa_user'], $_SESSION['2fa_code'], $_SESSION['2fa_expires'])) {
+//         return false;
+//     }
 
-    if (time() > $_SESSION['2fa_expires']) {
-        unset($_SESSION['2fa_user'], $_SESSION['2fa_code'], $_SESSION['2fa_expires'], $_SESSION['aguardando_2fa']);
-        return false;
-    }
+//     if (time() > $_SESSION['2fa_expires']) {
+//         unset($_SESSION['2fa_user'], $_SESSION['2fa_code'], $_SESSION['2fa_expires'], $_SESSION['aguardando_2fa']);
+//         return false;
+//     }
 
-    if ($codigo == $_SESSION['2fa_code']) {
-        $user = $_SESSION['2fa_user'];
-        $_SESSION['user_id'] = $user['id'];
-        $_SESSION['username'] = $user['username'];
-        $_SESSION['tipo'] = $user['tipo'];
+//     if ($codigo == $_SESSION['2fa_code']) {
+//         $user = $_SESSION['2fa_user'];
+//         $_SESSION['user_id'] = $user['id'];
+//         $_SESSION['username'] = $user['username'];
+//         $_SESSION['tipo'] = $user['tipo'];
 
-        unset($_SESSION['2fa_user'], $_SESSION['2fa_code'], $_SESSION['2fa_expires'], $_SESSION['aguardando_2fa']);
-        return true;
-    }
+//         unset($_SESSION['2fa_user'], $_SESSION['2fa_code'], $_SESSION['2fa_expires'], $_SESSION['aguardando_2fa']);
+//         return true;
+//     }
 
-    return false;
-}
+//     return false;
+// }
 
-// Função de logout
-function logout(): void
-{
-    session_unset();
-    session_destroy();
-}
-
-// Valida a força da senha
-function validarSenhaForte(string $pwd): ?string
-{
-    if (strlen($pwd) < 8)
-        return "Senha deve ter ao menos 8 caracteres.";
-    if (!preg_match('/[A-Z]/', $pwd))
-        return "Inclua pelo menos 1 letra maiúscula.";
-    if (!preg_match('/[a-z]/', $pwd))
-        return "Inclua pelo menos 1 letra minúscula.";
-    if (!preg_match('/\d/', $pwd))
-        return "Inclua ao menos 1 número.";
-    if (!preg_match('/[\W]/', $pwd))
-        return "Inclua ao menos 1 símbolo (ex: !@#).";
-    return null;
-}

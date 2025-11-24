@@ -1,10 +1,15 @@
 <?php
 require __DIR__ . '/conexao.php';
 
+// =======================
+// Inicialização de sessão
+// =======================
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
-
+// =====================================
+// Registra acessos dos usuários ao site
+// =====================================
 try {
     $userId = $_SESSION['user_id'] ?? null;
     $tipo = $_SESSION['tipo'] ?? 'visitante';
@@ -24,6 +29,7 @@ try {
     $ultimoAcesso->execute($userId ? [$userId, $pagina] : [$pagina]);
     $ultimo = $ultimoAcesso->fetchColumn();
 
+    // Se não houve acesso recente, registra o novo acesso
     if (!$ultimo || (time() - strtotime($ultimo)) > $tempoLimite) {
         $stmt = $pdo->prepare("
             INSERT INTO acessos (user_id, ip, pagina, origem, tipo, data_acesso)

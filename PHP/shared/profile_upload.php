@@ -1,4 +1,7 @@
 <?php
+// =======================
+// Inicialização de sessão
+// =======================
 session_start();
 header('Content-Type: application/json; charset=utf-8');
 
@@ -7,6 +10,9 @@ require __DIR__ . '/auth.php';
 require __DIR__ . '/usuarios.php';
 require __DIR__ . '/perfil.php';
 
+// =======================
+// Atualizar Foto de Perfil
+// =======================
 $response = ['sucesso' => false, 'erro' => '', 'novaFoto' => ''];
 
 try {
@@ -34,6 +40,8 @@ try {
     $response['erro'] = $e->getMessage();
 }
 
-// Garante que nada mais será impresso
+// ============
+// Finalização
+// ============
 echo json_encode($response, JSON_UNESCAPED_UNICODE);
 exit;

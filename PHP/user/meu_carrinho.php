@@ -2,13 +2,21 @@
 require_once __DIR__ . '/../shared/conexao.php';
 require_once __DIR__ . '/../shared/auth.php';
 require __DIR__ . '/../shared/acessos.php';
+// ====================
+// Verificação de login
+// ====================
 verificarLogin();
 
+// =======================
+// Inicialização de sessão
+// =======================
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-// Inicializa o carrinho se não existir
+// =========================
+// Inicialização do carrinho
+// =========================
 if (!isset($_SESSION['carrinho'])) {
     $_SESSION['carrinho'] = [];
 }
@@ -140,7 +148,7 @@ if (!empty($_SESSION['carrinho'])) {
     <?php
     $carrinhoVazio = empty($_SESSION['carrinho']);
     ?>
-    <div id="footer-carrinho" style="<?= $carrinhoVazio ? 'position: absolute; bottom: 0; width: 100%;' : '' ?>">
+    <div id="footer-carrinho" style="<?= $carrinhoVazio ?>">
         <?php include __DIR__ . '/rodape.php'; ?>
     </div>
 

@@ -1,15 +1,22 @@
 <?php
+// =======================
+// Inicialização de sessão
+// =======================
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
 require __DIR__ . '/../shared/conexao.php';
 
+// =======================
 // Controle de visualizações
+// =========================
 if (!isset($_SESSION['visualizou_noticias'])) {
     $_SESSION['visualizou_noticias'] = [];
 }
-
+// =======================
+// Informações da Notícia
+// =======================
 if (isset($_GET['id'])) {
     $id = (int) $_GET['id'];
 
@@ -23,7 +30,9 @@ if (isset($_GET['id'])) {
     $stmt->execute();
     $noticia = $stmt->fetch(PDO::FETCH_ASSOC);
 }
-
+// ====================
+// Funções de Notícias
+// ====================
 function buscarNoticiasPopulares(PDO $pdo, int $limite = 5): array
 {
     $stmt = $pdo->prepare("

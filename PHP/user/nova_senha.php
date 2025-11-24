@@ -4,7 +4,9 @@ require_once '../shared/conexao.php';
 $erro = '';
 $token = $_POST['token'] ?? null;
 
-// Quando o formulário for enviado
+// ================================
+// Processa submissão do formulário
+// ================================
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $senha = $_POST['senha'] ?? '';
     $confirmar = $_POST['confirmar'] ?? '';

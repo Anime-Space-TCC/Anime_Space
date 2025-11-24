@@ -3,7 +3,11 @@ require __DIR__ . '/../shared/conexao.php';
 require __DIR__ . '/../shared/animes.php';
 require_once __DIR__ . '/../shared/auth.php';
 
+// ====================
+// Verificação de login
+// ====================
 verificarLogin();
+
 $grade = buscarGradeSemanal($pdo);
 
 //Função para limitar o número de animes exibidos por dia

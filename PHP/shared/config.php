@@ -1,5 +1,7 @@
 <?php
-
+// ==================================================
+// Configuração de dados de simulação para PHP Mailer
+// ==================================================
 return [
     'smtp' => [
         'host' => 'smtp.gmail.com',    // o servidor SMTP real (ex: smtp.gmail.com)

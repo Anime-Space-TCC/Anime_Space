@@ -1,8 +1,13 @@
 <?php
+// =======================
+// Inicialização de sessão
+// =======================
 session_start();
 header('Content-Type: application/json');
 
-// Verifica se é admin
+// ===========================
+// Verifica se é administrador
+// ===========================
 if (!isset($_SESSION['tipo']) || $_SESSION['tipo'] !== 'admin') {
     http_response_code(403);
     echo json_encode(['erro' => 'Acesso negado']);
@@ -11,7 +16,9 @@ if (!isset($_SESSION['tipo']) || $_SESSION['tipo'] !== 'admin') {
 
 require __DIR__ . '/../../PHP/shared/conexao.php';
 
+// =================================
 // Busca os 10 acessos mais recentes
+// =================================
 $stmt = $pdo->prepare("
     SELECT 
         a.id, 

@@ -1,17 +1,28 @@
 <?php
+// ========================
+// Inicialização de sessão
+// ========================
 session_start();
+// =================================
+// Configurações de cabeçalho e erro
+// =================================
 header('Content-Type: application/json; charset=utf-8');
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
 require __DIR__ . '/conexao.php';
 
+// ==============================
+// Verifica se o usuário é admin
+// ==============================
 if (!isset($_SESSION['tipo']) || $_SESSION['tipo'] !== 'admin') {
     http_response_code(403);
     echo json_encode(['erro' => 'Acesso negado']);
     exit;
 }
-
+// ===================================================
+// Captura e processa dados para análises dos gráficos
+// ===================================================
 try {
     // ===== Totais gerais em uma query =====
     $totais = $pdo->query("
@@ -82,7 +93,9 @@ try {
         LIMIT 10
     ")->fetchAll(PDO::FETCH_ASSOC);
 
-    // ===== Saída JSON otimizada =====
+    // ====================
+// Saída JSON otimizada
+// ====================
     echo json_encode([
         'geral' => $totais,
         'acessos_por_dia' => $acessosPorDia,

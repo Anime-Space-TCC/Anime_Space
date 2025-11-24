@@ -3,7 +3,9 @@ session_start();
 require_once __DIR__ . '/../shared/conexao.php';
 require_once __DIR__ . '/../shared/gamificacao.php';
 
-// Verifica se o usuário está logado
+// ====================
+// Verificação de login
+// ====================
 if (!isset($_SESSION['user_id'])) {
     header('Location: login.php');
     exit();

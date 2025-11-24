@@ -1,31 +1,38 @@
-// Dropdown de temporadas
-const btnDropdown = document.getElementById("btnDropdown");
+const btnTemp = document.getElementById("btnTemp");
 const dropdownList = document.getElementById("dropdownList");
 
-if (btnDropdown && dropdownList) {
-  const dropdownItems = dropdownList.querySelectorAll("li");
+// Só ativa se existir dropdown (ou seja, +1 temporada)
+if (btnTemp && dropdownList) {
 
-  btnDropdown.addEventListener("click", () => {
-    dropdownList.classList.toggle("show");
-  });
+    const dropdownItems = dropdownList.querySelectorAll("li");
 
-  dropdownItems.forEach((item) => {
-    item.addEventListener("click", () => {
-      const temporada = item.dataset.temporada;
-      btnDropdown.textContent = `Temporada ${temporada}`;
-
-      document.querySelectorAll(".temporada-bloco").forEach((bloco) => {
-        bloco.style.display =
-          bloco.dataset.temporada === temporada ? "" : "none";
-      });
-
-      dropdownList.classList.remove("show");
+    // Abrir/fechar dropdown
+    btnTemp.addEventListener("click", (event) => {
+        event.stopPropagation();
+        dropdownList.classList.toggle("show");
     });
-  });
 
-  document.addEventListener("click", (e) => {
-    if (!btnDropdown.contains(e.target) && !dropdownList.contains(e.target)) {
-      dropdownList.classList.remove("show");
-    }
-  });
+    // Selecionar temporada
+    dropdownItems.forEach((item) => {
+        item.addEventListener("click", (event) => {
+            event.stopPropagation();
+
+            const temporada = item.dataset.temporada;
+
+            btnTemp.textContent = `Temporada ${temporada}`;
+
+            // Mostrar apenas essa temporada
+            document.querySelectorAll(".temporada-bloco").forEach((bloco) => {
+                bloco.style.display =
+                    bloco.dataset.temporada === temporada ? "" : "none";
+            });
+
+            dropdownList.classList.remove("show");
+        });
+    });
+
+    // Fechar ao clicar fora
+    document.addEventListener("click", () => {
+        dropdownList.classList.remove("show");
+    });
 }

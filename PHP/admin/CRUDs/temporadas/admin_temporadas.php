@@ -93,19 +93,20 @@ if (!empty($busca)) {
             <td><?= htmlspecialchars($t['ano_fim']) ?></td>
             <td><?= htmlspecialchars($t['qtd_episodios']) ?></td>
             <td>
-              <a href="../../../../PHP/admin/CRUDs/temporadas/temporadas_form.php?id=<?= $t['id'] ?>"
+              <a href="../../../../PHP/admin/CRUDs/temporadas/temporadas_form.php?id=<?= (int) $t['id'] ?>"
                 class="admin-btn">Editar</a>
-              <a href="../../../../PHP/admin/CRUDs/temporadas/temporadas_delete.php?id=<?= $t['id'] ?>" class="admin-btn"
-                onclick="return confirm('Excluir esta temporada?')">Excluir</a>
+              <a href="../../../../PHP/admin/CRUDs/temporadas/temporadas_delete.php?id=<?= (int) $t['id'] ?>"
+                class="admin-btn" onclick="return confirm('Excluir esta temporada?')">Excluir</a>
             </td>
           </tr>
         <?php endforeach; ?>
-      </tbody>
-      <tfoot>
+        </tbody> <tfoot>
         <tr>
-          <td colspan="8">TOTAL: <?= count($temporadas) ?> temporadas cadastradas</td>
+          <td colspan="8">TOTAL:
+            <?= count($temporadas) ?> temporadas cadastradas
+          </td>
         </tr>
-      </tfoot>
+        </tfoot>
     </table>
   </main>
 </body>

@@ -1,10 +1,14 @@
 <?php
+// =======================
+// Inicialização de sessão
+// =======================
 session_start();
+// Recupera os pagamentos confirmados da sessão
 $pagamentos = $_SESSION['pagamentos_confirmados'] ?? [];
 if (empty($pagamentos))
     die("Nenhum pagamento encontrado.");
 
-// Total
+// Total geral dos pagamentos
 $total = 0;
 foreach ($pagamentos as $p) {
     $valorItem = floatval(str_replace(',', '.', str_replace('.', '', $p['valor'])));
