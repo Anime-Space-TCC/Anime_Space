@@ -8,7 +8,7 @@
   <div class="rodape-container">
 
     <div class="rodape-coluna">
-      <h3>Animes Space</h3>
+      <h4>Animes Space</h4>
       <p>O universo infinito dos animes — notícias, lançamentos e comunidade para todos os otakus.</p>
     </div>
 
