@@ -7,9 +7,4 @@
     <div class="propaganda"><img src="../../img/ads/propaganda4.jpg" alt="Anúncio 4"></div>
   </div>
 </div>
-
-<script>
-  const letreiro = document.getElementById('letreiro');
-  // Duplica o conteúdo para loop contínuo
-  letreiro.innerHTML += letreiro.innerHTML;
-</script>
+<script src="../../JS/propaganda.js"></script>

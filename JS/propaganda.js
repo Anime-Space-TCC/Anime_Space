@@ -28,7 +28,7 @@ const banners = {
 };
 
 // ================================
-// Letreiro do rodapé (animado)
+// Função para carregar o letreiro
 // ================================
 function carregarLetreiro(imagens) {
   if (!letreiro) return;
@@ -39,9 +39,34 @@ function carregarLetreiro(imagens) {
       (src) => `<div class="propaganda"><img src="${src}" alt="Anúncio"></div>`
     )
     .join("");
+}
 
-  // Duplica o conteúdo para efeito de rolagem contínua
-  letreiro.innerHTML += letreiro.innerHTML;
+// ================================
+// Função iniciar animação do letreiro (vai e volta)
+function iniciarLetreiro() {
+  if (!letreiro) return;
+
+  // largura total do letreiro
+  const largura = letreiro.scrollWidth;
+
+  // define a animação via CSS em pixels, vai e volta suave
+  letreiro.style.animation = `vaiVolta ${Math.max(15, largura / 100)}s ease-in-out infinite alternate`;
+
+  // cria keyframes dinamicamente
+  const styleSheet = document.styleSheets[0];
+  const keyframes = `
+    @keyframes vaiVolta {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-${largura - letreiro.parentElement.clientWidth}px); }
+    }
+  `;
+
+  // remove keyframes antigos se existirem
+  for (let i = styleSheet.cssRules.length - 1; i >= 0; i--) {
+    if (styleSheet.cssRules[i].name === "vaiVolta") styleSheet.deleteRule(i);
+  }
+
+  styleSheet.insertRule(keyframes, styleSheet.cssRules.length);
 }
 
 // ================================
@@ -62,8 +87,9 @@ function rotateAds(adElements, adGroups, interval = 8000) {
 // Execuções automáticas
 // ================================
 
-// Rodapé: sempre ativo se o letreiro existir
+// Rodapé: carrega banners e inicia animação
 carregarLetreiro(banners.rodape);
+window.addEventListener('load', iniciarLetreiro);
 
 // Laterais: apenas em páginas específicas
 if (currentPage.includes("estreias") || currentPage.includes("lancamentos")) {

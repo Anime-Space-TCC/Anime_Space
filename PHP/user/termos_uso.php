@@ -9,7 +9,7 @@ session_start();
 
 <head>
   <meta charset="UTF-8">
-  <title>Termos de Uso - Anime Space</title>
+  <title>Termos de Uso - Animes Space</title>
   <link rel="stylesheet" href="../../CSS/style.css">
   <link rel="icon" href="../../img/slogan3.png" type="image/png">
 </head>
@@ -17,7 +17,7 @@ session_start();
 <body>
   <div class="termos-container">
     <h1>Termos de Uso</h1>
-    <p>Bem-vindo ao Anime Space! Antes de criar sua conta, leia atentamente nossos Termos de Uso.</p>
+    <p>Bem-vindo ao Animes Space! Antes de criar sua conta, leia atentamente nossos Termos de Uso.</p>
     <br>
     <h2>1. Uso da Plataforma</h2>
     <p>O Anime Space é destinado ao entretenimento e à comunidade de fãs de animes. Ao se cadastrar, você concorda em

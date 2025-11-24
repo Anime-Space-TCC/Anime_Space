@@ -42,7 +42,7 @@ $animes = getAnimesFiltradosPaginados($filtroGenero, $filtroAno, $filtroLinguage
 
 <head>
   <meta charset="UTF-8">
-  <title>Streaming de Animes</title>
+  <title>Streaming de Animes - Animes Space</title>
   <link rel="stylesheet" href="../../CSS/style.css">
   <link rel="icon" href="../../img/slogan3.png" type="image/png">
 </head>

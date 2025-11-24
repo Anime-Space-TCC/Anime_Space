@@ -24,7 +24,7 @@ $metodo = $pagamentos[0]['tipo'] ?? '';
 
 <head>
     <meta charset="UTF-8">
-    <title>Confirmação de Pagamento - Anime Space</title>
+    <title>Confirmação de Pagamento - Animes Space</title>
     <link rel="stylesheet" href="../../CSS/style.css">
     <link rel="icon" href="../../img/slogan3.png" type="image/png">
 </head>

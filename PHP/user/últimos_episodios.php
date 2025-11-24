@@ -18,9 +18,14 @@ $offset = ($pagina - 1) * $porPagina;
 
 $episodios = getUltimosEpisodiosPaginados($porPagina, $offset);
 
-// Como queremos apenas os 20 últimos no total:
-$totalEpisodios = 20;
+// Conta quantos episódios existem no total
+$totalEpisodios = getTotalUltimosEpisodios(); 
 $totalPaginas = ceil($totalEpisodios / $porPagina);
+
+// Impede ir para páginas inexistentes
+if ($pagina > $totalPaginas) {
+    $pagina = $totalPaginas;
+}
 ?>
 
 <!DOCTYPE html>
@@ -28,7 +33,7 @@ $totalPaginas = ceil($totalEpisodios / $porPagina);
 
 <head>
   <meta charset="UTF-8" />
-  <title>Lançamentos</title>
+  <title>Lançamentos - Animes Space</title>
   <link rel="stylesheet" href="../../CSS/style.css" />
   <link rel="icon" href="../../img/slogan3.png" type="image/png">
 </head>

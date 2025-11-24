@@ -19,12 +19,14 @@ function limitarAnimesPorDia(array $lista, int $limite = 3): array
 
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
   <meta charset="UTF-8" />
-  <title>Grade Semanal de Lançamentos</title>
+  <title>Grade Semanal de Lançamentos - Animes Space</title>
   <link rel="stylesheet" href="../../CSS/style.css" />
   <link rel="icon" href="../../img/slogan3.png" type="image/png">
 </head>
+
 <body>
   <?php
   $current_page = 'semanal';
@@ -33,32 +35,35 @@ function limitarAnimesPorDia(array $lista, int $limite = 3): array
   <main class="page-content">
     <h1 class="titulo-pagina">Grade Semanal de Lançamentos</h1>
 
+    <?php
+    $diasSemana = ['Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado', 'Domingo'];
+    $hoje = date('N') - 1; // 0 = segunda, ..., 6 = domingo
+    ?>
     <div class="grade-semanal">
-      <?php
-      $diasSemana = ['Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado', 'Domingo'];
-      foreach ($diasSemana as $dia):
-        ?>
-          <div class="dia">
-            <h2><?= $dia ?></h2>
-            <?php if (!empty($grade[$dia])): ?>
-                <?php foreach (limitarAnimesPorDia($grade[$dia]) as $anime): ?>
-                    <div class="anime-item">
-                      <img src="../../img/<?= htmlspecialchars($anime['capa']) ?>" alt="<?= htmlspecialchars($anime['nome']) ?>">
-                      <div class="anime-info">
-                        <strong><?= htmlspecialchars($anime['nome']) ?></strong>
-                        <span>🕒 <?= date('H:i', strtotime($anime['hora_exibicao'])) ?></span>
-                        <a href="../../PHP/user/episodes.php?id=<?= $anime['id'] ?>">Ver episódios</a>
-                      </div>
-                    </div>
-                <?php endforeach; ?>
-            <?php else: ?>
-                <p>Nenhum anime neste dia.</p>
-            <?php endif; ?>
-          </div>
+      <?php foreach ($diasSemana as $index => $dia): ?>
+        <div class="dia <?= ($index === $hoje) ? 'hoje' : '' ?>">
+          <h2><?= $dia ?></h2>
+          <?php if (!empty($grade[$dia])): ?>
+            <?php foreach (limitarAnimesPorDia($grade[$dia]) as $anime): ?>
+              <div class="anime-item">
+                <img src="../../img/<?= htmlspecialchars($anime['capa']) ?>" alt="<?= htmlspecialchars($anime['nome']) ?>">
+                <div class="anime-info">
+                  <strong><?= htmlspecialchars($anime['nome']) ?></strong>
+                  <span>🕒 <?= date('H:i', strtotime($anime['hora_exibicao'])) ?></span>
+                  <a href="../../PHP/user/episodes.php?id=<?= $anime['id'] ?>" class="btn-semanal">ASSISTIR</a>
+                </div>
+              </div>
+            <?php endforeach; ?>
+          <?php else: ?>
+            <p>Nenhum anime neste dia.</p>
+          <?php endif; ?>
+        </div>
       <?php endforeach; ?>
     </div>
+
   </main>
 
   <?php include __DIR__ . '/rodape.php'; ?>
 </body>
+
 </html>

@@ -94,7 +94,7 @@ $totalPaginas = ceil($totalQuizzes / $porPagina);
 
 <head>
   <meta charset="UTF-8">
-  <title>Quizzes - Anime Space</title>
+  <title>Quizzes - Animes Space</title>
   <link rel="stylesheet" href="../../CSS/style.css">
   <link rel="icon" href="../../img/slogan3.png" type="image/png">
 </head>

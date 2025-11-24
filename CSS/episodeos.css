@@ -1223,21 +1223,16 @@ body {
   height: 120px;
   background: rgba(0, 0, 0, 0.8);
   overflow: hidden;
-  display: flex;
-  align-items: center;
   border-top: 1px solid #ff9f00;
   border-bottom: 4px solid #ff9f00;
+  display: flex;
+  align-items: center;
 }
 
 .letreiro {
   display: flex;
-  align-items: center;
   gap: 80px;
-  animation: rolar 25s linear infinite;
-}
-
-.letreiro-container:hover .letreiro {
-  animation-play-state: paused;
+  /* vamos setar a animação dinamicamente via JS */
 }
 
 .propaganda img {
@@ -1249,15 +1244,6 @@ body {
 
 .propaganda img:hover {
   transform: scale(1.1);
-}
-
-@keyframes rolar {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(-50%);
-  }
 }
 
 .rodape-container {

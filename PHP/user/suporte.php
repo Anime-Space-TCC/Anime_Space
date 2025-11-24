@@ -51,7 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <head>
     <meta charset="UTF-8">
-    <title>Suporte - Anime Space</title>
+    <title>Suporte - Animes Space</title>
     <link rel="stylesheet" href="../../CSS/style.css">
     <link rel="icon" href="../../img/slogan3.png" type="image/png">
 </head>
@@ -63,8 +63,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     ?>
     <main class="page-content">
         <div class="suporte">
-            <h1>Suporte - Anime Space</h1>
-            <p>Bem-vindo ao suporte do Anime Space! Use o formulário abaixo para entrar em contato com nossa equipe.</p>
+            <h1>Suporte - Animes Space</h1>
+            <p>Bem-vindo ao suporte do Animes Space! Use o formulário abaixo para entrar em contato com nossa equipe.</p>
 
             <?php if ($mensagem_enviada): ?>
                 <div class="msg-sucesso">✅ Sua mensagem foi enviada com sucesso! Entraremos em contato em breve.</div>

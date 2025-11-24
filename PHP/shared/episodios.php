@@ -84,6 +84,14 @@ function getUltimosEpisodiosPaginados(int $porPagina = 10, int $offset = 0): arr
 
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
+// Conta quantos episódios existem no total
+function getTotalUltimosEpisodios() {
+    global $pdo; 
+
+    $sql = "SELECT COUNT(*) FROM episodios"; 
+    return (int) $pdo->query($sql)->fetchColumn();
+}
+
 
 // Busca um episódio com informações do anime
 function buscarEpisodioComAnime(int $episodioId): ?array

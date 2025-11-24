@@ -49,7 +49,7 @@ if (!empty($_SESSION['carrinho'])) {
 
 <head>
     <meta charset="UTF-8">
-    <title>Meu Carrinho - Anime Space</title>
+    <title>Meu Carrinho - Animes Space</title>
     <link rel="stylesheet" href="../../CSS/style.css" />
     <link rel="icon" href="../../img/slogan3.png" type="image/png" />
 </head>
@@ -67,7 +67,7 @@ if (!empty($_SESSION['carrinho'])) {
         <?php if (empty($_SESSION['carrinho'])): ?>
             <p>Seu carrinho está vazio.</p>
         <?php else: ?>
-            <div class="carrinho-lista">
+            <div class="carrinho-container">
                 <?php foreach ($_SESSION['carrinho'] as $id => $quantidade): ?>
                     <?php
                     if (!isset($produtosCarrinhoById[$id])) {
@@ -89,9 +89,8 @@ if (!empty($_SESSION['carrinho'])) {
                         <div class="carrinho-info">
                             <span class="nome-produto"><?= htmlspecialchars($produto['nome']) ?></span>
 
-                            <span>Qtd: 
-                                <input type="number" min="1" value="<?= $quantidade ?>" 
-                                class="quantidade" data-id="<?= $id ?>">
+                            <span>Qtd:
+                                <input type="number" min="1" value="<?= $quantidade ?>" class="quantidade" data-id="<?= $id ?>">
                             </span>
 
                             <div class="preco-container">
@@ -116,39 +115,34 @@ if (!empty($_SESSION['carrinho'])) {
             </div>
 
             <p class="total-itens">
-                <strong>Total de itens:</strong> 
+                <strong>Total de itens:</strong>
                 <span id="totalCarrinho"><?= $totalCarrinho ?></span>
             </p>
 
             <!-- 🔽 MÉTODOS DE PAGAMENTO -->
-            <form action="../../PHP/shared/processar_pagamento.php" method="POST" class="form-pagamento">
+            <form action="../../PHP/shared/processar_pagamento.php" method="POST" class="pagamento-container">
                 <input type="hidden" name="metodo" class="input-metodo" value="">
+                <h2>Formas de pagamento</h2>
 
-                <div class="pagamento-container">
-                    <h2>Escolha sua forma de pagamento</h2>
-
-                    <div class="pagamento-opcao" data-metodo="cartao">
-                        <img src="../../img/cartao.jpg" alt="Cartão"> Cartão de Crédito/Débito
-                    </div>
-
-                    <div class="pagamento-opcao" data-metodo="pix">
-                        <img src="../../img/pix.jpg" alt="PIX"> PIX
-                    </div>
-
-                    <div class="pagamento-opcao" data-metodo="boleto">
-                        <img src="../../img/boleto.jpg" alt="Boleto"> Boleto Bancário
-                    </div>
-
-                    <button type="submit" class="btn-finalizar">Finalizar Compra</button>
+                <div class="pagamento-opcao" data-metodo="cartao">
+                    <img src="../../img/cartao.jpg" alt="Cartão"> Cartão de Crédito/Débito
                 </div>
+
+                <div class="pagamento-opcao" data-metodo="pix">
+                    <img src="../../img/pix.jpg" alt="PIX"> PIX
+                </div>
+
+                <div class="pagamento-opcao" data-metodo="boleto">
+                    <img src="../../img/boleto.jpg" alt="Boleto"> Boleto Bancário
+                </div>
+
+                <button type="submit" class="btn-finalizar">Finalizar Compra</button>
             </form>
         <?php endif; ?>
-    </main>
-
-    <?php
-    $carrinhoVazio = empty($_SESSION['carrinho']);
-    ?>
-    <div id="footer-carrinho" style="<?= $carrinhoVazio ?>">
+        </main> <?php
+        $carrinhoVazio = empty($_SESSION['carrinho']);
+        ?>  <div id="footer-carrinho" style="
+        <?= $carrinhoVazio ?>">
         <?php include __DIR__ . '/rodape.php'; ?>
     </div>
 

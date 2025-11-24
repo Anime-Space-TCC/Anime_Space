@@ -51,7 +51,7 @@ $totalPaginas = ceil($totalProdutos / $porPagina);
 
 <head>
     <meta charset="UTF-8">
-    <title>Loja - Anime Space</title>
+    <title>Loja - Animes Space</title>
     <link rel="stylesheet" href="../../CSS/style.css" />
     <link rel="icon" href="../../img/slogan3.png" type="image/png" />
 </head>
@@ -67,7 +67,7 @@ $totalPaginas = ceil($totalProdutos / $porPagina);
     <main class="page-content">
         <header class="loja-header">
             <div class="titulo-pagina">
-                <h1>Loja Anime Space</h1>
+                <h1>Loja Animes Space</h1>
             </div>
         </header>
 

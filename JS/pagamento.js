@@ -1,35 +1,26 @@
-// Manipulação de seleção de métodos de pagamento e finalizar compras
+// Manipulação de seleção de métodos de pagamento e validação
 document.addEventListener("DOMContentLoaded", () => {
   const opcoes = document.querySelectorAll(".pagamento-opcao");
-  const formsPagamento = document.querySelectorAll(".form-pagamento");
-
-  let metodoSelecionado = null;
+  const formPagamento = document.querySelector(".pagamento-container");
+  const inputMetodo = formPagamento.querySelector(".input-metodo");
 
   // Seleciona método de pagamento
-  opcoes.forEach((opcao) => {
+  opcoes.forEach(opcao => {
     opcao.addEventListener("click", () => {
-      // Remove selecionado de todas as opções
-      opcoes.forEach((o) => o.classList.remove("selecionado"));
+      // Remove seleção de todas as opções
+      opcoes.forEach(o => o.classList.remove("selecionado"));
       // Marca a opção clicada
       opcao.classList.add("selecionado");
-      metodoSelecionado = opcao.dataset.metodo;
-
-      // Atualiza todos os inputs hidden dos formulários
-      formsPagamento.forEach((form) => {
-        const inputMetodo = form.querySelector(".input-metodo");
-        if (inputMetodo) inputMetodo.value = metodoSelecionado;
-      });
+      // Atualiza input hidden
+      inputMetodo.value = opcao.dataset.metodo;
     });
   });
 
-  // Valida formulário ao enviar
-  formsPagamento.forEach((form) => {
-    form.addEventListener("submit", (e) => {
-      const metodo = form.querySelector(".input-metodo").value;
-      if (!metodo) {
-        e.preventDefault();
-        alert("Selecione um método de pagamento antes de finalizar.");
-      }
-    });
+  // Valida envio do formulário
+  formPagamento.addEventListener("submit", e => {
+    if (!inputMetodo.value) {
+      e.preventDefault();
+      alert("Selecione um método de pagamento antes de finalizar.");
+    }
   });
 });

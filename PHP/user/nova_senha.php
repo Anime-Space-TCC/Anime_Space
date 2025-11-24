@@ -41,7 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <head>
     <meta charset="UTF-8">
-    <title>Nova Senha - Anime Space</title>
+    <title>Nova Senha - Animes Space</title>
     <link rel="stylesheet" href="../../CSS/style.css">
     <link rel="icon" href="../../img/slogan3.png" type="image/png">
 </head>

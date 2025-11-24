@@ -48,7 +48,7 @@ $stmt->execute([$user_id]);
 
 <head>
     <meta charset="UTF-8">
-    <title>Upgrade de Perfil</title>
+    <title>Upgrade de Perfil - Animes Space</title>
     <link rel="stylesheet" href="../../CSS/perfil.css">
     <link rel="icon" href="../../../img/slogan3.png" type="image/png">
 </head>

@@ -7,7 +7,7 @@ require_once '../shared/conexao.php';
 
 <head>
     <meta charset="UTF-8">
-    <title>Recuperar Senha - Anime Space</title>
+    <title>Recuperar Senha - Animes Space</title>
     <link rel="stylesheet" href="../../CSS/style.css">
     <link rel="icon" href="../../img/slogan3.png" type="image/png">
 </head>

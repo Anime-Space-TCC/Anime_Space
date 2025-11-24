@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Sobre o Site</title>
+    <title>Sobre o Site - Animes Space</title>
     <link rel="stylesheet" href="../../CSS/style.css">
     <link rel="icon" href="../../img/slogan3.png" type="image/png">
 </head>
@@ -21,7 +21,7 @@
         </h1>
         <section class="texto">
             <p>
-                O <strong>Anime Space</strong> é um portal dedicado aos amantes de animes que buscam uma experiência
+                O <strong>Animes Space</strong> é um portal dedicado aos amantes de animes que buscam uma experiência
                 completa,
                 moderna e totalmente integrada. Aqui você encontra episódios, informações detalhadas, recomendações,
                 gamificação e um ambiente feito por fãs — para fãs.
@@ -43,7 +43,7 @@
                 <li>Plataforma segura, organizada e em constante evolução.</li>
             </ul><br>
             <p>
-                No <strong>Anime Space</strong>, nossa missão é conectar a comunidade otaku, oferecendo uma experiência
+                No <strong>Animes Space</strong>, nossa missão é conectar a comunidade otaku, oferecendo uma experiência
                 rica e envolvente para todos os fãs de animes. Seja você um novato ou um veterano, aqui é o seu lugar
                 para explorar o universo dos animes com facilidade e diversão.
             </p>
@@ -67,7 +67,7 @@
             <p><strong>Estevão:</strong> Desenvolvedor Full Stack, responsável pela programação, banco de dados e
                 funcionalidades principais.</p>
             <p><strong>Larissa:</strong> Gerente de Projeto, cuidando da organização, escopo e coordenação do time.</p>
-            <p><strong>Júlio:</strong> QA e Tester, garantindo que tudo funcione com qualidade e estabilidade.</p>
+            <p><strong>Júlio:</strong>Tester, garantindo que tudo funcione com qualidade e estabilidade.</p>
         </section>
     </main>
 

@@ -24,7 +24,7 @@ foreach ($pagamentos as $p) {
 
 <head>
     <meta charset="UTF-8">
-    <title>Pagamento Confirmado</title>
+    <title>Pagamento Confirmado - Animes Space</title>
     <link rel="stylesheet" href="../../CSS/style.css">
     <link rel="icon" href="../../img/slogan3.png" type="image/png">
 </head>

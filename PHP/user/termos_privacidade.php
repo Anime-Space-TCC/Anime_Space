@@ -9,7 +9,7 @@ session_start();
 
 <head>
   <meta charset="UTF-8">
-  <title>Política de Privacidade - Anime Space</title>
+  <title>Política de Privacidade - Animes Space</title>
   <link rel="stylesheet" href="../../CSS/style.css">
   <link rel="icon" href="../../img/slogan3.png" type="image/png">
 </head>
@@ -17,7 +17,7 @@ session_start();
 <body>
   <div class="termos-container">
     <h1>Política de Privacidade</h1>
-    <p>Bem-vindo ao Anime Space! Esta Política de Privacidade explica como coletamos, utilizamos e protegemos suas informações.</p>
+    <p>Bem-vindo ao Animes Space! Esta Política de Privacidade explica como coletamos, utilizamos e protegemos suas informações.</p>
     <br>
 
     <h2>1. Coleta de Informações</h2>

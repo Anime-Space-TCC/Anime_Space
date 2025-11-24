@@ -15,7 +15,7 @@ $lancamentos = buscarLancamentos($pdo, 9);
 <head>
   <meta charset="UTF-8" /> 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Anime Space!</title> 
+  <title>Animes Space!</title> 
   <link rel="stylesheet" href="../../CSS/style.css" /> 
   <link rel="icon" href="../../img/slogan3.png" type="image/png" /> 
 </head>

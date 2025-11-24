@@ -8,7 +8,7 @@
   <div class="rodape-container">
 
     <div class="rodape-coluna">
-      <h3>Anime Space</h3>
+      <h3>Animes Space</h3>
       <p>O universo infinito dos animes — notícias, lançamentos e comunidade para todos os otakus.</p>
     </div>
 
@@ -45,7 +45,7 @@
 
   <!-- Barra inferior -->
   <div class="rodape-final">
-    <p>© <?= date('Y') ?> <strong>Anime Space</strong> — Todos os direitos reservados.</p>
+    <p>© <?= date('Y') ?> <strong>Animes Space</strong> — Todos os direitos reservados.</p>
   </div>
 
 </footer>

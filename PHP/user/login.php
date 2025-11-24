@@ -46,7 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8" /> 
-<title>Login - Anime Space</title> 
+<title>Login - Animes Space</title> 
 <link rel="stylesheet" href="../../CSS/style.css" /> 
 <link rel="icon" href="../../img/slogan3.png" type="image/png"> 
 </head>
@@ -57,7 +57,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <h2>Login</h2> 
 
     <?php if ($errors): ?>
-        <ul style="color: #f00; margin-bottom: 15px;">
+        <ul style="color: #f00; margin-bottom: 15px; list-style: none; padding: 0;">
           <?php foreach ($errors as $error): ?>
               <li><?= htmlspecialchars($error) ?></li>
           <?php endforeach; ?>
