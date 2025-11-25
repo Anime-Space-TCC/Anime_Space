@@ -536,7 +536,6 @@ body {
 .letreiro {
   display: flex;
   gap: 80px;
-  /* vamos setar a animação dinamicamente via JS */
 }
 
 .propaganda img {

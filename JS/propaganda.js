@@ -7,7 +7,7 @@ const currentPage = window.location.pathname;
 
 // Seleciona áreas de anúncios (se existirem)
 const lateralAds = document.querySelectorAll(".ads-lateral .ad-item img");
-const letreiro = document.getElementById("letreiro"); // usado no rodapé animado
+const letreiro = document.getElementById("letreiro"); 
 
 // ================================
 // Conjuntos de banners
@@ -50,7 +50,7 @@ function iniciarLetreiro() {
   const largura = letreiro.scrollWidth;
 
   // define a animação via CSS em pixels, vai e volta suave
-  letreiro.style.animation = `vaiVolta ${Math.max(15, largura / 100)}s ease-in-out infinite alternate`;
+  letreiro.style.animation = `vaiVolta ${Math.max(2, largura / 1000)}s ease-in-out infinite alternate`;
 
   // cria keyframes dinamicamente
   const styleSheet = document.styleSheets[0];
